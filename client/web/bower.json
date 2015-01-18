@@ -1,0 +1,16 @@
+{
+      "name": "whiteboard",
+      "version": "0.0.1",
+      "dependencies": {
+        "requirejs": "~2.1.4",
+        "marionette": "~1.0.2",
+        "backbone.wreqr": "0.2.0",
+        "backbone.eventbinder": "1.0.2",
+        "backbone.babysitter": "0.0.6",
+        "jquery": "2.0.0",
+    },
+    
+    "devDependencies": {
+
+    }
+}
