@@ -5,6 +5,7 @@ define([
     'marionette',
     'controllers/MainController',
     'routers/MainRouter',
+    'controllers/UserSession',
     'views/master'
 ], function (
     $,
@@ -25,6 +26,8 @@ define([
     App.addInitializer(function() {
         var mainView = new MasterView();
         var controller = new Controller();
+
+        this.userSessionController = new UserSessionController();
 
         App.body.show(mainView);
         controller.mainContent = mainView.mainContent;
