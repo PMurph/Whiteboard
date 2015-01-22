@@ -8,6 +8,10 @@ module.exports = function (grunt) {
         'src/**/*.js',
     ];
 
+    var serverTestFiles = [
+        'tests/*Spec.js'
+    ];
+
     grunt.initConfig({
         watch: {
         },
@@ -15,7 +19,7 @@ module.exports = function (grunt) {
             options: {
                 jshintrc: '../.jshintrc'
             },
-            src: serverSourceFiles
+            src: serverSourceFiles.concat(serverTestFiles)
         },
         jasmine_node: {
             options: {

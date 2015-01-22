@@ -10,6 +10,10 @@ module.exports = function (grunt) {
         '!app/scripts/vendor/*',
     ];
 
+    var clientTestFiles = [
+        'tests/*Spec.js',
+    ];
+
     grunt.initConfig({
         watch: {
             files: clientSourceFiles,
@@ -24,13 +28,13 @@ module.exports = function (grunt) {
             options: {
                 jshintrc: '../../.jshintrc'
             },
-            src: clientSourceFiles
+            src: clientSourceFiles.concat(clientTestFiles)
         },
         jasmine: {
             all: {
-                src: 'app/scripts/**/*.js',
+                src: clientSourceFiles,
                 options: {
-                    specs: 'tests/*Spec.js',
+                    specs: clientTestFiles,
                     template: require('grunt-template-jasmine-requirejs'),
                     templateOptions: {
                         requireConfigFile: 'app/scripts/config.js',
