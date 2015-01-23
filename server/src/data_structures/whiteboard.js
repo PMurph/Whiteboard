@@ -1,18 +1,20 @@
 var Whiteboard = function() {
     "use strict";
-    var drawCommands = [];
+    this._drawCommands = [];
+}
 
-    this.getAllDrawCommands = function() {
-        return drawCommands;
-    }
+Whiteboard.prototype = {
+    getAllDrawCommands: function() {
+        return this._drawCommands;
+    },
 
-    this.getLastDrawCommands = function(numCommands) {
-        return drawCommands.slice(drawCommands.length - numCommands, drawCommands.length);
-    }
+    getLastDrawCommands: function(numCommands) {
+        return this._drawCommands.slice(this._drawCommands.length - numCommands, this._drawCommands.length);
+    },
 
-    this.addDrawCommand = function(drawCommand) {
-        drawCommands.push(drawCommand);
-    }
+    addDrawCommand: function(drawCommand) {
+        this._drawCommands.push(drawCommand);
+    },
 }
 
 module.exports.Whiteboard = Whiteboard;
