@@ -1,16 +1,15 @@
 {
-      "name": "whiteboard",
-      "version": "0.0.1",
-      "dependencies": {
-        "requirejs": "~2.1.4",
-        "marionette": "~1.0.2",
-        "backbone.wreqr": "0.2.0",
-        "backbone.eventbinder": "1.0.2",
-        "backbone.babysitter": "0.0.6",
-        "jquery": "2.0.0",
-    },
-    
-    "devDependencies": {
-
-    }
+  "name": "whiteboard",
+  "version": "0.0.1",
+  "dependencies": {
+    "requirejs": "~2.1.4",
+    "marionette": "~2.3.0",
+    "backbone.wreqr": "^1.0.0",
+    "backbone.eventbinder": "1.0.2",
+    "backbone.babysitter": "^0.1.0",
+    "jquery": "2.0.0",
+    "requirejs-text": "~2.0.13",
+    "requirejs-tpl": "*",
+    "underscore": "~1.6.0"
+  }
 }

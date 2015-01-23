@@ -1,9 +1,7 @@
 # Whiteboard
-===
 A shared whiteboard application to facilitate the sharing of ideas.
 
 ## Technologies
----
 * Node.js (using Express)
 * MongoDB
 * Backbone (with Marionette)
@@ -11,7 +9,6 @@ A shared whiteboard application to facilitate the sharing of ideas.
 * socket.io
 
 ## Dev Setup
----
 
 ### Requirements
 * [Node.js](http://nodejs.org/)
@@ -44,7 +41,6 @@ Do a dance
 ```
 
 ## Useful dev tools/commands
----
 TODO: Quick summary after this is setup
 ```
 grunt
