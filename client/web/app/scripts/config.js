@@ -9,7 +9,6 @@ requirejs.config({
         'backbone.eventbinder' : '../bower_components/backbone.eventbinder/lib/backbone.eventbinder',
         'backbone.babysitter' : '../bower_components/backbone.babysitter/lib/backbone.babysitter',
         text: '../bower_components/requirejs-text/text',
-        //'requirejs-underscore-tpl': '../bower_components/requirejs-underscore-tpl/underscore-tpl',
         tpl: '../bower_components/requirejs-tpl/tpl'
     },
     shim: {
@@ -29,7 +28,7 @@ requirejs.config({
         },
         backbonewreqr: {
             deps: ['backbone'],
-            exports: 'BackboneWReqR'
+            exports: 'BackboneWreqr'
         },
         text: {
             exports: 'text'

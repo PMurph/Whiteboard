@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'marionette',
-    'tpl!/scripts/templates/master.html'
+    'tpl!/scripts/templates/login/layout.html'
 ], function(
     $,
     _,
@@ -11,10 +11,6 @@ define([
     'use strict';
 
     return Marionette.LayoutView.extend({
-        template: Template,
-
-        regions: {
-            mainContent: '#main-content-region'
-        }
+        template: Template
     });
 });

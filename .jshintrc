@@ -1,18 +1,12 @@
 {
     "node": true,
-    "es5": true,
-    "esnext": true,
-    "bitwise": true,
     "camelcase": true,
     "curly": true,
     "eqeqeq": true,
-    "immed": true,
     "indent": 4,
     "latedef": true,
     "newcap": true,
     "noarg": true,
-    "quotmark": "single",
-    "regexp": true,
     "undef": true,
     "unused": true,
     "strict": true,
@@ -24,9 +18,20 @@
         "document": false,
         "location": false,
         "window": false,
+        "module": false,
 
         /* RequireJS globals */
         "define": false,
-        "requirejs": false
+        "requirejs": false,
+        "require": false,
+
+        /* Jasmine */
+        "describe": false,
+        "it": false,
+        "expect": false,
+        "beforeAll": false,
+        "afterAll": false,
+        "beforeEach": false,
+        "afterEach": false
     }
 }

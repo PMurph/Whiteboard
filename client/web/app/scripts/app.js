@@ -1,19 +1,38 @@
 define([
     'underscore',
     'backbone',
-    'marionette'
-],
-
-function (_, Backbone) {
+    'marionette',
+    'controllers/MainController',
+    'routers/MainRouter',
+    'views/master'
+], function (
+    _,
+    Backbone,
+    Marionette,
+    Controller,
+    Router,
+    MasterView) {
     'use strict';
 
-    var App = new Backbone.Marionette.Application();
+    var App = new Marionette.Application();
 
-    App.addInitializer(function () {
-        this.root = '/';
+    App.addRegions({
+        'body': 'body'
     });
 
-    //TODO: Modify jQuery ajax to add session info
+    App.addInitializer(function() {
+        var mainView = new MasterView();
+        var controller = new Controller();
+
+        App.body.show(mainView);
+        controller.mainContent = mainView.mainContent;
+
+        new Router({
+            controller: controller
+        });
+
+        Backbone.history.start({ pushState: false, root: '/' });
+    });
 
     return App;
 });
