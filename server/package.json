@@ -1,0 +1,13 @@
+{
+    "name": "whiteboard-server",
+    "main": "server.js",
+    "dependencies": {
+        "express": "^4.11.0",
+        "grunt": "^0.4.5",
+        "grunt-contrib-jshint": "^0.10.0",
+        "jasmine": "^2.1.1",
+        "jshint": "^2.5.11",
+        "mongoose": "^3.8.21",
+        "socket.io": "^1.2.1"
+    }
+}
