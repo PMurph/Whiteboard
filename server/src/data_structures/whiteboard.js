@@ -1,7 +1,7 @@
 var Whiteboard = function() {
     "use strict";
     this._drawCommands = [];
-}
+};
 
 Whiteboard.prototype = {
     getAllDrawCommands: function() {
@@ -15,6 +15,6 @@ Whiteboard.prototype = {
     addDrawCommand: function(drawCommand) {
         this._drawCommands.push(drawCommand);
     },
-}
+};
 
 module.exports.Whiteboard = Whiteboard;
