@@ -1,4 +1,5 @@
 define([
+    'jquery',
     'underscore',
     'backbone',
     'marionette',
@@ -6,6 +7,7 @@ define([
     'routers/MainRouter',
     'views/master'
 ], function (
+    $,
     _,
     Backbone,
     Marionette,
@@ -29,6 +31,23 @@ define([
 
         new Router({
             controller: controller
+        });
+    });
+
+    App.addInitializer(function() {
+        $.ajaxSetup({
+            cache: false,
+            crossDomain: true,
+            dataType: 'jsonp',
+            headers: {
+                'Authorization': 'session id here'
+            },
+            statusCode: {
+                // Forbidden
+                403: function() {
+                    Backbone.history.navigate('login', {trigger: true});
+                }
+            }
         });
 
         Backbone.history.start({ pushState: false, root: '/' });
