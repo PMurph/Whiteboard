@@ -3,7 +3,6 @@
 module.exports = function (grunt) {
     // load all grunt tasks using matchdep npm module
     require('matchdep').filterDev('grunt-contrib-*').forEach(grunt.loadNpmTasks);
-    grunt.loadNpmTasks('grunt-bower-requirejs');
 
     var clientSourceFiles =  [
         'app/scripts/**/*.js',
@@ -18,11 +17,6 @@ module.exports = function (grunt) {
         watch: {
             files: clientSourceFiles,
             tasks: ['jshint']
-        },
-        bowerRequirejs: {
-              all: {
-                    rjsConfig: 'app/scripts/config.js'
-                    }
         },
         jshint: {
             options: {
@@ -53,7 +47,6 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask('default', [
-        'bowerRequirejs',
         'jshint',
         'test',
     ]);
