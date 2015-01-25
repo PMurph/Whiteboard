@@ -1,0 +1,3 @@
+function createNewRoom(user) {
+	
+}

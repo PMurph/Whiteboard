@@ -1,4 +1,7 @@
 /client/web/node_modules
 /client/web/app/bower_components
+whiteboard.sublime-project
+whiteboard.sublime-workspace
+npm-debug.log
 /server/node_modules
 .DS_Store
