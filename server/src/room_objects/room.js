@@ -1,18 +1,11 @@
-var Room = function(creatingUser) {
+var Room = function(creatingUser, whiteboard) {
     "use strict"
     this._creatingUser = creatingUser;
     this._connectedUsers = [creatingUser];
+    this._whiteboard = whiteboard;
 };
 
 Room.prototype = {
-    getCreatingUser: function() {
-        return this._creatingUser;
-    },
-
-    getConnectedUsers: function() {
-        return this._connectedUsers;
-    },
-
     connectUserToRoom: function(connectingUser) {
         if(this._getUserIndex(connectingUser) == -1) {
             this._connectedUsers.push(connectingUser);
@@ -47,6 +40,20 @@ Room.prototype = {
             this._connectedUsers.splice(index, 1);
         }
     },
+
+    getCreatingUser: function() {
+        return this._creatingUser;
+    },
+
+    getConnectedUsers: function() {
+        return this._connectedUsers;
+    },
+
+    handleDrawCommand: function(drawCommandWrapper) {
+        var drawCommand = drawCommandWrapper.getDrawCommand();
+
+        this._whiteboard.addDrawCommand(drawCommand);
+    }
 };
 
 module.exports.Room = Room;

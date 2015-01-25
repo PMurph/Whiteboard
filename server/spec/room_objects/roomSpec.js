@@ -1,10 +1,10 @@
 var RoomObjects = require("../../src/room_objects/room.js");
 
 describe("Room", function() {
-    describe("Users", function() {
-        var room;
-        var CREATING_USER = {"id": "2", "username": "testuser"}
+    var room;
+    var CREATING_USER = {"id": "2", "username": "testuser"};
 
+    describe("Users", function() {
         beforeEach(function() {
             room = new RoomObjects.Room(CREATING_USER);
         });
@@ -43,6 +43,30 @@ describe("Room", function() {
     });
 
     describe("Drawing", function() {
-        
+        var whiteboardMock;
+        var drawCommandMock;
+        var TEST_DRAW_COMMAND = "This is a test";
+
+        beforeEach(function() {
+            whiteboardMock = {
+                addDrawCommand: function(drawCommand){},
+            }
+
+            drawCommandMock = {
+                getDrawCommand: function() {},
+            }
+
+            room = new RoomObjects.Room(CREATING_USER, whiteboardMock);
+        });
+
+        it('should pass the draw command from to the whiteboard', function() {
+            spyOn(drawCommandMock, "getDrawCommand").and.returnValue(TEST_DRAW_COMMAND);
+            spyOn(whiteboardMock, "addDrawCommand");
+
+            room.handleDrawCommand(drawCommandMock);
+
+            expect(drawCommandMock.getDrawCommand).toHaveBeenCalled();
+            expect(whiteboardMock.addDrawCommand).toHaveBeenCalledWith(TEST_DRAW_COMMAND);
+        });
     });
 });
