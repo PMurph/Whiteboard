@@ -1,4 +1,4 @@
-var data_structures = require("../../src/data_structures/room.js");
+var RoomObjects = require("../../src/room_objects/room.js");
 
 describe("Room", function() {
     describe("Users", function() {
@@ -6,7 +6,7 @@ describe("Room", function() {
         var CREATING_USER = {"id": "2", "username": "testuser"}
 
         beforeEach(function() {
-            room = new data_structures.Room(CREATING_USER);
+            room = new RoomObjects.Room(CREATING_USER);
         });
 
         it("should return the creating user's information", function() {
@@ -35,10 +35,14 @@ describe("Room", function() {
                 expect(room.getConnectedUsers()).toEqual([CREATING_USER, TEST_USER2]);
             });
 
-            it('should not contain two users with the same information', function() {
+            it("should not contain two users with the same information", function() {
                 room.connectUserToRoom(TEST_USER1);
                 expect(room.getConnectedUsers()).toEqual([CREATING_USER, TEST_USER1, TEST_USER2]);
             });
         });
+    });
+
+    describe("Drawing", function() {
+        
     });
 });

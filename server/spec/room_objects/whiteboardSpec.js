@@ -1,10 +1,10 @@
-var data_structures = require('../../src/data_structures/whiteboard.js')
+var RoomObjects = require('../../src/room_objects/whiteboard.js')
 
 describe("Whiteboard", function() {
     var testWhiteboard;
 
     beforeEach(function(){
-        testWhiteboard = new data_structures.Whiteboard();
+        testWhiteboard = new RoomObjects.Whiteboard();
     });
 
     describe("empty whiteboard", function() {
@@ -15,6 +15,10 @@ describe("Whiteboard", function() {
         it('should return an empty array when retrieving the last 5 draw commands if none exist', function() {
             expect(testWhiteboard.getLastDrawCommands(5)).toEqual([]);
         });
+
+        it('should return 0 for the number of draw commands seen', function() {
+            expect(testWhiteboard.getNumDrawCommandsSeen()).toEqual(0);
+        })
     });
 
     describe("populated whiteboard", function() {
@@ -35,6 +39,10 @@ describe("Whiteboard", function() {
 
         it('should return all the commands if n is greated than the number of draw commands', function() {
             expect(testWhiteboard.getAllDrawCommands(5)).toEqual(TEST_COMMANDS);
+        });
+
+        it('should return the number of draw commands seen', function() {
+            expect(testWhiteboard.getNumDrawCommandsSeen()).toEqual(TEST_COMMANDS.length);
         });
     });
 });
