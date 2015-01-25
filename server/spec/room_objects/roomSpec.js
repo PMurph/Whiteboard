@@ -3,10 +3,21 @@ var RoomObjects = require("../../src/room_objects/room.js");
 describe("Room", function() {
     var room;
     var CREATING_USER = {"id": "2", "username": "testuser"};
+    var ROOM_ID = 3;
+
+    describe("Room Id", function() {
+        beforeEach(function() {
+            room = new RoomObjects.Room(ROOM_ID, CREATING_USER);
+        });
+
+        it('should return the correct room id', function(){
+            expect(room.getId()).toBe(ROOM_ID);
+        });
+    });
 
     describe("Users", function() {
         beforeEach(function() {
-            room = new RoomObjects.Room(CREATING_USER);
+            room = new RoomObjects.Room(ROOM_ID, CREATING_USER);
         });
 
         it("should return the creating user's information", function() {
@@ -56,7 +67,7 @@ describe("Room", function() {
                 getDrawCommand: function() {},
             }
 
-            room = new RoomObjects.Room(CREATING_USER, whiteboardMock);
+            room = new RoomObjects.Room(ROOM_ID, CREATING_USER, whiteboardMock);
         });
 
         it('should pass the draw command from to the whiteboard', function() {

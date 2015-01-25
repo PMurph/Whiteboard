@@ -1,7 +1,8 @@
-var Room = function(creatingUser, whiteboard) {
+var Room = function(roomId, creatingUser, whiteboard) {
     "use strict"
     this._creatingUser = creatingUser;
     this._connectedUsers = [creatingUser];
+    this._id = roomId;
     this._whiteboard = whiteboard;
 };
 
@@ -47,6 +48,10 @@ Room.prototype = {
 
     getConnectedUsers: function() {
         return this._connectedUsers;
+    },
+
+    getId: function(){
+        return this._id;
     },
 
     handleDrawCommand: function(drawCommandWrapper) {
