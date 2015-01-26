@@ -67,8 +67,9 @@ describe("Room", function() {
 
             drawCommandWrapperMock = {
                 getDrawCommand: function() {},
-                setUsersToPushTo: function(userToSendTo) {},
+                sendDrawCommandToUsers: function() {},
                 setNumDrawCommandsSeen: function(numDrawCommandsSeen) {},
+                setUsersToPushTo: function(userToSendTo) {},
             }
 
             room = new RoomObjects.Room(ROOM_ID, CREATING_USER, whiteboardMock);
@@ -107,6 +108,13 @@ describe("Room", function() {
 
             room.handleDrawCommand(drawCommandWrapperMock);
             expect(drawCommandWrapperMock.setNumDrawCommandsSeen).toHaveBeenCalledWith(TEST_NUM_DRAW_COMMANDS_SEEN);
+        });
+
+        it('should tell the draw command wrapper to send to users', function() {
+            spyOn(drawCommandWrapperMock, "sendDrawCommandToUsers");
+
+            room.handleDrawCommand(drawCommandWrapperMock);
+            expect(drawCommandWrapperMock.sendDrawCommandToUsers).toHaveBeenCalled();
         });
     });
 });

@@ -54,6 +54,8 @@ Room.prototype = {
 
         var numDrawCommandsSeen = this._whiteboard.getNumDrawCommandsSeen();
         drawCommandWrapper.setNumDrawCommandsSeen(numDrawCommandsSeen);
+
+        drawCommandWrapper.sendDrawCommandToUsers();
     }
 };
 
