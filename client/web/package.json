@@ -10,7 +10,8 @@
     "grunt": "~0.4.5",
     "grunt-contrib-jasmine": "~0.8.2",
     "grunt-contrib-jshint": "~0.11.0",
-    "grunt-template-jasmine-requirejs": "~0.2.0"
+    "grunt-template-jasmine-requirejs": "~0.2.0",
+    "jasmine-ajax": "~2.99.0"
   },
   "engines": {
     "node": ">=0.8.0"

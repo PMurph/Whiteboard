@@ -27,8 +27,10 @@ module.exports = function (grunt) {
         jasmine: {
             all: {
                 src: clientSourceFiles,
+                keepRunner: true,
                 options: {
                     specs: clientTestFiles,
+                    vendor: ['./node_modules/jasmine-ajax/lib/mock-ajax.js'],
                     template: require('grunt-template-jasmine-requirejs'),
                     templateOptions: {
                         requireConfigFile: 'app/scripts/config.js',
