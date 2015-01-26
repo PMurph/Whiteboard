@@ -3,6 +3,7 @@ var RoomObjects = require("../../src/room_objects/room.js");
 describe("Room", function() {
     var room;
     var CREATING_USER = {"id": "2", "username": "testuser"};
+    var TEST_USER1 = {"id": "4", "username": "otheruser"};
     var ROOM_ID = 3;
 
     describe("Room Id", function() {
@@ -29,7 +30,6 @@ describe("Room", function() {
         });
 
         describe("Users connecting and disconnecting", function() {
-            var TEST_USER1 = {"id": "4", "username": "otheruser"};
             var TEST_USER2 = {"id": "1", "username": "newuser"};
 
             beforeEach(function() {
@@ -55,29 +55,58 @@ describe("Room", function() {
 
     describe("Drawing", function() {
         var whiteboardMock;
-        var drawCommandMock;
+        var drawCommandWrapperMock;
         var TEST_DRAW_COMMAND = "This is a test";
+        var TEST_NUM_DRAW_COMMANDS_SEEN = 3;
 
         beforeEach(function() {
             whiteboardMock = {
-                addDrawCommand: function(drawCommand){},
+                addDrawCommand: function(drawCommand) {},
+                getNumDrawCommandsSeen: function() {},
             }
 
-            drawCommandMock = {
+            drawCommandWrapperMock = {
                 getDrawCommand: function() {},
+                setUsersToPushTo: function(userToSendTo) {},
+                setNumDrawCommandsSeen: function(numDrawCommandsSeen) {},
             }
 
             room = new RoomObjects.Room(ROOM_ID, CREATING_USER, whiteboardMock);
+            room.connectUserToRoom(TEST_USER1);
+
+            spyOn(whiteboardMock, "addDrawCommand");
+            spyOn(drawCommandWrapperMock, "getDrawCommand").and.returnValue(TEST_DRAW_COMMAND);
+            spyOn(whiteboardMock, "getNumDrawCommandsSeen").and.returnValue(TEST_NUM_DRAW_COMMANDS_SEEN);
+
         });
 
+        it('shoudl get the draw command from the draw command wrapper', function() {
+            room.handleDrawCommand(drawCommandWrapperMock);
+            expect(drawCommandWrapperMock.getDrawCommand).toHaveBeenCalled();
+        })
+
         it('should pass the draw command from to the whiteboard', function() {
-            spyOn(drawCommandMock, "getDrawCommand").and.returnValue(TEST_DRAW_COMMAND);
-            spyOn(whiteboardMock, "addDrawCommand");
-
-            room.handleDrawCommand(drawCommandMock);
-
-            expect(drawCommandMock.getDrawCommand).toHaveBeenCalled();
+            room.handleDrawCommand(drawCommandWrapperMock);
             expect(whiteboardMock.addDrawCommand).toHaveBeenCalledWith(TEST_DRAW_COMMAND);
+        });
+
+        it('should pass the draw command wrapper all the connected users', function() {
+            spyOn(drawCommandWrapperMock, "setUsersToPushTo");
+
+            room.handleDrawCommand(drawCommandWrapperMock);
+            expect(drawCommandWrapperMock.setUsersToPushTo).toHaveBeenCalledWith(room.getConnectedUsers());
+        });
+
+        it('should get the number of draw commands seen by the whiteboard', function() {
+            room.handleDrawCommand(drawCommandWrapperMock);
+            expect(whiteboardMock.getNumDrawCommandsSeen).toHaveBeenCalled();
+        });
+
+        it('should pass the number of draw commands seen to the draw command wrapper', function(){
+            spyOn(drawCommandWrapperMock, "setNumDrawCommandsSeen");
+
+            room.handleDrawCommand(drawCommandWrapperMock);
+            expect(drawCommandWrapperMock.setNumDrawCommandsSeen).toHaveBeenCalledWith(TEST_NUM_DRAW_COMMANDS_SEEN);
         });
     });
 });

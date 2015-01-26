@@ -21,19 +21,11 @@ Room.prototype = {
     _getUserIndex: function(user) {
         var index = -1;
         for(var i = 0; i < this._connectedUsers.length && index == -1; i++) {
-            if(this._areUsersEqual(user, this._connectedUsers[i])) {
+            if(user["id"] == this._connectedUsers[i]["id"]) {
                 index = i;
             }
         }
         return index;
-    },
-
-    _areUsersEqual: function(user, other_user) {
-        var usersAreEqual = false;
-        if(user["id"] == other_user["id"]) {
-            usersAreEqual = true;
-        }
-        return usersAreEqual;
     },
 
     _removeUser: function(index) {
@@ -58,6 +50,10 @@ Room.prototype = {
         var drawCommand = drawCommandWrapper.getDrawCommand();
 
         this._whiteboard.addDrawCommand(drawCommand);
+        drawCommandWrapper.setUsersToPushTo(this._connectedUsers);
+
+        var numDrawCommandsSeen = this._whiteboard.getNumDrawCommandsSeen();
+        drawCommandWrapper.setNumDrawCommandsSeen(numDrawCommandsSeen);
     }
 };
 
