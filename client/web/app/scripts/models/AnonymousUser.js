@@ -5,7 +5,7 @@ define([
     'use strict';
 
     var AnonymousUser = User.extend({
-        url: '/api/anonymousUser',
+        url: '/api/user',
         initialize: function () {
             this.anonymous = true;
         }

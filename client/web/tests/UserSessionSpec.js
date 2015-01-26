@@ -33,7 +33,7 @@ define(["app", "models/AnonymousUser"], function(App, AnonymousUser) {
 
                 request = jasmine.Ajax.requests.mostRecent();
 
-                expect(request.url).toBe('/api/anonymousUser');
+                expect(request.url).toBe('/api/user');
                 expect(request.method).toBe('POST');
             });
             describe('on success', function() {
@@ -47,7 +47,6 @@ define(["app", "models/AnonymousUser"], function(App, AnonymousUser) {
                     expect(App.userSessionController._setAuthToken).toHaveBeenCalledWith('testToken');
                 });
                 it('set user', function() {
-                    expect(App.userSessionController.isAuthenticated()).toBe(true);
                     expect(App.userSessionController.getUser() instanceof AnonymousUser).toBe(true);
                     expect(App.userSessionController.getUser().id).toBe(5);
                     expect(App.userSessionController.getUser().get("name")).toBe("AnonymousTest");
