@@ -5,3 +5,4 @@
 *.swp
 .grunt/
 _SpecRunner.html
+db_data/

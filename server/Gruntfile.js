@@ -12,6 +12,8 @@ module.exports = function (grunt) {
         'tests/*Spec.js'
     ];
 
+    var mongoCommand = "mongod --dbpath db_data/ --logpath db_data/log.txt --smallfiles ";
+
     grunt.initConfig({
         watch: {
         },
@@ -34,11 +36,32 @@ module.exports = function (grunt) {
                 cwd: __dirname + '/src/',
                 watch: serverSourceFiles
             }
+        },
+        shell: {
+            mongoStart: {
+                command: mongoCommand + '--fork'
+            },
+            mongoStop: {
+                command: mongoCommand + '--shutdown'
+            }
         }
     });
 
+    grunt.registerTask('watch-mongo', function () {
+        var execSync = require('exec-sync');
+     
+        console.log('Watching mongo database...');
+        process.on('SIGINT', function () {
+            console.log('Stopping mongo database...');
+            execSync(mongoCommand + '--shutdown')
+        });
+    });
+
     grunt.registerTask('run', [
-        'nodemon'
+        'shell:mongoStart',
+        'watch-mongo',
+        'nodemon',
+        'shell:mongoStop'
     ]);
 
     grunt.registerTask('test', [
