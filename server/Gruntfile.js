@@ -26,6 +26,7 @@ module.exports = function (grunt) {
         jasmine_node: {
             options: {
                 match: '.',
+                includeStackTrace: true,
                 specNameMatcher: 'Spec'
             },
             all: ['tests/']
@@ -65,7 +66,10 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('test', [
-        'jasmine_node'
+        'shell:mongoStart',
+        'watch-mongo',
+        'jasmine_node',
+        'shell:mongoStop'
     ]);
 
 
