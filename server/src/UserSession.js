@@ -1,9 +1,9 @@
 'use strict';
 
-var mongoose = require("mongoose"),
-               crypto = require('crypto');
-var UserSession = function () {
-        this.userSchema = new mongoose.Schema({
+var crypto = require('crypto');
+
+var UserSession = function (db) {
+        var userSchema = new db.Schema({
             name: String,
 
             login: String,
@@ -17,7 +17,7 @@ var UserSession = function () {
             toJSON: true
         });
 
-       this.UserModel = mongoose.model('User', this.userSchema);
+       this._UserModel = db.model('User', userSchema);
 };
 
 UserSession.prototype = {
@@ -37,9 +37,9 @@ UserSession.prototype = {
 
         return hash.digest('hex');
     },
-    _createAnonymousUser: function(token) {
-        var anonUser = new this.UserModel({
-            name: "Anon",
+    _createAnonymousUser: function(name, token) {
+        var anonUser = new this._UserModel({
+            name: name,
             anonymous: true,
             authToken: token
         });
@@ -50,7 +50,8 @@ UserSession.prototype = {
     },
     _authAnonymous: function(req, res) {
         var token = this._createAuthToken();
-        var anonUserDoc = this._createAnonymousUser(token);
+        var name = req.body.name || "Anonymous User";
+        var anonUserDoc = this._createAnonymousUser(name, token);
 
         res.json(anonUserDoc.toObject());
     },
@@ -73,7 +74,7 @@ UserSession.prototype = {
             res.sendStatus(400);
         }
     },
-    routeF: function() {
+    getRouteF: function() {
         var self = this;
 
         return function (req, res) {

@@ -7,12 +7,13 @@ var express = require('express'),
 
 var Server = function () {
     this.app = express();
+    this._db = mongoose;
 
     this.port = process.env.PORT || 3000;
     this.hostname = "127.0.0.1";
     this.dbHostname = "127.0.0.1";
 
-    this._userSession = new UserSession();
+    this._userSession = new UserSession(this._db);
     
     /* BodyParser must be added before routes 
      * for handlers to see parsed JSON data */
@@ -30,7 +31,7 @@ Server.prototype = {
     },
     _setupRoutes: function() {
         this.app.use('/', express.static(__dirname + '/../../client/web/app'));
-        this.app.use("/api/user", this._userSession.routeF());
+        this.app.use("/api/user", this._userSession.getRouteF());
     },
     start: function(port, hostname, listenCB) {
         this.port = port || this.port;
