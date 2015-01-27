@@ -49,23 +49,42 @@ UserSession.prototype = {
         return anonUser;
     },
     _authAnonymous: function(req, res) {
+        var token = this._createAuthToken();
+        var anonUserDoc = this._createAnonymousUser(token);
 
-        if(req.method === 'POST') {
-            var token = this._createAuthToken();
-            var anonUserDoc = this._createAnonymousUser(token);
-
-            res.json(anonUserDoc.toObject());
-        }else if (req.method === 'GET') {
-            console.log("HEEHEH");
+        res.json(anonUserDoc.toObject());
+    },
+    _handlePost: function(req, res) {
+        if(req.body &&
+            req.body.anonymous === true &&
+            (req.body.authToken === undefined || req.body.authToken === null))
+        {
+            this._authAnonymous(req, res);
         }else{
-            console.log("Unsupported method");
+            res.sendStatus(400);
         }
     },
-    authAnonymousRouteF: function() {
-        var instance = this;
+    _handleGet: function(req, res) {
+        if(req.body &&
+            (req.body.authToken === undefined || req.body.authToken === null))
+        {
+            //
+        }else{
+            res.sendStatus(400);
+        }
+    },
+    routeF: function() {
+        var self = this;
 
         return function (req, res) {
-            instance._authAnonymous(req, res);
+            if(req.method === 'POST'){
+                self._handlePost(req, res);
+            }else if (req.method === 'GET') {
+                self._handleGet(req, res);
+            }else{
+                console.log("Unsupported method: " + req.method + "i for user route");
+                res.sendStatus(405);
+            }
         };
     }
 };
