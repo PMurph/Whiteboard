@@ -54,6 +54,12 @@ describe("Server User Session", function () {
             .send(testRequest.authAnon.malformedAnonFalse)
             .expect(400, done);
         });
+        it("should authenticate anonymous (Malformed AuthToken Set)", function(done) {
+            req
+            .post('/api/user')
+            .send(testRequest.authAnon.malformedAnonAuthTokenSet)
+            .expect(400, done);
+        });
     });
     it("should stop server", function(done) {
         server.stop(done);
