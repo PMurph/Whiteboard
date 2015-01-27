@@ -38,53 +38,64 @@ UserSession.prototype = {
         return hash.digest('hex');
     },
     _createAnonymousUser: function(name, token) {
-        var anonUser = new this._UserModel({
+        var anonUserDoc = new this._UserModel({
             name: name,
             anonymous: true,
             authToken: token
         });
 
-        anonUser.save(this._mongoCallbackF);
+        anonUserDoc.save(this._mongoCallbackF);
 
-        return anonUser;
+        return anonUserDoc;
     },
-    _authAnonymous: function(req, res) {
+    _authAnonymous: function(displayName) {
         var token = this._createAuthToken();
-        var name = req.body.name || "Anonymous User";
+        var name = displayName || "Anonymous User";
         var anonUserDoc = this._createAnonymousUser(name, token);
 
-        res.json(anonUserDoc.toObject());
+        return anonUserDoc.toObject();
     },
-    _handlePost: function(req, res) {
-        if(req.body &&
-            req.body.anonymous === true &&
-            (req.body.authToken === undefined || req.body.authToken === null))
+    _handlePost: function(body) {
+        if(body &&
+            body.anonymous === true &&
+            (body.authToken === undefined || body.authToken === null))
         {
-            this._authAnonymous(req, res);
+            return this._authAnonymous(body.name);
         }else{
-            res.sendStatus(400);
+            return 400;
         }
     },
-    _handleGet: function(req, res) {
-        if(req.body &&
-            (req.body.authToken === undefined || req.body.authToken === null))
+    _handleGet: function(body) {
+        if(body &&
+            (body.authToken === undefined || body.authToken === null))
         {
-            //
+            return {};
         }else{
-            res.sendStatus(400);
+            return 400;
         }
     },
     getRouteF: function() {
         var self = this;
 
         return function (req, res) {
+            var result;
+
             if(req.method === 'POST'){
-                self._handlePost(req, res);
+                result = self._handlePost(req.body);
             }else if (req.method === 'GET') {
-                self._handleGet(req, res);
+                result = self._handleGet(req.body);
             }else{
                 console.log("Unsupported method: " + req.method + "i for user route");
-                res.sendStatus(405);
+                result = 405;
+            }
+
+            if (result instanceof Object) {
+                res.json(result);
+            }else if (!isNaN(result)) {
+                res.sendStatus(result);
+            }else{
+                console.log("Unspported result from method handler Result: " + String(result));
+                res.sendStatus(500);
             }
         };
     }
