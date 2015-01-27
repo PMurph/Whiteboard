@@ -6,7 +6,7 @@ define([
     var User = Backbone.Model.extend({
         url: '/api/user',
         initialize: function () {
-            this.anonymous = false;
+            this.set("anonymous", false);
         }
     });
 

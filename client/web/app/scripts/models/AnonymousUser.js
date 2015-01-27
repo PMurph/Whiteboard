@@ -7,7 +7,7 @@ define([
     var AnonymousUser = User.extend({
         url: '/api/user',
         initialize: function () {
-            this.anonymous = true;
+            this.set("anonymous", true);
         }
     });
 
