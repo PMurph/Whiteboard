@@ -1,5 +1,6 @@
+"use strict"
+
 var Whiteboard = function() {
-    "use strict";
     this._drawCommands = [];
 };
 

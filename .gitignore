@@ -6,3 +6,6 @@
 .grunt/
 _SpecRunner.html
 db_data/
+whiteboard.sublime-project
+whiteboard.sublime-workspace
+npm-debug.log

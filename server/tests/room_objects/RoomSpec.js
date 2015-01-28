@@ -1,9 +1,10 @@
-var RoomObjects = require("../../src/room_objects/room.js");
+"use strict";
+var RoomObjects = require("../../src/room_objects/Room.js");
 
 describe("Room", function() {
     var room;
-    var CREATING_USER = {"id": "2", "username": "testuser"};
-    var TEST_USER1 = {"id": "4", "username": "otheruser"};
+    var CREATING_USER = {userId: "2", username: "testuser"};
+    var TEST_USER1 = {userId: "4", username: "otheruser"};
     var ROOM_ID = 3;
 
     describe("Room Id", function() {
@@ -30,7 +31,7 @@ describe("Room", function() {
         });
 
         describe("Users connecting and disconnecting", function() {
-            var TEST_USER2 = {"id": "1", "username": "newuser"};
+            var TEST_USER2 = {userId: "1", username: "newuser"};
 
             beforeEach(function() {
                 room.connectUserToRoom(TEST_USER1);

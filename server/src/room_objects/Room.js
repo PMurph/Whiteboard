@@ -1,5 +1,6 @@
+"use strict";
+
 var Room = function(roomId, creatingUser, whiteboard) {
-    "use strict"
     this._creatingUser = creatingUser;
     this._connectedUsers = [creatingUser];
     this._id = roomId;
@@ -8,7 +9,7 @@ var Room = function(roomId, creatingUser, whiteboard) {
 
 Room.prototype = {
     connectUserToRoom: function(connectingUser) {
-        if(this._getUserIndex(connectingUser) == -1) {
+        if(this._getUserIndex(connectingUser) === -1) {
             this._connectedUsers.push(connectingUser);
         }
     },
@@ -20,8 +21,8 @@ Room.prototype = {
 
     _getUserIndex: function(user) {
         var index = -1;
-        for(var i = 0; i < this._connectedUsers.length && index == -1; i++) {
-            if(user["id"] == this._connectedUsers[i]["id"]) {
+        for(var i = 0; i < this._connectedUsers.length && index === -1; i++) {
+            if(user.userId === this._connectedUsers[i].userId) {
                 index = i;
             }
         }

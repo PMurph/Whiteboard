@@ -9,15 +9,17 @@ describe("User Session Unit Test", function () {
     beforeEach(function() {
         userSession = new UserSession(mongooseMock);
     });
+
     it("should initalize database schema and user model", function() {
         expect(userSession).not.toBeNull();
     });
+
     it("should create proper route function", function() {
         var routeF = userSession.getRouteF();
 
         expect(routeF instanceof Function).toBe(true);
-
     });
+
     describe("Anonymous Autentication", function() {
         var anonAuthTest = {
             wellFormedName: {
@@ -50,6 +52,7 @@ describe("User Session Unit Test", function () {
             res = jasmine.createSpyObj("res", ["send", "sendStatus", "json"]);
 
         });
+
         it("should respond with User Document (Well Formed Name)", function() {
             req.method = "POST";
             req.body = anonAuthTest.wellFormedName;
@@ -58,6 +61,7 @@ describe("User Session Unit Test", function () {
 
             expect(res.json).toHaveBeenCalled();
         });
+
         it("should respond with User Document on (Well Formed)", function() {
             req.method = "POST";
             req.body = anonAuthTest.wellFormed;
@@ -66,6 +70,7 @@ describe("User Session Unit Test", function () {
 
             expect(res.json).toHaveBeenCalled();
         });
+
         it("should NOT respond (Malformed Anonymous False)", function() {
             req.method = "POST";
             req.body = anonAuthTest.malformedAnonFalse;
@@ -74,6 +79,7 @@ describe("User Session Unit Test", function () {
 
             expect(res.sendStatus).toHaveBeenCalledWith(400);
         });
+
         it("should NOT respond (Malformed AuthToken Set)", function() {
             req.method = "POST";
             req.body = anonAuthTest.malformedAuthTokenSet;
@@ -82,6 +88,7 @@ describe("User Session Unit Test", function () {
 
             expect(res.sendStatus).toHaveBeenCalledWith(400);
         });
+        
         it("should NOT respond (Malformed Empty)", function() {
             req.method = "POST";
             req.body = anonAuthTest.malformedAnonFalse;
