@@ -16,8 +16,8 @@ RoomFactory.prototype = {
         this.creatingUser = creatingUser;
         this.newRoomID = _getNextRoomID();
         
-        var newWhiteboard = Whiteboard();
-        var newRoom = Room(newRoomID, creatingUser, newWhiteboard);
+        var newWhiteboard = new Whiteboard();
+        var newRoom = new Room(newRoomID, creatingUser, newWhiteboard);
 
         return newRoom;
     },
