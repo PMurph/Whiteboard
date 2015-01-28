@@ -81,7 +81,7 @@ describe("Room", function() {
 
         });
 
-        it('shoudl get the draw command from the draw command wrapper', function() {
+        it('should get the draw command from the draw command wrapper', function() {
             room.handleDrawCommand(drawCommandWrapperMock);
             expect(drawCommandWrapperMock.getDrawCommand).toHaveBeenCalled();
         })
