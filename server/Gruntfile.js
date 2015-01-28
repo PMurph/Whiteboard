@@ -15,6 +15,7 @@ module.exports = function (grunt) {
     var mongoCommand = "mongod --dbpath db_data/ --logpath db_data/log.txt --smallfiles ",
         jasmineCommand = "JASMINE_CONFIG_PATH=jasmine.json jasmine";
 
+    process.env.JASMINE_CONFIG_PATH="jasmine.json";
     grunt.initConfig({
         watch: {
         },
@@ -39,7 +40,7 @@ module.exports = function (grunt) {
                 command: mongoCommand + '--shutdown'
             },
             jasmine: {
-                command: jasmineCommand
+                command: 'jasmine' 
             },
             mongoInstallWin: {
                 command: mongoCommand + '--install',
@@ -58,9 +59,6 @@ module.exports = function (grunt) {
                 options: {
                     failOnError: false
                 }
-            },
-            jasmineWin: {
-                command: 'jasmine'
             }
         }
     });
@@ -98,14 +96,14 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.registerTask('test', "Jasmine Test Runner (with MongoDB)", function() {
+    grunt.registerTask('all-test', "Jasmine Test Runner (with MongoDB)", function() {
         if (process.platform === "win32" || process.platform === "win64"){
             process.env.JASMINE_CONFIG_PATH="jasmine.json";
             grunt.task.run([
                 'shell:mongoInstallWin',
                 'shell:mongoStartWin',
                 'watch-mongo',
-                'shell:jasmineWin',
+                'shell:jasmine',
                 'shell:mongoStopWin'
             ]);
         }else{
@@ -118,6 +116,9 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask('test',[
+                'shell:jasmine',
+    ]);
 
     grunt.registerTask('default', [
         'jshint',
