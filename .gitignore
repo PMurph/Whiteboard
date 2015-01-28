@@ -2,3 +2,7 @@
 /client/web/app/bower_components
 /server/node_modules
 .DS_Store
+*.swp
+.grunt/
+_SpecRunner.html
+db_data/

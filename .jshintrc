@@ -26,12 +26,14 @@
         "require": false,
 
         /* Jasmine */
+	"jasmine": false,
         "describe": false,
         "it": false,
         "expect": false,
         "beforeAll": false,
         "afterAll": false,
         "beforeEach": false,
-        "afterEach": false
+        "afterEach": false,
+        "spyOn": false
     }
 }

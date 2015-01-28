@@ -1,13 +1,22 @@
 {
-    "name": "whiteboard-server",
-    "main": "server.js",
-    "dependencies": {
-        "express": "^4.11.0",
-        "grunt": "^0.4.5",
-        "grunt-contrib-jshint": "^0.10.0",
-        "jasmine": "^2.1.1",
-        "jshint": "^2.5.11",
-        "mongoose": "^3.8.21",
-        "socket.io": "^1.2.1"
-    }
+  "name": "whiteboard-server",
+  "main": "src/main.js",
+  "dependencies": {
+    "express": "~4.11.1",
+    "mongoose": "~3.8.22",
+    "socket.io": "~1.3.2",
+    "body-parser": "~1.10.2"
+  },
+  "devDependencies": {
+    "jasmine": "~2.1.1",
+    "matchdep": "~0.3.0",
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.11.0",
+    "grunt-jasmine-node": "git://github.com/jasmine-contrib/grunt-jasmine-node.git",
+    "grunt-nodemon": "~0.4.0",
+    "grunt-shell-spawn": "~0.3.1",
+    "exec-sync": "~0.1.6",
+    "supertest": "~0.15.0",
+    "mongoose-mock": "git://github.com/soda0289/mongoose-mock.git"
+  }
 }
