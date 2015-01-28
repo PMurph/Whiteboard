@@ -11,7 +11,6 @@ RoomFactory.prototype = {
     initialize: function() {
         creatingUser: String
     },
-    // Room(roomId, creatingUser, whiteboard)
     _createNewRoom: function(creatingUser) {
         this.creatingUser = creatingUser;
         this.newRoomID = _getNextRoomID();
