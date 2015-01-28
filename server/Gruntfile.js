@@ -96,7 +96,7 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.registerTask('all-test', "Jasmine Test Runner (with MongoDB)", function() {
+    grunt.registerTask('test-all', "Jasmine Test Runner (with MongoDB)", function() {
         if (process.platform === "win32" || process.platform === "win64"){
             process.env.JASMINE_CONFIG_PATH="jasmine.json";
             grunt.task.run([
