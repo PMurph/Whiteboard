@@ -15,6 +15,7 @@ module.exports = function (grunt) {
     var mongoCommand = "mongod --dbpath db_data/ --logpath db_data/log.txt --smallfiles ",
         jasmineCommand = "JASMINE_CONFIG_PATH=jasmine.json jasmine";
 
+    process.env.JASMINE_CONFIG_PATH="jasmine.json";
     grunt.initConfig({
         watch: {
         },
@@ -39,35 +40,85 @@ module.exports = function (grunt) {
                 command: mongoCommand + '--shutdown'
             },
             jasmine: {
-                command: jasmineCommand
+                command: 'jasmine' 
+            },
+            mongoInstallWin: {
+                command: mongoCommand + '--install',
+                options: {
+                    failOnError: false
+                }
+            },
+            mongoStartWin: {
+                command: 'net start MongoDB',
+                options: {
+                    failOnError: false
+                }
+            },
+            mongoStopWin: {
+                command: 'net stop MongoDB',
+                options: {
+                    failOnError: false
+                }
             }
         }
     });
 
     grunt.registerTask('watch-mongo', function () {
-        var execSync = require('exec-sync');
+        var shelljs = require('shelljs');
      
         console.log('Watching mongo database...');
         process.on('SIGINT', function () {
             console.log('Stopping mongo database...');
-            execSync(mongoCommand + '--shutdown')
+            shelljs.exec(mongoCommand + '--shutdown')
         });
     });
 
-    grunt.registerTask('run', [
-        'shell:mongoStart',
-        'watch-mongo',
-        'nodemon',
-        'shell:mongoStop'
-    ]);
+    grunt.registerTask('run', "Node.JS and MongoDB starter", function(){
+    
+        if (process.platform === "win32" || process.platform === "win64"){
+            process.env.JASMINE_CONFIG_PATH="jasmine.json";
+            grunt.task.run([
+                'shell:mongoInstallWin',
+                'shell:mongoStartWin',
+                'watch-mongo',
+                'nodemon',
+                'shell:mongoStopWin'
+           ]);
+        }else{
+            grunt.task.run([
+                'shell:mongoStart',
+                'watch-mongo',
+                'nodemon',
+                'shell:mongoStop'
+            ]);
 
-    grunt.registerTask('test', [
-        'shell:mongoStart',
-        'watch-mongo',
-        'shell:jasmine',
-        'shell:mongoStop'
-    ]);
+        }
 
+    });
+
+    grunt.registerTask('test-all', "Jasmine Test Runner (with MongoDB)", function() {
+        if (process.platform === "win32" || process.platform === "win64"){
+            process.env.JASMINE_CONFIG_PATH="jasmine.json";
+            grunt.task.run([
+                'shell:mongoInstallWin',
+                'shell:mongoStartWin',
+                'watch-mongo',
+                'shell:jasmine',
+                'shell:mongoStopWin'
+            ]);
+        }else{
+            grunt.task.run([
+                'shell:mongoStart',
+                'watch-mongo',
+                'shell:jasmine',
+                'shell:mongoStop'
+           ]);
+        }
+    });
+
+    grunt.registerTask('test',[
+                'shell:jasmine',
+    ]);
 
     grunt.registerTask('default', [
         'jshint',
