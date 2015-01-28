@@ -62,16 +62,16 @@ describe("Room", function() {
 
         beforeEach(function() {
             whiteboardMock = {
-                addDrawCommand: function(drawCommand) {},
+                addDrawCommand: function() {},
                 getNumDrawCommandsSeen: function() {},
-            }
+            };
 
             drawCommandWrapperMock = {
                 getDrawCommand: function() {},
                 sendDrawCommandToUsers: function() {},
-                setNumDrawCommandsSeen: function(numDrawCommandsSeen) {},
-                setUsersToPushTo: function(userToSendTo) {},
-            }
+                setNumDrawCommandsSeen: function() {},
+                setUsersToPushTo: function() {},
+            };
 
             room = new RoomObjects.Room(ROOM_ID, CREATING_USER, whiteboardMock);
             room.connectUserToRoom(TEST_USER1);
@@ -85,7 +85,7 @@ describe("Room", function() {
         it('should get the draw command from the draw command wrapper', function() {
             room.handleDrawCommand(drawCommandWrapperMock);
             expect(drawCommandWrapperMock.getDrawCommand).toHaveBeenCalled();
-        })
+        });
 
         it('should pass the draw command from to the whiteboard', function() {
             room.handleDrawCommand(drawCommandWrapperMock);

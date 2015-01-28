@@ -1,5 +1,5 @@
 "use strict";
-var RoomObjects = require('../../src/room_objects/Whiteboard.js')
+var RoomObjects = require('../../src/room_objects/Whiteboard.js');
 
 describe("Whiteboard", function() {
     var testWhiteboard;
@@ -19,7 +19,7 @@ describe("Whiteboard", function() {
 
         it('should return 0 for the number of draw commands seen', function() {
             expect(testWhiteboard.getNumDrawCommandsSeen()).toEqual(0);
-        })
+        });
     });
 
     describe("populated whiteboard", function() {
