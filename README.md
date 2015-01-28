@@ -18,7 +18,7 @@ A shared whiteboard application to facilitate the sharing of ideas.
 * Jasmine (Testing framework and runner)
 
 ### Windows
-Must run shell (command prompt, git bash) as administrator for grunt script to execute. This is becuase mongoDB is run as a server and only an administrator can start and stop them.
+Must run shell (command prompt, git bash) as administrator for grunt script to execute server and database. This is becuase mongoDB is run as a background service and only an administrator can start and stop them.
 
 ### Useful dev tools/commands
 Clean node modules:
