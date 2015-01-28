@@ -9,10 +9,11 @@ module.exports = function (grunt) {
     ];
 
     var serverTestFiles = [
-        'tests/*Spec.js'
+        'tests/**/*Spec.js'
     ];
 
-    var mongoCommand = "mongod --dbpath db_data/ --logpath db_data/log.txt --smallfiles ";
+    var mongoCommand = "mongod --dbpath db_data/ --logpath db_data/log.txt --smallfiles ",
+        jasmineCommand = "JASMINE_CONFIG_PATH=jasmine.json jasmine";
 
     grunt.initConfig({
         watch: {
@@ -22,14 +23,6 @@ module.exports = function (grunt) {
                 jshintrc: '../.jshintrc'
             },
             src: serverSourceFiles.concat(serverTestFiles)
-        },
-        jasmine_node: {
-            options: {
-                match: '.',
-                includeStackTrace: true,
-                specNameMatcher: 'Spec'
-            },
-            all: ['tests/']
         },
         nodemon: {
             all: {
@@ -44,6 +37,9 @@ module.exports = function (grunt) {
             },
             mongoStop: {
                 command: mongoCommand + '--shutdown'
+            },
+            jasmine: {
+                command: jasmineCommand
             }
         }
     });
@@ -68,7 +64,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'shell:mongoStart',
         'watch-mongo',
-        'jasmine_node',
+        'shell:jasmine',
         'shell:mongoStop'
     ]);
 
