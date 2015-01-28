@@ -46,11 +46,15 @@ describe("User Session Intergration", function () {
             .send(testRequest.authAnon.wellFormed)
             .expect(200)
             .end(function(err, response) {
-                if(response)
-                    var body = response.body;
-                else
-                    var body = {};
-                if(err) {
+                var body;
+
+                if(response){
+                    body = response.body;
+                }else{
+                    body = {};
+                }
+
+                if(err){
                     done(err);
                 }
 
@@ -66,10 +70,14 @@ describe("User Session Intergration", function () {
             .send(testRequest.authAnon.wellFormed)
             .expect(200)
             .end(function(err, response) {
-                if(response)
-                    var body = response.body;
-                else
-                    var body = {};
+                var body;
+
+                if(response){
+                    body = response.body;
+                }else{
+                    body = {};
+                }
+
                 if(err) {
                     done(err);
                 }
