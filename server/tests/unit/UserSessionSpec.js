@@ -1,6 +1,6 @@
 'use strict';
 
-var UserSession = require("../src/UserSession"),
+var UserSession = require("../../src/UserSession"),
     mongooseMock = require("mongoose-mock");
 
 describe("User Session Unit Test", function () {
