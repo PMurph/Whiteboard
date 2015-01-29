@@ -1,3 +1,4 @@
+"use strict";
 var DrawCommandLogic = function(room) {
     this._room = room;
 };

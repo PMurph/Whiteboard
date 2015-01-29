@@ -1,5 +1,4 @@
 "use strict";
-
 var DRAW_MESSAGE_TYPE = "draw";
 
 var RoomMessageReceiver = function(socket, drawCommandLogic) {

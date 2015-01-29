@@ -1,3 +1,4 @@
+"use strict";
 var logic = require("../../src/logic/DrawCommandLogic.js");
 
 describe("DrawCommandLogic", function() {
