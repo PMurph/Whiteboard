@@ -22,6 +22,7 @@ define([
         },
         _setAuthToken: function(token) {
             this._authToken = token;
+
             $.ajaxSetup({
                 data: {
                     authToken: token
@@ -52,20 +53,23 @@ define([
             return true;
         },
         authUser: function(login, password) {
-            var user = new User({
-                login: login,
-                password: password
-            });
+            var user = new User({});
+            user.setLogin(login);
+            user.setPassword(password);
 
-            this._handlePromise(user.fetch(), user);
+            this._handlePromise(user.fetch({
+                data: {
+                    login: user.getLogin(),
+                    password: user.getPassword()
+                }
+            }), user);
             return true;
         },
         registerUser: function(login, password, name) {
-            var newUser = new User({
-                login: login,
-                password: password,
-                name: name
-            });
+            var newUser = new User();
+            newUser.setLogin(login);
+            newUser.setPassword(password);
+            newUser.setDisplayName(name);
 
             this._handlePromise(newUser.save({}), newUser);
             return true;
@@ -76,7 +80,6 @@ define([
         isAuthenticated: function() {
             return (this._authToken !== null);
         }
-
     });
 
     return UserSessionController;
