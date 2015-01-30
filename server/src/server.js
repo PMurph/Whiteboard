@@ -15,9 +15,7 @@ var Server = function () {
 
     this._userSession = new UserSession(this._db);
     
-    /* BodyParser must be added before routes 
-     * for handlers to see parsed JSON data */
-    this.app.use(bodyParser.json());
+    this._setupMiddleware();
     this._setupRoutes();
 
 };
@@ -28,6 +26,9 @@ Server.prototype = {
     },
     _disconnectDB: function() {
         mongoose.disconnect();
+    },
+    _setupMiddleware: function() {
+        this.app.use(bodyParser.json());
     },
     _setupRoutes: function() {
         this.app.use('/', express.static(__dirname + '/../../client/web/app'));
