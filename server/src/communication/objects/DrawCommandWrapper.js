@@ -10,4 +10,4 @@ DrawCommandWrapper.prototype = {
     },
 };
 
-module.exports.DrawCommandWrapper = DrawCommandWrapper;
+module.exports = DrawCommandWrapper;

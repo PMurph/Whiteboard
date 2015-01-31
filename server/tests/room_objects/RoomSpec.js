@@ -1,5 +1,5 @@
 "use strict";
-var RoomObjects = require("../../src/room_objects/Room.js");
+var Room = require("../../src/room_objects/Room.js");
 
 describe("Room", function() {
     var room;
@@ -9,7 +9,7 @@ describe("Room", function() {
 
     describe("Room Id", function() {
         beforeEach(function() {
-            room = new RoomObjects.Room(ROOM_ID, CREATING_USER);
+            room = new Room(ROOM_ID, CREATING_USER);
         });
 
         it('should return the correct room id', function(){
@@ -19,7 +19,7 @@ describe("Room", function() {
 
     describe("Users", function() {
         beforeEach(function() {
-            room = new RoomObjects.Room(ROOM_ID, CREATING_USER);
+            room = new Room(ROOM_ID, CREATING_USER);
         });
 
         it("should return the creating user's information", function() {
@@ -73,7 +73,7 @@ describe("Room", function() {
                 setUsersToPushTo: function() {},
             };
 
-            room = new RoomObjects.Room(ROOM_ID, CREATING_USER, whiteboardMock);
+            room = new Room(ROOM_ID, CREATING_USER, whiteboardMock);
             room.connectUserToRoom(TEST_USER1);
 
             spyOn(whiteboardMock, "addDrawCommand");

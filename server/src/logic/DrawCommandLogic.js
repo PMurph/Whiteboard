@@ -9,4 +9,4 @@ DrawCommandLogic.prototype = {
     },
 };
 
-module.exports.DrawCommandLogic = DrawCommandLogic;
+module.exports = DrawCommandLogic;

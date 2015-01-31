@@ -1,5 +1,5 @@
 "use strict";
-var logic = require("../../src/logic/DrawCommandLogic.js");
+var DrawCommandLogic = require("../../src/logic/DrawCommandLogic.js");
 
 describe("DrawCommandLogic", function() {
     var roomMock;
@@ -15,7 +15,7 @@ describe("DrawCommandLogic", function() {
 
         };
 
-        testDrawCommandLogic = new logic.DrawCommandLogic(roomMock);
+        testDrawCommandLogic = new DrawCommandLogic(roomMock);
     });
 
     it("should call the room's handleDrawCommand function with the same drawCommandWrapper if the wrapper is valid", function() {

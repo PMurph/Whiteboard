@@ -1,5 +1,5 @@
 "use strict";
-var communications = require("../../../src/communication/objects/DrawCommandWrapper.js");
+var DrawCommandWrapper = require("../../../src/communication/objects/DrawCommandWrapper.js");
 
 describe("DrawCommandWrapper", function() {
     var testDrawCommand;
@@ -8,7 +8,7 @@ describe("DrawCommandWrapper", function() {
     beforeEach(function() {
         testDrawCommand = {some: "test", draw: "command"};
 
-        testDrawCommandWrapper = new communications.DrawCommandWrapper(testDrawCommand);
+        testDrawCommandWrapper = new DrawCommandWrapper(testDrawCommand);
     });
 
     it("should return the testDrawCommand", function() {

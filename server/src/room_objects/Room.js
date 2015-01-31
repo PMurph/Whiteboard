@@ -60,4 +60,4 @@ Room.prototype = {
     }
 };
 
-module.exports.Room = Room;
+module.exports = Room;

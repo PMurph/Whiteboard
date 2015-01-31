@@ -22,4 +22,4 @@ Whiteboard.prototype = {
     },
 };
 
-module.exports.Whiteboard = Whiteboard;
+module.exports = Whiteboard;
