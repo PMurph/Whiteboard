@@ -60,7 +60,7 @@ describe("Room", function() {
         var TEST_DRAW_COMMAND = "This is a test";
         var TEST_NUM_DRAW_COMMANDS_SEEN = 3;
 
-        beforeEach(function() {
+        beforeEach(function(){
             whiteboardMock = jasmine.createSpyObj('Whiteboard', ['addDrawCommand', 'getNumDrawCommandsSeen']);
             drawCommandWrapperMock = jasmine.createSpyObj('drawCommandWrapper', ['getDrawCommand', 'sendDrawCommandToUsers', 'setNumDrawCommandsSeen', 'setUsersToPushTo']);
 
@@ -71,34 +71,25 @@ describe("Room", function() {
             whiteboardMock.getNumDrawCommandsSeen.and.returnValue(TEST_NUM_DRAW_COMMANDS_SEEN);
         });
 
-        it('should get the draw command from the draw command wrapper', function() {
-            room.handleDrawCommand(drawCommandWrapperMock);
-            expect(drawCommandWrapperMock.getDrawCommand).toHaveBeenCalled();
+        describe("Receiving Drawing Command", function() {
+            it('should get the draw command from the draw command wrapper', function() {
+                room.handleDrawCommand(drawCommandWrapperMock);
+                expect(drawCommandWrapperMock.getDrawCommand).toHaveBeenCalled();
+            });
+
+            it('should pass the draw command from to the whiteboard', function() {
+                room.handleDrawCommand(drawCommandWrapperMock);
+                expect(whiteboardMock.addDrawCommand).toHaveBeenCalledWith(TEST_DRAW_COMMAND);
+            });
+
+            it('should get the number of draw commands seen by the whiteboard', function() {
+                room.handleDrawCommand(drawCommandWrapperMock);
+                expect(whiteboardMock.getNumDrawCommandsSeen).toHaveBeenCalled();
+            });
         });
 
-        it('should pass the draw command from to the whiteboard', function() {
-            room.handleDrawCommand(drawCommandWrapperMock);
-            expect(whiteboardMock.addDrawCommand).toHaveBeenCalledWith(TEST_DRAW_COMMAND);
-        });
+        describe("Responding to Draw Command", function() {
 
-        it('should pass the draw command wrapper all the connected users', function() {
-            room.handleDrawCommand(drawCommandWrapperMock);
-            expect(drawCommandWrapperMock.setUsersToPushTo).toHaveBeenCalledWith(room.getConnectedUsers());
-        });
-
-        it('should get the number of draw commands seen by the whiteboard', function() {
-            room.handleDrawCommand(drawCommandWrapperMock);
-            expect(whiteboardMock.getNumDrawCommandsSeen).toHaveBeenCalled();
-        });
-
-        it('should pass the number of draw commands seen to the draw command wrapper', function(){
-            room.handleDrawCommand(drawCommandWrapperMock);
-            expect(drawCommandWrapperMock.setNumDrawCommandsSeen).toHaveBeenCalledWith(TEST_NUM_DRAW_COMMANDS_SEEN);
-        });
-
-        it('should tell the draw command wrapper to send to users', function() {
-            room.handleDrawCommand(drawCommandWrapperMock);
-            expect(drawCommandWrapperMock.sendDrawCommandToUsers).toHaveBeenCalled();
         });
     });
 });
