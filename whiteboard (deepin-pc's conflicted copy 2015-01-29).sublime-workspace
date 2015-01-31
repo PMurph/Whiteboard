@@ -1,0 +1,620 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"numb",
+				"number_of_words_to_use〔variable〕"
+			],
+			[
+				"alg3",
+				"alg3_time〔variable〕"
+			],
+			[
+				"list",
+				"listToProcess〔variable〕"
+			],
+			[
+				"wordC",
+				"wordCounter〔variable〕"
+			],
+			[
+				"try",
+				"try	Try/Except"
+			],
+			[
+				"A",
+				"AlgorithmThreeDictionaryBasedCounters"
+			],
+			[
+				"pr",
+				"print"
+			],
+			[
+				"Al",
+				"AlgorithmTwoSortAndFindUniqueValues"
+			],
+			[
+				"Alg",
+				"AlgorithmOneInsertionCount"
+			],
+			[
+				"num",
+				"numWordsToProcess"
+			],
+			[
+				"Algor",
+				"AlgorithmTwoSortAndFindUniqueValues"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "server/src/room_objects/Room.js",
+			"settings":
+			{
+				"buffer_size": 1687,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/src/room_objects/RoomFactory.js",
+			"settings":
+			{
+				"buffer_size": 635,
+				"line_ending": "Unix",
+				"name": "'use strict';"
+			}
+		},
+		{
+			"file": "client/web/app/scripts/controllers/UserSession.js",
+			"settings":
+			{
+				"buffer_size": 2047,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/tests/room_objects/RoomFactorySpec.js",
+			"settings":
+			{
+				"buffer_size": 595,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/src/room_objects/Whiteboard.js",
+			"settings":
+			{
+				"buffer_size": 580,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 109.0,
+		"selected_items":
+		[
+			[
+				"package install",
+				"Package Control: Install Package"
+			],
+			[
+				"packag",
+				"Package Control: Install Package"
+			],
+			[
+				"packages",
+				"Package Control: List Packages"
+			],
+			[
+				"git",
+				"Git: Commit"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"pack inst",
+				"Package Control: Install Package"
+			],
+			[
+				"package inst",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"packain",
+				"Package Control: Install Package"
+			],
+			[
+				"package insta",
+				"Package Control: Install Package"
+			],
+			[
+				"pack in",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"package list",
+				"Package Control: List Packages"
+			],
+			[
+				"packa",
+				"Package Control: List Packages"
+			],
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			],
+			[
+				"set syn C#",
+				"Set Syntax: C#"
+			]
+		],
+		"width": 475.0
+	},
+	"console":
+	{
+		"height": 153.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client/web",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client/web/app",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client/web/app/scripts",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client/web/app/scripts/collections",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client/web/app/scripts/controllers",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/db_data",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/tests",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/tests/room_objects"
+	],
+	"file_history":
+	[
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/room_objects/RoomFactory.js",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/room_objects/room.js",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/server.js",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/room_objects/whiteboard.js",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 4580/Assignments/A1/md2.c",
+		"/home/chris/Dropbox/Computer Science/4th Year/Comp 3170/Assignments/A1/FunkChrisA1Q2.py",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/data_structures/RoomFactory.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client/web/app/index.html",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/UserSession.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 3170/Assignments/A1/FunkChrisA1Q2.py",
+		"/C/Users/Chris/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/D/Dropbox/Computer Science/3rd Year/Comp 3010/Assignments/A3/FunkChrisA3Q4.html",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/server.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/data_structures/roomChatFactory.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/data_structures/chat.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/data_structures/room.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/npm_install.bat",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/data_structures/whiteboard.js",
+		"/C/Users/Chris/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/Program Files/Sublime Text 3/Packages/Theme - Default.sublime-package",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/main.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client/web/tests/UserSessionSpec.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/spec/data_structures/whiteboardSpec.js",
+		"/C/Users/Chris/AppData/Roaming/Sublime Text 3/Packages/User/Distraction Free.sublime-settings",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/whiteboard.sublime-project",
+		"/D/Dropbox/amazon",
+		"/D/Dropbox/Computer Science/4th Year/Comp 3170/Assignments/A1/LovecraftWorks.txt",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4580/Assignments/A1/md2.c",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/src/server.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/server/tests/serverSpec.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client/web/Gruntfile.js",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client/web/app/styles/main.css",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4550/Project/battleship_text.c",
+		"/C/Users/Chris/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Users/Chris/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4580/Assignments/A1/A1.txt",
+		"/D/Dropbox/Computer Science/3rd Year/Comp 3170/Assignments/A2/FunkChrisA2Q4.py",
+		"/D/Dropbox/Computer Science/4th Year/Comp 3170/Assignments/A1/test2.txt",
+		"/D/Dropbox/Computer Science/4th Year/Comp 3170/Assignments/A1/testDataSmall.txt",
+		"/D/Dropbox/Computer Science/4th Year/Comp 4350/Project/Whiteboard/client/web/app/scripts/main.js",
+		"/D/Dropbox/Computer Science/3rd Year/Comp 3170/Assignments/A2/SkipList.py",
+		"/D/Dropbox/Computer Science/2nd Year/Comp 2140/Assignments/Assignment 3/A3/Question 1/Comp2140A3Q1.java",
+		"/D/Dropbox/Computer Science/2nd Year/Comp 2140/Assignments/Assignment 3/A3/Question 1/Stack.java",
+		"/D/Dropbox/Computer Science/3rd Year/Comp 3170/Assignments/A1/FunkChrisA1Q3.py",
+		"/D/Dropbox/Computer Science/3rd Year/Comp 3170/Assignments/A1/FunkChrisA1Q1A.py",
+		"/D/Dropbox/possible ips.txt",
+		"/D/Dropbox/Debian.docx",
+		"/D/Dropbox/Computer Science/3rd Year/Comp 3430/Assignments/A2/Q2/FunkChrisA2Q2.c",
+		"/D/Dropbox/.dropbox",
+		"/D/Dropbox/UBUNTU INSTALL COMMANDS.txt",
+		"/D/Dropbox/Laptop Partition Table.txt",
+		"/D/Dropbox/Computer Science/School Stuff/monitor.cs",
+		"/C/Program Files (x86)/PuTTY/README.txt",
+		"/S/Important Documents/Secrets.txt",
+		"/E/Passphrase",
+		"/E/standard.fp",
+		"/E/ConvertFinal.ps",
+		"/S/Important Documents/Secrets",
+		"/E/CIS/database/ClientSystem.script",
+		"/D/Dropbox/Computer Science/Electives/Econ 1010/Assignments/written answers a3.txt",
+		"/E/CIS/database/RestoreDB.bat",
+		"/D/Music/Creative.txt",
+		"/D/Music/A On The Go.txt",
+		"/D/Documents/Projects/CIS/.gitignore",
+		"/D/Documents/Projects/CIS/CIS/CIS.csproj",
+		"/D/Dropbox/Computer Science/comedy gold",
+		"/D/Dropbox/Computer Science/Eclipse Workspace/CIS/database/ClientSystemDB.sql",
+		"/D/Documents/Projects/CIS/CIS/bin/.gitignore",
+		"/D/Documents/Projects/CIS/CIS/dbinit.script",
+		"/D/Documents/Projects/CIS/CIS.sln",
+		"/D/Dropbox/Computer Science/Eclipse Workspace/CIS/database/ClientSystem.script",
+		"/D/Dropbox/Computer Science/Eclipse Workspace/CIS/database/dbinit.script",
+		"/S/Dez'z school stuff which is definietly not porn... like seriously. Don't bother clicking this..txt",
+		"/D/Dropbox/Computer Science/Projects/Visual Studio/Recipe Book/ListOfIngredients.txt",
+		"/D/Dropbox/Computer Science/Projects/Visual Studio/Recipe Book/ListOfMeasurements.txt",
+		"/S/CD Keys.txt",
+		"/D/Dropbox/Computer Science/3rd Year/Comp 3430/Example Comp 3430/Assignments/A2/solutionThreadPool/console.c",
+		"/K/Compy-2 Backups/TXT Stuff/devmode commands.txt",
+		"/K/Compy-2 Backups/TXT Stuff/coolthing.txt",
+		"/K/Compy-2 Backups/TXT Stuff/cats.txt",
+		"/K/Compy-2 Backups/TXT Stuff/beautiful.txt",
+		"/K/Compy-2 Backups/TXT Stuff/Code Speak.txt",
+		"/K/Compy-2 Backups/TXT Stuff/guys.txt",
+		"/K/Compy-2 Backups/TXT Stuff/facebookatschool.txt",
+		"/K/Compy-2 Backups/TXT Stuff/light sucks.txt",
+		"/K/Compy-2 Backups/TXT Stuff/newstory.txt",
+		"/K/Compy-2 Backups/TXT Stuff/utah phillips.txt",
+		"/K/Compy-2 Backups/TXT Stuff/riddles.txt",
+		"/K/Compy-2 Backups/TXT Stuff/shipnames.txt",
+		"/K/Compy-2 Backups/TXT Stuff/wallmart.txt",
+		"/K/Compy-2 Backups/TXT Stuff/Lines.txt",
+		"/K/Compy-2 Backups/TXT Stuff/nosmoke.txt",
+		"/K/Compy-2 Backups/TXT Stuff/idea.txt",
+		"/K/Compy-2 Backups/TXT Stuff/ninedies.txt",
+		"/S/Writings/fear.txt",
+		"/S/Writings/planet names.txt",
+		"/S/Writings/random.txt",
+		"/S/Writings/skit.txt",
+		"/S/one.txt",
+		"/S/wisdom.txt",
+		"/S/Songs (2).txt",
+		"/S/respond.txt",
+		"/S/quiz.txt",
+		"/S/hint.txt",
+		"/S/housingPlacementForm.txt",
+		"/S/dates.txt",
+		"/S/d.txt",
+		"/S/Writings/brilliant.txt",
+		"/S/Writings/wip.txt",
+		"/S/Writings/mucho thanko.txt",
+		"/S/Writings/email.txt",
+		"/E/HP Pavilion dv6-6178ca.txt",
+		"/D/Dropbox/Computer Science/Electives/Econ 1020/test1answers.txt"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"user",
+			"print",
+			"'the':",
+			"the:",
+			"the",
+			"(  )",
+			")",
+			"(",
+			"( )",
+			"D:\\Music\\Music\\Music",
+			"E:\\Dropbox",
+			"V:\\Dropbox\\Music"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"creatingUser",
+			"()",
+			" )",
+			"( ",
+			"()",
+			"D:\\Music\\Music",
+			"D:\\Music",
+			"D:\\Music\\Music"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "server/src/room_objects/Room.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1687,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								412,
+								412
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "server/src/room_objects/RoomFactory.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 635,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								255,
+								255
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"auto_name": "'use strict';",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "client/web/app/scripts/controllers/UserSession.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 2047,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								348,
+								348
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "server/tests/room_objects/RoomFactorySpec.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 595,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								374,
+								374
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"auto_name": "",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "server/src/room_objects/Whiteboard.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 580,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								271,
+								271
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 458.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 122.0
+	},
+	"project": "whiteboard.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 269.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
