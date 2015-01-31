@@ -1,18 +1,16 @@
 "use strict";
-
-var IncomingDrawCommandMessage = function(roomCommunicator, drawCommand) {
-    this._drawCommand = drawCommand;
+var DrawCommandMessage = function(roomCommunicator, drawCommand) {
     this._roomCommunicator = roomCommunicator;
+    this._drawCommand = drawCommand;
 };
 
-IncomingDrawCommandMessage.prototype = {
+DrawCommandMessage.prototype = {
     getDrawCommand: function() {
         return this._drawCommand;
     },
-
     getRoomCommunicator: function() {
         return this._roomCommunicator;
     }
 };
 
-module.exports = IncomingDrawCommandMessage;
+module.exports = DrawCommandMessage;

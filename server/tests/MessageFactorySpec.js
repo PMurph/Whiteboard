@@ -1,5 +1,6 @@
+"use strict";
 var MessageFactory = require("../src/MessageFactory.js");
-var IncomingDrawCommandMessage = require("../src/communication/objects/IncomingDrawCommandMessage.js");
+var DrawCommandMessage = require("../src/communication/objects/DrawCommandMessage.js");
 
 describe("MessageFactory", function() {
     var testMessageFactory;
@@ -17,7 +18,7 @@ describe("MessageFactory", function() {
             var TEST_DRAW_COMMAND = {msgType: "draw"};
             var created_message = testMessageFactory.wrapIncomingMessage(TEST_DRAW_COMMAND);
 
-            expect(created_message instanceof IncomingDrawCommandMessage).toBe(true);
+            expect(created_message instanceof DrawCommandMessage).toBe(true);
         });
     });
 });
