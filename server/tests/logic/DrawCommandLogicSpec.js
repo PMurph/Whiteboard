@@ -7,20 +7,13 @@ describe("DrawCommandLogic", function() {
     var testDrawCommandLogic;
 
     beforeEach(function() {
-        roomMock = {
-            handleDrawCommand: function(drawCommandWrapper) {},
-        };
-
-        drawCommandWrapperMock = {
-
-        };
+        roomMock = jasmine.createSpyObj('Room', ['handleDrawCommand']);
+        drawCommandWrapperMock = jasmine.createSpyObj("DrawCommandLogic", ['handleDrawCommand']);
 
         testDrawCommandLogic = new DrawCommandLogic(roomMock);
     });
 
     it("should call the room's handleDrawCommand function with the same drawCommandWrapper if the wrapper is valid", function() {
-        spyOn(roomMock, "handleDrawCommand");
-
         testDrawCommandLogic.handleDrawCommand(drawCommandWrapperMock);
         expect(roomMock.handleDrawCommand).toHaveBeenCalledWith(drawCommandWrapperMock);
     });

@@ -7,16 +7,10 @@ describe("RoomCommunicator", function() {
     var drawCommandLogicMock;
 
     beforeEach(function() {
-        socketMock = {
-            on: function(eventType, callback) {},
-        };
-
-        drawCommandLogicMock = {
-            handleDrawCommand: function(drawCommand) {},
-        };
+        socketMock = jasmine.createSpyObj('Socket', ['on']);
+        drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawCommand']);
 
         testRoomCommunicator = new RoomCommunicator(socketMock, drawCommandLogicMock);
-        spyOn(drawCommandLogicMock, 'handleDrawCommand');
     });
 
     it("should pass a message of the 'draw' type to the draw command logic", function() {
