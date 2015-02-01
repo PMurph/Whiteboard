@@ -12,3 +12,9 @@ console.log("Test");
 console.log(drawo.setCurrentColour("Black"));
 console.log(drawo.getCurrentColour());
 console.log(drawo.getCurrentTool());
+
+console.log(drawo.setCurrentColour("aslfkjdasklfjasdklfjasdklfjsd"));
+console.log(drawo.getCurrentColour());
+
+console.log(drawo.setCurrentColour("Blue"));
+console.log(drawo.getCurrentColour());

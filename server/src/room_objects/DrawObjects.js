@@ -7,7 +7,11 @@ var TOOLS = {
 
 var COLOURS = {
 	BLACK : { value: 0, name: "Black" },
-	BLUE : { value: 1, name: "Blue" }
+	BLUE : { value: 1, name: "Blue" },
+	RED : { value: 2, name: "Red" },
+	YELLOW : { value: 3, name: "Yellow" },
+	GREEN : { value: 4, name: "Green" },
+	PURPLE : { value: 5, name: "Purple" }
 };
 
 var DrawObjects = function() {
