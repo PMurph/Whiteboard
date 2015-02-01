@@ -89,7 +89,9 @@ describe("Room", function() {
         });
 
         describe("Responding to Draw Command", function() {
+            it('should call ', function() {
 
+            });
         });
     });
 });

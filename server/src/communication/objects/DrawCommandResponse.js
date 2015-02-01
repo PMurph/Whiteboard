@@ -23,7 +23,7 @@ DrawCommandResponse.prototype = {
     },
     setNumDrawCommandsSeen: function(numDrawCommandsSeen) {
         this._numDrawCommandsSeen = numDrawCommandsSeen;
-    }
+    },
 };
 
 module.exports = DrawCommandResponse;

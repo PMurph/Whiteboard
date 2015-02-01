@@ -25,7 +25,7 @@ describe("RoomCommunicator", function() {
 
         it("should call the message factory to wrap the incoming message is of type 'draw'", function() {
             testRoomCommunicator.handleMessage(TEST_VALID_DRAW_MSG);
-            expect(messageFactoryMock.wrapIncomingMessage).toHaveBeenCalledWith(TEST_VALID_DRAW_MSG);
+            expect(messageFactoryMock.wrapIncomingMessage).toHaveBeenCalledWith(testRoomCommunicator, TEST_VALID_DRAW_MSG);
         });
 
         it("should pass a message of the 'draw' type to the draw command logic", function() {

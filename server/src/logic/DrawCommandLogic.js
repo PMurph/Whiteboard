@@ -4,9 +4,13 @@ var DrawCommandLogic = function(room) {
 };
 
 DrawCommandLogic.prototype = {
-    handleDrawCommand: function(drawCommandWrapper) {
-        this._room.handleDrawCommand(drawCommandWrapper);
+    handleDrawCommand: function(drawCommandMessage) {
+        this._room.handleDrawCommand(drawCommandMessage);
     },
+    handleDrawResponse: function(drawCommandResponse) {
+        var roomCommunicator = drawCommandResponse.getRoomCommunicator();
+        roomCommunicator.sendMessage(null);
+    }
 };
 
 module.exports = DrawCommandLogic;

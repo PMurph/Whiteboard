@@ -12,7 +12,7 @@ var RoomCommunicator = function(socket, drawCommandLogic, messageFactory) {
 RoomCommunicator.prototype = {
     handleMessage: function(messageData) {
         if(messageData.msgType === DRAW_MESSAGE_TYPE) {
-            this._drawCommandLogic.handleDrawCommand(this._messageFactory.wrapIncomingMessage(messageData));
+            this._drawCommandLogic.handleDrawCommand(this._messageFactory.wrapIncomingMessage(this, messageData));
         }
     },
     sendMessage: function(messageData) {

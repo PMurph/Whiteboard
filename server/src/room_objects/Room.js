@@ -47,16 +47,16 @@ Room.prototype = {
         return this._id;
     },
 
-    handleDrawCommand: function(drawCommandWrapper) {
-        var drawCommand = drawCommandWrapper.getDrawCommand();
+    handleDrawCommand: function(drawCommandMessage) {
+        var drawCommand = drawCommandMessage.getDrawCommand();
 
         this._whiteboard.addDrawCommand(drawCommand);
-        drawCommandWrapper.setUsersToPushTo(this._connectedUsers);
+        drawCommandMessage.setUsersToPushTo(this._connectedUsers);
 
         var numDrawCommandsSeen = this._whiteboard.getNumDrawCommandsSeen();
-        drawCommandWrapper.setNumDrawCommandsSeen(numDrawCommandsSeen);
+        drawCommandMessage.setNumDrawCommandsSeen(numDrawCommandsSeen);
 
-        drawCommandWrapper.sendDrawCommandToUsers();
+        drawCommandMessage.sendDrawCommandToUsers();
     }
 };
 
