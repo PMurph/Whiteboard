@@ -2,8 +2,7 @@
 var Room = require('room');
 var Whiteboard = require('whiteboard');
 
-var RoomFactory = function(creatingUser) {
-    this.creatingUser = creatingUser;
+var RoomFactory = function() {
 };
 
 RoomFactory.prototype = ({
