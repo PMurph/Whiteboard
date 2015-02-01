@@ -21,7 +21,7 @@ var DrawModel = function() {
 
 DrawModel.prototype = {
 	addCoordinate: function(coord) {
-		if (typeof coord === "coordinate")
+		if (typeof coord == 'coordinate')
 		{
         	this.listOfCoordinates.push(coord);
         }
@@ -37,7 +37,7 @@ DrawModel.prototype = {
 
     setTool: function(newTool) {
         this.tool = newTool;
-    }
+    },
 };
 
 module.exports.DrawModel = DrawModel;
