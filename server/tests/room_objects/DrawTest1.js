@@ -3,8 +3,12 @@
 var DrawObjects = require('./../../src/room_objects/DrawObjects');
 var DrawModel = require('./../../src/room_objects/DrawModel');
 
-var drawO = new DrawObjects();
-var drawM = new DrawModel();
+var drawo = new DrawObjects();
+var drawm = new DrawModel();
 
-console.log( drawO.COLOURS);
-console.log( drawM.getColour);
+//console.log( drawo.COLOURS);
+console.log("Test");
+//console.log(drawm.getColour());
+console.log(drawo.setCurrentColour("Black"));
+console.log(drawo.getCurrentColour());
+console.log(drawo.getCurrentTool());

@@ -11,8 +11,8 @@ var COLOURS = {
 };
 
 var DrawObjects = function() {
-	this.tools = TOOLS;
-	this.colour = COLOURS;
+	this.tool = TOOLS.DRAW;
+	this.colour = COLOURS.BLACK;
 };
 
 DrawObjects.prototype = {
@@ -23,6 +23,40 @@ DrawObjects.prototype = {
     COLOURS: function() {
         return COLOURS;
     },
+
+    setCurrentColour: function(newColour) {
+    	for (var colourName in COLOURS) {
+			var colour = COLOURS[colourName];
+
+			if (colour.name === newColour) {
+				this.colour = COLOURS[colourName];
+				return true;
+			}
+		}
+
+		return false;
+    },
+
+    setCurrentTool: function(newTool) {
+    	for (var colourName in TOOLS) {
+			var colour = TOOLS[colourName];
+
+			if (colour.name === newTool) {
+				this.colour = TOOLS[colourName];
+				return true;
+			}
+		}
+
+		return false;
+    },
+
+    getCurrentColour: function() {
+    	return this.colour.name;
+    },
+
+    getCurrentTool: function() {
+    	return this.tool.name;
+    }
 };
 
-module.exports.DrawObjects = DrawObjects;
+module.exports = DrawObjects;

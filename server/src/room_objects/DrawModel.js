@@ -4,10 +4,12 @@ var Coordinates = require('./Coordinates');
 var DrawObjects = require('./DrawObjects');
 
 var DrawModel = function() {
+    var drawObjects = new DrawObjects();
+
     this.listOfCoordinates = [];
-    this.colour = DrawObjects.COLOURS.BLACK;
+    this.colour = drawObjects.COLOURS.BLACK;
     this.thickness = 1;
-    this.tool = DrawObjects.TOOLS.DRAW;
+    this.tool = drawObjects.TOOLS.DRAW;
 };
 
 DrawModel.prototype = {
@@ -31,7 +33,7 @@ DrawModel.prototype = {
     },
 
     getColour: function(){
-        return this.colour;
+        return this.colour.name;
     },
 
     getTool: function(){
@@ -47,4 +49,4 @@ DrawModel.prototype = {
     },
 };
 
-module.exports.DrawModel = DrawModel;
+module.exports = DrawModel;
