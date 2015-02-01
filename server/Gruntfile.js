@@ -56,6 +56,9 @@ module.exports = function (grunt) {
                 options: {
                     failOnError: false
                 }
+            },
+            jasmineRunnerUnit: {
+                command: 'node tests/jasmineRunner unit',
             }
         }
     });
@@ -70,28 +73,8 @@ module.exports = function (grunt) {
         });
     });
 
-    grunt.registerMultiTask('jasmine_runner', "Run the jasmine tests with terminal reporter", function () {
-        var Jasmine = require('jasmine'),
-            glob = require('glob'),
-            reporters = require('jasmine-reporters');
-            
-        var terminalReporter = new reporters.TerminalReporter({
-            verbosity: 3,
-            color: true
-        });
-
-        var j = new Jasmine();
-        j.env.addReporter(terminalReporter);
-        
-        console.log(String(this.data));
-
-        var files = glob.sync(String(this.data));
-        j.execute(files);
-    });
-
     grunt.registerTask('run', "Node.JS and MongoDB starter", function(){
         if (process.platform === "win32" || process.platform === "win64"){
-            process.env.JASMINE_CONFIG_PATH="jasmine.json";
             grunt.task.run([
                 'shell:mongoInstallWin',
                 'shell:mongoStartWin',
@@ -113,7 +96,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test-all', "Jasmine Test Runner (with MongoDB)", function() {
         if (process.platform === "win32" || process.platform === "win64"){
-            process.env.JASMINE_CONFIG_PATH="jasmine.json";
             grunt.task.run([
                 'shell:mongoInstallWin',
                 'shell:mongoStartWin',
@@ -132,7 +114,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test',[
-                'jasmine_runner:unit',
+                'shell:jasmineRunnerUnit'
     ]);
 
     grunt.registerTask('default', [
