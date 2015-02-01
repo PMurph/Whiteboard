@@ -14,6 +14,9 @@ RoomCommunicator.prototype = {
             this._drawCommandLogic.handleDrawCommand(messageData.drawCommand);
         }
     },
+    sendMessage: function(messageData) {
+        this._socket.emit(messageData);
+    },
 };
 
 module.exports = RoomCommunicator;

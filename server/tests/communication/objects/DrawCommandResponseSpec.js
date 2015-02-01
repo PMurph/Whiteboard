@@ -3,6 +3,7 @@ var DrawCommandResponse = require("../../../src/communication/objects/DrawComman
 
 describe("DrawCommandResponse", function() {
     var TEST_USERS = [{username: "alice"}, {username: "bob"}];
+    var TEST_NUM_DRAWS_SEEN = 6;
 
     var testDrawCommand;
     var testRoomCommunicator;
@@ -27,5 +28,22 @@ describe("DrawCommandResponse", function() {
         testDrawCommandResponse.setUsersToSendTo(TEST_USERS);
 
         expect(testDrawCommandResponse.getUsersToSendTo()).toEqual(TEST_USERS);
-    })
+    });
+
+    it('should return the number of draw commands seen by the whiteboard at the point when the response was created', function() {
+        testDrawCommandResponse.setNumDrawCommandsSeen(TEST_NUM_DRAWS_SEEN);
+
+        expect(testDrawCommandResponse.getNumDrawCommandsSeen()).toEqual(TEST_NUM_DRAWS_SEEN);
+    });
+
+    describe('sendDrawCommandToUsers', function() {
+        beforeEach(function() {
+            testDrawCommandResponse.setUsersToSendTo(TEST_USERS);
+            testDrawCommandResponse.setNumDrawCommandsSeen(TEST_NUM_DRAWS_SEEN);
+        });
+
+        it('should call the RoomCommunicators sendDrawCommandToUsers function', function() {
+
+        });
+    });
 });
