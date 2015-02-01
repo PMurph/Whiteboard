@@ -3,17 +3,17 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
-    UserSession = require('./UserSession');
+    UserManager = require('./session/UserManager');
 
 var Server = function () {
     this.app = express();
     this._db = mongoose;
     
     this.port = process.env.PORT || 3000;
-    this.hostname = "0.0.0.0";
-    this.dbHostname = "127.0.0.1";
+    this.hostname = '0.0.0.0';
+    this.dbHostname = '127.0.0.1';
 
-    this._userSession = new UserSession(this._db);
+    this._userManager = new UserManager(this._db);
     
     this._setupMiddleware();
     this._setupRoutes();
@@ -32,7 +32,7 @@ Server.prototype = {
     },
     _setupRoutes: function() {
         this.app.use('/', express.static(__dirname + '/../../client/web/app'));
-        this.app.use("/api/user", this._userSession.getRouteF());
+        this.app.use('/api/user', this._userManager.getRouteF());
     },
     start: function(port, hostname, listenCB) {
         this.port = port || this.port;
@@ -43,7 +43,7 @@ Server.prototype = {
     stop: function(closeCB) {
         this._disconnectDB();
         if(this.httpServ){
-            console.log("Stopping server...");
+            console.log('Stopping server...');
             this.httpServ.close(closeCB);
         }
     }
