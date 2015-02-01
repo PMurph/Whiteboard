@@ -1,12 +1,12 @@
 "use strict";
-var IncomingDrawCommandLogic = function(room) {
+var DrawCommandLogic = function(room) {
     this._room = room;
 };
 
-IncomingDrawCommandLogic.prototype = {
+DrawCommandLogic.prototype = {
     handleDrawCommand: function(drawCommandWrapper) {
         this._room.handleDrawCommand(drawCommandWrapper);
     },
 };
 
-module.exports = IncomingDrawCommandLogic;
+module.exports = DrawCommandLogic;

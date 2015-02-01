@@ -1,20 +1,20 @@
 "use strict";
-var IncomingDrawCommandLogic = require("../../src/logic/IncomingDrawCommandLogic.js");
+var DrawCommandLogic = require("../../src/logic/DrawCommandLogic.js");
 
-describe("IncomingDrawCommandLogic", function() {
+describe("DrawCommandLogic", function() {
     var roomMock;
     var drawCommandWrapperMock;
-    var testIncomingDrawCommandLogic;
+    var testDrawCommandLogic;
 
     beforeEach(function() {
         roomMock = jasmine.createSpyObj('Room', ['handleDrawCommand']);
         drawCommandWrapperMock = jasmine.createSpyObj("DrawCommandWrapper", ['handleDrawCommand']);
 
-        testIncomingDrawCommandLogic = new IncomingDrawCommandLogic(roomMock);
+        testDrawCommandLogic = new DrawCommandLogic(roomMock);
     });
 
     it("should call the room's handleDrawCommand function with the same drawCommandWrapper if the wrapper is valid", function() {
-        testIncomingDrawCommandLogic.handleDrawCommand(drawCommandWrapperMock);
+        testDrawCommandLogic.handleDrawCommand(drawCommandWrapperMock);
         expect(roomMock.handleDrawCommand).toHaveBeenCalledWith(drawCommandWrapperMock);
     });
 });
