@@ -1,22 +1,13 @@
 "use strict";
 //{ "vertices": [{"x": 0.0, "y": 1.0}, ...], "tool": {...}, ...}
-var Coordinates = require('coordinates');
-
-var TOOLS = {
-	DRAW : { value: 0, name: "Draw", code: "D" },
-	ERASE : { value: 1, name: "Erase", code: "E" },
-};
-
-var COLOURS = {
-	BLACK : { value: 0, name: "Black", code: "Bk" },
-	BLUE : { value: 1, name: "Blue", code: "Bl" },
-};
+var Coordinates = require('./Coordinates');
+var DrawObjects = require('./DrawObjects');
 
 var DrawModel = function() {
     this.listOfCoordinates = [];
-    this.colour = COLOURS.BLACK;
+    this.colour = DrawObjects.COLOURS.BLACK;
     this.thickness = 1;
-    this.tool = TOOLS.DRAW;
+    this.tool = DrawObjects.TOOLS.DRAW;
 };
 
 DrawModel.prototype = {
@@ -37,6 +28,22 @@ DrawModel.prototype = {
 
     setTool: function(newTool) {
         this.tool = newTool;
+    },
+
+    getColour: function(){
+        return this.colour;
+    },
+
+    getTool: function(){
+        return this.tool;
+    },
+
+    getThickness: function(){
+        return this.thickness;
+    },
+
+    getListOfCoordinates: function(){
+        return this.listOfCoordinates;
     },
 };
 
