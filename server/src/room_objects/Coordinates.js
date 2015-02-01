@@ -1,6 +1,6 @@
 "use strict";
 
-var DrawModel = function(x, y) {
+var Coordinates = function(x, y) {
     this.x = x;
     this.y = y;
 };

@@ -14,14 +14,14 @@ var COLOURS = {
 
 var DrawModel = function() {
     this.listOfCoordinates = [];
-    this.colour = this.COLOUR.BLACK;
+    this.colour = COLOURS.BLACK;
     this.thickness = 1;
     this.tool = TOOLS.DRAW;
 };
 
 DrawModel.prototype = {
 	addCoordinate: function(coord) {
-		if (typeof coord === "Coordinate")
+		if (coord === Coordinates)
 		{
         	this.listOfCoordinates.push(coord);
         }
