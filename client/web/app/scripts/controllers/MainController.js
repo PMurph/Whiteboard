@@ -1,19 +1,29 @@
 define([
     'marionette',
-    'views/dashboard',
-    'views/login/layout'
+    'layouts/dashboard',
+    'layouts/room',
+    'models/room'
 ], function(
     Marionette,
-    Dashboard,
-    LoginView) {
+    DashboardView,
+    RoomLayoutView,
+    RoomModel) {
     'use strict';
 
     return Marionette.Controller.extend({
-        login: function() {
-            this.mainContent.show(new LoginView());
-        },
         dashboard: function() {
-            this.mainContent.show(new Dashboard());
+            this.mainContent.show(new DashboardView());
+        },
+
+        room: function(id) {
+            var roomModel = new RoomModel({
+                id: id,
+                name: 'stub name ' + id
+            });
+
+            this.mainContent.show(new RoomLayoutView({
+                model: roomModel
+            }));
         }
     });
 });
