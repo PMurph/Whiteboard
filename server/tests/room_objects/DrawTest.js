@@ -4,8 +4,6 @@ var DrawObjects = require("../../src/room_objects/DrawModel.js");
 
 describe("Room", function() {
     var draw;
-    var defThickness = 1;
-    var defColour = COLOURS.BLACK;
 
     describe("Draw Model", function() {
         beforeEach(function() {

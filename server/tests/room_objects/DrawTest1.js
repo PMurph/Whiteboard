@@ -6,9 +6,7 @@ var DrawModel = require('./../../src/room_objects/DrawModel');
 var drawo = new DrawObjects();
 var drawm = new DrawModel();
 
-//console.log( drawo.COLOURS);
-console.log("Test");
-//console.log(drawm.getColour());
+console.log("Object Test");
 console.log(drawo.setColour("Black"));
 console.log(drawo.getColour());
 console.log(drawo.getTool());
@@ -18,3 +16,7 @@ console.log(drawo.getColour());
 
 console.log(drawo.setColour("Blue"));
 console.log(drawo.getColour());
+
+console.log("Model Test");
+console.log(drawm.setColour("Black"));
+console.log(drawm.getColour());

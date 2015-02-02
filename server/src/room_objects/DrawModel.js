@@ -4,12 +4,9 @@ var Coordinates = require('./Coordinates');
 var DrawObjects = require('./DrawObjects');
 
 var DrawModel = function() {
-    var drawObjects = new DrawObjects();
-
+    this.drawingInformation = new DrawObjects();
     this.listOfCoordinates = [];
-    this.colour = drawObjects.getColour();
     this.thickness = 1;
-    this.tool = drawObjects.getTool();
 };
 
 DrawModel.prototype = {
@@ -20,24 +17,28 @@ DrawModel.prototype = {
         }
     },
 
+    getCoordinate: function() {
+        return this.listOfCoordinates;
+    },
+
     setThickness: function(newThickness) {
         this.thickness = newThickness;
     },
 
     setColour: function(newColour) {
-        return this.colour.setColour(newColour);
+        return this.drawingInformation.setColour(newColour);
     },
 
     setTool: function(newTool) {
-        return this.tool.setTool(newTool);
+        return this.drawingInformation.setTool(newTool);
     },
 
     getColour: function(){
-        return this.colour.getColour();
+        return this.drawingInformation.getColour();
     },
 
     getTool: function(){
-        return this.tool.getTool();
+        return this.drawingInformation.getTool();
     },
 
     getThickness: function(){

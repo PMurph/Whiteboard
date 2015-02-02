@@ -15,4 +15,4 @@ Coordinates.prototype = {
     }
 };
 
-module.exports.Coordinates = Coordinates;
+module.exports = Coordinates;
