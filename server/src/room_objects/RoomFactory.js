@@ -1,6 +1,6 @@
 'use strict';
-var Room = require('room');
-var Whiteboard = require('whiteboard');
+var Room = require('Room');
+var Whiteboard = require('Whiteboard');
 
 var RoomFactory = function() {
 };
