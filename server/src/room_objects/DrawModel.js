@@ -7,9 +7,9 @@ var DrawModel = function() {
     var drawObjects = new DrawObjects();
 
     this.listOfCoordinates = [];
-    this.colour = drawObjects.COLOURS.BLACK;
+    this.colour = drawObjects.getColour();
     this.thickness = 1;
-    this.tool = drawObjects.TOOLS.DRAW;
+    this.tool = drawObjects.getTool();
 };
 
 DrawModel.prototype = {
@@ -25,19 +25,19 @@ DrawModel.prototype = {
     },
 
     setColour: function(newColour) {
-        this.newColour = newColour;
+        return this.colour.setColour(newColour);
     },
 
     setTool: function(newTool) {
-        this.tool = newTool;
+        return this.tool.setTool(newTool);
     },
 
     getColour: function(){
-        return this.colour.name;
+        return this.colour.getColour();
     },
 
     getTool: function(){
-        return this.tool;
+        return this.tool.getTool();
     },
 
     getThickness: function(){

@@ -9,12 +9,12 @@ var drawm = new DrawModel();
 //console.log( drawo.COLOURS);
 console.log("Test");
 //console.log(drawm.getColour());
-console.log(drawo.setCurrentColour("Black"));
-console.log(drawo.getCurrentColour());
-console.log(drawo.getCurrentTool());
+console.log(drawo.setColour("Black"));
+console.log(drawo.getColour());
+console.log(drawo.getTool());
 
-console.log(drawo.setCurrentColour("aslfkjdasklfjasdklfjasdklfjsd"));
-console.log(drawo.getCurrentColour());
+console.log(drawo.setColour("aslfkjdasklfjasdklfjasdklfjsd"));
+console.log(drawo.getColour());
 
-console.log(drawo.setCurrentColour("Blue"));
-console.log(drawo.getCurrentColour());
+console.log(drawo.setColour("Blue"));
+console.log(drawo.getColour());
