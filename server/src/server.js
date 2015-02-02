@@ -8,9 +8,9 @@ var express = require('express'),
 var Server = function () {
     this.app = express();
     this._db = mongoose;
-
+    
     this.port = process.env.PORT || 3000;
-    this.hostname = "127.0.0.1";
+    this.hostname = "0.0.0.0";
     this.dbHostname = "127.0.0.1";
 
     this._userSession = new UserSession(this._db);

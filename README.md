@@ -12,25 +12,46 @@ A shared whiteboard application to facilitate the sharing of ideas.
 
 ### Requirements
 * [Node.js](http://nodejs.org/)
-* [MongoDB](http://www.mongodb.org/) (not yet setup)
+* [MongoDB](http://www.mongodb.org/) (Must add to PATH on Windows)
 * Bower (front end library management)
 * Grunt-CLI (handy dev tasks simplified)
+* Jasmine (Testing framework and runner)
+
+### Windows
+Must run shell (command prompt, git bash) as administrator for grunt script to execute server and database. This is becuase mongoDB is run as a background service and only an administrator can start and stop them.
+
+### Useful dev tools/commands
+Clean node modules:
+```
+rm -rf node_modules/
+npm install
+```
+Run JS Lint test and Tests
+```
+grunt
+```
+Start node.js web server and mongoDB
+```
+grunt run
+```
+
+#### General Setup 
 ```
 // After Node.js is installed and is in your $PATH
 npm install bower -g
 npm install grunt-cli -g
+npm install jasmine -g
 ```
-
-#### Web Client
-cd into /client/web and run
+#### Setup Web Client
 ```
+cd client/web/
 npm install
 bower install
 ```
 
-#### Web/App Server
-cd into /server
+#### Setup Web/App Server
 ```
+cd server/
 npm install
 ```
 
@@ -40,9 +61,3 @@ Coming soon
 Do a dance
 ```
 
-## Useful dev tools/commands
-TODO: Quick summary after this is setup
-```
-grunt
-grunt watch
-```
