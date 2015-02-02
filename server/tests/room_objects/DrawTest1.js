@@ -17,7 +17,7 @@ console.log(drawo.getColour());
 console.log(drawo.setColour("Blue"));
 console.log(drawo.getColour());
 
-console.log("Model Test");
+console.log("\nModel Test");
 console.log(drawm.getColour());
 console.log(drawm.getTool());
 console.log(drawm.getThickness());
@@ -25,3 +25,10 @@ console.log(drawm.getListOfCoordinates());
 
 console.log(drawm.setColour("Black"));
 console.log(drawm.getColour());
+
+console.log("\Coordinate Test");
+drawm.addCoordinate(0, 0);
+drawm.addCoordinate(1, 1);
+drawm.addCoordinate(2, 2);
+drawm.addCoordinate(-3, -3);
+console.log(drawm.getListOfCoordinates());
