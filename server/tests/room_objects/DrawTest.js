@@ -1,77 +1,47 @@
 "use strict";
-var DrawObjects = require("../../src/room_objects/DrawModel.js");
-//var Coordinates = require("../../src/room_objects/Coordinates.js");
+var DrawModel = require('./../../src/room_objects/DrawModel');
 
 describe("Room", function() {
     var draw;
 
     describe("Draw Model", function() {
         beforeEach(function() {
-            draw = new DrawObjects.DrawModel();
+            draw = new DrawModel();
         });
 
         it('it should return good default values', function(){
-            expect(draw.getId()).toBe(ROOM_ID);
-        });
-    });
-
-    describe("Users", function() {
-        beforeEach(function() {
-            draw = new DrawObjects.Room(ROOM_ID, CREATING_USER);
+            expect(draw.getColour()).toBe("Black");
+            expect(draw.getTool()).toBe("Draw");
+            expect(draw.getThickness()).toBe(1);
+            expect(draw.getListOfCoordinates()).toBe([]);
         });
 
-        it("should return the creating user's information", function() {
-            expect(draw.getCreatingUser()).toEqual(CREATING_USER);
+        it('it should return false on setting bad values', function(){
+            expect(draw.setColour("asdfasfd")).toBe(false);
+            expect(draw.getColour()).toBe("Black");
+            expect(draw.setTool("asdfasfd")).toBe(false);
+            expect(draw.getTool()).toBe("Draw");
+            expect(draw.setThickness(999)).toBe(false);
         });
 
-
-        describe("Users connecting and disconnecting", function() {
-            var TEST_USER2 = {userId: "1", username: "newuser"};
-
-            beforeEach(function() {
-                draw.connectUserToRoom(TEST_USER1);
-                draw.connectUserToRoom(TEST_USER2);
-            });
-
-            it("should return the creating user's information and all other connected users", function() {
-                expect(draw.getConnectedUsers()).toEqual([CREATING_USER, TEST_USER1, TEST_USER2]);
-            });
-        });
-    });
-
-    describe("Drawing", function() {
-        var whiteboardMock;
-        var drawCommandWrapperMock;
-        var TEST_DRAW_COMMAND = "This is a test";
-        var TEST_NUM_DRAW_COMMANDS_SEEN = 3;
-
-        beforeEach(function() {
-            whiteboardMock = {
-                addDrawCommand: function() {},
-                getNumDrawCommandsSeen: function() {},
-            };
-
-            drawCommandWrapperMock = {
-                getDrawCommand: function() {},
-                sendDrawCommandToUsers: function() {},
-                setNumDrawCommandsSeen: function() {},
-                setUsersToPushTo: function() {},
-            };
-
-            draw = new DrawObjects.Room(ROOM_ID, CREATING_USER, whiteboardMock);
-            draw.connectUserToRoom(TEST_USER1);
-
-            spyOn(whiteboardMock, "addDrawCommand");
-            spyOn(drawCommandWrapperMock, "getDrawCommand").and.returnValue(TEST_DRAW_COMMAND);
-            spyOn(whiteboardMock, "getNumDrawCommandsSeen").and.returnValue(TEST_NUM_DRAW_COMMANDS_SEEN);
-
+        it('it should return true on setting good values', function(){
+            expect(draw.setColour("Red")).toBe(true);
+            expect(draw.getColour()).toBe("Red");
+            expect(draw.setColour("Blue")).toBe(true);
+            expect(draw.getColour()).toBe("Blue");
+            expect(draw.setTool("Draw")).toBe(true);
+            expect(draw.getTool()).toBe("Draw");
+            expect(draw.setTool("Erase")).toBe(true);
+            expect(draw.getTool()).toBe("Erase");
+            expect(draw.setThickness(2)).toBe(false);
         });
 
-        it('should tell the draw command wrapper to send to users', function() {
-            spyOn(drawCommandWrapperMock, "sendDrawCommandToUsers");
-
-            draw.handleDrawCommand(drawCommandWrapperMock);
-            expect(drawCommandWrapperMock.sendDrawCommandToUsers).toHaveBeenCalled();
+        it('it should set good coordinates and print them out in order', function(){
+            draw.addCoordinate(0, 0);
+            expect(draw.getListOfCoordinates()[0].getXY()).toBe([0,0]);
+            draw.addCoordinate(1, 1);
+            expect(draw.getListOfCoordinates()[0].getXY()).toBe([0,0]);
+            expect(draw.getListOfCoordinates()[1].getXY()).toBe([1,1]);
         });
     });
 });

@@ -18,5 +18,10 @@ console.log(drawo.setColour("Blue"));
 console.log(drawo.getColour());
 
 console.log("Model Test");
+console.log(drawm.getColour());
+console.log(drawm.getTool());
+console.log(drawm.getThickness());
+console.log(drawm.getListOfCoordinates());
+
 console.log(drawm.setColour("Black"));
 console.log(drawm.getColour());

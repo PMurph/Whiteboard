@@ -12,6 +12,10 @@ Coordinates.prototype = {
 
     getY: function() {
     	return this.y;
+    },
+
+    getXY: function() {
+    	return [this.x, this.y];
     }
 };
 

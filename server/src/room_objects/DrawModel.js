@@ -10,19 +10,18 @@ var DrawModel = function() {
 };
 
 DrawModel.prototype = {
-	addCoordinate: function(coord) {
-		if (coord === Coordinates)
-		{
-        	this.listOfCoordinates.push(coord);
-        }
-    },
-
-    getCoordinate: function() {
-        return this.listOfCoordinates;
+	addCoordinate: function(x, y) {
+        var newCoord = new Coordinates(x, y);
+        this.listOfCoordinates.push(newCoord);
     },
 
     setThickness: function(newThickness) {
-        this.thickness = newThickness;
+        if (newThickness >= 0 && newThickness < 100) {
+            this.thickness = newThickness;
+            return true;
+        }
+
+        return false;
     },
 
     setColour: function(newColour) {
