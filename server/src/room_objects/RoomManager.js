@@ -1,5 +1,5 @@
 'use strict';
-var RoomFactory = require('RoomFactory')
+var RoomFactory = require('RoomFactory');
 
 var RoomManager = function() {
 	this.roomFactory = new RoomFactory();
