@@ -4,8 +4,9 @@ var DrawCommandMessage = require("../src/communication/objects/DrawCommandMessag
 var DrawCommandResponse = require("../src/communication/objects/DrawCommandResponse.js");
 
 describe("MessageFactory", function() {
+    var TEST_ROOM_ID = 42;
     var TEST_ROOM_COMMUNICATOR = "test room communicator";
-    var TEST_DRAW_COMMAND = {msgType: "draw", drawCommand: "some draw command object"};
+    var TEST_DRAW_COMMAND = {msgType: "draw", drawCommand: "some draw command object", roomId: TEST_ROOM_ID};
     var testMessageFactory;
 
     beforeEach(function(){
@@ -14,6 +15,10 @@ describe("MessageFactory", function() {
 
     it('should respond to the wrapIncomingMessage function', function() {
         expect(testMessageFactory.wrapIncomingMessage).toBeDefined();
+    });
+
+    it('should respond to the createResponseFromMessage function', function() {
+        expect(testMessageFactory.createResponseFromMessage).toBeDefined();
     });
 
     describe("Incoming Draw Command", function() {
@@ -55,5 +60,9 @@ describe("MessageFactory", function() {
         it('should return a DrawCommandResponse that returns the drawCommand that was contained in the DrawCommandMessage', function() {
             expect(createdResponse.getDrawCommand()).toEqual(TEST_DRAW_COMMAND);
         });
+
+        it('should return a DrawCommandResponse that has the correct room id', function() {
+            expect(createdResponse.getRoomId()).toEqual(TEST_ROOM_ID);
+        })
     });
 });

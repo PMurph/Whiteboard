@@ -4,6 +4,7 @@ var DrawCommandResponse = require("../../../src/communication/objects/DrawComman
 describe("DrawCommandResponse", function() {
     var TEST_USERS = [{username: "alice"}, {username: "bob"}];
     var TEST_NUM_DRAWS_SEEN = 6;
+    var TEST_ROOM_ID = 5;
 
     var testDrawCommand;
     var testRoomCommunicator;
@@ -13,7 +14,9 @@ describe("DrawCommandResponse", function() {
         testDrawCommand = {some: "test", draw: "command"};
         testRoomCommunicator = "test object";
 
-        testDrawCommandResponse = new DrawCommandResponse(testRoomCommunicator, testDrawCommand);
+        testDrawCommandResponse = new DrawCommandResponse(TEST_ROOM_ID, testRoomCommunicator, testDrawCommand);
+        testDrawCommandResponse.setUsersToSendTo(TEST_USERS);
+        testDrawCommandResponse.setNumDrawCommandsSeen(TEST_NUM_DRAWS_SEEN);
     });
 
     it('should return the room communicator it was created with', function() {
@@ -25,25 +28,34 @@ describe("DrawCommandResponse", function() {
     });
 
     it('should return a list of users that the response will be sent to', function() {
-        testDrawCommandResponse.setUsersToSendTo(TEST_USERS);
-
         expect(testDrawCommandResponse.getUsersToSendTo()).toEqual(TEST_USERS);
     });
 
     it('should return the number of draw commands seen by the whiteboard at the point when the response was created', function() {
-        testDrawCommandResponse.setNumDrawCommandsSeen(TEST_NUM_DRAWS_SEEN);
-
         expect(testDrawCommandResponse.getNumDrawCommandsSeen()).toEqual(TEST_NUM_DRAWS_SEEN);
     });
 
-    describe('sendDrawCommandToUsers', function() {
+    it('should return the roomId of the room it was created in', function() {
+        expect(testDrawCommandResponse.getRoomId()).toEqual(TEST_ROOM_ID);
+    });
+
+    describe('Formatting message to be sent to user', function() {
+        var testMessage;
+
         beforeEach(function() {
-            testDrawCommandResponse.setUsersToSendTo(TEST_USERS);
-            testDrawCommandResponse.setNumDrawCommandsSeen(TEST_NUM_DRAWS_SEEN);
+            testMessage = testDrawCommandResponse.createResponseMessage();
         });
 
-        it('should call the RoomCommunicators sendDrawCommandToUsers function', function() {
+        it('should return a dictionary with a drawOrderNum key that has value equal to the number of draw commands seen', function() {
+            expect(testMessage.drawOrderNum).toEqual(TEST_NUM_DRAWS_SEEN);
+        });
 
+        it('should return a dictionary with a roomId key that has value equal to the room id of the response', function() {
+            expect(testMessage.roomId).toEqual(TEST_ROOM_ID);
+        });
+
+        it('should return a dictionary with a drawCommand key with a value equal to the drawCommand of the response', function() {
+            expect(testMessage.drawCommand).toEqual(testDrawCommand);
         });
     });
 });

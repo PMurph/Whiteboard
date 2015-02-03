@@ -11,7 +11,8 @@ MessageFactory.prototype = {
         return new DrawCommandMessage(roomCommunicator, incommingMessage.drawCommand);
     },
     createResponseFromMessage: function(message) {
-        return new DrawCommandResponse(message.getRoomCommunicator(), message.getDrawCommand());
+        var drawCommand = message.getDrawCommand();
+        return new DrawCommandResponse(drawCommand.roomId, message.getRoomCommunicator(), drawCommand);
     },
 };
 

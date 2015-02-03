@@ -1,15 +1,17 @@
 "use strict";
-var DrawCommandLogic = function(room) {
-    this._room = room;
+var DrawCommandLogic = function(roomManager) {
+    this._roomManager = roomManager;
 };
 
 DrawCommandLogic.prototype = {
     handleDrawCommand: function(drawCommandMessage) {
-        this._room.handleDrawCommand(drawCommandMessage);
+        var room = this._roomManager.getRoom(drawCommandMessage.getRoomId());
+        room.handleDrawCommand(drawCommandMessage);
     },
     handleDrawResponse: function(drawCommandResponse) {
         var roomCommunicator = drawCommandResponse.getRoomCommunicator();
-        roomCommunicator.sendMessage(null);
+        var responseMessage = drawCommandResponse.createResponseMessage();
+        roomCommunicator.sendMessage(responseMessage);
     }
 };
 

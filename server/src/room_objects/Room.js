@@ -1,10 +1,11 @@
 "use strict";
 
-var Room = function(roomId, creatingUser, whiteboard) {
+var Room = function(roomId, creatingUser, whiteboard, messageFactory) {
     this._creatingUser = creatingUser;
     this._connectedUsers = [creatingUser];
     this._id = roomId;
     this._whiteboard = whiteboard;
+    this._messageFactory = messageFactory;
 };
 
 Room.prototype = {
@@ -47,17 +48,24 @@ Room.prototype = {
         return this._id;
     },
 
-    handleDrawCommand: function(drawCommandMessage) {
+    handleDrawCommand: function(drawCommandMessage, drawCommandLogic) {
         var drawCommand = drawCommandMessage.getDrawCommand();
-
         this._whiteboard.addDrawCommand(drawCommand);
-        drawCommandMessage.setUsersToPushTo(this._connectedUsers);
+
+        var drawCommandResponse = this._createDrawCommandResponse(drawCommandMessage);
+
+        drawCommandLogic.handleDrawResponse(drawCommandResponse);
+    },
+
+    _createDrawCommandResponse: function(drawCommandMessage) {
+        var drawCommandResponse = this._messageFactory.createResponseFromMessage(drawCommandMessage);
+        drawCommandResponse.setUsersToSendTo(this._connectedUsers);
 
         var numDrawCommandsSeen = this._whiteboard.getNumDrawCommandsSeen();
-        drawCommandMessage.setNumDrawCommandsSeen(numDrawCommandsSeen);
+        drawCommandResponse.setNumDrawCommandsSeen(numDrawCommandsSeen);
 
-        drawCommandMessage.sendDrawCommandToUsers();
-    }
+        return drawCommandResponse;
+    },
 };
 
 module.exports = Room;

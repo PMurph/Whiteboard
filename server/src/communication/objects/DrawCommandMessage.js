@@ -10,7 +10,10 @@ DrawCommandMessage.prototype = {
     },
     getRoomCommunicator: function() {
         return this._roomCommunicator;
-    }
+    },
+    getRoomId: function() {
+        return this._drawCommand.roomId;
+    },
 };
 
 module.exports = DrawCommandMessage;

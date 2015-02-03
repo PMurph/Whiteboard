@@ -2,37 +2,48 @@
 var DrawCommandLogic = require("../../src/logic/DrawCommandLogic.js");
 
 describe("DrawCommandLogic", function() {
+    var roomManagerMock;
     var roomMock;
     var testDrawCommandLogic;
 
     beforeEach(function() {
+        roomManagerMock = jasmine.createSpyObj('RoomManager', ['getRoom']);
         roomMock = jasmine.createSpyObj('Room', ['handleDrawCommand']);
 
-        testDrawCommandLogic = new DrawCommandLogic(roomMock);
+        roomManagerMock.getRoom.and.returnValue(roomMock);
+        testDrawCommandLogic = new DrawCommandLogic(roomManagerMock);
     });
 
     describe('handleDrawCommand', function() {
+        var TEST_ROOM_ID = 45;
         var drawCommandMessageMock;
 
         beforeEach(function() {
-            drawCommandMessageMock = jasmine.createSpyObj("DrawCommandMessage", ['handleDrawCommand', 'handleDrawResponse']);
+            drawCommandMessageMock = jasmine.createSpyObj("DrawCommandMessage", ['handleDrawCommand', 'handleDrawResponse', 'getRoomId']);
+            drawCommandMessageMock.getRoomId.and.returnValue(TEST_ROOM_ID);
+            testDrawCommandLogic.handleDrawCommand(drawCommandMessageMock);
         });
 
         it("should call the room's handleDrawCommand function with the same drawCommandMessage if the message is valid", function() {
-            testDrawCommandLogic.handleDrawCommand(drawCommandMessageMock);
             expect(roomMock.handleDrawCommand).toHaveBeenCalledWith(drawCommandMessageMock);
+        });
+
+        it("should get the room from the RoomManager", function() {
+            expect(roomManagerMock.getRoom).toHaveBeenCalledWith(TEST_ROOM_ID);
         });
     });
 
     describe('handleDrawResponse', function() {
+        var TEST_RESPONSE_MESSAGE = {some: "test", response: "message"};
         var drawCommandResponseMock;
         var roomCommunicatorMock;
 
         beforeEach(function() {
-            drawCommandResponseMock = jasmine.createSpyObj("DrawCommandResponse", ['getRoomCommunicator']);
+            drawCommandResponseMock = jasmine.createSpyObj("DrawCommandResponse", ['getRoomCommunicator', 'createResponseMessage']);
             roomCommunicatorMock = jasmine.createSpyObj('RoomCommunicator', ['sendMessage']);
 
             drawCommandResponseMock.getRoomCommunicator.and.returnValue(roomCommunicatorMock);
+            drawCommandResponseMock.createResponseMessage.and.returnValue(TEST_RESPONSE_MESSAGE);
             testDrawCommandLogic.handleDrawResponse(drawCommandResponseMock);
         });
 
@@ -40,8 +51,12 @@ describe("DrawCommandLogic", function() {
             expect(drawCommandResponseMock.getRoomCommunicator).toHaveBeenCalled();
         });
 
-        it("should call the DrawCommandResponse's RoomCommunicator's sendMessage function to have been called", function() {
-            expect(roomCommunicatorMock.sendMessage).toHaveBeenCalled();
+        it("should call the DrawCommandResponse's RoomCommunicator's sendMessage function to have been called with a response message", function() {
+            expect(roomCommunicatorMock.sendMessage).toHaveBeenCalledWith(TEST_RESPONSE_MESSAGE);
+        });
+
+        it("should call the DrawCommandResponse's createResponseMessage function", function() {
+            expect(drawCommandResponseMock.createResponseMessage).toHaveBeenCalled();
         });
     });
 });
