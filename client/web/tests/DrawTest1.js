@@ -1,7 +1,7 @@
 "use strict";
 //{ "vertices": [{"x": 0.0, "y": 1.0}, ...], "tool": {...}, ...}
-var DrawObjects = require('./../../app/objects/DrawObjects');
-var DrawModel = require('./../../app/objects/DrawModel');
+var DrawObjects = require('./../app/objects/DrawObjects');
+var DrawModel = require('./../app/objects/DrawModel');
 
 var drawo = new DrawObjects();
 var drawm = new DrawModel();
