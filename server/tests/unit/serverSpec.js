@@ -9,6 +9,8 @@ describe("Server", function() {
         var dbOptions = {
             mongoose: mockMongoose
         };
+
+        spyOn(mockMongoose, "connect");
         server = new Server(mockExpress, dbOptions); 
     });
     it("should start", function() {
@@ -54,5 +56,22 @@ describe("Server", function() {
         server = new Server(mockExpress, testDBOptions);
 
         expect(server.getDBName()).toBe(testDBName);
+    });
+    it("should connect to database", function() {
+        server.start();
+        expect(mockMongoose.connect).toHaveBeenCalled();
+    });
+    it("should connect to database with hostname and database name set with dbOptions", function() {
+        var testHostname = "testHostname";
+        var testDBName = "testDB";
+        var testDBOptions = {
+            mongoose: mockMongoose,
+            hostname: testHostname,
+            name: testDBName
+        };
+        server = new Server(mockExpress, testDBOptions);
+
+        server.start();
+        expect(mockMongoose.connect).toHaveBeenCalledWith("mongodb://" + testHostname + "/" + testDBName);
     });
 });
