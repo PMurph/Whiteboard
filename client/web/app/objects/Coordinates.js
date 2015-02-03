@@ -1,21 +1,21 @@
 "use strict";
 
-var Coordinates = function(x, y) {
-    this.x = x;
-    this.y = y;
+var Coordinates = function(_x, _y) {
+    this._x = _x;
+    this._y = _y;
 };
 
 Coordinates.prototype = {
     getX: function() {
-        return this.x;
+        return this._x;
     },
 
     getY: function() {
-    	return this.y;
+    	return this._y;
     },
 
     getXY: function() {
-    	return [this.x, this.y];
+    	return [this._x, this._y];
     }
 };
 
