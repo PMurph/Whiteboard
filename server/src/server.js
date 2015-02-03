@@ -44,7 +44,7 @@ Server.prototype = {
     start: function(port, hostname, listenCB) {
         this._port = port || this._port;
         this._hostname = hostname || this._hostname;
-    //    this._connectDB(this.dbHostname, this.dbName);
+        this._connectDB(this._dbHostname, this._dbName);
         this._httpServ = this.app.listen(this._port, this._hostname, null, listenCB);
     },
     stop: function(closeCB) {
