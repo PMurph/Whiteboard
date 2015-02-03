@@ -52,7 +52,8 @@ UserManager.prototype = {
     _handleUnauthGet: function(query, dbCallback) {
         if(query &&
             query.login &&
-            query.password)
+            query.password &&
+            (!query.anonymous || query.anonymous === false))
         {
             this.userSession.authUser(query.login, query.password, dbCallback);
         }else{
@@ -79,7 +80,7 @@ UserManager.prototype = {
             
             if (authToken.length > 0) {
                 self.findByAuthToken(authToken, function (err, authUser) {
-                    if (err) {
+                    if (err || !authUser) {
                         return res.sendStatus(400);
                     }
                     if(req.method === 'POST') {
