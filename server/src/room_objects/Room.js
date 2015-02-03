@@ -52,19 +52,10 @@ Room.prototype = {
         var drawCommand = drawCommandMessage.getDrawCommand();
         this._whiteboard.addDrawCommand(drawCommand);
 
-        var drawCommandResponse = this._createDrawCommandResponse(drawCommandMessage);
+        var drawOrder = this._whiteboard.getNumDrawCommandsSeen();
+        drawCommandMessage.setDrawOrder(drawOrder);
 
-        drawCommandLogic.handleDrawResponse(drawCommandResponse);
-    },
-
-    _createDrawCommandResponse: function(drawCommandMessage) {
-        var drawCommandResponse = this._messageFactory.createResponseFromMessage(drawCommandMessage);
-        drawCommandResponse.setUsersToSendTo(this._connectedUsers);
-
-        var numDrawCommandsSeen = this._whiteboard.getNumDrawCommandsSeen();
-        drawCommandResponse.setNumDrawCommandsSeen(numDrawCommandsSeen);
-
-        return drawCommandResponse;
+        drawCommandLogic.handleDrawResponse(drawCommandMessage);
     },
 };
 

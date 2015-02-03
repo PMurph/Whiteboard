@@ -10,7 +10,7 @@ DrawCommandLogic.prototype = {
     },
     handleDrawResponse: function(drawCommandResponse) {
         var roomCommunicator = drawCommandResponse.getRoomCommunicator();
-        var responseMessage = drawCommandResponse.createResponseMessage();
+        var responseMessage = drawCommandResponse.createMessage();
         roomCommunicator.sendMessage(responseMessage);
     }
 };

@@ -39,11 +39,11 @@ describe("DrawCommandLogic", function() {
         var roomCommunicatorMock;
 
         beforeEach(function() {
-            drawCommandResponseMock = jasmine.createSpyObj("DrawCommandResponse", ['getRoomCommunicator', 'createResponseMessage']);
+            drawCommandResponseMock = jasmine.createSpyObj("DrawCommandMessage", ['getRoomCommunicator', 'createMessage']);
             roomCommunicatorMock = jasmine.createSpyObj('RoomCommunicator', ['sendMessage']);
 
             drawCommandResponseMock.getRoomCommunicator.and.returnValue(roomCommunicatorMock);
-            drawCommandResponseMock.createResponseMessage.and.returnValue(TEST_RESPONSE_MESSAGE);
+            drawCommandResponseMock.createMessage.and.returnValue(TEST_RESPONSE_MESSAGE);
             testDrawCommandLogic.handleDrawResponse(drawCommandResponseMock);
         });
 
@@ -56,7 +56,7 @@ describe("DrawCommandLogic", function() {
         });
 
         it("should call the DrawCommandResponse's createResponseMessage function", function() {
-            expect(drawCommandResponseMock.createResponseMessage).toHaveBeenCalled();
+            expect(drawCommandResponseMock.createMessage).toHaveBeenCalled();
         });
     });
 });

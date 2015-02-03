@@ -63,8 +63,7 @@ describe("Room", function() {
         var drawCommandLogicMock;
 
         beforeEach(function(){
-            drawCommandMessageMock = jasmine.createSpyObj('DrawCommandMessage', ['getDrawCommand', 'sendDrawCommandToUsers', 'setNumDrawCommandsSeen', 'setUsersToPushTo']);
-            drawCommandResponseMock = jasmine.createSpyObj('DrawCommandResponse', ['setUsersToSendTo', 'setNumDrawCommandsSeen']);
+            drawCommandMessageMock = jasmine.createSpyObj('DrawCommandMessage', ['getDrawCommand', 'setDrawOrder']);
             drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawResponse']);
 
             room.connectUserToRoom(TEST_USER1);
@@ -91,20 +90,12 @@ describe("Room", function() {
         });
 
         describe("Responding to Draw Command", function() {
-            it('should get a response from the MessageFactory', function() {
-                expect(messageFactoryMock.createResponseFromMessage).toHaveBeenCalledWith(drawCommandMessageMock);
-            });
-
-            it('should give the list of users to the DrawCommandResponse', function() {
-                expect(drawCommandResponseMock.setUsersToSendTo).toHaveBeenCalledWith(room.getConnectedUsers());
-            });
-
-            it('should give the number of draw commands seen by the whiteboard to the DrawCommandResponse', function() {
-                expect(drawCommandResponseMock.setNumDrawCommandsSeen).toHaveBeenCalledWith(TEST_NUM_DRAW_COMMANDS_SEEN);
+            it('should set the draw order of the drawCommandMessage with the number of draw commands seen by the whiteboard', function() {
+                expect(drawCommandMessageMock.setDrawOrder).toHaveBeenCalledWith(TEST_NUM_DRAW_COMMANDS_SEEN);
             });
 
             it("should call the DrawCommandLogic's handleDrawResponse method", function() {
-                expect(drawCommandLogicMock.handleDrawResponse).toHaveBeenCalledWith(drawCommandResponseMock);
+                expect(drawCommandLogicMock.handleDrawResponse).toHaveBeenCalledWith(drawCommandMessageMock);
             });
         });
     });
