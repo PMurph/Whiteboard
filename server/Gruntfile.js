@@ -15,10 +15,6 @@ module.exports = function (grunt) {
     var mongoCommand = "mongod --dbpath db_data/ --logpath db_data/log.txt --smallfiles ";
 
     grunt.initConfig({
-        jasmine_runner: {
-            unit: 'tests/unit/**/*Spec.js',
-            all: serverTestFiles
-        },
         jshint: {
             options: {
                 jshintrc: '../.jshintrc'
@@ -59,6 +55,27 @@ module.exports = function (grunt) {
             },
             jasmineRunnerUnit: {
                 command: 'node tests/jasmineRunner unit',
+                options: {
+                    failOnError: false
+                }
+            },
+            jasmineRunnerIntegration: {
+                command: 'node tests/jasmineRunner integration',
+                options: {
+                    failOnError: false
+                }
+            },
+            jasmineRunnerAll: {
+                command: 'node tests/jasmineRunner unit integration',
+                options: {
+                    failOnError: false
+                }
+            },
+            nodeDebug: {
+                command: 'node-debug src/main.js',
+                options: {
+                    failOnError: false
+                }
             }
         }
     });
@@ -73,44 +90,45 @@ module.exports = function (grunt) {
         });
     });
 
-    grunt.registerTask('run', "Node.JS and MongoDB starter", function(){
+    function startMongo(taskList) {
+        var fullTaskList = [];
+        var mongoStart = [];
+        var mongoStop = [];
+
         if (process.platform === "win32" || process.platform === "win64"){
-            grunt.task.run([
+            mongoStart = [
                 'shell:mongoInstallWin',
                 'shell:mongoStartWin',
-                'watch-mongo',
-                'nodemon',
+                'watch-mongo'
+           ];
+            mongoStop = [
                 'shell:mongoStopWin'
-           ]);
+            ];
         }else{
-            grunt.task.run([
+            mongoStart = [
                 'shell:mongoStart',
                 'watch-mongo',
-                'nodemon',
-                'shell:mongoStop'
-            ]);
+            ];
 
+            mongoStop = [
+                'shell:mongoStop'
+            ];
         }
 
+        fullTaskList = mongoStart.concat(taskList).concat(mongoStop);
+        grunt.task.run(fullTaskList);
+    }
+
+    grunt.registerTask('run', "Node.JS and MongoDB starter", function(){
+        startMongo(['nodemon']);
+    });
+
+    grunt.registerTask('debug-run', "Node.JS debugger and MongoDB starter", function(){
+        startMongo(['shell:nodeDebug']);
     });
 
     grunt.registerTask('test-all', "Jasmine Test Runner (with MongoDB)", function() {
-        if (process.platform === "win32" || process.platform === "win64"){
-            grunt.task.run([
-                'shell:mongoInstallWin',
-                'shell:mongoStartWin',
-                'watch-mongo',
-                'shell:jasmine:all',
-                'shell:mongoStopWin'
-            ]);
-        }else{
-            grunt.task.run([
-                'shell:mongoStart',
-                'watch-mongo',
-                'jasmine_runner:all',
-                'shell:mongoStop'
-           ]);
-        }
+        startMongo(['shell:jasmineRunnerAll']);
     });
 
     grunt.registerTask('test',[
