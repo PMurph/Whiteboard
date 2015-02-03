@@ -32,8 +32,7 @@ require([
         });
 
         this.userSessionController = new UserSessionController();
-        //this.userSessionController.authAnonymous();
-        this.userSessionController.authUser("test", "password1");
+        this.userSessionController.authAnonymous();
 
         this.body.show(this.mainView);
         this.mainController.mainContent = this.mainView.mainContent;
