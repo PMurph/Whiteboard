@@ -63,6 +63,6 @@ describe("MessageFactory", function() {
 
         it('should return a DrawCommandResponse that has the correct room id', function() {
             expect(createdResponse.getRoomId()).toEqual(TEST_ROOM_ID);
-        })
+        });
     });
 });

@@ -1,10 +1,11 @@
+"use strict";
 var DrawCommandResponse = function(roomId, roomCommunicator, drawCommand) {
     this._roomCommunicator = roomCommunicator;
     this._drawCommand = drawCommand;
     this._usersToSendTo = [];
     this._numDrawCommandsSeen = 0;
     this._roomId = roomId;
-}
+};
 
 DrawCommandResponse.prototype = {
     createResponseMessage: function() {
