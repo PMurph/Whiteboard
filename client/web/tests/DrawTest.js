@@ -1,5 +1,5 @@
 "use strict";
-var DrawModel = require('./../../src/room_objects/DrawModel');
+var DrawModel = require('./../../app/objects/DrawModel');
 
 describe("Room", function() {
     var draw;
