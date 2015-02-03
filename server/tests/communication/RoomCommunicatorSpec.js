@@ -34,12 +34,13 @@ describe("RoomCommunicator", function() {
     });
 
     describe("sendMessage", function(){
+        var TEST_MESSAGE_TYPE = "test type";
         var TEST_MESSAGE = {test: "data"};
 
         it("should call the sockets emit function with the message", function() {
-            testRoomCommunicator.sendMessage(TEST_MESSAGE);
+            testRoomCommunicator.sendMessage(TEST_MESSAGE_TYPE, TEST_MESSAGE);
 
-            expect(socketMock.emit).toHaveBeenCalledWith(TEST_MESSAGE);
+            expect(socketMock.emit).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_MESSAGE);
         }); 
     });
 });

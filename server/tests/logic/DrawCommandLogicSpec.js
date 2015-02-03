@@ -34,6 +34,7 @@ describe("DrawCommandLogic", function() {
     });
 
     describe('handleDrawResponse', function() {
+        var TEST_MESSAGE_TYPE = "drawCommand";
         var TEST_RESPONSE_MESSAGE = {some: "test", response: "message"};
         var drawCommandResponseMock;
         var roomCommunicatorMock;
@@ -51,8 +52,8 @@ describe("DrawCommandLogic", function() {
             expect(drawCommandResponseMock.getRoomCommunicator).toHaveBeenCalled();
         });
 
-        it("should call the DrawCommandResponse's RoomCommunicator's sendMessage function to have been called with a response message", function() {
-            expect(roomCommunicatorMock.sendMessage).toHaveBeenCalledWith(TEST_RESPONSE_MESSAGE);
+        it("should call the DrawCommandResponse's RoomCommunicator's sendMessage function to have been called with drawCommand message type and a response message", function() {
+            expect(roomCommunicatorMock.sendMessage).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_RESPONSE_MESSAGE);
         });
 
         it("should call the DrawCommandResponse's createResponseMessage function", function() {

@@ -11,8 +11,8 @@ RoomCommunicator.prototype = {
     handleDrawCommand: function(messageData) {
         this._drawCommandLogic.handleDrawCommand(this._messageFactory.wrapIncomingMessage(this, messageData));
     },
-    sendMessage: function(messageData) {
-        this._socket.emit(messageData);
+    sendMessage: function(messageType, messageData) {
+        this._socket.emit(messageType, messageData);
     },
 };
 
