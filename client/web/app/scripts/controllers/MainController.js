@@ -11,6 +11,7 @@ define([
     Marionette,
     DashboardView,
     RoomLayoutView,
+    LoginView,
     RoomModel) {
     'use strict';
 

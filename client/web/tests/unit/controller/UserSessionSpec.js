@@ -48,6 +48,7 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
             });
             describe('on success', function() {
                 beforeEach(function() {
+                    spyOn(App.mainController, 'dashboard');
                     spyOn(App.userSessionController, '_setAuthToken').and.callThrough();
                     request.respondWith(testResponses.authenticate.anon.success);
                 });
@@ -110,6 +111,7 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
             });
             describe('on success', function() {
                 beforeEach(function() {
+                    spyOn(App.mainController, 'dashboard');
                     spyOn(App.userSessionController, '_setAuthToken').and.callThrough();
                     request.respondWith(testResponses.authenticate.regular.success);
                 });
