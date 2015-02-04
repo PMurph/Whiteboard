@@ -7,18 +7,8 @@ var bodyParser = require('body-parser'),
 
 var Server = function (exp, dbOptions) {
     this.app = exp;
-    this._db = mongoose;
-    
-    this._port = process.env.PORT || 3000;
-    this._hostname = '0.0.0.0';
-    this._dbHostname = '127.0.0.1';
-    this._dbName = 'whiteboard';
-
-    if(dbOptions) {
-        this._db = dbOptions.mongoose || this._db;
-        this._dbHostname = dbOptions.hostname || this._dbHostname;
-        this._dbName = dbOptions.name || this._dbName;
-    }
+    this._setupHttpServer();
+    this._setupDatabase(dbOptions);
 
     this._userManager = new UserManager(this._db);
 
@@ -32,6 +22,21 @@ Server.prototype = {
     },
     _disconnectDB: function() {
         this._db.disconnect();
+    },
+    _setupDatabase: function(dbOptions) {
+        this._db = mongoose;
+        this._dbHostname = '127.0.0.1';
+        this._dbName = 'whiteboard';
+
+        if(dbOptions) {
+            this._db = dbOptions.mongoose || this._db;
+            this._dbHostname = dbOptions.hostname || this._dbHostname;
+            this._dbName = dbOptions.name || this._dbName;
+        }
+    },
+    _setupHttpServer: function() {
+        this._port = process.env.PORT || 3000;
+        this._hostname = '0.0.0.0';
     },
     _setupMiddleware: function() {
         this.app.use(bodyParser.json());
