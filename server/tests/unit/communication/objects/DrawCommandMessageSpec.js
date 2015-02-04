@@ -1,5 +1,5 @@
 "use strict";
-var DrawCommandMessage = require("../../../src/communication/objects/DrawCommandMessage.js");
+var DrawCommandMessage = require("../../../../src/communication/objects/DrawCommandMessage.js");
 
 describe("DrawCommandMessage", function() {
     var TEST_ROOM_ID = 45;

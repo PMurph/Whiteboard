@@ -1,18 +1,24 @@
 "use strict";
-var RoomCommunicator = require('../../src/communication/RoomCommunicator.js');
+var RoomCommunicator = require('../../../src/communication/RoomCommunicator.js');
 
 describe("RoomCommunicator", function() {
+    var TEST_ROOM_ID = 42;
+
     var testRoomCommunicator;
     var socketMock;
     var drawCommandLogicMock;
     var messageFactoryMock;
 
     beforeEach(function() {
-        socketMock = jasmine.createSpyObj('Socket', ['on', 'emit']);
+        socketMock = jasmine.createSpyObj('Socket', ['on', 'join', 'emit']);
         drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawCommand']);
         messageFactoryMock = jasmine.createSpyObj('MessageFactory', ['wrapIncomingMessage']);
 
-        testRoomCommunicator = new RoomCommunicator(socketMock, drawCommandLogicMock, messageFactoryMock);
+        testRoomCommunicator = new RoomCommunicator(TEST_ROOM_ID, socketMock, drawCommandLogicMock, messageFactoryMock);
+    });
+
+    it("should connect to a room with the id passed to the constructor", function() {
+        expect(socketMock.join).toHaveBeenCalledWith(TEST_ROOM_ID);
     });
 
     describe("handleMessage", function() {

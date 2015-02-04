@@ -1,5 +1,5 @@
 "use strict";
-var RoomObjects = require("../../../src/room_objects/Room.js");
+var Room = require("../../../src/room_objects/Room.js");
 
 describe("Room", function() {
     var CREATING_USER = {userId: "2", username: "testuser"};

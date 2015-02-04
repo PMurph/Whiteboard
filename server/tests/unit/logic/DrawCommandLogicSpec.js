@@ -1,5 +1,5 @@
 "use strict";
-var DrawCommandLogic = require("../../src/logic/DrawCommandLogic.js");
+var DrawCommandLogic = require("../../../src/logic/DrawCommandLogic.js");
 
 describe("DrawCommandLogic", function() {
     var roomManagerMock;

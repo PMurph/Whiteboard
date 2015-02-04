@@ -1,6 +1,6 @@
 "use strict";
-var MessageFactory = require("../src/MessageFactory.js");
-var DrawCommandMessage = require("../src/communication/objects/DrawCommandMessage.js");
+var MessageFactory = require("../../src/MessageFactory.js");
+var DrawCommandMessage = require("../../src/communication/objects/DrawCommandMessage.js");
 
 describe("MessageFactory", function() {
     var TEST_ROOM_ID = 42;

@@ -1,9 +1,11 @@
 "use strict";
-var RoomCommunicator = function(socket, drawCommandLogic, messageFactory) {
+var RoomCommunicator = function(roomId, socket, drawCommandLogic, messageFactory) {
+    this._roomId = roomId;
     this._socket = socket;
     this._drawCommandLogic = drawCommandLogic;
     this._messageFactory = messageFactory;
 
+    socket.join(roomId);
     socket.on('drawCommand', this.handleMessage);
 };
 
