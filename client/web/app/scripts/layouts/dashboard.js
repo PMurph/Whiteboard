@@ -2,7 +2,7 @@ define([
     'marionette',
     'collections/rooms',
     'views/dashboard/rooms',
-    'tpl!/scripts/templates/dashboard/dashboard.html'
+    'tpl!templates/dashboard/dashboard.html'
 ], function(
     Marionette,
     RoomsCollection,
