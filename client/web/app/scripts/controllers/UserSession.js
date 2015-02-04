@@ -22,6 +22,7 @@ define([
         },
         _setAuthToken: function(token) {
             this._authToken = token;
+
             $.ajaxSetup({
                 data: {
                     authToken: token
@@ -32,41 +33,45 @@ define([
                 App.mainController.dashboard();
             }
         },
-        _authSuccessF: function(usc) {
-            return function (model, response) {
+        _handlePromise: function(promise, model) {
+            var self = this;
+
+            promise.then(function (response) {
                 if (response.authToken) {
-                    usc._setAuthToken(response.authToken);
-                    usc._currentUser = model;
+                    self._setAuthToken(response.authToken);
+                    self._currentUser = model;
                 }
-            };
-        },
-        _authErrorF: function(usc) {
-            return function () {
-                usc._setAuthToken(null);
-                usc._currentUser = null;
-            };
+            }).fail(function () {
+                self._setAuthToken(null);
+                self._currentUser = null;
+            });
         },
         authAnonymous: function() {
             var anonUser = new AnonymousUser();
-
-            anonUser.save({}, {
-                success: this._authSuccessF(this),
-                error: this._authErrorF(this)
-            });
-
+            
+            this._handlePromise(anonUser.save({}), anonUser);
             return true;
         },
         authUser: function(login, password) {
-            var user = new User({
-                login: login,
-                password: password
-            });
+            var user = new User({});
+            user.setLogin(login);
+            user.setPassword(password);
 
-            user.fetch({
-                success: this._authSuccessF(this),
-                error: this._authErrorF(this)
-            });
+            this._handlePromise(user.fetch({
+                data: {
+                    login: user.getLogin(),
+                    password: user.getPassword()
+                }
+            }), user);
+            return true;
+        },
+        registerUser: function(login, password, name) {
+            var newUser = new User();
+            newUser.setLogin(login);
+            newUser.setPassword(password);
+            newUser.setDisplayName(name);
 
+            this._handlePromise(newUser.save({}), newUser);
             return true;
         },
         getUser: function() {
@@ -75,7 +80,6 @@ define([
         isAuthenticated: function() {
             return (this._authToken !== null);
         }
-
     });
 
     return UserSessionController;

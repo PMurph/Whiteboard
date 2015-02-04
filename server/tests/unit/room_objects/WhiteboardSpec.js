@@ -1,5 +1,5 @@
 "use strict";
-var Whiteboard = require('../../src/room_objects/Whiteboard.js');
+var RoomObjects = require('../../../src/room_objects/Whiteboard.js');
 
 describe("Whiteboard", function() {
     var testWhiteboard;
