@@ -1,9 +1,13 @@
 define([
+    'jquery',
+    'backbone',
     'marionette',
     'layouts/dashboard',
     'layouts/room',
     'models/room'
 ], function(
+    $,
+    Backbone,
     Marionette,
     DashboardView,
     RoomLayoutView,
@@ -11,6 +15,26 @@ define([
     'use strict';
 
     return Marionette.Controller.extend({
+        _setupAjax: function() {
+            $.ajaxSetup({
+                cache: false,
+                crossDomain: true,
+                dataType: 'jsonp',
+                contentType: 'application/json',
+                statusCode: {
+                    403: function() {
+                        Backbone.history.navigate('login', {trigger: true});
+                        //self.login();
+                    }
+                }
+            });
+        },
+        initialize: function() {
+            this._setupAjax();
+        },
+        login: function() {
+            this.mainContent.show(new LoginView());
+        },
         dashboard: function() {
             this.mainContent.show(new DashboardView());
         },

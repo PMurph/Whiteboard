@@ -1,5 +1,5 @@
 "use strict";
-var RoomObjects = require("../../src/room_objects/Room.js");
+var RoomObjects = require("../../../src/room_objects/Room.js");
 
 describe("Room", function() {
     var room;

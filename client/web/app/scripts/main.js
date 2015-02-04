@@ -24,6 +24,9 @@ require([
 
     App.on('start', function() {
         this.mainController = new MainController();
+        this.router = new Router({
+            controller: this.mainController
+        });
         this.mainView = new MasterView({
             controller: this.mainController
         });
@@ -34,30 +37,11 @@ require([
         this.body.show(this.mainView);
         this.mainController.mainContent = this.mainView.mainContent;
 
-        new Router({
-            controller: this.mainController
-        });
     });
 
     App.on('start', function() {
-        $.ajaxSetup({
-            cache: false,
-            crossDomain: true,
-            dataType: 'jsonp',
-            headers: {
-                'Authorization': 'session id here'
-            },
-            statusCode: {
-                // Forbidden
-                403: function() {
-                    Backbone.history.navigate('login', {trigger: true});
-                }
-            }
-        });
-
         Backbone.history.start({ pushState: false, root: '/' });
     });
-
 
     App.start();
 });
