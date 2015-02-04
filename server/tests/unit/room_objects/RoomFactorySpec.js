@@ -1,5 +1,5 @@
 "use strict";
-var RoomFactory = require("../../src/room_objects/RoomFactory.js");
+var RoomFactory = require("../../../src/room_objects/RoomFactory.js");
 
 describe("RoomFactory", function() {
     var roomFactory;
