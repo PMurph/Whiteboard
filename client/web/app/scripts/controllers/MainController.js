@@ -4,6 +4,7 @@ define([
     'marionette',
     'layouts/dashboard',
     'layouts/room',
+    'layouts/login',
     'models/room'
 ], function(
     $,
