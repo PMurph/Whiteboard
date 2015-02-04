@@ -8,7 +8,7 @@ describe("RoomFactory", function() {
 
     describe("Room Id", function() {
         beforeEach(function() {
-            roomFactory = new RoomFactory.RoomFactory(CREATING_USER);
+            roomFactory = new RoomFactory(CREATING_USER);
         });
 
         it('should return a new room id every time', function(){

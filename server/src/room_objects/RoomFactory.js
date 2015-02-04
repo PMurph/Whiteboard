@@ -1,14 +1,12 @@
 'use strict';
-var Room = require('Room');
-var Whiteboard = require('Whiteboard');
+var Room = require('./Room');
+var Whiteboard = require('./Whiteboard');
 
 var RoomFactory = function() {
+	this.roomID = 0;
 };
 
 RoomFactory.prototype = ({
-    initialize: function() {
-        this.roomID = 0;
-    },
     getNextRoomID: function() {
         this.roomID = this.roomID + 1;
         return this.roomID;
