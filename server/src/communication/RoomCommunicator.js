@@ -14,7 +14,7 @@ RoomCommunicator.prototype = {
         this._drawCommandLogic.handleDrawCommand(this._messageFactory.wrapIncomingMessage(this, messageData));
     },
     sendMessage: function(messageType, messageData) {
-        this._socket.emit(messageType, messageData);
+        this._socket.broadcast.to(this._roomId).emit(messageType, messageData);
     },
 };
 

@@ -10,7 +10,7 @@ describe("RoomCommunicator", function() {
     var messageFactoryMock;
 
     beforeEach(function() {
-        socketMock = jasmine.createSpyObj('Socket', ['on', 'join', 'emit']);
+        socketMock = jasmine.createSpyObj('Socket', ['on', 'join']);
         drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawCommand']);
         messageFactoryMock = jasmine.createSpyObj('MessageFactory', ['wrapIncomingMessage']);
 
@@ -43,10 +43,25 @@ describe("RoomCommunicator", function() {
         var TEST_MESSAGE_TYPE = "test type";
         var TEST_MESSAGE = {test: "data"};
 
-        it("should call the sockets emit function with the message", function() {
-            testRoomCommunicator.sendMessage(TEST_MESSAGE_TYPE, TEST_MESSAGE);
+        var socketBroadcastMock;
+        var socketRoomMock;
 
-            expect(socketMock.emit).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_MESSAGE);
+        beforeEach(function() {
+            socketBroadcastMock = jasmine.createSpyObj('SocketBroadcast', ['to']);
+
+            socketMock.broadcast = socketBroadcastMock;
+            socketRoomMock = jasmine.createSpyObj('SocketRoom', ['emit']);
+            socketMock.broadcast.to.and.returnValue(socketRoomMock);
+
+            testRoomCommunicator.sendMessage(TEST_MESSAGE_TYPE, TEST_MESSAGE);
+        });
+
+        it("shoudl call the socket broadcast's to method with the room id it was created with", function() {
+            expect(socketBroadcastMock.to).toHaveBeenCalledWith(TEST_ROOM_ID);
+        });
+
+        it("should call the socket room's emit function with the message", function() {
+            expect(socketRoomMock.emit).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_MESSAGE);
         }); 
     });
 });
