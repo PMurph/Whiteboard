@@ -1,77 +1,63 @@
 "use strict";
 
 describe("Server", function() {
-    var Server = require("../../src/server");
     var mockMongoose = require("mongoose-mock");
+
+    var TEST_HOSTNAME = "testHostname";
+    var TEST_DB_NAME = "testDBname";
+    var TEST_DB_OPTIONS = {
+        mongoose: mockMongoose,
+        name: TEST_DB_NAME,
+        hostname: TEST_HOSTNAME,
+    };
+
+    var Server = require("../../src/server");
     var mockExpress = jasmine.createSpyObj("express", ["use","listen"]);
     var server;
+
     beforeEach(function() {
-        var dbOptions = {
-            mongoose: mockMongoose
-        };
-
         spyOn(mockMongoose, "connect");
-        server = new Server(mockExpress, dbOptions); 
+        server = new Server(mockExpress, TEST_DB_OPTIONS); 
     });
-    it("should start", function() {
-        server.start();
-        expect(mockExpress.listen).toHaveBeenCalled();
-    });
-    it("should set port number on start", function() {
-        var testPort = 3456;
-        server.start(testPort);
 
-        expect(server.getPort()).toBe(testPort);
-    });
-    it("should set port number and hostname on start", function() {
-        var testPort = 3456;
-        var testHostname = "testHostname";
+    describe("server startup", function() {
+        var TEST_PORT = 3456;
 
-        server.start(testPort, testHostname);
-        expect(server.getHostname()).toBe(testHostname);
-    });
-    it("should set port number and hostname on start", function() {
-        var testPort = 3456;
-        var testHostname = "testHostname";
+        it("should start", function() {
+            server.start();
+            expect(mockExpress.listen).toHaveBeenCalled();
+        });
 
-        server.start(testPort, testHostname);
-        expect(server.getHostname()).toBe(testHostname);
-    });
-    it("should set database hostname", function() {
-        var testHostname = "testHostname";
-        var testDBOptions = {
-            mongoose: mockMongoose,
-            hostname: testHostname
-        };
-        server = new Server(mockExpress, testDBOptions);
+        it("should set port number on start", function() {
+            server.start(TEST_PORT);
+            expect(server.getPort()).toBe(TEST_PORT);
+        });
 
-        expect(server.getDBHostname()).toBe(testHostname);
+        it("should set port number and hostname on start", function() {
+            server.start(TEST_PORT, TEST_HOSTNAME);
+            expect(server.getHostname()).toBe(TEST_HOSTNAME);
+        });
     });
-    it("should set database name", function() {
-        var testDBName = "testDBname";
-        var testDBOptions = {
-            mongoose: mockMongoose,
-            name: testDBName
-        };
-        server = new Server(mockExpress, testDBOptions);
 
-        expect(server.getDBName()).toBe(testDBName);
-    });
-    it("should connect to database", function() {
-        server.start();
-        expect(mockMongoose.connect).toHaveBeenCalled();
-    });
-    it("should connect to database with hostname and database name set with dbOptions", function() {
-        var testHostname = "testHostname";
-        var testDBName = "testDB";
-        var testDBOptions = {
-            mongoose: mockMongoose,
-            hostname: testHostname,
-            name: testDBName
-        };
-        server = new Server(mockExpress, testDBOptions);
+    describe("database startup", function() {
+        beforeEach(function() {
+            server.start();
+        });
 
-        server.start();
-        expect(mockMongoose.connect).toHaveBeenCalledWith("mongodb://" + testHostname + "/" + testDBName);
+        it("should set database hostname", function() {
+            expect(server.getDBHostname()).toEqual(TEST_HOSTNAME);
+        });
+
+        it("should set database name", function() {
+            expect(server.getDBName()).toBe(TEST_DB_NAME);
+        });
+
+        it("should connect to database", function() {
+            expect(mockMongoose.connect).toHaveBeenCalled();
+        });
+
+        it("should connect to database with hostname and database name set with dbOptions", function() {
+            expect(mockMongoose.connect).toHaveBeenCalledWith("mongodb://" + TEST_HOSTNAME + "/" + TEST_DB_NAME);
+        });
     });
 });

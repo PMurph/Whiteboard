@@ -24,7 +24,6 @@ var Server = function (exp, dbOptions) {
 
     this._setupMiddleware();
     this._setupRoutes();
-
 };
 
 Server.prototype = {
