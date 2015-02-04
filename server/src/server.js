@@ -48,7 +48,7 @@ Server.prototype = {
         this._httpServ = this.app.listen(this._port, this._hostname, null, listenCB);
     },
     stop: function(closeCB) {
-        //this._disconnectDB();
+        this._disconnectDB();
         if(this._httpServ){
             console.log('Stopping server...');
             this._httpServ.close(closeCB);
