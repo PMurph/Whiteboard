@@ -24,7 +24,7 @@ describe("RoomCommunicator", function() {
 
         beforeEach(function() {
             messageFactoryMock.wrapIncomingMessage.and.returnValue(TEST_WRAPPED_DRAW_COMMAND_MSG);
-            testRoomCommunicator.handleDrawCommand(testRoomCommunicator, TEST_VALID_DRAW_MSG);
+            testRoomCommunicator.handleDrawCommand(TEST_VALID_DRAW_MSG);
         });
 
         it("should call the message factory to wrap the incoming message is of type 'draw'", function() {
