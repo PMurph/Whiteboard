@@ -14,6 +14,13 @@ module.exports = function (grunt) {
     ];
 
     grunt.initConfig({
+        connect: {
+            server: {
+                options: {
+                    port: 8000
+                }
+            }
+        },
         watch: {
             files: clientSourceFiles,
             tasks: ['jshint']
@@ -25,10 +32,26 @@ module.exports = function (grunt) {
             src: clientSourceFiles.concat(clientTestFiles)
         },
         jasmine: {
-            all: {
+            terminal: {
                 src: clientSourceFiles,
                 keepRunner: true,
                 options: {
+                    specs: clientTestFiles,
+                    vendor: ['./node_modules/jasmine-ajax/lib/mock-ajax.js'],
+                    template: require('grunt-template-jasmine-requirejs'),
+                    templateOptions: {
+                        requireConfigFile: 'app/scripts/config.js',
+                        requireConfig: {
+                            baseUrl: 'app/scripts'
+                        }
+                    }
+                }
+            },
+            debug_host: {
+                src: clientSourceFiles,
+                keepRunner: true,
+                options: {
+                    host: "127.0.0.1:8000",
                     specs: clientTestFiles,
                     vendor: ['./node_modules/jasmine-ajax/lib/mock-ajax.js'],
                     template: require('grunt-template-jasmine-requirejs'),
@@ -44,9 +67,13 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
-        'jasmine'
+        'jasmine:terminal'
     ]);
 
+    grunt.registerTask('test-debug', [
+        'connect',
+        'jasmine:debug_host'
+    ]);
 
     grunt.registerTask('default', [
         'jshint',
