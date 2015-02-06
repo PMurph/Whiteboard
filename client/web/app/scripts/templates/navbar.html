@@ -5,7 +5,7 @@
         </a>
         <span id="nav-details">
             <% if(displayName){ %> <span id="username"><%= displayName %></span> <% } %>
-            <% if(!anonymous){ %> | <span id="logout">logout</span> <% }else{ %> | <span id="logout">logout</span> <% } %>
+            <% if(!anonymous){ %> | <a href="#logout"><span id="logout">logout</span></a><% }else{ %> | <a href="#login"><span id="logout">login</span></a><% } %>
         </span>
     </div>
 </nav>
