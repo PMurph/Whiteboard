@@ -2,6 +2,9 @@ define([
     'jquery',
     'backbone',
     'marionette',
+    'routers/MainRouter',
+    'views/master',
+    'views/navbar',
     'layouts/dashboard',
     'layouts/room',
     'layouts/login',
@@ -10,6 +13,9 @@ define([
     $,
     Backbone,
     Marionette,
+    Router,
+    MasterView,
+    NavbarView,
     DashboardView,
     RoomLayoutView,
     LoginView,
@@ -31,8 +37,33 @@ define([
                 }
             });
         },
+        _setupRouter: function() {
+            this.router = new Router({
+                controller: this
+            });
+        },
+        _setupView: function() {
+            this.view = new MasterView({
+                controller: this
+            });
+            this.view.render();
+            this.mainContent = this.view.mainContent;
+            this.header = this.view.header;
+        },
         initialize: function() {
+            this._setupRouter();
+            this._setupView();
+
             this._setupAjax();
+        },
+        showSheild: function() {
+            this.view.ui.appShield.show();
+        },
+        hideSheild: function() {
+            this.view.ui.appShield.hide();
+        },
+        renderHeader: function() {
+            this.header.show(new NavbarView());
         },
         login: function() {
             this.mainContent.show(new LoginView());

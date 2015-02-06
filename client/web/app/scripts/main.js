@@ -4,17 +4,13 @@ require([
     'app',
     'marionette',
     'controllers/MainController',
-    'controllers/UserSession',
-    'routers/MainRouter',
-    'views/master'
+    'controllers/UserSession'
 ], function ($,
     Backbone,
     App,
     Marionette,
     MainController,
-    UserSessionController,
-    Router,
-    MasterView) {
+    UserSessionController) {
              
     'use strict';
 
@@ -24,18 +20,12 @@ require([
 
     App.on('start', function() {
         this.mainController = new MainController();
-        this.router = new Router({
-            controller: this.mainController
-        });
-        this.mainView = new MasterView({
-            controller: this.mainController
-        });
+        this.mainView = this.mainController.view;
 
         this.userSessionController = new UserSessionController();
         this.userSessionController.authAnonymous();
 
         this.body.show(this.mainView);
-        this.mainController.mainContent = this.mainView.mainContent;
     });
 
     App.on('start', function() {

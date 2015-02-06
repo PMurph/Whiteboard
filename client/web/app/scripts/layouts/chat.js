@@ -2,7 +2,7 @@ define([
     'marionette',
     'collections/chatMessages',
     'views/chat/chatMessages',
-    'tpl!/scripts/templates/chat/layout.html'
+    'tpl!templates/chat/layout.html'
 ], function(
     Marionette,
     ChatMessagesCollection,

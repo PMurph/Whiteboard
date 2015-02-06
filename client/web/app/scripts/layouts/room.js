@@ -2,7 +2,7 @@ define([
     'marionette',
     'layouts/chat',
     'views/room/whiteboard',
-    'tpl!/scripts/templates/room/layout.html'
+    'tpl!templates/room/layout.html'
 ], function(
     Marionette,
     ChatViewComponent,

@@ -1,0 +1,11 @@
+<nav>
+    <div id="nav-text">
+        <a href="#">
+            <div id="nav-title">whiteboard</div>
+        </a>
+        <span id="nav-details">
+            <% if(displayName){ %> <span id="username"><%= displayName %></span> <% } %>
+            <% if(!anonymous){ %> | <span id="logout">logout</span> <% }else{ %> | <span id="logout">logout</span> <% } %>
+        </span>
+    </div>
+</nav>

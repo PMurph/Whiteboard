@@ -26,6 +26,16 @@ nav {
 	display: inline-block;
 }
 
+#app-shield {
+	z-index: 4;
+	background-color: rgba(0, 0, 0, 0.7);
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
+
 .content-container {
 	width: 916px;
 	margin: 0 auto;

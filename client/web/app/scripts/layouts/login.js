@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'marionette',
-    'tpl!/scripts/templates/login/layout.html'
+    'tpl!templates/login/layout.html'
 ], function(
     $,
     _,

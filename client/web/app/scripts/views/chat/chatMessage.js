@@ -1,6 +1,6 @@
 define([
     'marionette',
-    'tpl!/scripts/templates/chat/chatMessage.html'
+    'tpl!templates/chat/chatMessage.html'
 ], function(
     Marionette,
     Template) {

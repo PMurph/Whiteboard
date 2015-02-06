@@ -30,7 +30,8 @@ define([
             });
 
             if(token) {
-                App.mainController.dashboard();
+                App.mainController.renderHeader();
+                App.mainController.hideSheild();
             }
         },
         _handlePromise: function(promise, model) {
@@ -38,12 +39,12 @@ define([
 
             promise.then(function (response) {
                 if (response.authToken) {
-                    self._setAuthToken(response.authToken);
                     self._currentUser = model;
+                    self._setAuthToken(response.authToken);
                 }
             }).fail(function () {
-                self._setAuthToken(null);
                 self._currentUser = null;
+                self._setAuthToken(null);
             });
         },
         authAnonymous: function() {

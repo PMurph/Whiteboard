@@ -1,15 +1,15 @@
 define([
     'backbone',
     'marionette',
-    'tpl!/scripts/templates/dashboard/room.html'
+    'tpl!templates/dashboard/room.html'
 ], function(
     Backbone,
     Marionette,
-    Template) {
+    template) {
     'use strict';
 
     return Marionette.ItemView.extend({
-        template: Template,
+        template: template,
 
         className: 'pure-u-1-3'
     });
