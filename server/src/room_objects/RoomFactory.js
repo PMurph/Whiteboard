@@ -3,7 +3,7 @@ var Room = require('./Room');
 var Whiteboard = require('./Whiteboard');
 
 var RoomFactory = function() {
-	this.roomID = 0;
+    this.roomID = 0;
 };
 
 RoomFactory.prototype = ({
