@@ -1,10 +1,11 @@
 "use strict";
 
-var Room = function(roomId, creatingUser, whiteboard) {
+var Room = function(roomId, creatingUser, whiteboard, messageFactory) {
     this._creatingUser = creatingUser;
     this._connectedUsers = [creatingUser];
     this._id = roomId;
     this._whiteboard = whiteboard;
+    this._messageFactory = messageFactory;
 };
 
 Room.prototype = {
@@ -47,17 +48,15 @@ Room.prototype = {
         return this._id;
     },
 
-    handleDrawCommand: function(drawCommandWrapper) {
-        var drawCommand = drawCommandWrapper.getDrawCommand();
-
+    handleDrawCommand: function(drawCommandMessage, drawCommandLogic) {
+        var drawCommand = drawCommandMessage.getDrawCommand();
         this._whiteboard.addDrawCommand(drawCommand);
-        drawCommandWrapper.setUsersToPushTo(this._connectedUsers);
 
-        var numDrawCommandsSeen = this._whiteboard.getNumDrawCommandsSeen();
-        drawCommandWrapper.setNumDrawCommandsSeen(numDrawCommandsSeen);
+        var drawOrder = this._whiteboard.getNumDrawCommandsSeen();
+        drawCommandMessage.setDrawOrder(drawOrder);
 
-        drawCommandWrapper.sendDrawCommandToUsers();
-    }
+        drawCommandLogic.handleDrawResponse(drawCommandMessage);
+    },
 };
 
-module.exports.Room = Room;
+module.exports = Room;

@@ -1,11 +1,11 @@
 "use strict";
-var RoomObjects = require('../../src/room_objects/Whiteboard.js');
+var Whiteboard = require('../../../src/room_objects/Whiteboard.js');
 
 describe("Whiteboard", function() {
     var testWhiteboard;
 
     beforeEach(function(){
-        testWhiteboard = new RoomObjects.Whiteboard();
+        testWhiteboard = new Whiteboard();
     });
 
     describe("empty whiteboard", function() {

@@ -11,6 +11,8 @@ define([
     'use strict';
 
     return Marionette.LayoutView.extend({
-        template: Template
+        template: Template,
+
+        className: 'content-container'
     });
 });

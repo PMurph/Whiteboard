@@ -4,7 +4,7 @@ define(['marionette'], function(Marionette) {
     return Marionette.AppRouter.extend({
         appRoutes: {
             '': 'dashboard',
-            'login': 'login'
+            'room/:id': 'room'
         }
     });
 });

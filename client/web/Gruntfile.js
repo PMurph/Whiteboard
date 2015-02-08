@@ -10,7 +10,7 @@ module.exports = function (grunt) {
     ];
 
     var clientTestFiles = [
-        'tests/*Spec.js',
+        'tests/**/*Spec.js',
     ];
 
     grunt.initConfig({
