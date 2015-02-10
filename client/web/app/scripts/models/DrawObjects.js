@@ -17,8 +17,8 @@ define(['backbone'], function (Backbone) {
 
 	var DrawObjects = Backbone.Model.extend({
 		initialize: function() {
-			this.tool = TOOLS.DRAW;
-			this.colour = COLOURS.BLACK;
+			this._tool = TOOLS.DRAW;
+			this._colour = COLOURS.BLACK;
 		},
 
 	    setColour: function(newColour) {
@@ -26,7 +26,7 @@ define(['backbone'], function (Backbone) {
 				var colour = COLOURS[colourName];
 
 				if (colour.name === newColour) {
-					this.colour = COLOURS[colourName];
+					this._colour = COLOURS[colourName];
 					return true;
 				}
 			}
@@ -35,11 +35,11 @@ define(['backbone'], function (Backbone) {
 	    },
 
 	    setTool: function(newTool) {
-	    	for (var colourName in TOOLS) {
-				var colour = TOOLS[colourName];
+	    	for (var toolName in TOOLS) {
+				var tool = TOOLS[toolName];
 
-				if (colour.name === newTool) {
-					this.colour = TOOLS[colourName];
+				if (tool.name === newTool) {
+					this._tool = TOOLS[toolName];
 					return true;
 				}
 			}
@@ -48,11 +48,11 @@ define(['backbone'], function (Backbone) {
 	    },
 
 	    getColour: function() {
-	    	return this.colour.name;
+	    	return this._colour.name;
 	    },
 
 	    getTool: function() {
-	    	return this.tool.name;
+	    	return this._tool.name;
 	    }
 
 	});
