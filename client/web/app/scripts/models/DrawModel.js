@@ -1,4 +1,4 @@
- define(['backbone', './Coordinates', './DrawObjects'], function (Backbone, Coordinates, DrawObjects) {
+ define(['backbone', './DrawObjects'], function (Backbone, DrawObjects) {
     "use strict";
 
     var DrawModel = Backbone.Model.extend({
@@ -10,8 +10,7 @@
         },
 
         addCoordinate: function(x, y) {
-            var newCoord = new Coordinates(x, y);
-            this._listOfCoordinates.push(newCoord);
+            this._listOfCoordinates.push([x, y]);
         },
 
         setThickness: function(newThickness) {
