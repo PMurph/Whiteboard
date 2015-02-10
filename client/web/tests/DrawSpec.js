@@ -12,7 +12,7 @@ define(['models/DrawModel'], function(DrawModel) {
             expect(draw.getColour()).toBe("Black");
             expect(draw.getTool()).toBe("Draw");
             expect(draw.getThickness()).toBe(1);
-            expect(draw.getListOfCoordinates()).toBe([]);
+            expect(draw.getListOfCoordinates()).toEqual([]);
         });
 
         it('it should return false on setting bad values', function(){
