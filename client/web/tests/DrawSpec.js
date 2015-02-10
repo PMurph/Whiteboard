@@ -37,5 +37,13 @@ define(['models/DrawModel'], function(DrawModel) {
             expect(draw.getTool()).toBe("Erase");
             expect(draw.setThickness(2)).toBe(false);
         });
+
+        it('it should set good coordinates and print them out in order', function(){
+            draw.addCoordinate(0, 0);
+            expect(draw.getListOfCoordinates()[0].getXY()).toEqual([0,0]);
+            draw.addCoordinate(1, 1);
+            expect(draw.getListOfCoordinates()[0].getXY()).toEqual([0,0]);
+            expect(draw.getListOfCoordinates()[1].getXY()).toEqual([1,1]);
+        });
     });
 });
