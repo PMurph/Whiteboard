@@ -10,7 +10,8 @@
         },
 
         addCoordinate: function(x, y) {
-            this._listOfCoordinates.push([x, y]);
+            var newCoord = {x:x, y:y};
+            this._listOfCoordinates.push(newCoord);
         },
 
         setThickness: function(newThickness) {

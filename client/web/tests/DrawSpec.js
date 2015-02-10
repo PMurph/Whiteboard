@@ -37,10 +37,10 @@ define(['models/DrawModel'], function(DrawModel) {
         
         it('it should set good coordinates and print them out in order', function(){
             draw.addCoordinate(0, 0);
-            expect(draw.getListOfCoordinates()[0]).toEqual({x: 0, y: 0]);
+            expect(draw.getListOfCoordinates()[0]).toEqual({x: 0, y: 0});
             draw.addCoordinate(1, 1);
-            expect(draw.getListOfCoordinates()[0]).toEqual([x: 0, y: 0]);
-            expect(draw.getListOfCoordinates()[1]).toEqual([x: 1, y: 1]);
+            expect(draw.getListOfCoordinates()[0]).toEqual({x: 0, y: 0});
+            expect(draw.getListOfCoordinates()[1]).toEqual({x: 1, y: 1});
         });
     });
 });
