@@ -1,5 +1,5 @@
  define(['backbone', './Coordinates', './DrawObjects'], function (Backbone, Coordinates, DrawObjects) {
-"use strict";
+    "use strict";
 
     var DrawModel = Backbone.Model.extend({
 

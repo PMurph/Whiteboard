@@ -25,17 +25,14 @@ define(['models/DrawModel'], function(DrawModel) {
 
         it('it should return true on setting good values', function(){
             expect(draw.setColour("Red")).toBe(true);
-            draw.setColour("Red");
             expect(draw.getColour()).toBe("Red");
             expect(draw.setColour("Blue")).toBe(true);
-            draw.setColour("Blue");
             expect(draw.getColour()).toBe("Blue");
             expect(draw.setTool("Draw")).toBe(true);
             expect(draw.getTool()).toBe("Draw");
-            draw.setTool("Erase");
             expect(draw.setTool("Erase")).toBe(true);
             expect(draw.getTool()).toBe("Erase");
-            expect(draw.setThickness(2)).toBe(false);
+            expect(draw.setThickness(2)).toBe(true);
         });
 
         it('it should set good coordinates and print them out in order', function(){

@@ -2,9 +2,9 @@ define(['backbone'], function (Backbone) {
     'use strict';
 
 var Coordinates = Backbone.Model.extend( {
-        initialize: function(_x, _y) {
-            this._x = _x;
-            this._y = _y;
+        initialize: function(x, y) {
+            this._x = x;
+            this._y = y;
         },
 
         getX: function() {
@@ -12,11 +12,11 @@ var Coordinates = Backbone.Model.extend( {
         },
 
         getY: function() {
-        	return this._y;
+            return this._y;
         },
 
         getXY: function() {
-        	return [this._x, this._y];
+            return [this._x, this._y];
         }
     });
 
