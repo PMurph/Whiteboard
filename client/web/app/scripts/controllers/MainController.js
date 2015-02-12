@@ -2,7 +2,9 @@ define([
     'jquery',
     'backbone',
     'marionette',
+
     'routers/MainRouter',
+
     'views/master',
     'views/navbar',
     'layouts/dashboard',
@@ -13,7 +15,9 @@ define([
     $,
     Backbone,
     Marionette,
+
     Router,
+
     MasterView,
     NavbarView,
     DashboardView,
@@ -43,12 +47,10 @@ define([
             });
         },
         _setupView: function() {
-            this.view = new MasterView({
-                controller: this
-            });
+            this.view = new MasterView();
             this.view.render();
-            this.mainContent = this.view.mainContent;
-            this.header = this.view.header;
+            this.mainContent = this.view.getRegion("mainContent");
+            this.header = this.view.getRegion("header");
         },
         initialize: function() {
             this._setupRouter();
@@ -63,10 +65,12 @@ define([
             this.view.ui.appShield.hide();
         },
         renderHeader: function() {
-            this.header.show(new NavbarView());
+            this.navbarView = new NavbarView();
+            this.header.show(this.navbarView);
         },
         login: function() {
-            this.mainContent.show(new LoginView());
+            this.loginView = new LoginView();
+            this.mainContent.show(this.loginView);
         },
         dashboard: function() {
             this.mainContent.show(new DashboardView());
