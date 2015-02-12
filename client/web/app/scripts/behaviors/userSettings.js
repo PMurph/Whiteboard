@@ -3,11 +3,11 @@ define([
     './../app',
     'jquery',
     'backbone',
-    'marionette',
+    'marionette'
 ], function (App,
      $,
      Backbone,
-     Marionette,
+     Marionette
 ) {
     'use strict';
 
