@@ -36,6 +36,22 @@ nav {
 	right: 0px;
 }
 
+#userSettings {
+	position: absolute;
+	z-index: 2;
+	background-color: rgba(255, 255, 255, 0.8);
+	margin: 10px;
+}
+
+.link:hover {
+     text-shadow: 1px 1px 1px #555;
+}
+
+.link {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
 .content-container {
 	width: 916px;
 	margin: 0 auto;

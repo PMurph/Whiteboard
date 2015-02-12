@@ -3,13 +3,16 @@ define([
     'underscore',
     'marionette',
     'app',
+    'behaviors/navbar',
     'tpl!templates/navbar.html'
 ], function(
     $,
     _,
     Marionette,
     App,
-    template) {
+    NavbarBehavior,
+    template
+) {
     'use strict';
 
     return Marionette.LayoutView.extend({
@@ -23,6 +26,21 @@ define([
                 return template({displayName: user.getDisplayName(), anonymous: user.isAnonymous()});
             }else{
                 return template({displayName: null, anonymous: null});
+            }
+        },
+        regions: {
+            userSettings: "#userSettings"
+        },
+        ui: {
+            b: "body",
+            userSettings: "#userSettings",
+
+            loginButton: "#loginButton",
+            userSettingsButton: "#userSettingsButton"
+        },
+        behaviors: {
+            NavbarButtons: {
+                behaviorClass: NavbarBehavior 
             }
         }
     });
