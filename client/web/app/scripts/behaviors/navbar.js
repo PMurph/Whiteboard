@@ -17,7 +17,12 @@ define([
     var NavbarBehavior = Marionette.Behavior.extend({
         events: {
             "click @ui.loginButton": "showLogin",
-            "click @ui.userSettingsButton": "showUserSettings"
+            "click @ui.userSettingsButton": "showUserSettings",
+            "mousedown @ui.userSettingsButton": "stopSelection",
+            "mousedown @ui.loginButton": "stopSelection"
+        },
+        stopSelection: function(event) {
+            event.preventDefault();
         },
         _hideCBFactory: function() {
             var self = this;
@@ -48,6 +53,7 @@ define([
             offset.left += 10;
 
             this.view.ui.userSettings.css(offset);
+            this.view.ui.userSettings.addClass("show");
 
             event.stopPropagation();
 
@@ -59,11 +65,14 @@ define([
 
         },
         hideUserSettings: function() {
+            this.view.ui.userSettings.removeClass("show");
             document.removeEventListener("click", this._hideCBFactory());
-            this.view.getRegion('userSettings').empty();
         },
         showLogin: function() {
             console.log("Login popup");
+        },
+        hideLogin: function() {
+
         }
     });
 

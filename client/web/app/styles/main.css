@@ -39,8 +39,23 @@ nav {
 #userSettings {
 	position: absolute;
 	z-index: 2;
+
 	background-color: rgba(255, 255, 255, 0.8);
+
 	margin: 10px;
+
+	overflow: hidden;
+	  
+	height: 0;
+	transition: height 0.4s ease-in-out;
+}
+
+#userSettings.show {
+     height: 100px;
+}
+
+#userSettings.hide {
+     height: 0px;
 }
 
 .link:hover {
@@ -50,6 +65,18 @@ nav {
 .link {
 	cursor: pointer;
 	text-decoration: underline;
+}
+
+#userSettingsList {
+     list-style-type: none;
+     padding: 5px;
+
+}
+
+#userSettingsList.show {
+}
+
+.settingItem {
 }
 
 .content-container {
