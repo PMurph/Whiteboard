@@ -26,7 +26,14 @@ define([
                 return this.__hideCB;
             }else{
                 this.__hideCB = function(event) {
-                    self.hideUserSettings();
+                    var id = self.view.ui.userSettings.attr('id'),
+                        search = "#" + id,
+                        target = $(event.target),
+                        parents = target.parents(search);
+
+                    if (parents.length === 0 && target.attr('id') !== id) {
+                        self.hideUserSettings();
+                    }
                 };
 
                 return this.__hideCB;
