@@ -10,14 +10,10 @@ var RoomManager = function(socketManager, userManager) {
     this.initSocketCallbacks(socketManager);
 };
 
-RoomManager.prototype = ({
-    authenticateUserCallback: function(error, user) {
-        if(error || !user || !this._pendingJoinRoomRequests[user.authToken]) {
-            
-        } else {
-            var pendingJoinRequest = this._pendingJoinRoomRequests[user.authToken];
-            this._joinRoom(pendingJoinRequest.roomId, pendingJoinRequest.socket);
-            delete this._pendingJoinRoomRequests[user.authToken];
+RoomManager.prototype = {
+    authenticateUser: function(error, user, callback) {
+        if(user && !error) {
+            callback();
         }
     },
 
@@ -41,14 +37,6 @@ RoomManager.prototype = ({
         });
     },
 
-    handleJoinRequest: function(roomId, authToken, socket) {
-        var self = this;
-        this._pendingJoinRoomRequests[authToken] = {roomId: roomId, socket: socket};
-        this._userManager.findByAuthToken(authToken, function(error, user) {
-            self.authenticateUserCallback(error, user);
-        });
-    },
-
     createNewRoom: function(creatingUser) {
         var room = this._roomFactory.createNewRoom(creatingUser);
         var roomId = room.getId();
@@ -59,6 +47,6 @@ RoomManager.prototype = ({
     getRoom: function(roomId) {
         return this._rooms[roomId];
     },
-});
+};
 
 module.exports = RoomManager;

@@ -32,27 +32,29 @@ describe("RoomManager", function() {
         beforeEach(function() {
             socketMock = jasmine.createSpyObj('socketManager', ["join"]);
         });
+    });
 
-        describe("valid user", function() {
-            var TEST_AUTH_TOKEN = "ValidToken";
-            var TEST_USER = {authToken: TEST_AUTH_TOKEN};
+    describe("authenticate socket messages", function() {
+        var TEST_USER = {username: TEST_USER_NAME};
+        var mockFunction;
 
-            it("should authenticate user using the authentication tocken when a room request occurs", function() {
-                testRoomManager.handleJoinRequest(testRoomId, TEST_AUTH_TOKEN, socketMock);
-                expect(userManagerMock.findByAuthToken).toHaveBeenCalledWith(TEST_AUTH_TOKEN, jasmine.any(Function));
-            });
+        beforeEach(function() {
+            mockFunction = jasmine.createSpy("callback");
+        });
 
-            it("should allow a user to join a room that exists", function() {
-                testRoomManager.handleJoinRequest(testRoomId, TEST_AUTH_TOKEN, socketMock);
-                testRoomManager.authenticateUserCallback(null, TEST_USER);
-                expect(socketMock.join).toHaveBeenCalledWith(testRoomId);
-            });
+        it("should call the callback if there is no error message, and a valid user", function() {
+            testRoomManager.authenticateUser(null, TEST_USER, mockFunction);
+            expect(mockFunction).toHaveBeenCalled();
+        });
 
-            it("should not allow a user to join a room that does not exist", function() {
-                testRoomManager.handleJoinRequest(42, TEST_AUTH_TOKEN, socketMock);
-                testRoomManager.authenticateUserCallback(null, TEST_USER);
-                expect(socketMock.join).not.toHaveBeenCalled();
-            });
+        it("should not call the callback if the user is null", function() {
+            testRoomManager.authenticateUser(null, null, mockFunction);
+            expect(mockFunction).not.toHaveBeenCalled();
+        });
+
+        it("should not call the callback if the error is not null", function() {
+            testRoomManager.authenticateUser("test", TEST_USER, mockFunction);
+            expect(mockFunction).not.toHaveBeenCalled();
         });
     });
 });
