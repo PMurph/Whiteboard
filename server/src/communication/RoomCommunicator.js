@@ -1,4 +1,6 @@
 "use strict";
+var DrawCommandMessage = require("./objects/DrawCommandMessage.js");
+
 var RoomCommunicator = function(socketManager, roomId, drawCommandLogic, messageFactory) {
     this._socketManager = socketManager;
     this._roomId = roomId;
@@ -16,7 +18,7 @@ RoomCommunicator.prototype = {
         });
     },
     handleDrawCommand: function(messageData) {
-        this._drawCommandLogic.handleDrawCommand(this._messageFactory.wrapIncomingMessage(this, messageData));
+        this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, messageData));
     },
     sendMessage: function(messageType, messageData) {
         this._socketManager.sockets.in(this._roomId).emit(messageType, messageData);

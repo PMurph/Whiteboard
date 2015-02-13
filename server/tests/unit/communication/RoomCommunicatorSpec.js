@@ -1,5 +1,6 @@
 "use strict";
 var RoomCommunicator = require('../../../src/communication/RoomCommunicator.js');
+var DrawCommandMessage = require('../../../src/communication/objects/DrawCommandMessage.js');
 
 describe("RoomCommunicator", function() {
     var TEST_ROOM_ID = 42;
@@ -8,31 +9,23 @@ describe("RoomCommunicator", function() {
     var socketManagerStub;
     
     var drawCommandLogicMock;
-    var messageFactoryMock;
 
     beforeEach(function() {
         socketManagerStub = {};
         drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawCommand']);
-        messageFactoryMock = jasmine.createSpyObj('MessageFactory', ['wrapIncomingMessage']);
 
-        testRoomCommunicator = new RoomCommunicator(socketManagerStub, TEST_ROOM_ID, drawCommandLogicMock, messageFactoryMock);
+        testRoomCommunicator = new RoomCommunicator(socketManagerStub, TEST_ROOM_ID, drawCommandLogicMock);
     });
 
     describe("handle draw commands", function() {
-        var TEST_WRAPPED_DRAW_COMMAND_MSG = {test: "message"};
         var TEST_VALID_DRAW_MSG = {msgType: "draw", drawCommand: {some: "test", fields: "k"}};
 
         beforeEach(function() {
-            messageFactoryMock.wrapIncomingMessage.and.returnValue(TEST_WRAPPED_DRAW_COMMAND_MSG);
             testRoomCommunicator.handleDrawCommand(TEST_VALID_DRAW_MSG);
         });
 
-        it("should call the message factory to wrap the incoming message is of type 'draw'", function() {
-            expect(messageFactoryMock.wrapIncomingMessage).toHaveBeenCalledWith(testRoomCommunicator, TEST_VALID_DRAW_MSG);
-        });
-
-        it("should pass a message of the 'draw' type to the draw command logic", function() {
-            expect(drawCommandLogicMock.handleDrawCommand).toHaveBeenCalledWith(TEST_WRAPPED_DRAW_COMMAND_MSG);
+        it("should pass a message of the DrawCommandMessage to the draw command logic", function() {
+            expect(drawCommandLogicMock.handleDrawCommand).toHaveBeenCalledWith(jasmine.any(DrawCommandMessage));
         });
     });
 
