@@ -2,6 +2,8 @@ define([
     'jquery',
     'backbone',
     'marionette',
+    
+    'app',
 
     'routers/MainRouter',
 
@@ -10,11 +12,14 @@ define([
     'layouts/dashboard',
     'layouts/room',
     'layouts/login',
+
     'models/room'
 ], function(
     $,
     Backbone,
     Marionette,
+
+    App,
 
     Router,
 
@@ -23,7 +28,9 @@ define([
     DashboardView,
     RoomLayoutView,
     LoginView,
-    RoomModel) {
+
+    RoomModel
+) {
     'use strict';
 
     return Marionette.Controller.extend({
@@ -36,7 +43,6 @@ define([
                 statusCode: {
                     403: function() {
                         Backbone.history.navigate('login', {trigger: true});
-                        //self.login();
                     }
                 }
             });
@@ -65,7 +71,9 @@ define([
             this.view.ui.appShield.hide();
         },
         renderHeader: function() {
-            this.navbarView = new NavbarView();
+            this.navbarView = new NavbarView({
+                model: App.userSessionController.getUser() 
+            });
             this.header.show(this.navbarView);
         },
         login: function() {

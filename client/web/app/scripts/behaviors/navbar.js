@@ -21,6 +21,9 @@ define([
             "mousedown @ui.userSettingsButton": "stopSelection",
             "mousedown @ui.loginButton": "stopSelection"
         },
+        modelEvents: {
+            "change:name": "changeDisplayName"
+        },
         stopSelection: function(event) {
             event.preventDefault();
         },
@@ -53,6 +56,7 @@ define([
             offset.left += 10;
 
             this.view.ui.userSettings.css(offset);
+            this.view.ui.userSettings.removeClass("hide");
             this.view.ui.userSettings.addClass("show");
 
             event.stopPropagation();
@@ -62,10 +66,11 @@ define([
                 document.addEventListener("click", self._hideCBFactory());
             });
             this.view.getRegion('userSettings').show(userSettingsView);
-
         },
         hideUserSettings: function() {
             this.view.ui.userSettings.removeClass("show");
+            this.view.ui.userSettings.removeClass("showSubmenu");
+            this.view.ui.userSettings.addClass("hide");
             document.removeEventListener("click", this._hideCBFactory());
         },
         showLogin: function() {
@@ -73,6 +78,9 @@ define([
         },
         hideLogin: function() {
 
+        },
+        changeDisplayName: function(user, newDisplayName) {
+            this.view.ui.userDisplayName.html(newDisplayName);
         }
     });
 

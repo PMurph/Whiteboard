@@ -4,7 +4,7 @@
             <div id="nav-title">whiteboard</div>
         </a>
         <span id="nav-details">
-            <% if(displayName){ %> <span id="userSettingsButton" class="link"><span id="username"><%= displayName %></span><img src="images/settings_gear.svg" width="30px" height="30px" /></span><% } %>
+            <% if(displayName){ %> <span id="userSettingsButton" class="link"><span id="userDisplayName"><%= displayName %></span><img src="images/settings_gear.svg" width="30px" height="30px" /></span><% } %>
             <% if(!anonymous){ %> | <span id="logoutButton" class="link"><span id="logout">logout</span></span><% }else{ %> | <span id="loginButton" class="link"><span id="logout">login</span></span><% } %>
         </span>
     </div>

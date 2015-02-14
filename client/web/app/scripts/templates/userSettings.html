@@ -1,4 +1,10 @@
+<span class="boxTitle">Settings</span>
+<hr />
 <ul id="userSettingsList">
-    <li class="settingItem">Change display name</li>
-    <li class="settingItem">Change login settings</li>
+    <li id="changeDisplayNameButton" class="settingItem, link">Display Name</li>
+    <% if (!isAnonymous) { %>
+    <li id="changeLoginButton" class="settingItem, link">Login</li>
+    <% } %>
 </ul>
+<div id="settingsSubMenu">
+</div>

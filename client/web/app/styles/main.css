@@ -37,26 +37,79 @@ nav {
 }
 
 #userSettings {
-	position: absolute;
-	z-index: 2;
+    position: absolute;
+    z-index: 2;
 
-	background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 1px 1px 1px #333;
 
-	margin: 10px;
+    border-style: solid;
+    border-width: 2px;
+    
+    height: 140px;
 
-	overflow: hidden;
-	  
-	height: 0;
-	transition: height 0.4s ease-in-out;
+    margin: 10px;
+
+    padding: 10px;
+
+    overflow: hidden;
+
+    transform: scale(0, 0); 
+    transition: transform 0.2s ease-in-out;
 }
 
 #userSettings.show {
-     height: 100px;
+     transform: scale(1, 1);
 }
 
 #userSettings.hide {
-     height: 0px;
 }
+
+#userSettings hr {
+    margin: 10px 0;
+}
+
+#userSettings .boxTitle {
+    font-weight: bold;
+    font-size: 14;
+}
+
+#userSettingsList {
+    list-style-type: none;
+    overflow: hidden;
+
+    display: inline-block;
+
+    vertical-align: top;
+    width: 125px;
+    height: 65px;
+
+    padding: 5px;
+    margin: 5px;
+    margin-right: 10px;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 10px;
+    border-right: 2px ridge;
+
+}
+
+#userSettingsList .selected {
+    font-weight: bold;
+}
+
+#settingsSubMenu {
+    display: inline-block;
+    max-width: 0px;
+    max-height: 75px;
+    overflow: hidden;
+    transition: max-width 0.2s ease-in-out;
+}
+
+#settingsSubMenu.showSubmenu {
+    max-width: 555px;
+}
+
 
 .link:hover {
      text-shadow: 1px 1px 1px #555;
@@ -65,18 +118,6 @@ nav {
 .link {
 	cursor: pointer;
 	text-decoration: underline;
-}
-
-#userSettingsList {
-     list-style-type: none;
-     padding: 5px;
-
-}
-
-#userSettingsList.show {
-}
-
-.settingItem {
 }
 
 .content-container {

@@ -36,7 +36,9 @@ define([
             userSettings: "#userSettings",
 
             loginButton: "#loginButton",
-            userSettingsButton: "#userSettingsButton"
+            userSettingsButton: "#userSettingsButton",
+
+            userDisplayName: "#userDisplayName"
         },
         behaviors: {
             NavbarButtons: {
