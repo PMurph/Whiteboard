@@ -24,8 +24,6 @@ define([
             var user = App.userSessionController.getUser();
             var newName = this.view.ui.displayNameText.val();
             
-            console.log("fefwefwef");
-
             if (user) {
                 user.setDisplayName(newName);
             } else {

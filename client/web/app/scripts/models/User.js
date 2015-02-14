@@ -40,12 +40,13 @@ define([
                 return false;
             }
 
-            this.set("name", displayName);
-
+            this.save({
+                displayName: displayName
+            });
             return true;
         },
         getDisplayName: function() {
-            return this.get("name");
+            return this.get("displayName");
         }
     });
 

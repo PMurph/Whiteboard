@@ -22,7 +22,7 @@ define([
             "mousedown @ui.loginButton": "stopSelection"
         },
         modelEvents: {
-            "change:name": "changeDisplayName"
+            "change:displayName": "changeDisplayName"
         },
         stopSelection: function(event) {
             event.preventDefault();
