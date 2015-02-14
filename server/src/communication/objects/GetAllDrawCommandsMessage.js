@@ -20,7 +20,7 @@ GetAllDrawCommandsMessage.prototype = {
 
     setDrawCommands: function(drawCommands) {
         this._drawCommands = drawCommands;
-    }
+    },
 };
 
 module.exports = GetAllDrawCommandsMessage;
