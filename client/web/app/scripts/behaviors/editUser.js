@@ -3,16 +3,13 @@ define([
     'jquery',
     'backbone',
     'marionette',
-    'app',
-    'views/editUser'
+    'app'
 ], function (
      $,
      Backbone,
      Marionette,
 
-     App,
-
-     EditUserView
+     App
 ) {
     'use strict';
 
