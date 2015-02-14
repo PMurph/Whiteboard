@@ -5,36 +5,46 @@ var RoomManager = function(socketManager, userManager) {
     this._roomFactory = new RoomFactory();
     this._rooms = {};
     this._userManager = userManager;
-    this._pendingJoinRoomRequests = {};
     
-    this.initSocketCallbacks(socketManager);
+    this._initSocketCallbacks(socketManager);
 };
 
 RoomManager.prototype = {
+    _initSocketCallbacks: function(socketManager) {
+        var self = this;
+
+        socketManager.use(function(socket, next) {
+            var authToken = socket.request._query.authToken;
+            self._userManager.findByAuthToken(authToken, function(error, user) {
+                self.authenticateUser(error, user, function() {
+                    next();
+                });
+            });
+        });
+
+        socketManager.on("connection", function(socket) {
+            socket.on("joinRequest", function(msgData) {
+                self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
+                    self.authenticateUser(error, user, function() {
+                        self.joinRoom(msgData.roomId, user, socket);
+                    });
+                });
+            });
+        });
+    },
+
     authenticateUser: function(error, user, callback) {
         if(user && !error) {
             callback();
         }
     },
 
-    _handleUnathenticatedRequest: function() {
-        var i = 0;
-        i++;
-    },
-
-    _joinRoom: function(roomId, socket) {
-        if(this._rooms[roomId]) {
+    joinRoom: function(roomId, user, socket) {
+        var room = this._rooms[roomId];
+        if(room) {
             socket.join(roomId);
+            room.connectUserToRoom(user);
         }
-    },
-
-    initSocketCallbacks: function(socketManager) {
-        var self = this;
-        socketManager.on("connection", function(socket) {
-            socket.on("joinRequest", function(msgData) {
-                self.handleJoinRequest(msgData.roomId, msgData.authToken, socket);
-            });
-        });
     },
 
     createNewRoom: function(creatingUser) {
