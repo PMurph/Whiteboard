@@ -11,7 +11,6 @@ define([
     'views/navbar',
     'layouts/dashboard',
     'layouts/room',
-    'layouts/login',
 
     'models/room'
 ], function(
@@ -27,7 +26,6 @@ define([
     NavbarView,
     DashboardView,
     RoomLayoutView,
-    LoginView,
 
     RoomModel
 ) {
@@ -64,10 +62,10 @@ define([
 
             this._setupAjax();
         },
-        showSheild: function() {
+        showShield: function() {
             this.view.ui.appShield.show();
         },
-        hideSheild: function() {
+        hideShield: function() {
             this.view.ui.appShield.hide();
         },
         renderHeader: function() {
@@ -75,10 +73,6 @@ define([
                 model: App.userSessionController.getUser() 
             });
             this.header.show(this.navbarView);
-        },
-        login: function() {
-            this.loginView = new LoginView();
-            this.mainContent.show(this.loginView);
         },
         dashboard: function() {
             this.mainContent.show(new DashboardView());

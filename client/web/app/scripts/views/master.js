@@ -9,7 +9,8 @@ define([
     _,
     Marionette,
     App,
-    Template) {
+    Template
+) {
     'use strict';
 
     return Marionette.LayoutView.extend({
@@ -19,7 +20,8 @@ define([
         },
         regions: {
             header: '#header',
-            mainContent: '#main-content-region'
+            mainContent: '#main-content-region',
+            centerBox: '#center-box'
         }
     });
 });

@@ -3,7 +3,8 @@ define([
     'views/dashboard/room'
 ], function(
     Marionette,
-    RoomItemView) {
+    RoomItemView
+) {
     'use strict';
 
     return Marionette.CollectionView.extend({

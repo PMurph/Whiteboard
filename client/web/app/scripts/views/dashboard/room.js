@@ -5,7 +5,8 @@ define([
 ], function(
     Backbone,
     Marionette,
-    template) {
+    template
+) {
     'use strict';
 
     return Marionette.ItemView.extend({

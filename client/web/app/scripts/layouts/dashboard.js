@@ -7,7 +7,8 @@ define([
     Marionette,
     RoomsCollection,
     RoomsCollectionView,
-    Template) {
+    Template
+) {
     'use strict';
 
     return Marionette.LayoutView.extend({

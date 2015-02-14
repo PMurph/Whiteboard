@@ -3,7 +3,8 @@ define([
     'views/chat/chatMessage'
 ], function(
     Marionette,
-    ChatMessageItemView) {
+    ChatMessageItemView
+) {
     'use strict';
 
     return Marionette.CollectionView.extend({

@@ -3,7 +3,8 @@ define([
     'tpl!templates/chat/chatMessage.html'
 ], function(
     Marionette,
-    Template) {
+    Template
+) {
     'use strict';
 
     return Marionette.ItemView.extend({

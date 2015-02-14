@@ -7,7 +7,8 @@ define([
     Marionette,
     ChatViewComponent,
     WhiteboardView,
-    Template) {
+    Template
+) {
     'use strict';
 
     return Marionette.LayoutView.extend({

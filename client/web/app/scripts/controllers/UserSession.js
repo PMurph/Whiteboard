@@ -1,16 +1,18 @@
 define([
-        './../app',
-        'jquery',
-        'backbone',
-        'marionette',
-        'models/AnonymousUser',
-        'models/User'
-], function (App,
-     $,
-     Backbone,
-     Marionette,
-     AnonymousUser,
-     User) {
+    'jquery',
+    'backbone',
+    'marionette',
+    'app',
+    'models/AnonymousUser',
+    'models/User'
+], function (
+    $,
+    Backbone,
+    Marionette,
+    App,
+    AnonymousUser,
+    User
+) {
     'use strict';
 
     var UserSessionController = Marionette.Controller.extend({
@@ -31,7 +33,7 @@ define([
 
             if(token) {
                 App.mainController.renderHeader();
-                App.mainController.hideSheild();
+                App.mainController.hideShield();
             }
         },
         _handlePromise: function(promise, model) {

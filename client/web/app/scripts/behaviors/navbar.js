@@ -1,16 +1,20 @@
 
 define([
-    './../app',
     'jquery',
     'backbone',
     'marionette',
-    'views/userSettings'
-], function (App,
-     $,
-     Backbone,
-     Marionette,
+    'app',
+    'views/userSettings',
+    'views/login'
+], function (
+    $,
+    Backbone,
+    Marionette,
 
-     UserSettingsView
+    App,
+
+    UserSettingsView,
+    LoginView
 ) {
     'use strict';
 
@@ -74,10 +78,11 @@ define([
             document.removeEventListener("click", this._hideCBFactory());
         },
         showLogin: function() {
-            console.log("Login popup");
+            App.mainController.showShield();
+            App.mainController.view.getRegion("centerBox").show(new LoginView());
         },
         hideLogin: function() {
-
+            App.mainController.hideShield();
         },
         changeDisplayName: function(user, newDisplayName) {
             this.view.ui.userDisplayName.html(newDisplayName);

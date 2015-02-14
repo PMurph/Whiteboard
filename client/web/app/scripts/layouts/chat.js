@@ -7,7 +7,8 @@ define([
     Marionette,
     ChatMessagesCollection,
     ChatMessagesView,
-    Template) {
+    Template
+) {
     'use strict';
 
     return Marionette.LayoutView.extend({
