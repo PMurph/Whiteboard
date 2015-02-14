@@ -11,7 +11,7 @@ var UserManager = function (db) {
 UserManager.prototype = {
     _setupDB: function(db) {
         var userSchema = new db.Schema({
-            name: String,
+            displayName: String,
 
             login: String,
             passwordHash: String,
@@ -26,9 +26,21 @@ UserManager.prototype = {
 
         this._UserModel = db.model('User', userSchema);
     },
+    _stripInternalProperties: function(obj) {
+        var cleanObj = {};
+
+        for(var propName in obj) {
+            if (propName.charAt(0) !== '_') {
+                cleanObj[propName] = obj[propName];
+            }
+        }
+
+        return cleanObj;
+    },
     _handleAuthPost: function(body, authUser, dbCallback) {
         if(body){
-            this.updateByID(authUser.id, body);
+            var updatedUser = this._stripInternalProperties(body);
+            this.updateById(authUser.id, updatedUser, dbCallback);
         }else{
             dbCallback(400);
         }
@@ -67,6 +79,7 @@ UserManager.prototype = {
             }else if(doc){
                 res.json(doc.toObject());
             }else{
+                console.log("Database Error:" + err);
                 res.sendStatus(500);
             }
         };
@@ -106,7 +119,7 @@ UserManager.prototype = {
     },
     createAnonymousUser: function (name, token, callback) {
       var anonUserDoc = new this._UserModel({
-          name: name,
+          displayName: name,
           anonymous: true,
           authToken: token
       });
@@ -127,6 +140,11 @@ UserManager.prototype = {
              authToken: authToken
          })
          .exec(callback);
+    },
+    updateById: function (id, user, callback) {
+        this._UserModel
+            .findByIdAndUpdate(id, {$set: user})
+            .exec(callback);
     }
 };
 
