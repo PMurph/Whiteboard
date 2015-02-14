@@ -39,7 +39,7 @@ describe("RoomManager", function() {
         var socketMock;
 
         beforeEach(function() {
-            socketMock = jasmine.createSpyObj('socketManager', ["join"]);
+            socketMock = jasmine.createSpyObj('socketManager', ["join", "on"]);
         });
 
         it("should call the sockets join method with the room id if the room exists", function() {

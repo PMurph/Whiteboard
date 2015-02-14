@@ -1,10 +1,14 @@
 'use strict';
-var RoomFactory = require('./RoomFactory');
+var Whiteboard = require('./Whiteboard.js');
+var Room = require('./Room.js');
+var RoomCommunicator = require("../communication/RoomCommunicator.js");
+var DrawCommandLogic = require("../logic/DrawCommandLogic.js");
 
 var RoomManager = function(socketManager, userManager) {
-    this._roomFactory = new RoomFactory();
+    this._roomId = 0;
     this._rooms = {};
     this._userManager = userManager;
+    this._drawCommandLogic = new DrawCommandLogic(this);
     
     this._initSocketCallbacks(socketManager);
 };
@@ -40,22 +44,38 @@ RoomManager.prototype = {
     },
 
     joinRoom: function(roomId, user, socket) {
-        var room = this._rooms[roomId];
-        if(room) {
-            socket.join(roomId);
-            room.connectUserToRoom(user);
+        var roomObjects = this._rooms[roomId];
+        if(roomObjects) {
+            roomObjects.roomCommunicator.addSocket(socket);
+            roomObjects.room.connectUserToRoom(user);
         }
     },
 
     createNewRoom: function(creatingUser) {
-        var room = this._roomFactory.createNewRoom(creatingUser);
-        var roomId = room.getId();
-        this._rooms[roomId] = room;
+        var roomId = this._getRoomId();
+        var newRoom = this._setupNewRoom(roomId, creatingUser);
+        var newRoomCommunicator = new RoomCommunicator(this._socketManager, roomId, this._drawCommandLogic);
+        
+        this._roomId++;
+        this._manageRoom(roomId, newRoomCommunicator, newRoom);
         return roomId;
     },
 
+    _getRoomId: function() {
+        return this._roomId;
+    },
+
+    _setupNewRoom: function(roomId, creatingUser) {
+        var newWhiteboard = new Whiteboard();
+        return new Room(roomId, creatingUser, newWhiteboard);
+    },
+
+    _manageRoom: function(roomId, roomCommunicator, room) {
+        this._rooms[roomId] = {room: room, roomCommunicator: roomCommunicator};
+    },
+
     getRoom: function(roomId) {
-        return this._rooms[roomId];
+        return this._rooms[roomId].room;
     },
 };
 
