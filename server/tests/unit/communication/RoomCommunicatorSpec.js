@@ -70,5 +70,9 @@ describe("RoomCommunicator", function() {
         it("should call the sockets on method with drawCommand", function() {
             expect(socketMock.on).toHaveBeenCalledWith("drawCommand", jasmine.any(Function));
         });
+
+        it("should call the sockets on method with getAllDrawCommands", function() {
+            expect(socketMock.on).toHaveBeenCalledWith("getAllDrawCommands", jasmine.any(Function));
+        });
     });
 });

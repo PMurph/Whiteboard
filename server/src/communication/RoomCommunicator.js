@@ -16,9 +16,16 @@ RoomCommunicator.prototype = {
         socket.on("drawCommand", function(messageData) {
             self.handleDrawCommand(messageData);
         });
+
+        socket.on("getAllDrawCommands", function(messageData) {
+            self.handleGetAllDrawCommands(messageData);
+        });
     },
     handleDrawCommand: function(messageData) {
         this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, messageData));
+    },
+    handleGetAllRoomData: function(messageData) {
+        messageData = {};
     },
     sendMessage: function(messageType, messageData) {
         this._socketManager.sockets.in(this._roomId).emit(messageType, messageData);
