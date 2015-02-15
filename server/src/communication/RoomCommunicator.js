@@ -30,6 +30,9 @@ RoomCommunicator.prototype = {
     sendMessage: function(messageType, messageData) {
         this._socketManager.sockets.in(this._roomId).emit(messageType, messageData);
     },
+    sendMessageToSocket: function(messageType, messageData, socket) {
+        socket.emit(messageType, messageData);
+    },
 };
 
 module.exports = RoomCommunicator;

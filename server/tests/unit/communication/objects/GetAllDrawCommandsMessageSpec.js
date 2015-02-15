@@ -6,10 +6,12 @@ describe("GetAllDrawCommandsMessage", function() {
 
     var testGetAllDrawCommandsMessage;
     var roomCommunicatorMock;
+    var socketMock;
 
     beforeEach(function() {
+        socketMock = "test";
         roomCommunicatorMock = "test";
-        testGetAllDrawCommandsMessage = new GetAllDrawCommandsMessage(roomCommunicatorMock, TEST_ROOM_ID);
+        testGetAllDrawCommandsMessage = new GetAllDrawCommandsMessage(roomCommunicatorMock, TEST_ROOM_ID, socketMock);
     });
 
     it("should return the room id it was created with", function() {
@@ -18,6 +20,10 @@ describe("GetAllDrawCommandsMessage", function() {
 
     it("should return the room communicator it was created with", function() {
         expect(testGetAllDrawCommandsMessage.getRoomCommunicator()).toEqual(roomCommunicatorMock);
+    });
+    
+    it("should return the socket it was created with", function() {
+        expect(testGetAllDrawCommandsMessage.getSocket()).toEqual(socketMock);
     });
 
     describe("create message", function() {

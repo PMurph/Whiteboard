@@ -7,11 +7,13 @@ describe("RoomCommunicator", function() {
 
     var testRoomCommunicator;
     var socketManagerStub;
+    var socketMock;
     
     var drawCommandLogicMock;
 
     beforeEach(function() {
         socketManagerStub = {};
+        socketMock = jasmine.createSpyObj('Socket', ['join', 'on', 'emit']);
         drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawCommand']);
 
         testRoomCommunicator = new RoomCommunicator(socketManagerStub, TEST_ROOM_ID, drawCommandLogicMock);
@@ -29,37 +31,45 @@ describe("RoomCommunicator", function() {
         });
     });
 
-    describe("sending messages to clients", function(){
+    describe("sending messages to clients ", function(){
         var TEST_MESSAGE_TYPE = "test type";
         var TEST_MESSAGE = {test: "data"};
-        
-        var socketListMock;
-        var socketRoomListMock;
 
-        beforeEach(function() {
-            socketListMock = jasmine.createSpyObj('SocketList', ['in']);
-            socketRoomListMock = jasmine.createSpyObj('SocketManager', ['emit']);
-            socketManagerStub.sockets = socketListMock;
-            socketListMock.in.and.returnValue(socketRoomListMock);
+        describe("sending messages to a room", function() {
+            var socketListMock;
+            var socketRoomListMock;
 
-            testRoomCommunicator.sendMessage(TEST_MESSAGE_TYPE, TEST_MESSAGE);
+            beforeEach(function() {
+                socketListMock = jasmine.createSpyObj('SocketList', ['in', 'emit']);
+                socketRoomListMock = jasmine.createSpyObj('SocketManager', ['emit']);
+                socketManagerStub.sockets = socketListMock;
+                socketListMock.in.and.returnValue(socketRoomListMock);
+
+                testRoomCommunicator.sendMessage(TEST_MESSAGE_TYPE, TEST_MESSAGE);
+            });
+
+            it("should broadcast the message to the all the sockets connected to this room", function() {
+                expect(socketListMock.in).toHaveBeenCalledWith(TEST_ROOM_ID);
+            });
+
+            it("should call the emit function with the message on the list of sockets associated with the room", function() {
+                expect(socketRoomListMock.emit).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_MESSAGE);
+            });
         });
 
-        it("should broadcast the message to the all the sockets connected to this room", function() {
-            expect(socketListMock.in).toHaveBeenCalledWith(TEST_ROOM_ID);
-        });
+        describe("sending message to room", function() {
+            beforeEach(function() {
+                testRoomCommunicator.sendMessageToSocket(TEST_MESSAGE_TYPE, TEST_MESSAGE, socketMock);
+            });
 
-        it("should call the emit function with the message on the list of sockets associated with the room", function() {
-            expect(socketRoomListMock.emit).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_MESSAGE);
-        }); 
+            it("should call the sockets emit message with the message type and data", function() {
+                expect(socketMock.emit).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_MESSAGE);
+            });
+        });
     });
     
     describe("adding a new clients to communicator", function() {
-        var socketMock;
-        
         beforeEach(function() {
-            socketMock = jasmine.createSpyObj('Socket', ['join', 'on']);
-            
             testRoomCommunicator.addSocket(socketMock);
         });
         

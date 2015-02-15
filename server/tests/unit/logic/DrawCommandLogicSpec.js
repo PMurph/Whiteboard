@@ -3,6 +3,7 @@ var DrawCommandLogic = require("../../../src/logic/DrawCommandLogic.js");
 
 describe("DrawCommandLogic", function() {
     var TEST_ROOM_ID = 45;
+    var TEST_RESPONSE_MESSAGE = {some: "test", response: "message"};
 
     var roomManagerMock;
     var roomMock;
@@ -10,7 +11,7 @@ describe("DrawCommandLogic", function() {
     var testDrawCommandLogic;
 
     beforeEach(function() {
-        roomCommunicatorMock = jasmine.createSpyObj('RoomCommunicator', ['sendMessage']);
+        roomCommunicatorMock = jasmine.createSpyObj('RoomCommunicator', ['sendMessage', 'sendMessageToSocket']);
         roomManagerMock = jasmine.createSpyObj('RoomManager', ['getRoom']);
         roomMock = jasmine.createSpyObj('Room', ['handleDrawCommand', 'handleGetAllDrawCommands']);
 
@@ -38,7 +39,6 @@ describe("DrawCommandLogic", function() {
 
     describe('handleDrawResponse', function() {
         var TEST_MESSAGE_TYPE = "drawCommand";
-        var TEST_RESPONSE_MESSAGE = {some: "test", response: "message"};
         var drawCommandResponseMock;
 
         beforeEach(function() {
@@ -66,7 +66,7 @@ describe("DrawCommandLogic", function() {
         var getAllDrawCommandsMessageMock;
 
         beforeEach(function() {
-            getAllDrawCommandsMessageMock = jasmine.createSpyObj('GetAllDrawCommandsMessage', ["getRoomId", "getRoomCommunicator"]);
+            getAllDrawCommandsMessageMock = jasmine.createSpyObj('GetAllDrawCommandsMessage', ["getRoomId", "getRoomCommunicator", "createMessage", "getSocket"]);
         });
 
         describe("handleGetAllDrawCommands", function() {
@@ -85,13 +85,32 @@ describe("DrawCommandLogic", function() {
         });
 
         describe("handleGetAllDrawCommandsResponse", function() {
+            var TEST_MESSAGE_TYPE = "getAllDrawCommands";
+
+            var socketMock;
+
             beforeEach(function() {
+                socketMock = {};
+                getAllDrawCommandsMessageMock.getSocket.and.returnValue(socketMock);
+                getAllDrawCommandsMessageMock.createMessage.and.returnValue(TEST_RESPONSE_MESSAGE);
                 getAllDrawCommandsMessageMock.getRoomCommunicator.and.returnValue(roomCommunicatorMock);
                 testDrawCommandLogic.handleGetAllDrawCommandsResponse(getAllDrawCommandsMessageMock);
             });
 
             it("should get the room communicator from the message", function() {
                 expect(getAllDrawCommandsMessageMock.getRoomCommunicator).toHaveBeenCalledWith();
+            });
+
+            it("should get the socket from the message", function() {
+                expect(getAllDrawCommandsMessageMock.getSocket).toHaveBeenCalled();
+            });
+
+            it("should call getAllDrawCommandsMessage's createMessage function", function() {
+                expect(getAllDrawCommandsMessageMock.createMessage).toHaveBeenCalled();
+            });
+            
+            it("should call the room communicator's sendMessageToSocket function", function() {
+                expect(roomCommunicatorMock.sendMessageToSocket).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_RESPONSE_MESSAGE, socketMock);
             });
         });
     });
