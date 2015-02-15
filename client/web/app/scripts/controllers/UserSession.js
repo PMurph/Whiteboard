@@ -21,6 +21,11 @@ define([
             this._currentUser = null;
 
             this._anonCount = 0;
+            this.on("Authenticated", this._authenticatedEvent, this);
+        },
+        _authenticatedEvent: function() {
+            App.mainController.renderHeader();
+            App.mainController.hideShield();
         },
         _setAuthToken: function(token) {
             this._authToken = token;
@@ -30,11 +35,6 @@ define([
                     authToken: token
                 }
             });
-
-            if(token) {
-                App.mainController.renderHeader();
-                App.mainController.hideShield();
-            }
         },
         _handlePromise: function(promise, model) {
             var self = this;
@@ -43,10 +43,9 @@ define([
                 if (response.authToken) {
                     self._currentUser = model;
                     self._setAuthToken(response.authToken);
+                    self.trigger("Authenticated");
                 }
             }).fail(function () {
-                self._currentUser = null;
-                self._setAuthToken(null);
             });
         },
         authAnonymous: function() {
