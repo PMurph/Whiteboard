@@ -14,7 +14,7 @@ describe("RoomCommunicator", function() {
     beforeEach(function() {
         socketManagerStub = {};
         socketMock = jasmine.createSpyObj('Socket', ['join', 'on', 'emit']);
-        drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawCommand']);
+        drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawCommand', 'handleGetAllDrawCommands']);
 
         testRoomCommunicator = new RoomCommunicator(socketManagerStub, TEST_ROOM_ID, drawCommandLogicMock);
     });
@@ -83,6 +83,18 @@ describe("RoomCommunicator", function() {
 
         it("should call the sockets on method with getAllDrawCommands", function() {
             expect(socketMock.on).toHaveBeenCalledWith("getAllDrawCommands", jasmine.any(Function));
+        });
+    });
+
+    describe("getting all draw commands", function() {
+        var TEST_GET_ALL_DRAW_COMMANDS = {test: "this is a test"};
+
+        beforeEach(function() {
+            testRoomCommunicator.handleGetAllDrawCommands(TEST_GET_ALL_DRAW_COMMANDS);
+        });
+
+        it("should call the drawCommandLogic's handleGetAllDrawCommands function", function() {
+            expect(drawCommandLogicMock.handleGetAllDrawCommands).toHaveBeenCalled();
         });
     });
 });
