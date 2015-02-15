@@ -27,9 +27,11 @@ UserSession.prototype = {
         var searchCallback = function (err, user) {
              if (err) {
                  dbCallback(400);
+                 return;
              }
              if (!user) {
                  dbCallback(403);
+                 return;
              }
              var token = self._createAuthToken();
              
