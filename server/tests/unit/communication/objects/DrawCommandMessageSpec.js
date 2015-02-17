@@ -5,15 +5,16 @@ describe("DrawCommandMessage", function() {
     var TEST_ROOM_ID = 45;
     var TEST_DRAW_ORDER_NUMBER = 42;
 
+    var roomCommunicatorMock;
     var testDrawCommand;
-    var testRoomCommunicator;
     var testDrawCommandMessage;
 
     beforeEach(function() {
         testDrawCommand = {some: "test", draw: "command"};
-        testRoomCommunicator = "test object";
+        roomCommunicatorMock = jasmine.createSpyObj("RoomCommunicator", ["getRoomId"]);
 
-        testDrawCommandMessage = new DrawCommandMessage(testRoomCommunicator, TEST_ROOM_ID, testDrawCommand);
+        roomCommunicatorMock.getRoomId.and.returnValue(TEST_ROOM_ID);
+        testDrawCommandMessage = new DrawCommandMessage(roomCommunicatorMock, testDrawCommand);
     });
 
     it("should return the testDrawCommand", function() {
@@ -21,7 +22,7 @@ describe("DrawCommandMessage", function() {
     });
 
     it("should return the RoomCommunicator object it was created with", function() {
-        expect(testDrawCommandMessage.getRoomCommunicator()).toEqual(testRoomCommunicator);
+        expect(testDrawCommandMessage.getRoomCommunicator()).toEqual(roomCommunicatorMock);
     });
 
     it('should return the room id passed to the contructor', function() {

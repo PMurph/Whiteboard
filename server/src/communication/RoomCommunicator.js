@@ -22,13 +22,16 @@ RoomCommunicator.prototype = {
         });
     },
     handleDrawCommand: function(messageData) {
-        this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, this._socket.rooms()[0], messageData));
+        this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, messageData));
     },
     handleGetAllDrawCommands: function() {
-        this._drawCommandLogic.handleGetAllDrawCommands(new GetAllDrawCommandsMessage(this, this._socket.rooms()[0]));
+        this._drawCommandLogic.handleGetAllDrawCommands(new GetAllDrawCommandsMessage(this));
+    },
+    getRoomId: function() {
+        return this._socket.rooms()[1];
     },
     sendMessage: function(messageType, messageData) {
-        this._socketManager.sockets.in(this._socket.rooms()[0]).emit(messageType, messageData);
+        this._socketManager.sockets.in(this.getRoomId()).emit(messageType, messageData);
     },
     sendMessageToSocket: function(messageType, messageData) {
         this._socket.emit(messageType, messageData);

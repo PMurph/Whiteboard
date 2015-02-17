@@ -8,8 +8,9 @@ describe("GetAllDrawCommandsMessage", function() {
     var roomCommunicatorMock;
 
     beforeEach(function() {
-        roomCommunicatorMock = "test";
-        testGetAllDrawCommandsMessage = new GetAllDrawCommandsMessage(roomCommunicatorMock, TEST_ROOM_ID);
+        roomCommunicatorMock = jasmine.createSpyObj("RoomCommunicator", ["getRoomId"]);
+        roomCommunicatorMock.getRoomId.and.returnValue(TEST_ROOM_ID);
+        testGetAllDrawCommandsMessage = new GetAllDrawCommandsMessage(roomCommunicatorMock);
     });
 
     it("should return the room id it was created with", function() {
@@ -22,10 +23,6 @@ describe("GetAllDrawCommandsMessage", function() {
 
     describe("create message", function() {
         var TEST_DRAW_COMMANDS = ["test1", "test2"];
-
-        it("should return a message with the correct room id", function() {
-            expect(testGetAllDrawCommandsMessage.createMessage().roomId).toEqual(TEST_ROOM_ID);
-        });
 
         it("should return a message containing an empty list of draw commands", function() {
             expect(testGetAllDrawCommandsMessage.createMessage().drawCommands).toEqual([]);
