@@ -16,6 +16,11 @@ define([
     return Marionette.ItemView.extend({
         template: Template,
         ui: {
+            loginTextbox: "#loginText",
+            passwordTextbox: "#passwordText",
+
+            loginButton: "#loginUserBtn",
+            registerButton: "#registerBtn",
             closeButton: "#closeLoginBtn"
         },
         behaviors: {

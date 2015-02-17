@@ -45,6 +45,7 @@ nav {
     background-color: white;
 
     width: 600px;
+    box-shadow: 4px 4px 4px #333333;
 }
 
 #userSettings {
@@ -178,4 +179,17 @@ canvas {
 
 #login-layout {
 	border: 3px solid #000000;
+	padding: 10px;
+}
+
+#loginInputLabels {
+    display: inline-block;
+}
+
+#loginTextboxes {
+    display: inline-block;
+}
+
+#loginButtons {
+    margin-top: 10px;
 }
