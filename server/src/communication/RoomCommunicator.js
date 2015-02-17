@@ -17,15 +17,15 @@ RoomCommunicator.prototype = {
             self.handleDrawCommand(messageData);
         });
 
-        this._socket.on("getAllDrawCommands", function(messageData) {
-            self.handleGetAllDrawCommands(messageData);
+        this._socket.on("getAllDrawCommands", function() {
+            self.handleGetAllDrawCommands();
         });
     },
     handleDrawCommand: function(messageData) {
-        this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, messageData));
+        this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, this._socket.rooms()[0], messageData));
     },
-    handleGetAllDrawCommands: function(messageData) {
-        this._drawCommandLogic.handleGetAllDrawCommands(new GetAllDrawCommandsMessage(this, this._socket.rooms()[0], messageData));
+    handleGetAllDrawCommands: function() {
+        this._drawCommandLogic.handleGetAllDrawCommands(new GetAllDrawCommandsMessage(this, this._socket.rooms()[0]));
     },
     sendMessage: function(messageType, messageData) {
         this._socketManager.sockets.in(this._socket.rooms()[0]).emit(messageType, messageData);

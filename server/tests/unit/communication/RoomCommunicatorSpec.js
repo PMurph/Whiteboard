@@ -78,10 +78,8 @@ describe("RoomCommunicator", function() {
     });
 
     describe("getting all draw commands", function() {
-        var TEST_GET_ALL_DRAW_COMMANDS = {test: "this is a test"};
-
         beforeEach(function() {
-            testRoomCommunicator.handleGetAllDrawCommands(TEST_GET_ALL_DRAW_COMMANDS);
+            testRoomCommunicator.handleGetAllDrawCommands();
         });
 
         it("should call the drawCommandLogic's handleGetAllDrawCommands function", function() {
