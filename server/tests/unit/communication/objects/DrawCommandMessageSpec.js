@@ -10,10 +10,10 @@ describe("DrawCommandMessage", function() {
     var testDrawCommandMessage;
 
     beforeEach(function() {
-        testDrawCommand = {roomId: TEST_ROOM_ID, some: "test", draw: "command"};
+        testDrawCommand = {some: "test", draw: "command"};
         testRoomCommunicator = "test object";
 
-        testDrawCommandMessage = new DrawCommandMessage(testRoomCommunicator, testDrawCommand);
+        testDrawCommandMessage = new DrawCommandMessage(testRoomCommunicator, TEST_ROOM_ID, testDrawCommand);
     });
 
     it("should return the testDrawCommand", function() {
@@ -24,7 +24,7 @@ describe("DrawCommandMessage", function() {
         expect(testDrawCommandMessage.getRoomCommunicator()).toEqual(testRoomCommunicator);
     });
 
-    it('should return the RoomId of the drawCommand', function() {
+    it('should return the room id passed to the contructor', function() {
         expect(testDrawCommandMessage.getRoomId()).toEqual(TEST_ROOM_ID);
     });
 

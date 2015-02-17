@@ -23,8 +23,7 @@ DrawCommandLogic.prototype = {
     handleGetAllDrawCommandsResponse: function(getAllDrawCommandsResponse) {
         var roomCommunicator = getAllDrawCommandsResponse.getRoomCommunicator();
         var responseMessage = getAllDrawCommandsResponse.createMessage();
-        var socket = getAllDrawCommandsResponse.getSocket();
-        roomCommunicator.sendMessageToSocket(GET_ALL_DRAW_MESSAGE_TYPE, responseMessage, socket);
+        roomCommunicator.sendMessageToSocket(GET_ALL_DRAW_MESSAGE_TYPE, responseMessage);
     },
 };
 

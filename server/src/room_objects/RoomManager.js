@@ -46,15 +46,17 @@ RoomManager.prototype = {
     joinRoom: function(roomId, user, socket) {
         var roomObjects = this._rooms[roomId];
         if(roomObjects) {
-            roomObjects.roomCommunicator.addSocket(socket);
+            socket.join(roomId);
+            roomObjects.roomCommunicators.push(new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic));
             roomObjects.room.connectUserToRoom(user);
         }
     },
 
-    createNewRoom: function(creatingUser) {
+    createNewRoom: function(creatingUser, socket) {
         var roomId = this._getRoomId();
+        socket.join(roomId);
         var newRoom = this._setupNewRoom(roomId, creatingUser);
-        var newRoomCommunicator = new RoomCommunicator(this._socketManager, roomId, this._drawCommandLogic);
+        var newRoomCommunicator = new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic);
         
         this._roomId++;
         this._manageRoom(roomId, newRoomCommunicator, newRoom);
@@ -71,7 +73,7 @@ RoomManager.prototype = {
     },
 
     _manageRoom: function(roomId, roomCommunicator, room) {
-        this._rooms[roomId] = {room: room, roomCommunicator: roomCommunicator};
+        this._rooms[roomId] = {room: room, roomCommunicators: [roomCommunicator]};
     },
 
     getRoom: function(roomId) {

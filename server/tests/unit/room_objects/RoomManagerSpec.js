@@ -7,16 +7,22 @@ describe("RoomManager", function() {
 
     var testRoomManager;
     var testRoomId;
+    var socketMock;
     var socketManagerMock;
     var userManagerMock;
 
     beforeEach(function() {
+        socketMock = jasmine.createSpyObj("Socket", ["join", "on"]);
         socketManagerMock = jasmine.createSpyObj("socketManager", ["on", "use"]);
         userManagerMock = jasmine.createSpyObj("UserManager", ["findByAuthToken"]);
 
         testRoomManager = new RoomManager(socketManagerMock, userManagerMock);
-        testRoomManager.createNewRoom(TEST_USER_NAME);
-        testRoomId = testRoomManager.createNewRoom(TEST_USER_NAME);
+        testRoomManager.createNewRoom(TEST_USER_NAME, socketMock);
+        testRoomId = testRoomManager.createNewRoom(TEST_USER_NAME, socketMock);
+    });
+
+    it("should call the sockets join function", function() {
+        expect(socketMock.join).toHaveBeenCalled();
     });
 
     it("should setup socket middleware callback on initialization", function() {

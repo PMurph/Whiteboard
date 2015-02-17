@@ -1,9 +1,8 @@
 "use strict";
-var GetAllDrawCommandsMessage = function(roomCommunicator, roomId, socket) {
+var GetAllDrawCommandsMessage = function(roomCommunicator, roomId) {
     this._roomCommunicator = roomCommunicator;
     this._roomId = roomId;
     this._drawCommands = [];
-    this._socket = socket;
 };
 
 GetAllDrawCommandsMessage.prototype = {
@@ -15,9 +14,6 @@ GetAllDrawCommandsMessage.prototype = {
     },
     getRoomId: function() {
         return this._roomId;
-    },
-    getSocket: function() {
-        return this._socket;
     },
     setDrawCommands: function(drawCommands) {
         this._drawCommands = drawCommands;

@@ -66,7 +66,7 @@ describe("DrawCommandLogic", function() {
         var getAllDrawCommandsMessageMock;
 
         beforeEach(function() {
-            getAllDrawCommandsMessageMock = jasmine.createSpyObj('GetAllDrawCommandsMessage', ["getRoomId", "getRoomCommunicator", "createMessage", "getSocket"]);
+            getAllDrawCommandsMessageMock = jasmine.createSpyObj('GetAllDrawCommandsMessage', ["getRoomId", "getRoomCommunicator", "createMessage"]);
         });
 
         describe("handleGetAllDrawCommands", function() {
@@ -87,11 +87,7 @@ describe("DrawCommandLogic", function() {
         describe("handleGetAllDrawCommandsResponse", function() {
             var TEST_MESSAGE_TYPE = "getAllDrawCommands";
 
-            var socketMock;
-
             beforeEach(function() {
-                socketMock = {};
-                getAllDrawCommandsMessageMock.getSocket.and.returnValue(socketMock);
                 getAllDrawCommandsMessageMock.createMessage.and.returnValue(TEST_RESPONSE_MESSAGE);
                 getAllDrawCommandsMessageMock.getRoomCommunicator.and.returnValue(roomCommunicatorMock);
                 testDrawCommandLogic.handleGetAllDrawCommandsResponse(getAllDrawCommandsMessageMock);
@@ -101,16 +97,12 @@ describe("DrawCommandLogic", function() {
                 expect(getAllDrawCommandsMessageMock.getRoomCommunicator).toHaveBeenCalledWith();
             });
 
-            it("should get the socket from the message", function() {
-                expect(getAllDrawCommandsMessageMock.getSocket).toHaveBeenCalled();
-            });
-
             it("should call getAllDrawCommandsMessage's createMessage function", function() {
                 expect(getAllDrawCommandsMessageMock.createMessage).toHaveBeenCalled();
             });
             
             it("should call the room communicator's sendMessageToSocket function", function() {
-                expect(roomCommunicatorMock.sendMessageToSocket).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_RESPONSE_MESSAGE, socketMock);
+                expect(roomCommunicatorMock.sendMessageToSocket).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_RESPONSE_MESSAGE);
             });
         });
     });

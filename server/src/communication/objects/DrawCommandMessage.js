@@ -1,6 +1,7 @@
 "use strict";
-var DrawCommandMessage = function(roomCommunicator, drawCommand) {
+var DrawCommandMessage = function(roomCommunicator, roomId, drawCommand) {
     this._roomCommunicator = roomCommunicator;
+    this._roomId = roomId;
     this._drawCommand = drawCommand;
     this._drawOrder = -1;
 };
@@ -16,7 +17,7 @@ DrawCommandMessage.prototype = {
         return this._roomCommunicator;
     },
     getRoomId: function() {
-        return this._drawCommand.roomId;
+        return this._roomId;
     },
     getDrawOrder: function() {
         return this._drawOrder;

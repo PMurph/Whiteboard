@@ -3,7 +3,7 @@ var RoomCommunicator = require('../../../src/communication/RoomCommunicator.js')
 var DrawCommandMessage = require('../../../src/communication/objects/DrawCommandMessage.js');
 
 describe("RoomCommunicator", function() {
-    var TEST_ROOM_ID = 42;
+    var TEST_ROOM_ID = "42";
 
     var testRoomCommunicator;
     var socketManagerStub;
@@ -13,10 +13,19 @@ describe("RoomCommunicator", function() {
 
     beforeEach(function() {
         socketManagerStub = {};
-        socketMock = jasmine.createSpyObj('Socket', ['join', 'on', 'emit']);
+        socketMock = jasmine.createSpyObj('Socket', ['join', 'on', 'emit', 'rooms']);
         drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawCommand', 'handleGetAllDrawCommands']);
 
-        testRoomCommunicator = new RoomCommunicator(socketManagerStub, TEST_ROOM_ID, drawCommandLogicMock);
+        socketMock.rooms.and.returnValue([TEST_ROOM_ID]);
+        testRoomCommunicator = new RoomCommunicator(socketManagerStub, socketMock, drawCommandLogicMock);
+    });
+        
+    it("should call the sockets on method with drawCommand", function() {
+        expect(socketMock.on).toHaveBeenCalledWith("drawCommand", jasmine.any(Function));
+    });
+
+    it("should call the sockets on method with getAllDrawCommands", function() {
+        expect(socketMock.on).toHaveBeenCalledWith("getAllDrawCommands", jasmine.any(Function));
     });
 
     describe("handle draw commands", function() {
@@ -65,24 +74,6 @@ describe("RoomCommunicator", function() {
             it("should call the sockets emit message with the message type and data", function() {
                 expect(socketMock.emit).toHaveBeenCalledWith(TEST_MESSAGE_TYPE, TEST_MESSAGE);
             });
-        });
-    });
-    
-    describe("adding a new clients to communicator", function() {
-        beforeEach(function() {
-            testRoomCommunicator.addSocket(socketMock);
-        });
-        
-        it("should call the sockets join method with the room id", function() {
-            expect(socketMock.join).toHaveBeenCalledWith(TEST_ROOM_ID);
-        });
-        
-        it("should call the sockets on method with drawCommand", function() {
-            expect(socketMock.on).toHaveBeenCalledWith("drawCommand", jasmine.any(Function));
-        });
-
-        it("should call the sockets on method with getAllDrawCommands", function() {
-            expect(socketMock.on).toHaveBeenCalledWith("getAllDrawCommands", jasmine.any(Function));
         });
     });
 
