@@ -32,10 +32,10 @@ define([
             userSettings: "#userSettings"
         },
         ui: {
-            b: "body",
             userSettings: "#userSettings",
 
             loginButton: "#loginButton",
+            logoutButton: "#logoutButton",
             userSettingsButton: "#userSettingsButton",
 
             userDisplayName: "#userDisplayName"

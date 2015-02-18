@@ -17,11 +17,17 @@ define([
 
     var UserSessionController = Marionette.Controller.extend({
         initialize: function() {
+            var self = this;
+
             this._authToken = null;
             this._currentUser = null;
 
             this._anonCount = 0;
             this.on("Authenticated", this._authenticatedEvent, this);
+
+            window.addEventListener("beforeunload", function(event) {
+                self.logoutSync();
+            });
         },
         _authenticatedEvent: function() {
             App.mainController.renderHeader();
@@ -36,12 +42,19 @@ define([
                 }
             });
         },
-        _handlePromise: function(promise, model) {
+        _setUser: function(user) {
+            if (this._currentUser && user) {
+                this.logout();
+            }
+
+            this._currentUser = user;
+        },
+        _handleAuthPromise: function(promise, model) {
             var self = this;
 
             promise.then(function (response) {
                 if (response.authToken) {
-                    self._currentUser = model;
+                    self._setUser(model);
                     self._setAuthToken(response.authToken);
                     self.trigger("Authenticated");
                 }
@@ -51,7 +64,7 @@ define([
         authAnonymous: function() {
             var anonUser = new AnonymousUser();
             
-            this._handlePromise(anonUser.save({}), anonUser);
+            this._handleAuthPromise(anonUser.save({}), anonUser);
             return true;
         },
         authUser: function(login, password) {
@@ -59,7 +72,7 @@ define([
             user.setLogin(login);
             user.setPassword(password);
 
-            this._handlePromise(user.fetch({
+            this._handleAuthPromise(user.fetch({
                 data: {
                     login: user.getLogin(),
                     password: user.getPassword()
@@ -73,8 +86,27 @@ define([
             newUser.setPassword(password);
             newUser.setDisplayName(name);
 
-            this._handlePromise(newUser.save({}), newUser);
+            this._handleAuthPromise(newUser.save({}), newUser);
             return true;
+        },
+        _logout: function(async) {
+            App.mainController.showShield();
+            this._currentUser
+                .save({
+                  status: "offline"
+                    },{
+                  async: async
+                })
+                .then(function () {
+                    self._currentUser = null;
+                    self._setAuthToken(null);
+                });
+        },
+        logout: function() {
+            this._logout(true);
+        },
+        logoutSync: function() {
+            this._logout(false);
         },
         getUser: function() {
             return this._currentUser;

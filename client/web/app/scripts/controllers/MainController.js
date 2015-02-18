@@ -40,7 +40,7 @@ define([
                 contentType: 'application/json',
                 statusCode: {
                     403: function() {
-                        Backbone.history.navigate('login', {trigger: true});
+ 
                     }
                 }
             });
@@ -63,9 +63,11 @@ define([
             this._setupAjax();
         },
         showShield: function() {
+            this.view.centerBox.empty();
             this.view.ui.appShield.show();
         },
         hideShield: function() {
+            this.view.centerBox.empty();
             this.view.ui.appShield.hide();
         },
         renderHeader: function() {

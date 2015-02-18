@@ -21,9 +21,11 @@ define([
     var NavbarBehavior = Marionette.Behavior.extend({
         events: {
             "click @ui.loginButton": "showLogin",
+            "click @ui.logoutButton": "logoutHandler",
             "click @ui.userSettingsButton": "showUserSettings",
             "mousedown @ui.userSettingsButton": "stopSelection",
-            "mousedown @ui.loginButton": "stopSelection"
+            "mousedown @ui.loginButton": "stopSelection",
+            "mousedown @ui.logoutButton": "stopSelection"
         },
         modelEvents: {
             "change:displayName": "changeDisplayName"
@@ -83,6 +85,9 @@ define([
         },
         hideLogin: function() {
             App.mainController.hideShield();
+        },
+        logoutHandler: function() {
+            App.userSessionController.authAnonymous();
         },
         changeDisplayName: function(user, newDisplayName) {
             this.view.ui.userDisplayName.html(newDisplayName);

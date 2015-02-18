@@ -16,7 +16,8 @@ define([
     return Marionette.LayoutView.extend({
         template: Template,
         ui: {
-            appShield: '#app-shield'
+            appShield: '#app-shield',
+            centerBox: '#center-box'
         },
         regions: {
             header: '#header',
