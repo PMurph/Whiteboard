@@ -25,7 +25,7 @@ define([
             this._anonCount = 0;
             this.on("Authenticated", this._authenticatedEvent, this);
 
-            window.addEventListener("beforeunload", function(event) {
+            window.addEventListener("beforeunload", function() {
                 self.logoutSync();
             });
         },
@@ -59,6 +59,7 @@ define([
                     self.trigger("Authenticated");
                 }
             }).fail(function () {
+                self.trigger("AuthFailed");
             });
         },
         authAnonymous: function() {
@@ -90,6 +91,8 @@ define([
             return true;
         },
         _logout: function(async) {
+            var self = this;
+
             App.mainController.showShield();
             this._currentUser
                 .save({
@@ -98,9 +101,10 @@ define([
                   async: async
                 })
                 .then(function () {
-                    self._currentUser = null;
-                    self._setAuthToken(null);
+                    self.trigger("LoggedOff");
                 });
+            this._currentUser = null;
+            this._setAuthToken(null);
         },
         logout: function() {
             this._logout(true);
