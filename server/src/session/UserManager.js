@@ -62,8 +62,15 @@ UserManager.prototype = {
     },
     _handleAuthPost: function(body, authUser, dbCallback) {
         if(body){
+            var userId = body._id;
             var updatedUser = this._stripInternalProperties(body);
-            this.updateById(authUser.id, updatedUser, dbCallback);
+
+            if (userId === authUser.id) {
+                this.updateById(authUser.id, updatedUser, dbCallback);
+            } else {
+                console.log("Error: authToken user id doesn't match the request user id");
+                dbCallback(400);
+            }
         }else{
             dbCallback(400);
         }
