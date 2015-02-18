@@ -18,7 +18,13 @@ UserManager.prototype = {
 
             anonymous: Boolean,
 
-            authToken: String 
+            authToken: String,
+            status: String,
+
+            createdOn: { 
+                type: Date,
+                default: Date.now 
+            }
         },{
             id: true,
             toJSON: true
@@ -36,6 +42,23 @@ UserManager.prototype = {
         }
 
         return cleanObj;
+    },
+    _removeUserCB: function(err) {
+        if (err) {
+            console.log("Error: " + err);
+        }
+    },
+    _handleStatusChange: function(id, user, newStatus) {
+        if (newStatus === "offline") {
+            user.authToken = "";
+            if (user.anonymous === true) {
+                this._UserModel
+                    .remove({_id: id})
+                    .exec(this._removeUserCB);
+                return true;
+            }
+        } 
+        return false;
     },
     _handleAuthPost: function(body, authUser, dbCallback) {
         if(body){
@@ -142,9 +165,23 @@ UserManager.prototype = {
          .exec(callback);
     },
     updateById: function (id, user, callback) {
-        this._UserModel
-            .findByIdAndUpdate(id, {$set: user})
-            .exec(callback);
+        var userDeleted = false;
+
+        if (user.status) {
+            userDeleted = this._handleStatusChange(id, user, user.status);
+        }
+
+        /* If an anonymous user status changes to
+         * offline it will be deleted from DB and 
+         * should not be updated. */
+        if (!userDeleted) {
+            this._UserModel
+                .findByIdAndUpdate(id, {$set: user})
+                .exec(callback);
+        } else {
+            callback(200);
+        }
+
     }
 };
 

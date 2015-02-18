@@ -36,6 +36,7 @@ UserSession.prototype = {
              var token = self._createAuthToken();
              
              user.authToken = token;
+             user.status = "online";
              user.save(dbCallback);
         };
 
