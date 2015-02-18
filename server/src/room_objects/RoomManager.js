@@ -47,19 +47,17 @@ RoomManager.prototype = {
         var roomObjects = this._rooms[roomId];
         if(roomObjects) {
             socket.join(roomId);
-            roomObjects.roomCommunicators.push(new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic));
+            new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic);
             roomObjects.room.connectUserToRoom(user);
         }
     },
 
-    createNewRoom: function(creatingUser, socket) {
+    createNewRoom: function(creatingUser) {
         var roomId = this._getRoomId();
-        socket.join(roomId);
         var newRoom = this._setupNewRoom(roomId, creatingUser);
-        var newRoomCommunicator = new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic);
-        
+
         this._roomId++;
-        this._manageRoom(roomId, newRoomCommunicator, newRoom);
+        this._manageRoom(roomId, newRoom);
         return roomId;
     },
 
@@ -72,8 +70,8 @@ RoomManager.prototype = {
         return new Room(roomId, creatingUser, newWhiteboard);
     },
 
-    _manageRoom: function(roomId, roomCommunicator, room) {
-        this._rooms[roomId] = {room: room, roomCommunicators: [roomCommunicator]};
+    _manageRoom: function(roomId, room) {
+        this._rooms[roomId] = {room: room};
     },
 
     getRoom: function(roomId) {

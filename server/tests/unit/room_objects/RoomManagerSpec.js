@@ -21,10 +21,6 @@ describe("RoomManager", function() {
         testRoomId = testRoomManager.createNewRoom(TEST_USER_NAME, socketMock);
     });
 
-    it("should call the sockets join function", function() {
-        expect(socketMock.join).toHaveBeenCalled();
-    });
-
     it("should setup socket middleware callback on initialization", function() {
         expect(socketManagerMock.use).toHaveBeenCalledWith(jasmine.any(Function));
     });
