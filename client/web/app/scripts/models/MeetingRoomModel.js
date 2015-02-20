@@ -18,10 +18,18 @@
             this._users = [];
         },
 
-        addUser: function(newUser) {
+        addActiveUserToRoom: function(newUser) {
             if (newUser instanceof User)
             {  
                 this._users.push(newUser);
+            }
+        },
+
+        removeUserFromRoom: function(user){
+            var index = this._users.indexOf(user);
+
+            if (index > -1) {
+                this._users.splice(index, 1);
             }
         },
 
@@ -37,6 +45,10 @@
             {
                 this._messages.push(newMsg);
             }
+        },
+
+        getListOfUsersActiveInRoom: function(){
+            return this._users;
         }
     });
 
