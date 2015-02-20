@@ -10,7 +10,7 @@ describe("Room", function() {
     var room;
 
     beforeEach(function() {
-        whiteboardMock = jasmine.createSpyObj('Whiteboard', ['addDrawCommand', 'getNumDrawCommandsSeen']);
+        whiteboardMock = jasmine.createSpyObj('Whiteboard', ['addDrawCommand', 'getNumDrawCommandsSeen', "getAllDrawCommands"]);
         messageFactoryMock = jasmine.createSpyObj('MessageFactory', ['createResponseFromMessage']);
 
         room = new Room(ROOM_ID, CREATING_USER, whiteboardMock, messageFactoryMock);
@@ -97,6 +97,33 @@ describe("Room", function() {
             it("should call the DrawCommandLogic's handleDrawResponse method", function() {
                 expect(drawCommandLogicMock.handleDrawResponse).toHaveBeenCalledWith(drawCommandMessageMock);
             });
+        });
+    });
+
+    describe("Getting all draw commands", function() {
+        var TEST_DRAW_COMMANDS = ["Test1", "Test2", "Test3"];
+
+        var getAllDrawCommandsMessageMock;
+        var drawCommandLogicMock;
+
+        beforeEach(function() {
+            drawCommandLogicMock = jasmine.createSpyObj("DrawCommandLogic", ["handleGetAllDrawCommandsResponse"]);
+            getAllDrawCommandsMessageMock = jasmine.createSpyObj('GetAllDrawCommandsMessage', ["setDrawCommands"]);
+            whiteboardMock.getAllDrawCommands.and.returnValue(TEST_DRAW_COMMANDS);
+
+            room.handleGetAllDrawCommands(getAllDrawCommandsMessageMock, drawCommandLogicMock);
+        });
+
+        it("should get all the draw commands from the whiteboard", function() {
+            expect(whiteboardMock.getAllDrawCommands).toHaveBeenCalled();
+        });
+
+        it("should set the getAllDrawCommandsMessage draw commands", function() {
+            expect(getAllDrawCommandsMessageMock.setDrawCommands).toHaveBeenCalledWith(TEST_DRAW_COMMANDS);
+        });
+
+        it("should call the drawCommandLogic's handleGetAllDrawCommandsResponse function", function() {
+            expect(drawCommandLogicMock.handleGetAllDrawCommandsResponse).toHaveBeenCalledWith(getAllDrawCommandsMessageMock);
         });
     });
 });

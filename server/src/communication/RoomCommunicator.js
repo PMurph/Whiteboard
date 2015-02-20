@@ -1,25 +1,40 @@
 "use strict";
-var RoomCommunicator = function(socketManager, roomId, drawCommandLogic, messageFactory) {
+var DrawCommandMessage = require("./objects/DrawCommandMessage.js");
+var GetAllDrawCommandsMessage = require("./objects/GetAllDrawCommandsMessage.js");
+
+var RoomCommunicator = function(socketManager, socket, drawCommandLogic) {
     this._socketManager = socketManager;
-    this._roomId = roomId;
+    this._socket = socket;
     this._drawCommandLogic = drawCommandLogic;
-    this._messageFactory = messageFactory;
+
+    this._initializeEvents();
 };
 
 RoomCommunicator.prototype = {
-    addSocket: function(socket) {
+    _initializeEvents: function() {
         var self = this;
-        socket.join(this._roomId);
-        
-        socket.on("drawCommand", function(messageData) {
+        this._socket.on("drawCommand", function(messageData) {
             self.handleDrawCommand(messageData);
+        });
+
+        this._socket.on("getAllDrawCommands", function() {
+            self.handleGetAllDrawCommands();
         });
     },
     handleDrawCommand: function(messageData) {
-        this._drawCommandLogic.handleDrawCommand(this._messageFactory.wrapIncomingMessage(this, messageData));
+        this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, messageData));
+    },
+    handleGetAllDrawCommands: function() {
+        this._drawCommandLogic.handleGetAllDrawCommands(new GetAllDrawCommandsMessage(this));
+    },
+    getRoomId: function() {
+        return this._socket.rooms()[1];
     },
     sendMessage: function(messageType, messageData) {
-        this._socketManager.sockets.in(this._roomId).emit(messageType, messageData);
+        this._socketManager.sockets.in(this.getRoomId()).emit(messageType, messageData);
+    },
+    sendMessageToSocket: function(messageType, messageData) {
+        this._socket.emit(messageType, messageData);
     },
 };
 

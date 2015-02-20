@@ -57,6 +57,12 @@ Room.prototype = {
 
         drawCommandLogic.handleDrawResponse(drawCommandMessage);
     },
+
+    handleGetAllDrawCommands: function(getAllDrawCommandsMessage, drawCommandLogic) {
+        var drawCommands = this._whiteboard.getAllDrawCommands();
+        getAllDrawCommandsMessage.setDrawCommands(drawCommands);
+        drawCommandLogic.handleGetAllDrawCommandsResponse(getAllDrawCommandsMessage);
+    },
 };
 
 module.exports = Room;
