@@ -2,13 +2,14 @@ define([
     'marionette',
     'layouts/chat',
     'views/room/whiteboard',
-    'tpl!templates/room/layout.html'
+    'controllers/SocketController',
+    'tpl!/scripts/templates/room/layout.html'
 ], function(
     Marionette,
     ChatViewComponent,
     WhiteboardView,
-    Template
-) {
+    SocketController,
+    Template) {
     'use strict';
 
     return Marionette.LayoutView.extend({
@@ -20,6 +21,10 @@ define([
             whiteboardRegion: '#whiteboard-region',
             chatRegion: '#chat-region',
             toolsRegion: '#tools-region'
+        },
+
+        initialize: function() {
+            this.socket = new SocketController();
         },
 
         onShow: function() {

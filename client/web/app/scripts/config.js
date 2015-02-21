@@ -9,7 +9,8 @@ requirejs.config({
         'backbone.eventbinder' : '../bower_components/backbone.eventbinder/lib/backbone.eventbinder',
         'backbone.babysitter' : '../bower_components/backbone.babysitter/lib/backbone.babysitter',
         text: '../bower_components/requirejs-text/text',
-        tpl: '../bower_components/requirejs-tpl/tpl'
+        tpl: '../bower_components/requirejs-tpl/tpl',
+        'socket.io': '../bower_components/socket.io-client/socket.io'
     },
     shim: {
         backbone: {
@@ -32,6 +33,9 @@ requirejs.config({
         },
         text: {
             exports: 'text'
+        },
+        'socket.io': {
+            exports: 'SocketIO'
         }
 
     }
