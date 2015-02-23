@@ -20,6 +20,10 @@ UserManager.prototype = {
 
             authToken: String,
             status: String,
+            saveSession: {
+                type: Boolean,
+                default: false
+            },
 
             createdOn: { 
                 type: Date,
@@ -36,7 +40,7 @@ UserManager.prototype = {
         var cleanObj = {};
 
         for(var propName in obj) {
-            if (propName.charAt(0) !== '_') {
+            if (propName.charAt(0) !== '_' && propName !== 'authToken') {
                 cleanObj[propName] = obj[propName];
             }
         }
@@ -50,7 +54,9 @@ UserManager.prototype = {
     },
     _handleStatusChange: function(id, user, newStatus) {
         if (newStatus === "offline") {
-            user.authToken = "";
+            if (user.saveSession === false || user.anonymous === true) {
+                user.authToken = "";
+            }
             if (user.anonymous === true) {
                 this._UserModel
                     .remove({_id: id})
@@ -60,13 +66,13 @@ UserManager.prototype = {
         } 
         return false;
     },
-    _handleAuthPost: function(body, authUser, dbCallback) {
+    _handleAuthPut: function(body, authUser, dbCallback) {
         if(body){
             var userId = body._id;
             var updatedUser = this._stripInternalProperties(body);
 
             if (userId === authUser.id) {
-                this.updateById(authUser.id, updatedUser, dbCallback);
+                this.updateById(authUser.id, authUser.anonymous, updatedUser, dbCallback);
             } else {
                 console.log("Error: authToken user id doesn't match the request user id");
                 dbCallback(400);
@@ -75,11 +81,25 @@ UserManager.prototype = {
             dbCallback(400);
         }
     },
+    _handleAuthPatch: function(body, authUser, dbCallback) {
+        if(body){
+            var updatedUser = this._stripInternalProperties(body);
+            this.updateById(authUser.id, authUser.anonymous, updatedUser, dbCallback);
+        }else{
+            dbCallback(400);
+        }
+    },
     _handleAuthGet: function(query, authUser, dbCallback) {
-        if (query && query.id){
+        if(query &&
+            query.login &&
+            query.password &&
+            (!query.anonymous || query.anonymous === false))
+        {
+            this.userSession.authUser(query.login, query.password, dbCallback);
+        }else if (query && query.id){
             this.findByID(query.id, dbCallback);
         }else if (authUser && authUser.id && !query.id){
-            this.findByID(authUser.id);
+            dbCallback(null, authUser);
         }else{
             dbCallback(400);
         }
@@ -102,6 +122,28 @@ UserManager.prototype = {
             dbCallback(400);
         }
     },
+    _handleAuthReq: function(req, res, authUser, dbCallback) {
+        if(req.method === 'PATCH') {
+            this._handleAuthPatch(req.body, authUser, dbCallback);
+        }else if(req.method === 'PUT') {
+            this._handleAuthPut(req.body, authUser, dbCallback);
+        }else if (req.method === 'GET') {
+            this._handleAuthGet(req.query, authUser, dbCallback);
+        }else{
+            console.log("Unsupported method: " + req.method + " for authenticated user route");
+            res.sendStatus(405);
+        }
+    },
+    _handleUnauthReq: function(req, res, dbCallback) {
+        if (req.method === 'POST') {
+            this._handleUnauthPost(req.body, dbCallback);
+        }else if (req.method === 'GET') {
+            this._handleUnauthGet(req.query, dbCallback);
+        }else{
+            console.log("Unsupported method: " + req.method + " for user route");
+            res.sendStatus(405);
+        }
+    },
     _getDBCallbackF: function(res) {
         return function(err, doc) {
             if (err && !isNaN(err)){
@@ -114,37 +156,30 @@ UserManager.prototype = {
             }
         };
     },
+    _handleRoute: function(req, res) {
+        var authToken = this.userSession.getRequestToken(req);
+        var dbCallback = this._getDBCallbackF(res);
+        
+        if (authToken.length > 0) {
+            var self = this;
+            this.findByAuthToken(authToken, function (err, authUser) {
+                if (err || !authUser) {
+                    return res.sendStatus(400);
+                }else{
+                    self._handleAuthReq(req, res, authUser, dbCallback);
+                }
+            });
+        }else{
+            this._handleUnauthReq(req, res, dbCallback);
+        }
+    },
     getRouteF: function() {
         var self = this;
 
+        /* this function should be replace with _.bindAll or something */
+
         return function (req, res) {
-            var authToken = self.userSession.getRequestToken(req);
-            var dbCallback = self._getDBCallbackF(res);
-            
-            if (authToken.length > 0) {
-                self.findByAuthToken(authToken, function (err, authUser) {
-                    if (err || !authUser) {
-                        return res.sendStatus(400);
-                    }
-                    if(req.method === 'POST') {
-                        self._handleAuthPost(req.body, authUser, dbCallback);
-                    }else if (req.method === 'GET') {
-                        self._handleAuthGet(req.query, authUser, dbCallback);
-                    }else{
-                        console.log("Unsupported method: " + req.method + " for authenticated user route");
-                        res.sendStatus(405);
-                    }
-                });
-            }else{
-                if (req.method === 'POST') {
-                    self._handleUnauthPost(req.body, dbCallback);
-                }else if (req.method === 'GET') {
-                    self._handleUnauthGet(req.query, dbCallback);
-                }else{
-                    console.log("Unsupported method: " + req.method + " for user route");
-                    res.sendStatus(405);
-                }
-            }
+            return self._handleRoute(req, res);
         };
     },
     createAnonymousUser: function (name, token, callback) {
@@ -164,6 +199,13 @@ UserManager.prototype = {
          })
          .exec(callback);
     },
+    findById: function (userId, callback) {
+        this._UserModel
+            .findOne({
+                _id: userId
+            })
+            .exec(callback);
+    },
     findByAuthToken: function (authToken, callback) {
       this._UserModel
          .findOne({
@@ -171,16 +213,18 @@ UserManager.prototype = {
          })
          .exec(callback);
     },
-    updateById: function (id, user, callback) {
+    updateById: function (id, anonymous, userChanges, callback) {
+        var user = userChanges || {};
         var userDeleted = false;
-
-        if (user.status) {
-            userDeleted = this._handleStatusChange(id, user, user.status);
-        }
 
         /* If an anonymous user status changes to
          * offline it will be deleted from DB and 
          * should not be updated. */
+        if (anonymous && user.status) {
+            user.anonymous = true;
+            userDeleted = this._handleStatusChange(id, user, user.status);
+        }
+
         if (!userDeleted) {
             this._UserModel
                 .findByIdAndUpdate(id, {$set: user})

@@ -33,9 +33,11 @@ UserSession.prototype = {
                  dbCallback(403);
                  return;
              }
-             var token = self._createAuthToken();
-             
-             user.authToken = token;
+            
+             if (!user.authToken) {
+                var token = self._createAuthToken();
+                user.authToken = token;
+             }
              user.status = "online";
              user.save(dbCallback);
         };
@@ -45,11 +47,12 @@ UserSession.prototype = {
     getRequestToken: function (req) {
         var authToken;
 
-        if(req.body) {
-            authToken = req.body.authToken;
-        }else if (req.query) {
+        if (req.method === "GET") {
             authToken = req.query.authToken;
+        }else{
+            authToken = req.body.authToken;
         }
+
         
         return authToken || "";
     },
