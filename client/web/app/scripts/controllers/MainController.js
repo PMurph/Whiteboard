@@ -78,7 +78,6 @@ define([
                     model = App.userSessionController.getUser() 
                 }
             }
-            console.log("User: " + user);
             this.navbarView = new NavbarView({
                 model: user
             });
