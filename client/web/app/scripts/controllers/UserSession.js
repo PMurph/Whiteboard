@@ -61,25 +61,19 @@ define([
 
             this._currentUser = user;
         },
-        _setUserById: function(userId) {
-            var self = this;
-
+        _setUserById: function(userId, callback) {
             if (this._currentUser && user) {
                 this.logout();
             }
 
             this._currentUser = new User({_id: userId});
             this._currentUser
-                .fetch({
-                    async: false
-                })
+                .fetch({async: false})
                 .then(function() {
-                    
+                   callback(null); 
                 })
                 .fail(function() {
-                    self.clearSavedSession();  
-                    self._setAuthToken(null);
-                    self._setUser(null);
+                    callback("failed to set user by id: " + userId);
                 });
         },
         _handleAuthPromise: function(promise, model) {
@@ -96,6 +90,8 @@ define([
             });
         },
         findSavedSession: function() {
+            var self = this;
+
             var savedToken, savedUserId;
 
             savedToken = localStorage.getItem("session::AuthToken");
@@ -103,8 +99,15 @@ define([
 
             if (savedUserId && savedToken) {
                 this._setAuthToken(savedToken);
-                this._setUserById(savedUserId);
-                this.trigger("Authenticated");
+                this._setUserById(savedUserId, function(err) {
+                    if (err) {
+                        self.clearSavedSession();  
+                        self._setAuthToken(null);
+                        self._setUser(null);
+                    }else{
+                        self.trigger("Authenticated");
+                    }
+                });
 
                 return true;
             }

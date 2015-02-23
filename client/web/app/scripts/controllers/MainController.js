@@ -75,7 +75,7 @@ define([
 
             if (!user) {
                 if (App.userSessionController) {
-                    model = App.userSessionController.getUser() 
+                    user = App.userSessionController.getUser() 
                 }
             }
             this.navbarView = new NavbarView({
