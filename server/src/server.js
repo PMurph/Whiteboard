@@ -5,6 +5,7 @@ var bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     UserManager = require('./session/UserManager'),
     RoomManager = require('./room_objects/RoomManager.js');
+    UserRequest = require('./session/UserRequest');
 
 var Server = function (exp, socketIO, dbOptions) {
     this.app = exp;
@@ -13,6 +14,7 @@ var Server = function (exp, socketIO, dbOptions) {
     this._setupDatabase(dbOptions);
 
     this._userManager = new UserManager(this._db);
+    this._userRequest = new UserRequest(this._userManager);
 
     this._setupMiddleware();
 };
