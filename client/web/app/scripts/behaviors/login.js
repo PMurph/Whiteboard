@@ -19,7 +19,8 @@ define([
         },
         events: {
             "click @ui.loginButton": "loginUser",
-            "click @ui.closeButton": "closeLoginWindow"
+            "click @ui.closeButton": "closeLoginWindow",
+            "click @ui.saveSessionCheck": "saveSessionToggle"
         },
         loginUser: function() {
             var login = this.view.ui.loginTextbox.val();
@@ -29,6 +30,14 @@ define([
         },
         closeLoginWindow: function() {
             App.mainController.hideShield();
+        },
+        saveSessionToggle: function() {
+            var checked = this.view.ui.saveSessionCheck.prop("checked");
+            if (checked) {
+                App.userSessionController.on("Authenticated", App.userSessionController.saveSession);
+            } else {
+                App.userSessionController.off("Authenticated", App.userSessionController.saveSession);
+            }
         }
     });
 

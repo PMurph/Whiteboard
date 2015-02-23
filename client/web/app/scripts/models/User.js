@@ -5,6 +5,7 @@ define([
 
     var User = Backbone.Model.extend({
         url: '/api/user',
+        idAttribute: "_id",
         initialize: function () {
             this.set("anonymous", false);
         },
@@ -47,6 +48,9 @@ define([
         },
         getDisplayName: function() {
             return this.get("displayName");
+        },
+        getId: function() {
+            return this.get("_id");
         }
     });
 

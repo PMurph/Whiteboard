@@ -21,7 +21,9 @@ define([
 
             loginButton: "#loginUserBtn",
             registerButton: "#registerBtn",
-            closeButton: "#closeLoginBtn"
+            closeButton: "#closeLoginBtn",
+
+            saveSessionCheck: "#saveSessionCheckbox"
         },
         behaviors: {
             login: {

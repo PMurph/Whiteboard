@@ -70,9 +70,17 @@ define([
             this.view.centerBox.empty();
             this.view.ui.appShield.hide();
         },
-        renderHeader: function() {
+        renderHeader: function(authUser) {
+            var user = authUser;
+
+            if (!user) {
+                if (App.userSessionController) {
+                    model = App.userSessionController.getUser() 
+                }
+            }
+            console.log("User: " + user);
             this.navbarView = new NavbarView({
-                model: App.userSessionController.getUser() 
+                model: user
             });
             this.header.show(this.navbarView);
         },

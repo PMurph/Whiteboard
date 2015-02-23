@@ -23,9 +23,15 @@ require([
         this.mainView = this.mainController.view;
 
         this.userSessionController = new UserSessionController();
-        this.userSessionController.authAnonymous();
 
         this.body.show(this.mainView);
+    });
+
+    App.on('start', function() {
+        this.userSessionController.findSavedSession();
+        if (!this.userSessionController.isAuthenticated()) {
+            this.userSessionController.authAnonymous();
+        }
     });
 
     App.on('start', function() {
