@@ -22,24 +22,25 @@ UserSession.prototype = {
 
         this.userManager.createAnonymousUser(name, token, dbCallback);
     },
-    authUser: function(login, password, dbCallback) {
+    authUser: function(login, password, saveSession, dbCallback) {
         var self = this;
         var searchCallback = function (err, user) {
-             if (err) {
-                 dbCallback(400);
-                 return;
-             }
-             if (!user) {
-                 dbCallback(403);
-                 return;
-             }
-            
-             if (!user.authToken) {
-                var token = self._createAuthToken();
-                user.authToken = token;
-             }
-             user.status = "online";
-             user.save(dbCallback);
+            if (err) {
+                dbCallback(400);
+                return;
+            }
+            if (!user) {
+                dbCallback(403);
+                return;
+            }
+
+            user.saveSession = saveSession || false;
+            if (!user.authToken || !saveSession) {
+               var token = self._createAuthToken();
+               user.authToken = token;
+            }
+            user.status = "online";
+            user.save(dbCallback);
         };
 
         this.userManager.findByLogin(login, password, searchCallback);

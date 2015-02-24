@@ -47,7 +47,7 @@ UserRequest.prototype = {
             query.password &&
             (!query.anonymous || query.anonymous === false))
         {
-            this.userSession.authUser(query.login, query.password, dbCallback);
+            this.userSession.authUser(query.login, query.password, query.saveSession, dbCallback);
         }else if (query && query.id){
             this.userManager.findByID(query.id, dbCallback);
         }else if (authUser && authUser.id && !query.id){
