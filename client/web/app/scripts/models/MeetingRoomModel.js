@@ -15,7 +15,7 @@
         initialize: function() {
             this._messages = [];
             this._drawModels = [];
-            this._users = [];
+            this._users = []; // collections;
         },
 
         addActiveUserToRoom: function(newUser) {

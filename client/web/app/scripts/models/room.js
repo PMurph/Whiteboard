@@ -7,4 +7,5 @@ define(['backbone'], function(Backbone) {
             id: 0
         }
     });
+    // put stuff in here
 });
