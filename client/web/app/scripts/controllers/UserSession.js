@@ -119,15 +119,18 @@ define([
             this._handleAuthPromise(anonUser.save({}), anonUser);
             return true;
         },
-        authUser: function(login, password) {
+        authUser: function(login, password, save) {
             var user = new User({});
+            var save = save || false;
+
             user.setLogin(login);
             user.setPassword(password);
 
             this._handleAuthPromise(user.fetch({
                 data: {
                     login: user.getLogin(),
-                    password: user.getPassword()
+                    password: user.getPassword(),
+                    saveSession: save
                 }
             }), user);
             return true;

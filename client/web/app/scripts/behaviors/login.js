@@ -15,7 +15,6 @@ define([
 
     var LoginBehavior = Marionette.Behavior.extend({
         initialize: function() {
-            
         },
         events: {
             "click @ui.loginButton": "loginUser",
@@ -25,14 +24,19 @@ define([
         loginUser: function() {
             var login = this.view.ui.loginTextbox.val();
             var password = this.view.ui.passwordTextbox.val();
+            var save = this.isSaveSessionChecked();
 
-            App.userSessionController.authUser(login, password);
+            App.userSessionController.authUser(login, password, save);
         },
         closeLoginWindow: function() {
             App.mainController.hideShield();
         },
+        isSaveSessionChecked: function() {
+            return this.view.ui.saveSessionCheck.prop("checked");
+        },
         saveSessionToggle: function() {
-            var checked = this.view.ui.saveSessionCheck.prop("checked");
+            var checked = this.isSaveSessionChecked();
+
             if (checked) {
                 App.userSessionController.on("Authenticated", App.userSessionController.saveSession);
             } else {
