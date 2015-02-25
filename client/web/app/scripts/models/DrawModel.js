@@ -9,6 +9,10 @@
             this._thickness = 1;
         },
 
+        // fetch: function(){
+            
+        // },
+
         addCoordinate: function(x, y) {
             var newCoord = {x:x, y:y};
             this._listOfCoordinates.push(newCoord);

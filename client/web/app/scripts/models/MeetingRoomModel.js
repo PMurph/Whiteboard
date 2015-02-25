@@ -15,13 +15,13 @@
         initialize: function() {
             this._messages = [];
             this._drawModels = [];
-            this._users = []; // collections;
+            this.users = []; // collections;
         },
 
         addActiveUserToRoom: function(newUser) {
             if (newUser instanceof User)
             {  
-                this._users.push(newUser);
+                this.users.push(newUser);
             }
         },
 
@@ -48,7 +48,7 @@
         },
 
         getListOfUsersActiveInRoom: function(){
-            return this._users;
+            return this.users;
         }
     });
 
