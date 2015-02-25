@@ -25,7 +25,11 @@ define([
             var newName = this.view.ui.displayNameText.val();
             
             if (user) {
-                user.setDisplayName(newName);
+                try {
+                    user.setDisplayName(newName);
+                } catch (e) {
+                    this._setStatus("Invalid: " + e);
+                }
             } else {
                 throw "No User set in UserSession Controller";
             }

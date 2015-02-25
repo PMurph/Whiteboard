@@ -40,6 +40,7 @@ define([
         },
         setDisplayName: function(displayName) {
             if(!displayName || displayName.length === 0) {
+                throw "Display name cannot be blank"
                 return false;
             }
 
