@@ -48,10 +48,8 @@ UserRequest.prototype = {
             (!query.anonymous || query.anonymous === false))
         {
             this.userSession.authUser(query.login, query.password, query.saveSession, dbCallback);
-        }else if (query && query.id){
-            this.userManager.findByID(query.id, dbCallback);
-        }else if (authUser && authUser.id && !query.id){
-            dbCallback(400, authUser);
+        }else if (authUser && (authUser.id == query._id)){
+            dbCallback(null, authUser);
         }else{
             dbCallback(400);
         }
@@ -69,7 +67,7 @@ UserRequest.prototype = {
             query.password &&
             (!query.anonymous || query.anonymous === false))
         {
-            this.userSession.authUser(query.login, query.password, dbCallback);
+            this.userSession.authUser(query.login, query.password, query.saveSession, dbCallback);
         }else{
             dbCallback(400);
         }
