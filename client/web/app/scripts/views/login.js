@@ -16,6 +16,8 @@ define([
     return Marionette.ItemView.extend({
         template: Template,
         ui: {
+            statusLabel: "#loginStatusLabel",
+
             loginTextbox: "#loginText",
             passwordTextbox: "#passwordText",
 

@@ -14,6 +14,7 @@ define([
         },
         setLogin: function(login) {
             if(!login || login.length === 0) {
+                throw "Login must be set";
                 return false;
             }
             this.set("login", login);
@@ -25,6 +26,7 @@ define([
         },
         setPassword: function(password) {
             if(!password || password.length === 0) {
+                throw "Password cannot be blank";
                 return false;
             }
 

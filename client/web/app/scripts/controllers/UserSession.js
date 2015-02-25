@@ -101,18 +101,24 @@ define([
         authUser: function(login, password, saveSession) {
             var user = new User({});
             var save = saveSession || false;
+            var promise;
+            
+            try {
+                user.setLogin(login);
+                user.setPassword(password);
+            } catch (e) {
+                throw e;
+            }
 
-            user.setLogin(login);
-            user.setPassword(password);
-
-            this._handleAuthPromise(user.fetch({
+            promise = user.fetch({
                 data: {
                     login: user.getLogin(),
                     password: user.getPassword(),
                     saveSession: save
                 }
-            }), user);
-            return true;
+            });
+
+            this._handleAuthPromise(promise, user);
         },
         registerUser: function(login, password, name) {
             var newUser = new User();

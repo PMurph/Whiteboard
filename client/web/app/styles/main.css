@@ -182,6 +182,11 @@ canvas {
 	padding: 10px;
 }
 
+#loginStatusLabel {
+    padding-bottom: 15px;
+    color: red;
+}
+
 #loginInputLabels {
     display: inline-block;
 }
@@ -190,6 +195,15 @@ canvas {
     display: inline-block;
 }
 
+#saveSessionOption {
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
 #loginButtons {
     margin-top: 10px;
+}
+
+#closeLoginBtn {
+    float: right;
 }
