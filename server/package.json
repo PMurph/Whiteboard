@@ -17,6 +17,7 @@
     "mongoose-mock": "git://github.com/soda0289/mongoose-mock.git",
     "shelljs": "^0.3.0",
     "supertest": "~0.15.0",
+    "socket.io-client": "~1.3.2",
     "jasmine-reporters": "git://github.com/larrymyers/jasmine-reporters.git"
   }
 }

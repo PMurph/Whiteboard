@@ -25,8 +25,9 @@ RoomManager.prototype = {
                 });
             });
         });
-
+        
         socketManager.on("connection", function(socket) {
+            console.log("connected");
             socket.on("joinRequest", function(msgData) {
                 self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
                     self.authenticateUser(error, user, function() {
