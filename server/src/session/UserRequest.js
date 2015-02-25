@@ -51,7 +51,7 @@ UserRequest.prototype = {
         }else if (query && query.id){
             this.userManager.findByID(query.id, dbCallback);
         }else if (authUser && authUser.id && !query.id){
-            dbCallback(null, authUser);
+            dbCallback(400, authUser);
         }else{
             dbCallback(400);
         }
@@ -115,8 +115,11 @@ UserRequest.prototype = {
         if (authToken.length > 0) {
             var self = this;
             this.userManager.findByAuthToken(authToken, function (err, authUser) {
-                if (err || !authUser) {
+                if (err) {
+                    console.log("Database error: " + err);
                     return res.sendStatus(400);
+                }else if (!authUser) {
+                    return res.sendStatus(403);
                 }else{
                     self._handleAuthReq(req, res, authUser, dbCallback);
                 }
