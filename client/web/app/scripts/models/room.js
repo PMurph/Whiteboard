@@ -28,7 +28,7 @@
         initialize: function() {
             this._messages = new MessagesList();
             this._drawModels = new DrawModelsList();
-            this.users = new UsersList(); // collections;
+            this.users = new UsersList();
         },
 
         addDrawing: function(newDraw){
