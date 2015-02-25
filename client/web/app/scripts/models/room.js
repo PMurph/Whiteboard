@@ -11,7 +11,8 @@
     "use strict";
 
     var MeetingRoomModel = Backbone.Model.extend({
-
+    	url: '/api/room',
+    	
         initialize: function() {
             this._messages = [];
             this._drawModels = [];
@@ -37,7 +38,10 @@
         }
     });
 
-    return MeetingRoomModel;
+    var Messages = Backbone.Collection.extend({
+        model: Song
+    });
 
+    return MeetingRoomModel;
     // socket IO stuff here
 });

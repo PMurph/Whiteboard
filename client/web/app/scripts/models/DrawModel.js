@@ -2,6 +2,7 @@
     "use strict";
 
     var DrawModel = Backbone.Model.extend({
+        url: '/api/drawmodel',
 
         initialize: function() {
             this._drawingInformation = new DrawObjects();
