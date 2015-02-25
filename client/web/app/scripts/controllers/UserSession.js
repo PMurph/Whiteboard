@@ -71,7 +71,12 @@ define([
 
             this._currentUser = new User({_id: userId});
             this._currentUser
-                .fetch({async: false})
+                .fetch({
+                    async: false,
+                    data: {
+                        _id: userId
+                    }
+                })
                 .then(function() {
                    callback(null); 
                 })
