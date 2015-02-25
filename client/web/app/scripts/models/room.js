@@ -47,7 +47,17 @@
 
         getListOfUsersActiveInRoom: function(){
             return this.users;
+        },
+
+        parse: function(response){
+        	var messageList = new MessagesList();
+        	var userList = new UsersList();
+        	var drawList = new DrawModelsList();
+        	messageList.add(response._messages);
+        	userList.add(response._drawModels);
+        	drawList.add(response.users);
         }
+
     });
 
     return MeetingRoomModel;
