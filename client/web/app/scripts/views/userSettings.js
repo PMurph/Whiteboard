@@ -34,18 +34,23 @@ define([
             }
         },
         regions: {
-            subMenu: "#settingsSubMenu"
+            configBox: "#subConfigBox"
         },
         ui: {
             changeDisplayNameButton: "#changeDisplayNameButton",
-            changeLoginButton: "#chnageLoginButton",
+            changeLoginButton: "#changeLoginButton",
             subMenu: "#settingsSubMenu",
-            userSettings: "#userSettings"
+            userSettings: "#userSettings",
+            subStatusLabel: "#subStatusLabel"
         },
         behaviors: {
             userSettings: {
                 behaviorClass: UserSettings
             }
+        },
+        setStatus: function(newStatus) {
+            var status = newStatus.replace(/ /g, '\u00a0');
+            this.ui.subStatusLabel.html(status);
         }
     });
 

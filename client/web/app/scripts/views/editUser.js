@@ -23,6 +23,9 @@ define([
     'use strict';
 
     return Marionette.ItemView.extend({
+        initialize: function(options) {
+            this.userSettingsView = options.userSettingsView;
+        },
         template: function() {
             return displayNameTemplate();
         },

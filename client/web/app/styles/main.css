@@ -113,13 +113,16 @@ nav {
 #settingsSubMenu {
     display: inline-block;
     max-width: 0px;
-    max-height: 75px;
     overflow: hidden;
     transition: max-width 0.2s ease-in-out;
 }
 
 #settingsSubMenu.showSubmenu {
     max-width: 555px;
+}
+
+#subStatusLabel{
+    color: red;
 }
 
 

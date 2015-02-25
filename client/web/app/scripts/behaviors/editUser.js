@@ -14,11 +14,11 @@ define([
     'use strict';
 
     var EditUserBehavior = Marionette.Behavior.extend({
-        initialize: function() {
-            
-        },
         events: {
             "click @ui.submitButton": "changeDisplayName"
+        },
+        _setStatus: function(newStatus) {
+            this.view.userSettingsView.setStatus(newStatus);
         },
         changeDisplayName: function() {
             var user = App.userSessionController.getUser();

@@ -17,9 +17,6 @@ define([
     'use strict';
 
     var UserSettingsBehavior= Marionette.Behavior.extend({
-        initialize: function() {
-            
-        },
         events: {
             "click @ui.changeDisplayNameButton": "showEditDisplayName"
         },
@@ -33,8 +30,9 @@ define([
                 this.view.ui.changeDisplayNameButton.addClass("selected");
                 this.view.ui.subMenu.addClass("showSubmenu");
 
-                this.view.getRegion("subMenu").show(new EditUserView({
-                    model: user
+                this.view.getRegion("configBox").show(new EditUserView({
+                    model: user,
+                    userSettingsView: this.view
                 }));
             }
         }
