@@ -19,6 +19,7 @@
         "location": false,
         "window": false,
         "module": false,
+	"localStorage": false,
 
         /* RequireJS globals */
         "define": false,
