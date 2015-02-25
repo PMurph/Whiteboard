@@ -34,7 +34,7 @@ define([
                     self.logoutSync();
                 }
             });
-            document.addEventListener("visibilitychange", function(event) {
+            document.addEventListener("visibilitychange", function() {
                 if(self.isAuthenticated() && self._currentUser) {
                     var status = document.visibilityState === "visible" ? "online" : "away";
                     self.setUserStatus(status, false);
@@ -62,7 +62,10 @@ define([
             this._currentUser = user;
         },
         _setUserById: function(userId, callback) {
-            if (this._currentUser && user) {
+            if (!userId) {
+                throw "Error: Invalid user id.";
+            }
+            if (this._currentUser) {
                 this.logout();
             }
 
@@ -89,39 +92,15 @@ define([
                 self.trigger("AuthFailed");
             });
         },
-        findSavedSession: function() {
-            var self = this;
-
-            var savedToken, savedUserId;
-
-            savedToken = localStorage.getItem("session::AuthToken");
-            savedUserId = localStorage.getItem("session::userId");
-
-            if (savedUserId && savedToken) {
-                this._setAuthToken(savedToken);
-                this._setUserById(savedUserId, function(err) {
-                    if (err) {
-                        self.clearSavedSession();  
-                        self._setAuthToken(null);
-                        self._setUser(null);
-                    }else{
-                        self.trigger("Authenticated");
-                    }
-                });
-
-                return true;
-            }
-            return false;
-        },
         authAnonymous: function() {
             var anonUser = new AnonymousUser();
             
             this._handleAuthPromise(anonUser.save({}), anonUser);
             return true;
         },
-        authUser: function(login, password, save) {
+        authUser: function(login, password, saveSession) {
             var user = new User({});
-            var save = save || false;
+            var save = saveSession || false;
 
             user.setLogin(login);
             user.setPassword(password);
@@ -169,6 +148,45 @@ define([
 
             return promise;
         },
+        setSaveSession: function(saveSession) {
+            var self = this;
+
+            if (this.isAuthenticated()) {
+                this._currentUser.save({
+                    authToken: this._authToken,
+                    saveSession: saveSession,
+                },{
+                    patch: true
+                }).then(function () {
+                   self.clearSavedSession();
+                });
+            }
+        },
+        findSavedSession: function() {
+            var self = this;
+
+            var savedToken, savedUserId;
+
+            savedToken = localStorage.getItem("session::AuthToken");
+            savedUserId = localStorage.getItem("session::userId");
+
+            if (savedUserId && savedToken) {
+                this._setAuthToken(savedToken);
+                this._setUserById(savedUserId, function(err) {
+                    if (err) {
+                        console.error("The saved authentication token is invalid. Using anonymous account.");
+                        self.clearSavedSession();  
+                        self._setAuthToken(null);
+                        self._setUser(null);
+                    }else{
+                        self.trigger("Authenticated");
+                    }
+                });
+
+                return true;
+            }
+            return false;
+        },
         saveSession: function() {
             localStorage.setItem("session::AuthToken", this._authToken);
             localStorage.setItem("session::userId", this._currentUser.getId());
@@ -182,7 +200,7 @@ define([
             var xhr;
 
             App.mainController.showShield();
-            xhr = this.setUserStatus("offline", async)
+            xhr = this.setUserStatus("offline", async);
             if (xhr) {
                 xhr.then(function () {
                     self.trigger("LoggedOff");

@@ -87,6 +87,7 @@ define([
             App.mainController.hideShield();
         },
         logoutHandler: function() {
+            App.userSessionController.setSaveSession(false);
             App.userSessionController.authAnonymous();
         },
         changeDisplayName: function(user, newDisplayName) {

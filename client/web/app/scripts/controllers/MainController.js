@@ -73,10 +73,8 @@ define([
         renderHeader: function(authUser) {
             var user = authUser;
 
-            if (!user) {
-                if (App.userSessionController) {
-                    user = App.userSessionController.getUser() 
-                }
+            if (!user && App.userSessionController) {
+                user = App.userSessionController.getUser();
             }
             this.navbarView = new NavbarView({
                 model: user
