@@ -28,7 +28,7 @@ RoomCommunicator.prototype = {
         this._drawCommandLogic.handleGetAllDrawCommands(new GetAllDrawCommandsMessage(this));
     },
     getRoomId: function() {
-        return this._socket.rooms()[1];
+        return this._socket.rooms[1];
     },
     sendMessage: function(messageType, messageData) {
         this._socketManager.sockets.in(this.getRoomId()).emit(messageType, messageData);

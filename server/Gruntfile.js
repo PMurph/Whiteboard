@@ -59,14 +59,14 @@ module.exports = function (grunt) {
                     failOnError: false
                 }
             },
-            jasmineRunnerIntegration: {
-                command: 'node tests/jasmineRunner integration',
+            jasmineRunnerInteg: {
+                command: 'node tests/jasmineRunner integ',
                 options: {
                     failOnError: false
                 }
             },
             jasmineRunnerAll: {
-                command: 'node tests/jasmineRunner unit integration',
+                command: 'node tests/jasmineRunner unit integ',
                 options: {
                     failOnError: false
                 }
@@ -131,12 +131,17 @@ module.exports = function (grunt) {
         startMongo(['shell:jasmineRunnerAll']);
     });
 
-    grunt.registerTask('test',[
-                'shell:jasmineRunnerUnit'
+    grunt.registerTask('test-unit',[
+        'shell:jasmineRunnerUnit'
+    ]);
+    
+    grunt.registerTask('test-integ',[
+        'shell:jasmineRunnerInteg'
     ]);
 
     grunt.registerTask('default', [
         'jshint',
-        'test'
+        'test-unit',
+        'test-integ'
     ]);
 };

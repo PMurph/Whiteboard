@@ -7,6 +7,7 @@ var DrawCommandLogic = require("../logic/DrawCommandLogic.js");
 var RoomManager = function(socketManager, userManager) {
     this._roomId = 0;
     this._rooms = {};
+    this._socketManager = socketManager;
     this._userManager = userManager;
     this._drawCommandLogic = new DrawCommandLogic(this);
     
@@ -25,7 +26,7 @@ RoomManager.prototype = {
                 });
             });
         });
-
+        
         socketManager.on("connection", function(socket) {
             socket.on("joinRequest", function(msgData) {
                 self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
@@ -44,21 +45,21 @@ RoomManager.prototype = {
     },
 
     joinRoom: function(roomId, user, socket) {
-        var roomObjects = this._rooms[roomId];
-        if(roomObjects) {
+        var roomObject = this._rooms[roomId];
+        if(roomObject) {
             socket.join(roomId);
             new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic);
-            roomObjects.room.connectUserToRoom(user);
+            roomObject.room.connectUserToRoom(user);
         }
     },
 
     createNewRoom: function(creatingUser) {
         var roomId = this._getRoomId();
-        var newRoom = this._setupNewRoom(roomId, creatingUser);
+        var newRoom = this._setupNewRoom(roomId.toString(), creatingUser);
 
         this._roomId++;
         this._manageRoom(roomId, newRoom);
-        return roomId;
+        return roomId.toString();
     },
 
     _getRoomId: function() {

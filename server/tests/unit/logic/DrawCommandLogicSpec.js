@@ -29,7 +29,7 @@ describe("DrawCommandLogic", function() {
         });
 
         it("should call the room's handleDrawCommand function with the same drawCommandMessage if the message is valid", function() {
-            expect(roomMock.handleDrawCommand).toHaveBeenCalledWith(drawCommandMessageMock);
+            expect(roomMock.handleDrawCommand).toHaveBeenCalledWith(drawCommandMessageMock, testDrawCommandLogic);
         });
 
         it("should get the room from the RoomManager", function() {
