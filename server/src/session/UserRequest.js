@@ -99,7 +99,10 @@ UserRequest.prototype = {
             if (err && !isNaN(err)){
                 res.sendStatus(err);
             }else if(doc){
-                res.json(doc.toObject());
+                res.json(doc.toObject({
+                    hide: '__v passwordHash',
+                    transform: true
+                }));
             }else{
                 console.log("Database Error:" + err);
                 res.sendStatus(500);

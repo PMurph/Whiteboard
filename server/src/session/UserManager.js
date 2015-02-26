@@ -33,7 +33,14 @@ UserManager.prototype = {
             id: true,
             toJSON: true
         });
-
+        userSchema.options.toObject = {};
+        userSchema.options.toObject.transform = function (doc, ret, options) {
+            if (options.hide) {
+                options.hide.split(' ').forEach(function (prop) {
+                    delete ret[prop];
+                });
+            }
+        };
         this._UserModel = db.model('User', userSchema);
     },
     _removeUserCB: function(err) {
@@ -65,12 +72,13 @@ UserManager.prototype = {
       anonUserDoc.save(callback);
     },
     findByLogin: function (login, password, callback) {
-      this._UserModel
-         .findOne({
-             login: login,
-             password: password
-         })
-         .exec(callback);
+        var passwordHash = this.userSession.hashPassword(password);
+        this._UserModel
+            .findOne({
+                login: login,
+                passwordHash: passwordHash
+             })
+             .exec(callback);
     },
     findById: function (userId, callback) {
         this._UserModel
@@ -95,6 +103,10 @@ UserManager.prototype = {
         if (userChanges.status) {
             userDeleted = this._handleStatusChange(user, userChanges.status);
             userChanges.authToken = user.authToken;
+        }
+        if (userChanges.password) {
+            userChanges.passwordHash = this.userSession.hashPassword(userChanges.password);
+            delete userChanges.password;
         }
 
         if (!userDeleted) {
