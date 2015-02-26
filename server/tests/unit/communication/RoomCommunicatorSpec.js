@@ -13,10 +13,10 @@ describe("RoomCommunicator", function() {
 
     beforeEach(function() {
         socketManagerStub = {};
-        socketMock = jasmine.createSpyObj('Socket', ['join', 'on', 'emit', 'rooms']);
+        socketMock = jasmine.createSpyObj('Socket', ['join', 'on', 'emit']);
         drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawCommand', 'handleGetAllDrawCommands']);
 
-        socketMock.rooms.and.returnValue([0, TEST_ROOM_ID]);
+        socketMock.rooms = [0, TEST_ROOM_ID];
         testRoomCommunicator = new RoomCommunicator(socketManagerStub, socketMock, drawCommandLogicMock);
     });
         

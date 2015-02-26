@@ -9,7 +9,7 @@ var DrawCommandLogic = function(roomManager) {
 DrawCommandLogic.prototype = {
     handleDrawCommand: function(drawCommandMessage) {
         var room = this._roomManager.getRoom(drawCommandMessage.getRoomId());
-        room.handleDrawCommand(drawCommandMessage);
+        room.handleDrawCommand(drawCommandMessage, this);
     },
     handleDrawResponse: function(drawCommandResponse) {
         var roomCommunicator = drawCommandResponse.getRoomCommunicator();
