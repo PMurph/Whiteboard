@@ -14,12 +14,16 @@ define([
         },
         setLogin: function(login) {
             if(!login || login.length === 0) {
-                throw "Login must be set";
-                return false;
+                throw "Login/Username must be set";
             }
-            this.set("login", login);
-
-            return true;
+             
+            if (!this.isNew()) {
+                return this.save({
+                    login: login
+                });
+            }else{
+                this.set("login", login);
+            }
         },
         getLogin: function() {
             return this.get("login");
@@ -27,27 +31,33 @@ define([
         setPassword: function(password) {
             if(!password || password.length === 0) {
                 throw "Password cannot be blank";
-                return false;
             }
 
             var b64password = window.btoa(password);
-            this.set("password", b64password);
-
-            return true;
+            
+            if (!this.isNew()) {
+                return this.save({
+                    password: b64password
+                });
+            }else{
+                this.set("b64password", b64password);
+            }
         },
-        getPassword: function() {
-            return this.get("password");
+        getB64Password: function() {
+            return this.get("b64password");
         },
         setDisplayName: function(displayName) {
             if(!displayName || displayName.length === 0) {
-                throw "Display name cannot be blank"
-                return false;
+                throw "Display name cannot be blank";
             }
 
-            this.save({
-                displayName: displayName
-            });
-            return true;
+            if (!this.isNew()) {
+                return this.save({
+                    displayName: displayName
+                });
+            }else{
+                this.set("displayName", displayName);
+            }
         },
         getDisplayName: function() {
             return this.get("displayName");

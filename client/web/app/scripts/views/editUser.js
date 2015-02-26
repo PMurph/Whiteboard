@@ -6,9 +6,7 @@ define([
 
     'app',
 
-    'behaviors/editUser',
-
-    'tpl!templates/settings/editDisplayName.html'
+    'behaviors/editUser'
 ], function(
     $,
     _,
@@ -16,21 +14,19 @@ define([
 
     App,
 
-    EditUser,
-
-    displayNameTemplate
+    EditUser
 ) {
     'use strict';
 
     return Marionette.ItemView.extend({
         initialize: function(options) {
-            this.userSettingsView = options.userSettingsView;
-        },
-        template: function() {
-            return displayNameTemplate();
+            this.userSettingsBehaviour = options.userSettingsBehaviour;
         },
         ui: {
             displayNameText: "#displayNameText",
+            password1Text: "#password1Text",
+            password2Text: "#password2Text",
+            usernameText: "#usernameText",
             submitButton: "#submitButton"
         },
         behaviors: {

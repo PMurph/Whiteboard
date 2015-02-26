@@ -18,13 +18,13 @@ define([
         },
         events: {
             "click @ui.loginButton": "loginUser",
+            "click @ui.registerButton": "registerNewUser",
             "click @ui.closeButton": "closeLoginWindow",
             "click @ui.saveSessionCheck": "saveSessionToggle"
         },
-        _setStatus: function(errorString) {
-            if (this.view) {
-                this.view.ui.statusLabel.html(errorString);
-            }
+        _setStatus: function(errorString, label) {
+            var statusLabel = label || this.view.ui.statusLabel;
+            statusLabel.html(errorString);
         },
         loginUser: function() {
             var self = this;
@@ -32,9 +32,10 @@ define([
             var login = this.view.ui.loginTextbox.val();
             var password = this.view.ui.passwordTextbox.val();
             var save = this.isSaveSessionChecked();
+            var statusLabel = this.view.ui.statusLabel;
 
             App.userSessionController.once("AuthFailed", function () {
-                self._setStatus("Login Failed: The login or password provided could not be authenticated.");
+                self._setStatus("Login Failed: The login or password provided could not be authenticated.", statusLabel);
             });
             try {
                 App.userSessionController.authUser(login, password, save);
@@ -42,6 +43,9 @@ define([
                 this._setStatus("Login Failed: " + e);
             }
 
+        },
+        registerNewUser: function() {
+            console.log("register new user");
         },
         closeLoginWindow: function() {
             App.mainController.hideShield();

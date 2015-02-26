@@ -38,7 +38,8 @@ define([
         },
         ui: {
             changeDisplayNameButton: "#changeDisplayNameButton",
-            changeLoginButton: "#changeLoginButton",
+            changeUsernameButton: "#changeUsernameButton",
+            changePasswordButton: "#changePasswordButton",
             subMenu: "#settingsSubMenu",
             userSettings: "#userSettings",
             subStatusLabel: "#subStatusLabel"
@@ -47,10 +48,6 @@ define([
             userSettings: {
                 behaviorClass: UserSettings
             }
-        },
-        setStatus: function(newStatus) {
-            var status = newStatus.replace(/ /g, '\u00a0');
-            this.ui.subStatusLabel.html(status);
         }
     });
 

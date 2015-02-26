@@ -48,7 +48,7 @@ UserRequest.prototype = {
             (!query.anonymous || query.anonymous === false))
         {
             this.userSession.authUser(query.login, query.password, query.saveSession, dbCallback);
-        }else if (authUser && (authUser.id == query._id)){
+        }else if (authUser && (authUser.id === query._id)){
             dbCallback(null, authUser);
         }else{
             dbCallback(400);

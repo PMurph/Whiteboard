@@ -118,7 +118,7 @@ define([
             promise = user.fetch({
                 data: {
                     login: user.getLogin(),
-                    password: user.getPassword(),
+                    password: user.getB64Password(),
                     saveSession: save
                 }
             });
