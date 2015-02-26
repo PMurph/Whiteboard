@@ -1,3 +1,4 @@
+"use strict";
 var socketIO = require('socket.io');
 var clientIO = require('socket.io-client');
 var RoomManager = require("../../src/room_objects/RoomManager.js");
@@ -6,7 +7,7 @@ describe('Room Pipeline', function() {
     var SOCKET_TIMEOUT = 1000;
     var TEST_PORT = 8080;
     
-    var server;
+    var originalTimeout;
     var socketManager;
     var testSocket;
     var testRoomManager;
@@ -14,6 +15,9 @@ describe('Room Pipeline', function() {
     var testRoomId;
     
     beforeAll(function(done) {
+        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = SOCKET_TIMEOUT * 10;
+    
         mockUserManager = jasmine.createSpyObj("UserManager", ["findByAuthToken"]);
         mockUserManager.findByAuthToken.and.callFake(function(authToken, callback) {
             callback(null, "test");
@@ -22,9 +26,12 @@ describe('Room Pipeline', function() {
         socketManager = socketIO.listen(TEST_PORT);
         
         testRoomManager = new RoomManager(socketManager, mockUserManager);
-        roomId = testRoomManager.createNewRoom("test");
+        testRoomId = testRoomManager.createNewRoom("test");
         
         testSocket = clientIO.connect('http://localhost:8080');
+        
+        spyOn(testRoomManager, "joinRoom").and.callThrough();
+        testSocket.emit("joinRequest", {roomId: testRoomId.toString()});
         
         setTimeout(function() {
             done();
@@ -34,74 +41,45 @@ describe('Room Pipeline', function() {
     afterAll(function() {
         testSocket.disconnect();
         socketManager.close();
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     });
     
     describe("roomInteraction", function() {
         var TEST_VALUE1 = "test value";
         var TEST_VALUE2 = "another test";
         var TEST_DRAW_COMMAND = {vertices: [{x: 5, y:3}, {x:-1, y:4}], drawTool: {}, test: TEST_VALUE1};
-        var TEST_DRAW_COMMAND2 = {vertices: [{x:1, y:2}], drawTools: {}, test: TEST_VALUE2};
+        var TEST_DRAW_COMMAND2 = {vertices: [{x:1, y:2}], drawTool: {}, test: TEST_VALUE2};
         
-        var returnedDrawCommand;
-    
-        beforeAll(function(done) {
-            spyOn(testRoomManager, "joinRoom").and.callThrough();
-            
-            testSocket.on('drawCommand', function(data) {
-                returnedDrawCommand = data.drawCommand;
-            });
-            
-            testSocket.emit("joinRequest", {roomId: roomId.toString()});
-            setTimeout(function() {
-                done();
-            }, SOCKET_TIMEOUT);
+        var responseValue;
+
+        it("should call the room manager's joinRoom on a joinRequest", function() {
+            expect(testRoomManager.joinRoom).toHaveBeenCalled();
         });
         
-        describe("joinRoom", function() {
-            it("should call the room manager's joinRoom on a joinRequest", function(done) {
-                expect(testRoomManager.joinRoom).toHaveBeenCalled();
+        it("should repeat the draw command that was sent to it", function(done) {
+            responseValue = TEST_VALUE1;
+            testSocket.on('drawCommand', function(response) {
+                expect(response.drawCommand.test).toEqual(responseValue);
                 done();
             });
-        });
-    
-        describe("drawingCommand response", function() {
-            beforeEach(function(done) {
-                testSocket.emit("drawCommand", TEST_DRAW_COMMAND);
-                setTimeout(function() {
-                    done();
-                }, SOCKET_TIMEOUT);
-            });
-            
-            it("should repeat the draw command that was sent to it", function(done) {
-                expect(returnedDrawCommand.test).toEqual("test value");
-                done();
-            });
+            testSocket.emit("drawCommand", TEST_DRAW_COMMAND);
         });
         
         describe("getAllDrawCommands response", function() {
-            var returnedDrawCommands;
-            
-            beforeEach(function(done) {
+            beforeAll(function() {
+                responseValue = TEST_VALUE2;
                 testSocket.emit("drawCommand", TEST_DRAW_COMMAND2);
-                
-                testSocket.on("getAllDrawCommands", function(data) {
-                    returnedDrawCommands = data.drawCommands;
-                });
-                
-                testSocket.emit("getAllDrawCommands");
-                
-                setTimeout(function() {
-                    done();
-                }, SOCKET_TIMEOUT);
             });
             
             it("should return the two draw commands in the correct order", function(done) {
-                expect(returnedDrawCommands.length).toBe(2);
-                expect(returnedDrawCommands[0].test).toEqual(TEST_VALUE1);
-                expect(returnedDrawCommands[1].test).toEqual(TEST_VALUE2);
-                done();
+                testSocket.on("getAllDrawCommands", function(response) {
+                    expect(response.drawCommands.length).toBe(2);
+                    expect(response.drawCommands[0].test).toEqual(TEST_VALUE1);
+                    expect(response.drawCommands[1].test).toEqual(TEST_VALUE2);
+                    done();
+                });
+                testSocket.emit("getAllDrawCommands");
             });
-            
         });
     });
 });
