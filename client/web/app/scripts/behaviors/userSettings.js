@@ -53,9 +53,30 @@ define([
             "click @ui.changeUsernameButton": "showEditUsername",
             "click @ui.changePasswordButton": "showEditPassword"
         },
-        setStatus: function(newStatus) {
+        setStatus: function(type, newStatus, imageSrc) {
+            var statusLabel = this.view.ui.subStatusLabel;
+            var errorType = false;
+
+            statusLabel.removeClass("error message");
+            if (type === "message") {
+                statusLabel.addClass("message");
+            } else if (type === "error") {
+                statusLabel.addClass("error");
+                errorType = true;
+                //imageSrc = "images/error.svg";
+            } else if (type === "clear"){
+                return statusLabel.empty();
+            } else {
+                throw "Unkown status type(" + type.toString() + ")";
+            }
             var status = newStatus.replace(/ /g, '\u00a0');
-            this.view.ui.subStatusLabel.html(status);
+            var imageHTML = (imageSrc) ? "<img src='" + imageSrc + "' height='25px'></img>" : "";
+            if (errorType) {
+
+                statusLabel.html(imageHTML + "&nbsp;" + status);
+            }else{
+                statusLabel.html(status + "&nbsp;" + imageHTML);
+            }
         },
         _getButton: function(buttonName) {
             return this.view.ui[buttonName];
@@ -74,7 +95,7 @@ define([
                     var currentButton = this._getButton(this._currentSubMenu.button);
 
                     currentButton.removeClass("selected");
-                    this.setStatus("");
+                    this.setStatus("clear");
                 }
 
                 button.addClass("selected");

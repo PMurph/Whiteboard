@@ -30,62 +30,77 @@ define([
 
             return events;
         },
-        _setStatus: function(newStatus) {
-            this.view.userSettingsBehaviour.setStatus(newStatus);
+        _setStatus: function(type, newStatus, imageSrc) {
+            this.view.userSettingsBehaviour.setStatus(type, newStatus, imageSrc);
         },
         _getUser: function() {
             return App.userSessionController.getUser();
         },
         clearStatus: function() {
-            this._setStatus("");
+            this._setStatus("clear");
 
             return false;
         },
-        changeDisplayName: function() {
-            var user = this._getUser();
-            var newName = this.view.ui.displayNameText.val();
-            this.clearStatus();
-            
-            try {
-                user.setDisplayName(newName);
-            } catch (e) {
-                this._setStatus("Invalid: " + e);
+        _setDisableOnFormElements: function(list, value) {
+            for(var i = 0; i < list.length; i++) {
+                list[i].prop("disabled", value);
             }
         },
-        changeUsername: function() {
-            var user = this._getUser();
-            var newLogin = this.view.ui.usernameText.val();
-            this.clearStatus();
-            
+        _handleUserSetter: function(user, setterF, newValue, formElemList) {
             try {
                 var self = this;
-                user.setLogin(newLogin)
+                if (!setterF || !_.isFunction(setterF)) {
+                    throw "User setter function is invalid";
+                }
+                this._setStatus("message", "Saving&nbsp;&nbsp;&nbsp;", "/images/ellipsis_small.svg");
+                this._setDisableOnFormElements(formElemList, true);
+                setterF.call(user, newValue)
                     .then(function () {
-                        
+                        self._setStatus("message", "Saved Successfully"); 
+                        self._setDisableOnFormElements(formElemList, false);
                     })
                     .fail(function (a, b, c) {
                         var aa = a;
-                        self._setStatus("Username/Login failed to set: ");
+                        self._setStatus("error", "Username/Login failed to set: ");
+                        self._setDisableOnFormElements(formElemList, false);
                     });
+
             } catch (e) {
-                this._setStatus("Invalid: " + e);
+                this._setStatus("error", "Invalid: " + e);
+                this._setDisableOnFormElements(formElemList, false);
             }
+
+        },
+        changeDisplayName: function() {
+            var user = this._getUser(),
+                nameTxt = this.view.ui.displayNameText,
+                saveButton = this.view.ui.submitButton,
+                newName = nameTxt.val();
+            
+            this._handleUserSetter(user, user.setDisplayName, newName, [nameTxt, saveButton]);
+        },
+        changeUsername: function() {
+            var user = this._getUser(),
+                loginTxt = this.view.ui.usernameText,
+                saveButton = this.view.ui.submitButton,
+                newLogin = loginTxt.val();
+            
+            this._handleUserSetter(user, user.setLogin, newLogin, [loginTxt, saveButton]);
+            
         },
         changePassword: function() {
-            var user = this._getUser();
-            this.clearStatus();
+            var user = this._getUser(),
+                pass1Txt = this.view.ui.password1Text,
+                pass2Txt = this.view.ui.password2Text,
+                saveButton = this.view.ui.submitButton;
 
-            if (this.view.ui.password1Text.val() !== this.view.ui.password2Text.val()){
-                this._setStatus("Invalid: The passwords entered did not match");
+            if (pass1Txt.val() !== pass2Txt.val()){
+                this._setStatus("error", "Invalid: The passwords entered did not match");
                 return;
             }
-            var newPassword = this.view.ui.password1Text.val();
+            var newPassword = pass1Txt.val();
             
-            try {
-                user.setPassword(newPassword);
-            } catch (e) {
-                this._setStatus("Invalid: " + e);
-            }
+            this._handleUserSetter(user, user.setPassword, newPassword, [pass1Txt, pass2Txt, saveButton]);
         }
     });
 

@@ -46,6 +46,8 @@ nav {
 
     width: 600px;
     box-shadow: 4px 4px 4px #333333;
+
+    padding: 10px;
 }
 
 #userSettings {
@@ -88,7 +90,7 @@ nav {
     list-style-type: none;
     overflow: hidden;
 
-    display: inline-block;
+    display: table-cell;
 
     vertical-align: top;
     width: 125px;
@@ -109,8 +111,9 @@ nav {
 }
 
 #settingsSubMenu {
-    display: inline-block;
+    display: table-cell;
     max-width: 0px;
+    padding-left: 10px;
     overflow: hidden;
     transition: max-width 0.2s ease-in-out;
 }
@@ -119,10 +122,13 @@ nav {
     max-width: 555px;
 }
 
-#subStatusLabel{
+#subStatusLabel.error{
     color: red;
 }
 
+#subStatusLabel.message{
+    color: black;
+}
 
 .link:hover {
      text-shadow: 1px 1px 1px #555;
@@ -179,8 +185,6 @@ canvas {
 }
 
 #login-layout {
-	border: 3px solid #000000;
-	padding: 10px;
 }
 
 #loginStatusLabel {
