@@ -92,6 +92,7 @@ define([
                     self._setUser(model);
                     self._setAuthToken(response.authToken);
                     self.trigger("Authenticated");
+                    self.off("AuthFailed");
                 }
             }).fail(function () {
                 self.trigger("AuthFailed");

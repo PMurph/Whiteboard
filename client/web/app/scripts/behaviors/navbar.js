@@ -80,8 +80,10 @@ define([
             document.removeEventListener("click", this._hideCBFactory());
         },
         showLogin: function() {
+            var loginView = new LoginView();
+
             App.mainController.showShield();
-            App.mainController.view.getRegion("centerBox").show(new LoginView());
+            App.mainController.view.getRegion("centerBox").show(loginView);
         },
         hideLogin: function() {
             App.mainController.hideShield();

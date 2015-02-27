@@ -60,6 +60,7 @@ define([
 
                 App.userSessionController.authUser(login, password, save);
             } catch (e) {
+                App.userSessionController.off("AuthFailed");
                 this._setStatus("Login Failed: " + e);
                 this._setDisabled(false);
             }
