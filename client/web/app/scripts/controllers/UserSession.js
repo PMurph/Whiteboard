@@ -55,7 +55,7 @@ define([
             });
         },
         _setUser: function(user) {
-            if (this._currentUser && user) {
+            if (this._currentUser && user && (this._currentUser !== user)) {
                 this.logout();
             }
 
@@ -125,13 +125,20 @@ define([
 
             this._handleAuthPromise(promise, user);
         },
-        registerUser: function(login, password, name) {
-            var newUser = new User();
-            newUser.setLogin(login);
-            newUser.setPassword(password);
-            newUser.setDisplayName(name);
+        registerUser: function(login, password, saveSession) {
+            var save = saveSession || false;
+            //We can convert anonymous user to non-anonymous and call it a registration
+            var newUser = (this._currentUser) ? this._currentUser : new User();
+            
+            var b64pass = window.btoa(password);
+            var promise = newUser.save({
+                login: login,
+                password: b64pass,
+                anonymous: false,
+                saveSession: save
+            });
 
-            this._handleAuthPromise(newUser.save({}), newUser);
+            this._handleAuthPromise(promise, newUser);
             return true;
         },
         getUserStatus: function() {
