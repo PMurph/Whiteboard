@@ -74,6 +74,11 @@ RoomManager.prototype = {
     _manageRoom: function(roomId, room) {
         this._rooms[roomId] = {room: room};
     },
+    
+    getCreateRouteF: function() {
+        return function(req, res) {
+        };
+    },
 
     getRoom: function(roomId) {
         return this._rooms[roomId].room;

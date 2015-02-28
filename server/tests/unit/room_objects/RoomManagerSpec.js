@@ -77,4 +77,16 @@ describe("RoomManager", function() {
             expect(mockFunction).not.toHaveBeenCalled();
         });
     });
+    
+    describe("creating room routing", function() {
+        var testCreateFunction;
+        
+        beforeEach(function() {
+            testCreateFunction = testRoomManager.getCreateRouteF();
+        });
+        
+        it("should be a create function", function() {
+            expect(testCreateFunction instanceof Function).toBe(true);
+        });
+    });
 });

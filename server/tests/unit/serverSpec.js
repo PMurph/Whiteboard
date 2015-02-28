@@ -13,11 +13,15 @@ describe("Server", function() {
 
     var Server = require("../../src/server");
     var mockExpress = jasmine.createSpyObj("express", ["use","listen"]);
+    var mockSocketIO = jasmine.createSpyObj("socket.io", ["listen"]);
+    var mockSocketManager = jasmine.createSpyObj("socketMnaager", ["getCreateRouteF","use","on"]);
     var server;
 
     beforeEach(function() {
         spyOn(mockMongoose, "connect");
-        server = new Server(mockExpress, TEST_DB_OPTIONS); 
+        mockSocketIO.listen.and.returnValue(mockSocketManager);
+        
+        server = new Server(mockExpress, mockSocketIO, TEST_DB_OPTIONS); 
     });
 
     describe("server startup", function() {
