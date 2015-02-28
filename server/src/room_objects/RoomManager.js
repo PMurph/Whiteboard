@@ -32,15 +32,19 @@ RoomManager.prototype = {
                 self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
                     self.authenticateUser(error, user, function() {
                         self.joinRoom(msgData.roomId, user, socket);
+                    }, 
+                    function(error, usser) {
                     });
                 });
             });
         });
     },
 
-    authenticateUser: function(error, user, callback) {
+    authenticateUser: function(error, user, authenticatedCallback, unauthenticatedCallback) {
         if(user && !error) {
-            callback();
+            authenticatedCallback();
+        } else {
+            unauthenticatedCallback(user, error);
         }
     },
 
@@ -76,7 +80,24 @@ RoomManager.prototype = {
     },
     
     getCreateRouteF: function() {
+        var self = this;
+    
         return function(req, res) {
+            var authToken = self._userManager.userSession.getRequestToken(req);
+            
+            self._userManager.findByAuthToken(authToken, function(error, user) {
+                self.authenticateUser(error, user, function() {
+                    if(req.method == "GET" || req.method == "POST") {
+                        self.createNewRoom(user.id);
+                        res.sendStatus(200);
+                    } else {
+                        res.sendStatus(400);
+                    }
+                }, 
+                function(error, user) {
+                    res.sendStatus(400);
+                });
+            });
         };
     },
 
