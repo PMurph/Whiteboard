@@ -3,7 +3,6 @@
 var bodyParser = require('body-parser'),
     Express = require('express'),
     mongoose = require('mongoose'),
-    socketIO = require('socket.io'),
     UserManager = require('./session/UserManager'),
     RoomManager = require('./room_objects/RoomManager.js');
 

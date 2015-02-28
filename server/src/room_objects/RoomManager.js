@@ -33,7 +33,7 @@ RoomManager.prototype = {
                     self.authenticateUser(error, user, function() {
                         self.joinRoom(msgData.roomId, user, socket);
                     }, 
-                    function(error, usser) {
+                    function() {
                     });
                 });
             });
@@ -87,14 +87,14 @@ RoomManager.prototype = {
             
             self._userManager.findByAuthToken(authToken, function(error, user) {
                 self.authenticateUser(error, user, function() {
-                    if(req.method == "GET" || req.method == "POST") {
+                    if(req.method === "GET" || req.method === "POST") {
                         self.createNewRoom(user.id);
                         res.sendStatus(200);
                     } else {
                         res.sendStatus(400);
                     }
                 }, 
-                function(error, user) {
+                function() {
                     res.sendStatus(400);
                 });
             });
