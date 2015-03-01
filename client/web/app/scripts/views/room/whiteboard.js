@@ -1,9 +1,11 @@
 define([
     'marionette',
-    'underscore'
+    'underscore',
+    'vent'
 ], function(
     Marionette,
-    _) {
+    _,
+    vent) {
     'use strict';
 
     var drawMessage = {
@@ -33,6 +35,10 @@ define([
             mouseup: '_mouseUp'
         },
 
+        initialize: function(options) {
+            this.roomModel = options.roomModel;
+        },
+
         onShow: function() {
             this._canvasElement = this.ui.canvas[0];
             this._ctx = this._canvasElement.getContext('2d');
@@ -45,7 +51,7 @@ define([
             this._ctx.lineCap = 'round';
             this._ctx.strokeStyle = 'black';
 
-            this._drawFromMessage(msg);
+            this.drawFromMessage(msg);
         },
 
         onBeforeDestroy: function() {
@@ -77,6 +83,10 @@ define([
             this._updateMouse(e);
             this._paint();
             this.ui.canvas.off('mousemove');
+            vent.trigger('draw', {
+                roomID: this.roomModel.get('id'),
+                message: drawMessage
+            });
         },
 
         _updateMouse: function(e) {
@@ -90,7 +100,7 @@ define([
             this._ctx.stroke();
         },
 
-        _drawFromMessage: function(drawMessage) {
+        drawFromMessage: function(drawMessage) {
             var self = this;
             this._ctx.beginPath();
 

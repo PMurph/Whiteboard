@@ -3,12 +3,14 @@ define([
     'layouts/chat',
     'views/room/whiteboard',
     'controllers/SocketController',
+    'vent',
     'tpl!/scripts/templates/room/layout.html'
 ], function(
     Marionette,
     ChatViewComponent,
     WhiteboardView,
     SocketController,
+    vent,
     Template) {
     'use strict';
 
@@ -23,13 +25,21 @@ define([
             toolsRegion: '#tools-region'
         },
 
-        initialize: function() {
-            this.socket = new SocketController();
+        onShow: function() {
+            this.whiteboard = new WhiteboardView({
+                roomModel: this.model
+            });
+            this.chat = new ChatViewComponent({
+                roomModel: this.model
+            });
+
+            this.chatRegion.show(this.chat);
+            this.whiteboardRegion.show(this.whiteboard);
         },
 
-        onShow: function() {
-            this.chatRegion.show(new ChatViewComponent());
-            this.whiteboardRegion.show(new WhiteboardView());
+        onBeforeDestroy: function() {
+            vent.trigger('leaveRoom', this.model.get('id'));
         }
+
     });
 });

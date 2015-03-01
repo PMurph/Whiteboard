@@ -10,7 +10,7 @@ var Server = function (exp, userRequest, socketIO, dbOptions) {
     this._socketIO = socketIO;
     this._setupHttpServer();
     this._setupDatabase(dbOptions);
-    
+
     this._userRequest = userRequest;
     this._userSession = userRequest.userSession;
 
@@ -54,7 +54,7 @@ Server.prototype = {
         this._httpServ = this.app.listen(this._port, this._hostname, null, listenCB);
         this._socketManager = this._socketIO.listen(this._httpServ);
         this._roomManager = new RoomManager(this._socketManager, this._userSession);
-        
+
         this._setupRoutes();
     },
     stop: function(closeCB) {

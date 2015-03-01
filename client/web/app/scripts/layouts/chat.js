@@ -2,13 +2,14 @@ define([
     'marionette',
     'collections/chatMessages',
     'views/chat/chatMessages',
-    'tpl!templates/chat/layout.html'
+    'vent',
+    'tpl!/scripts/templates/chat/layout.html'
 ], function(
     Marionette,
     ChatMessagesCollection,
     ChatMessagesView,
-    Template
-) {
+    vent,
+    Template) {
     'use strict';
 
     return Marionette.LayoutView.extend({
@@ -49,10 +50,20 @@ define([
             this.bindUIElements();
         },
 
+        addMessage: function(msg) {
+            this.chatCollection.add(msg);
+        },
+
         _sendMessage: function() {
-            this.chatCollection.add({
+            var message = {
                 name: 'a name',
                 message: this.ui.chatInput.val()
+            };
+
+            this.chatCollection.add(message);
+            vent.trigger('chat', {
+                roomID: 1,
+                message: message
             });
 
             this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight);

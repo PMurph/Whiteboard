@@ -1,14 +1,52 @@
 define([
+    'underscore',
     'socket.io',
     'marionette',
+    'vent',
 ], function(
-    SocketIO,
-    Marionette) {
+    _,
+    io,
+    Marionette,
+    vent) {
     'use strict';
 
-    return Marionette.Object.extend({
+    var Socket = Marionette.Object.extend({
         initialize: function() {
-            this.socket = new SocketIO();
+            this.listenTo(vent, 'leaveRoom', this._leaveRoom);
+            this.listenTo(vent, 'chat', this._emitChat);
+            this.listenTo(vent, 'draw', this._emitDraw);
+            this.io = io();
+        },
+
+        _socketHash: {},
+
+        joinRoom: function(roomID, roomView) {
+            //var roomSocket =  io('/room/' + roomID);
+            var roomSocket = this.io;
+            this._socketHash[roomID] = roomSocket;
+
+            roomSocket.on('chat', function(param) {
+                roomView.chat.addMessage(param);
+            });
+
+            roomSocket.on('draw', function(param) {
+                roomView.whiteboard.drawFromMessage(param);
+            });
+        },
+
+        _leaveRoom: function(roomID) {
+            // this._socketHash[roomID].off();
+            // delete this._socketHash[roomID];
+        },
+
+        _emitChat: function(params) {
+            this._socketHash[params.roomID].emit('chat', params.message);
+        },
+
+        _emitDraw: function(params) {
+            this._socketHash[params.roomID].emit('draw', params.message);
         }
     });
+
+    return new Socket();
 });

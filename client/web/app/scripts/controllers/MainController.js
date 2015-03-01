@@ -2,7 +2,7 @@ define([
     'jquery',
     'backbone',
     'marionette',
-    
+
     'app',
 
     'routers/MainRouter',
@@ -11,9 +11,10 @@ define([
     'views/navbar',
     'layouts/dashboard',
     'layouts/room',
-
+    'layouts/login',
+    'layouts/controls',
     'models/room',
-
+    'controllers/SocketController',
     'tpl!templates/status.html'
 ], function(
     $,
@@ -28,11 +29,11 @@ define([
     NavbarView,
     DashboardView,
     RoomLayoutView,
-
+    LoginView,
+    ControlsView,
     RoomModel,
-
-    StatusTemplate
-) {
+    SocketController,
+    StatusTemplate) {
     'use strict';
 
     return Marionette.Controller.extend({
@@ -44,7 +45,7 @@ define([
                 contentType: 'application/json',
                 statusCode: {
                     403: function() {
- 
+
                     }
                 }
             });
@@ -83,7 +84,7 @@ define([
                         image: "<img src='/images/" + imageSrc + "'></img>"
                     };
                 }
-            })); 
+            }));
 
         },
         renderHeader: function(authUser) {
@@ -105,10 +106,12 @@ define([
                 id: id,
                 name: 'stub name ' + id
             });
-
-            this.mainContent.show(new RoomLayoutView({
+            var roomLayout = new RoomLayoutView({
                 model: roomModel
-            }));
+            });
+
+            SocketController.joinRoom(id, roomLayout);
+            this.mainContent.show(roomLayout);
         }
     });
 });
