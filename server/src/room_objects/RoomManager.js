@@ -105,7 +105,6 @@ RoomManager.prototype = {
     _respondToSuccessfulCreate: function(roomId, res) {
         var responseContent = this._createRoomJSONResponse(roomId);
         res.writeHead(200, this._createResponseHeaders(responseContent));
-        console.log("Made it heere");
         res.end(responseContent);
     
     },
@@ -124,8 +123,25 @@ RoomManager.prototype = {
     },
     
     getRoomListRouteF: function() {
+        var self = this;
+    
         return function(req, res) {
+            if(req.method === "GET") {
+                self._responseToGetRoomList(res);
+            } else {
+                res.sendStatus(400);
+            }
         };
+    },
+    
+    _responseToGetRoomList: function(res) {
+        var responseContent = this._createRoomListJSONResponse();
+        res.writeHead(200, this._createResponseHeaders(responseContent));
+        res.end(responseContent);
+    },
+    
+    _createRoomListJSONResponse: function() {
+        return {rooms: this.getRoomList()};
     },
     
     getRoomList: function() {
