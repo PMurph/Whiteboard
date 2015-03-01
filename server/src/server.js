@@ -45,7 +45,8 @@ Server.prototype = {
     _setupRoutes: function() {
         this.app.use('/', Express.static(__dirname + '/../../client/web/app'));
         this.app.use('/api/user', this._userManager.getRouteF());
-        this.app.use('/api/room/create', this._roomManager.getCreateRouteF());
+        this.app.use('/api/rooms/new', this._roomManager.getCreateRouteF());
+        this.app.use('/api/rooms', this._roomManager.getRoomListRouteF());
     },
     start: function(port, hostname, listenCB) {
         this._port = port || this._port;

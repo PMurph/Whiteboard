@@ -21,7 +21,16 @@ define([
         
         _setupCreateButton: function() {
             $("#create-room-btn").click(function() {
-                console.log("Clicked");
+                $.ajax({
+                    url: 'api/room/create',
+                    error: function() {
+                        console.log("Could not create a new room.");
+                    },
+                    success: function(data) {
+                        console.log("Should not have happened");
+                    },
+                    type: 'POST',
+                });
             });
         }
     });

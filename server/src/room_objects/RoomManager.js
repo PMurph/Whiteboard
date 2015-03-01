@@ -122,6 +122,15 @@ RoomManager.prototype = {
     getRoom: function(roomId) {
         return this._rooms[roomId].room;
     },
+    
+    getRoomListRouteF: function() {
+        return function(req, res) {
+        };
+    },
+    
+    getRoomList: function() {
+        return Object.keys(this._rooms);
+    },
 };
 
 module.exports = RoomManager;

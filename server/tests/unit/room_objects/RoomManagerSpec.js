@@ -39,6 +39,37 @@ describe("RoomManager", function() {
             expect(room.getId()).toEqual(testRoomId);
         });
     });
+    
+    describe("getting a list of rooms", function() {
+        var testRoomId1;
+        var testRoomId2;
+        var testRoomId3;
+        
+        var roomList;
+        
+        beforeEach(function() {
+            testRoomManager._rooms = {}
+            testRoomId1 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
+            testRoomId2 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
+            testRoomId3 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
+            
+            roomList = testRoomManager.getRoomList();
+        });
+        
+        it("should return a list with 3 room ids", function() {
+            expect(roomList.length).toBe(3);
+        });
+        
+        it("should contain the ids of the rooms created", function() {
+            expect(roomList.indexOf(testRoomId1)).toBeGreaterThan(-1);
+            expect(roomList.indexOf(testRoomId2)).toBeGreaterThan(-1);
+            expect(roomList.indexOf(testRoomId3)).toBeGreaterThan(-1);
+        });
+        
+        it("should not contain an id that is not one of the rooms that has been created", function() {
+            expect(roomList.indexOf(-5467)).not.toBeGreaterThan(-1);
+        });
+    });
 
     describe("joining a room", function() {
         var mockSocket;
