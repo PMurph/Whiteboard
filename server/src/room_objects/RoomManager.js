@@ -110,7 +110,7 @@ RoomManager.prototype = {
     },
     
     _createRoomJSONResponse: function(roomId) {
-        return {roomId: roomId};
+        return JSON.stringify({roomId: roomId});
     },
     
     _createResponseHeaders: function(responseContent) {
@@ -141,7 +141,7 @@ RoomManager.prototype = {
     },
     
     _createRoomListJSONResponse: function() {
-        return {rooms: this.getRoomList()};
+        return JSON.stringify({rooms: this.getRoomList()});
     },
     
     getRoomList: function() {
