@@ -36,17 +36,18 @@ describe("User Session", function() {
     it("should authenticate regular user", function() {
         var testLogin = "testLogin",
             testPassword = "testPassword",
-            dbCallback = jasmine.createSpy();
+            dbCallback = function testCB() {};
 
         userSession.authUser(testLogin, testPassword, dbCallback);
-        expect(mockUserManager.findByLogin).toHaveBeenCalled();
+        expect(mockUserManager.findByLogin).toHaveBeenCalledWith(testLogin, testPassword, jasmine.any(Function));
     });
     it("should authenticate anonymous", function() {
         var testDisplayName = "testName",
-            dbCallback = jasmine.createSpy();
+            testToken = jasmine.any(String),
+            testDBCallback = function testCB() {};
 
-        userSession.authAnonymous(testDisplayName, dbCallback);
-        expect(mockUserManager.createAnonymousUser).toHaveBeenCalled();
+        userSession.authAnonymous(testDisplayName, testDBCallback);
+        expect(mockUserManager.createAnonymousUser).toHaveBeenCalledWith(testDisplayName, testToken, testDBCallback);
     });
 });
 

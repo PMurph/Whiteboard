@@ -2,19 +2,15 @@
 
 var bodyParser = require('body-parser'),
     Express = require('express'),
-    mongoose = require('mongoose'),
-    UserManager = require('./session/UserManager'),
-    RoomManager = require('./room_objects/RoomManager.js');
-    UserRequest = require('./session/UserRequest');
+    mongoose = require('mongoose');
 
-var Server = function (exp, socketIO, dbOptions) {
+var Server = function (exp, userRequest, socketIO, dbOptions) {
     this.app = exp;
     this._socketIO = socketIO;
     this._setupHttpServer();
     this._setupDatabase(dbOptions);
-
-    this._userManager = new UserManager(this._db);
-    this._userRequest = new UserRequest(this._userManager);
+    
+    this._userRequest = userRequest;
 
     this._setupMiddleware();
 };

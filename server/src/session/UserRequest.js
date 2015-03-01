@@ -65,10 +65,11 @@ UserRequest.prototype = {
     _handleUnauthGet: function(query, dbCallback) {
         if(query &&
             query.login &&
-            query.password &&
+            (query.password || query.b64password) &&
             (!query.anonymous || query.anonymous === false))
         {
-            this.userSession.authUser(query.login, query.password, query.saveSession, dbCallback);
+            var password = query.password || (new Buffer(query.b64password, 'base64')).toString();
+            this.userSession.authUser(query.login, password, query.saveSession, dbCallback);
         }else{
             dbCallback(400);
         }

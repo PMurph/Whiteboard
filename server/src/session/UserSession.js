@@ -16,15 +16,6 @@ UserSession.prototype = {
 
         return hash.digest('hex');
     },
-    hashPassword: function(password) {
-        var hash = crypto.createHash('sha256');
-
-        hash.update("wbpassword");
-        hash.update(password);
-        hash.update("$aal1ttt&");
-
-        return hash.digest('base64');
-    },
     authAnonymous: function(displayName, dbCallback) {
         var token = this._createAuthToken();
         var name = displayName || "Anonymous User";

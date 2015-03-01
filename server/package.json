@@ -12,7 +12,7 @@
     "grunt-contrib-jshint": "~0.11.0",
     "grunt-nodemon": "~0.4.0",
     "grunt-shell": "^1.1.1",
-    "jasmine": "~2.1.1",
+    "jasmine": "~2.2",
     "matchdep": "~0.3.0",
     "mongoose-mock": "git://github.com/soda0289/mongoose-mock.git",
     "shelljs": "^0.3.0",

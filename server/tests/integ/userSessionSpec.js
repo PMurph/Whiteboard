@@ -1,43 +1,52 @@
 'use strict';
 
 var request = require('supertest'),
+    express = require('express'),
+    mongoose = require('mongoose'),
+    UserManager = require('../../src/session/UserManager'),
+    UserSession = require('../../src/session/UserSession'),
+    UserRequest = require('../../src/session/UserRequest'),
     Server = require('../../src/server');
 
 
-var testRequest = {
-    authAnon: {
-        wellFormed: {
-            name: "AnonNameTest",
-            anonymous: true
-        },
-        wellFormedNoName: {
-            anonymous: true
-        },
-        malformedAnonFalse: {
-            name: "AnonNameTest",
-            anonymous: false
-        },
-        malformedAnonAuthTokenSet: {
-            authToken: "authTokenIsSet",
-            name: "AnonNameTest",
-            anonymous: true
-        },
-        malformedEmpty: {
-
-        }
-    }
-};
 
 describe("User Session Intergration", function () {
     var server = null;
 
-    it("should start server", function(done) {
-        server = new Server();
+    beforeAll(function(done) {
+        var userManager = new UserManager(mongoose),
+            userSession = new UserSession(userManager),
+            userRequest = new UserRequest(userManager, userSession);
+
+        server = new Server(new express(), userRequest);
         server.start(3333, "localhost", done);
     });
     describe("autenticate user", function() {
+        var testRequest = {
+            authAnon: {
+                wellFormed: {
+                    name: "AnonNameTest",
+                    anonymous: true
+                },
+                wellFormedNoName: {
+                    anonymous: true
+                },
+                malformedAnonFalse: {
+                    name: "AnonNameTest",
+                    anonymous: false
+                },
+                malformedAnonAuthTokenSet: {
+                    authToken: "authTokenIsSet",
+                    name: "AnonNameTest",
+                    anonymous: true
+                },
+                malformedEmpty: {
+
+                }
+            }
+        };
         var req;
-        beforeEach(function() {
+        beforeAll(function() {
             req = request("http://127.0.0.1:3333");
         });
         it("should authenticate anonymous (Well Formed Name)", function(done) {
@@ -58,7 +67,7 @@ describe("User Session Intergration", function () {
                     done(err);
                 }
 
-                expect(body.name).toBe("AnonNameTest");
+                expect(body.displayName).toBe("AnonNameTest");
                 expect(body.id).not.toBeNull();
                 expect(body.authToken).not.toBeNull();
                 done();
@@ -107,7 +116,7 @@ describe("User Session Intergration", function () {
             .expect(400, done);
         });
     });
-    it("should stop server", function(done) {
+    afterAll("should stop server", function(done) {
         server.stop(done);
     });
 });

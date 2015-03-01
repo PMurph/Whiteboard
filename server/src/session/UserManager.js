@@ -1,10 +1,8 @@
 "use strict";
 
-var UserSession = require("./UserSession");
+var crypto = require('crypto');
 
 var UserManager = function (db) {
-    this.userSession = new UserSession(this);
-
     this._setupDB(db);
 };
 
@@ -34,6 +32,8 @@ UserManager.prototype = {
             id: true,
             toJSON: true
         });
+
+        
         userSchema.options.toObject = {};
         userSchema.options.toObject.transform = function (doc, ret, options) {
             if (options.hide) {
@@ -70,6 +70,15 @@ UserManager.prototype = {
 
         return true;
     },
+    hashPassword: function(password) {
+        var hash = crypto.createHash('sha256');
+
+        hash.update("wbpassword");
+        hash.update(password);
+        hash.update("$aal1ttt&");
+
+        return hash.digest('base64');
+    },
     createAnonymousUser: function (name, token, callback) {
       var anonUserDoc = new this._UserModel({
           displayName: name,
@@ -78,9 +87,11 @@ UserManager.prototype = {
       });
 
       anonUserDoc.save(callback);
+
+      return anonUserDoc;
     },
     findByLogin: function (login, password, callback) {
-        var passwordHash = this.userSession.hashPassword(password);
+        var passwordHash = this.hashPassword(password);
         this._UserModel
             .findOne({
                 login: login,
@@ -119,7 +130,7 @@ UserManager.prototype = {
                 callback("Password is too short must be at least " + this.MIN_PASSWORD_LENGTH + " characters");
                 return;
             }
-            userChanges.passwordHash = this.userSession.hashPassword(password);
+            userChanges.passwordHash = this.hashPassword(password);
             delete userChanges.password;
             delete userChanges.b64password;
         }
