@@ -109,7 +109,7 @@ describe("RoomManager", function() {
             mockUserSession.getRequestToken.and.returnValue(TEST_AUTH_TOKEN);
             spyOn(testRoomManager, "createNewRoom").and.callThrough();
             mockUserManager.userSession = mockUserSession;
-            mockResponse = jasmine.createSpyObj("Response", ["sendStatus"]);
+            mockResponse = jasmine.createSpyObj("Response", ["sendStatus", "writeHead", "end"]);
             testCreateFunction = testRoomManager.getCreateRouteF();
         });
         
@@ -124,22 +124,36 @@ describe("RoomManager", function() {
                 });
             });
         
-            it("should return 200 if a post request is sent with a valid authentication token", function(done) {
-                mockResponse.sendStatus.and.callFake(function(status) {
-                    expect(status).toBe(200);
-                    done();
+            describe("valid request types", function() {
+                afterEach(function() {
+                    expect(mockResponse.end).toHaveBeenCalled();
                 });
-                mockRequest = {method: "POST", query: {authToken: TEST_AUTH_TOKEN}};
-                testCreateFunction(mockRequest, mockResponse);
-            });
             
-            it("should return 200 if a get request is sent with a valid authentication token", function(done) {
-                mockResponse.sendStatus.and.callFake(function(status) {
-                    expect(status).toBe(200);
-                    done();
+                it("should return 200 if a post request is sent with a valid authentication token", function(done) {
+                    mockResponse.writeHead.and.callFake(function(status, headers) {
+                        expect(status).toBe(200);
+                        expect(headers).not.toBeNull();
+                    });
+                    mockResponse.end.and.callFake(function() {
+                        done();
+                    });
+                    
+                    mockRequest = {method: "POST", query: {authToken: TEST_AUTH_TOKEN}};
+                    testCreateFunction(mockRequest, mockResponse);
                 });
-                mockRequest = {method: "GET", query: {authToken: TEST_AUTH_TOKEN}};
-                testCreateFunction(mockRequest, mockResponse);
+            
+                it("should return 200 if a get request is sent with a valid authentication token", function(done) {
+                    mockResponse.writeHead.and.callFake(function(status, headers) {
+                        expect(status).toBe(200);
+                        expect(headers).not.toBeNull();
+                    });
+                    mockResponse.end.and.callFake(function() {
+                        done();
+                    });
+                    
+                    mockRequest = {method: "GET", query: {authToken: TEST_AUTH_TOKEN}};
+                    testCreateFunction(mockRequest, mockResponse);
+                });
             });
             
             it("should return 400 if a request is sent with a valid authentication token but is neither a post nor get", function(done) {

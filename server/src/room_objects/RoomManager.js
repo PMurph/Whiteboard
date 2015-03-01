@@ -87,9 +87,10 @@ RoomManager.prototype = {
             
             self._userManager.findByAuthToken(authToken, function(error, user) {
                 self.authenticateUser(error, user, function() {
+                    var roomId = 0;
                     if(req.method === "GET" || req.method === "POST") {
-                        self.createNewRoom(user.id);
-                        res.sendStatus(200);
+                        roomId = self.createNewRoom(user.id);
+                        self._respondToSuccessfulCreate(roomId, res);
                     } else {
                         res.sendStatus(400);
                     }
@@ -99,6 +100,23 @@ RoomManager.prototype = {
                 });
             });
         };
+    },
+    
+    _respondToSuccessfulCreate: function(roomId, res) {
+        var responseContent = this._createRoomJSONResponse(roomId);
+        res.writeHead(200, this._createResponseHeaders(responseContent));
+        console.log("Made it heere");
+        res.end(responseContent);
+    
+    },
+    
+    _createRoomJSONResponse: function(roomId) {
+        return {roomId: roomId};
+    },
+    
+    _createResponseHeaders: function(responseContent) {
+        return {"Content-Type": "application/json",
+            "Content-Length": responseContent.length};
     },
 
     getRoom: function(roomId) {
