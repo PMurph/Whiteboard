@@ -94,8 +94,8 @@ define([
                     self.trigger("Authenticated");
                     self.off("AuthFailed");
                 }
-            }).fail(function () {
-                self.trigger("AuthFailed");
+            }).fail(function (xhr) {
+                self.trigger("AuthFailed", xhr.responseText);
             });
         },
         authAnonymous: function() {
@@ -119,7 +119,7 @@ define([
             promise = user.fetch({
                 data: {
                     login: user.getLogin(),
-                    password: user.getB64Password(),
+                    b64password: user.getB64Password(),
                     saveSession: save
                 }
             });
@@ -134,7 +134,7 @@ define([
             var b64pass = window.btoa(password);
             var promise = newUser.save({
                 login: login,
-                password: b64pass,
+                b64password: b64pass,
                 anonymous: false,
                 saveSession: save
             });

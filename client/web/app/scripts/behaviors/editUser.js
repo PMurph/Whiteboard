@@ -61,9 +61,9 @@ define([
                         self._setStatus("message", "Saved Successfully"); 
                         self._setDisableOnFormElements(formElemList, false);
                     })
-                    .fail(function (a, b, c) {
-                        var aa = a;
-                        self._setStatus("error", "Username/Login failed to set: ");
+                    .fail(function (xhr) {
+                        var errorText = xhr.responseText || "Error: server failed to respond to request.";
+                        self._setStatus("error", "Error: " + errorText);
                         self._setDisableOnFormElements(formElemList, false);
                     });
 

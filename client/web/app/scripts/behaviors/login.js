@@ -22,8 +22,8 @@ define([
             "click @ui.closeButton": "closeLoginWindow",
             "click @ui.saveSessionCheck": "saveSessionToggle"
         },
-        _setStatus: function(errorString, label) {
-            var statusLabel = label || this.view.ui.statusLabel;
+        _setStatus: function(errorString) {
+            var statusLabel = this.view.ui.statusLabel;
             statusLabel.html(errorString);
         },
         _setDisabled: function(value) {
@@ -47,11 +47,10 @@ define([
                     login = loginTxt.val(),
                     passwordTxt = this.view.ui.passwordTextbox,
                     password = passwordTxt.val(),
-                    save = this.isSaveSessionChecked(),
-                    statusLabel = this.view.ui.statusLabel;
+                    save = this.isSaveSessionChecked();
 
                 App.userSessionController.once("AuthFailed", function () {
-                    self._setStatus("Login Failed: The login or password provided could not be authenticated.", statusLabel);
+                    self._setStatus("Login Failed: The login or password provided could not be authenticated.");
                     self._setDisabled(false);
                 });
 
@@ -74,11 +73,10 @@ define([
                     login = loginTxt.val(),
                     passwordTxt = this.view.ui.passwordTextbox,
                     password = passwordTxt.val(),
-                    save = this.isSaveSessionChecked(),
-                    statusLabel = this.view.ui.statusLabel;
+                    save = this.isSaveSessionChecked();
 
-                App.userSessionController.once("RegistrationFailed", function (aa, bb, cc) {
-                    self._setStatus("Registration Failed: .", statusLabel);
+                App.userSessionController.once("AuthFailed", function (error) {
+                    self._setStatus("Registration Failed: " + error);
                     self._setDisabled(false);
                 });
 
@@ -87,6 +85,7 @@ define([
 
                 App.userSessionController.registerUser(login, password, save);
             } catch (e) {
+                App.userSessionController.off("AuthFailed");
                 this._setStatus("Registration Failed: " + e);
                 this._setDisabled(false);
             }
