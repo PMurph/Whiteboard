@@ -42,12 +42,13 @@ UserRequest.prototype = {
         }
     },
     _handleAuthGet: function(query, authUser, dbCallback) {
-        if(query &&
+        if(query && 
             query.login &&
-            query.password &&
+            (query.password || query.b64password) &&
             (!query.anonymous || query.anonymous === false))
         {
-            this.userSession.authUser(query.login, query.password, query.saveSession, dbCallback);
+            var password = query.password || (new Buffer(query.b64password, 'base64')).toString();
+            this.userSession.authUser(query.login, password, query.saveSession, dbCallback);
         }else if (authUser && (authUser.id === query._id)){
             dbCallback(null, authUser);
         }else{
@@ -98,6 +99,8 @@ UserRequest.prototype = {
         return function(err, doc) {
             if (err && !isNaN(err)){
                 res.sendStatus(err);
+            }else if(err && (err instanceof String || typeof err === 'string')){
+                res.status(400).send(err);
             }else if(doc){
                 res.json(doc.toObject({
                     hide: '__v passwordHash',

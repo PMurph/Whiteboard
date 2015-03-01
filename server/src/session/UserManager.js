@@ -9,6 +9,7 @@ var UserManager = function (db) {
 };
 
 UserManager.prototype = {
+    MIN_PASSWORD_LENGTH: 5,
     _setupDB: function(db) {
         var userSchema = new db.Schema({
             displayName: String,
@@ -62,6 +63,13 @@ UserManager.prototype = {
         } 
         return false;
     },
+    _checkPassword: function (password) {
+        if (password.length < this.MIN_PASSWORD_LENGTH) {
+            return false;   
+        }
+
+        return true;
+    },
     createAnonymousUser: function (name, token, callback) {
       var anonUserDoc = new this._UserModel({
           displayName: name,
@@ -104,9 +112,16 @@ UserManager.prototype = {
             userDeleted = this._handleStatusChange(user, userChanges.status);
             userChanges.authToken = user.authToken;
         }
-        if (userChanges.password) {
-            userChanges.passwordHash = this.userSession.hashPassword(userChanges.password);
+
+        if (userChanges.password || userChanges.b64password) {
+            var password = userChanges.password || (new Buffer(userChanges.b64password, 'base64')).toString();
+            if (!this._checkPassword(password)) {
+                callback("Password is too short must be at least " + this.MIN_PASSWORD_LENGTH + " characters");
+                return;
+            }
+            userChanges.passwordHash = this.userSession.hashPassword(password);
             delete userChanges.password;
+            delete userChanges.b64password;
         }
 
         if (!userDeleted) {
