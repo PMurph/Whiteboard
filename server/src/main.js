@@ -1,5 +1,6 @@
 var Server = require("./server"),
-    express = require('express');
+    express = require('express'),
+    socketIO = require('socket.io');
 
-var serv = new Server(express());
+var serv = new Server(express(), socketIO);
 serv.start();

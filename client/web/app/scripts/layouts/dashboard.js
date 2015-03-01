@@ -16,10 +16,14 @@ define([
         className: 'content-container',
 
         regions: {
-            roomsListRegion: '#rooms-list-region'
+            roomsListRegion: '#rooms-list-region',
         },
 
         onShow: function() {
+            this._populateRooms();
+        },
+        
+        _populateRooms: function() {
             // Stub collection to show some rooms
             this.collection = new RoomsCollection();
             for (var i = 0; i < 6; i++) {
@@ -32,6 +36,6 @@ define([
                 collection: this.collection
             });
             this.roomsListRegion.show(collectionView);
-        }
+        },
     });
 });

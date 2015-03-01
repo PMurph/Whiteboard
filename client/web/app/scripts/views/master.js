@@ -14,7 +14,8 @@ define([
         template: Template,
 
         regions: {
-            mainContent: '#main-content-region'
+            mainContent: '#main-content-region',
+            controlsRegion: '#controls-region',
         }
     });
 });
