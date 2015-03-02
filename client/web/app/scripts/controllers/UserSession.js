@@ -137,6 +137,8 @@ define([
                 b64password: b64pass,
                 anonymous: false,
                 saveSession: save
+            },{
+                wait: true
             });
 
             this._handleAuthPromise(promise, newUser);
@@ -159,6 +161,7 @@ define([
                    status: newStatus
                 },{
                    patch: true,
+                   wait: true,
                    async: async
                 });
             }else{
@@ -175,7 +178,8 @@ define([
                     authToken: this._authToken,
                     saveSession: saveSession,
                 },{
-                    patch: true
+                    patch: true,
+                    wait: true
                 }).then(function () {
                    self.clearSavedSession();
                 });

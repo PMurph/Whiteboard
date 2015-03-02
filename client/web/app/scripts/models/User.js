@@ -20,6 +20,8 @@ define([
             if (!this.isNew()) {
                 return this.save({
                     login: login
+                },{
+                    wait: true   
                 });
             }else{
                 this.set("login", login);
@@ -37,7 +39,9 @@ define([
             
             if (!this.isNew()) {
                 return this.save({
-                    password: b64password
+                    b64password: b64password
+                },{
+                    wait: true   
                 });
             }else{
                 this.set("b64password", b64password);
@@ -54,6 +58,8 @@ define([
             if (!this.isNew()) {
                 return this.save({
                     displayName: displayName
+                },{
+                    wait: true   
                 });
             }else{
                 this.set("displayName", displayName);
