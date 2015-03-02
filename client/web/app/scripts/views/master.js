@@ -15,7 +15,6 @@ define([
 
         regions: {
             mainContent: '#main-content-region',
-            controlsRegion: '#controls-region',
         }
     });
 });

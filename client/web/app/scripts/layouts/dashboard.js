@@ -24,14 +24,9 @@ define([
         },
         
         _populateRooms: function() {
-            // Stub collection to show some rooms
             this.collection = new RoomsCollection();
-            for (var i = 0; i < 6; i++) {
-                this.collection.add({
-                    name: 'room ' + i,
-                    id: i
-                });
-            }
+            this.collection.fetch();
+            
             var collectionView = new RoomsCollectionView({
                 collection: this.collection
             });
