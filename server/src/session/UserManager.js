@@ -134,6 +134,18 @@ UserManager.prototype = {
             }
         }
 
+        if(userChanges.anonymous !== user.anonymous) {
+            if (userChanges.anonymous === false) {
+                if ((!userChanges.password && !userChanges.b64password) || !userChanges.login) {
+                    callback("Login and Password must be set to register regular user.");
+                    return;
+                }
+            }else{
+                callback(400);
+                return;
+            }
+        }
+
         if (userChanges.password || userChanges.b64password) {
             var password = userChanges.password || (new Buffer(userChanges.b64password, 'base64')).toString();
             if (!this._checkPassword(password)) {
