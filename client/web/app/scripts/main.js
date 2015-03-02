@@ -36,8 +36,6 @@ require([
 
         this.body.show(this.mainView);
         this.mainController.mainContent = this.mainView.mainContent;
-        this.mainController.controlsRegion = this.mainView.controlsRegion;
-
     });
 
     App.on('start', function() {

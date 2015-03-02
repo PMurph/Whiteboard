@@ -5,7 +5,6 @@ define([
     'layouts/dashboard',
     'layouts/room',
     'layouts/login',
-    'layouts/controls',
     'models/room'
 ], function(
     $,
@@ -14,7 +13,6 @@ define([
     DashboardView,
     RoomLayoutView,
     LoginView,
-    ControlsView,
     RoomModel) {
     'use strict';
 
@@ -41,7 +39,6 @@ define([
         },
         dashboard: function() {
             this.mainContent.show(new DashboardView());
-            this.controlsRegion.show(new ControlsView());
         },
         room: function(id) {
             var roomModel = new RoomModel({
