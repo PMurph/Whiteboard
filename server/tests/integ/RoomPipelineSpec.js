@@ -5,7 +5,7 @@ var RoomManager = require("../../src/room_objects/RoomManager.js");
 
 describe('Room Pipeline', function() {
     var SOCKET_TIMEOUT = 1000;
-    var TEST_PORT = 8080;
+    var TEST_PORT = 8888;
     
     var originalTimeout;
     var socketManager;
@@ -28,7 +28,7 @@ describe('Room Pipeline', function() {
         testRoomManager = new RoomManager(socketManager, mockUserManager);
         testRoomId = testRoomManager.createNewRoom("test");
         
-        testSocket = clientIO.connect('http://localhost:8080');
+        testSocket = clientIO.connect('http://localhost:' + TEST_PORT);
         
         spyOn(testRoomManager, "joinRoom").and.callThrough();
         testSocket.emit("joinRequest", {roomId: testRoomId.toString()});

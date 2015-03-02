@@ -33,15 +33,16 @@ UserManager.prototype = {
             toJSON: true
         });
 
-        
-        userSchema.options.toObject = {};
-        userSchema.options.toObject.transform = function (doc, ret, options) {
-            if (options.hide) {
-                options.hide.split(' ').forEach(function (prop) {
-                    delete ret[prop];
-                });
-            }
-        };
+        if (userSchema.options) { 
+            userSchema.options.toObject = {};
+            userSchema.options.toObject.transform = function (doc, ret, options) {
+                if (options.hide) {
+                    options.hide.split(' ').forEach(function (prop) {
+                        delete ret[prop];
+                    });
+                }
+            };
+        }
         this._UserModel = db.model('User', userSchema);
     },
     _removeUserCB: function(err) {

@@ -9,6 +9,7 @@ describe("User Manager", function() {
     beforeEach(function() {
         userManager = new UserManager(mockMongoDB);
         userModel = mockMongoDB.model("User");
+        userModel.prototype.save = jasmine.createSpy("save");
         spyOn(userModel, "findOne").and.callFake(function() {
             queryExec = jasmine.createSpyObj("Query", ["exec"]); 
             return queryExec;
@@ -24,7 +25,7 @@ describe("User Manager", function() {
             expect(userDoc.anonymous).toBe(true);
             expect(userDoc.displayName).toBe(testName);
             expect(userDoc.authToken).toBe(testToken);
-            expect(userDoc.save.calledWith(testCallback)).toBe(true);
+            expect(userDoc.save).toHaveBeenCalledWith(testCallback);
         });
         it("should find user by login and set callback" , function() {
             var testLogin = "TestToken",
