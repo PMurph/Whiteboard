@@ -1,7 +1,7 @@
 "use strict";
 
 
-define(["models/AnonymousUser"], function(AnonUser) {
+define(["models/AnonymousUser", "tests/bind"], function(AnonUser) {
     describe("AnonymousUser Model", function() {
         var user;
         beforeEach(function() {
@@ -12,7 +12,7 @@ define(["models/AnonymousUser"], function(AnonUser) {
         });
         it("should set/get display name", function() {
             var testName = "name_password";
-            expect(user.setDisplayName(testName)).toBe(true);
+            expect(user.setDisplayName.bind(user,testName)).not.toThrow();
             //Password is encoded as Base64 not plain text
             expect(user.getDisplayName()).toBe(testName);
         });
@@ -21,9 +21,9 @@ define(["models/AnonymousUser"], function(AnonUser) {
                 emptyName = "",
                 undefinedName;
 
-            expect(user.setDisplayName(nullName)).toBe(false);
-            expect(user.setDisplayName(emptyName)).toBe(false);
-            expect(user.setDisplayName(undefinedName)).toBe(false);
+            expect(user.setDisplayName.bind(user,nullName)).toThrow();
+            expect(user.setDisplayName.bind(user,emptyName)).toThrow();
+            expect(user.setDisplayName.bind(user,undefinedName)).toThrow();
         });
     });
 });

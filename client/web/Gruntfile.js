@@ -42,7 +42,10 @@ module.exports = function (grunt) {
                     templateOptions: {
                         requireConfigFile: 'app/scripts/config.js',
                         requireConfig: {
-                            baseUrl: 'app/scripts'
+                            baseUrl: 'app/scripts',
+                            paths: {
+                                tests: '../../tests/'
+                            }
                         }
                     }
                 }
@@ -58,7 +61,10 @@ module.exports = function (grunt) {
                     templateOptions: {
                         requireConfigFile: 'app/scripts/config.js',
                         requireConfig: {
-                            baseUrl: 'app/scripts'
+                            baseUrl: 'app/scripts',
+                            paths: {
+                                tests: '../../tests/'
+                            }
                         }
                     }
                 }

@@ -1,7 +1,6 @@
 "use strict";
 
-
-define(["models/User"], function(User) {
+define(["models/User", "tests/bind"], function(User) {
     describe("User Model", function() {
         var user;
         beforeEach(function() {
@@ -12,7 +11,7 @@ define(["models/User"], function(User) {
         });
         it("should set/get login", function() {
             var testLogin = "test_login";
-            expect(user.setLogin(testLogin)).toBe(true);
+            user.setLogin(testLogin);
             expect(user.getLogin()).toBe(testLogin);
         });
         it("should NOT set null, undefined, or empty login", function() {
@@ -20,29 +19,26 @@ define(["models/User"], function(User) {
                 emptyLogin = "",
                 undefinedLogin;
 
-            expect(user.setLogin(nullLogin)).toBe(false);
-            expect(user.setLogin(emptyLogin)).toBe(false);
-            expect(user.setLogin(undefinedLogin)).toBe(false);
+            expect(user.setLogin.bind(user, nullLogin)).toThrow();
+            expect(user.setLogin.bind(user, emptyLogin)).toThrow();
+            expect(user.setLogin.bind(user, undefinedLogin)).toThrow();
         });
         it("should set/get password", function() {
             var testPassword = "test_password";
-            expect(user.setPassword(testPassword)).toBe(true);
-            //Password is encoded as Base64 not plain text
-            expect(user.getPassword()).toBe(window.btoa(testPassword));
+            expect(user.setPassword.bind(user, testPassword)).not.toThrow();
         });
         it("should NOT set null, undefined, or empty password", function() {
             var nullPassword = null,
                 emptyPassword = "",
                 undefinedPassword;
 
-            expect(user.setPassword(nullPassword)).toBe(false);
-            expect(user.setPassword(emptyPassword)).toBe(false);
-            expect(user.setPassword(undefinedPassword)).toBe(false);
+            expect(user.setPassword.bind(user, nullPassword)).toThrow();
+            expect(user.setPassword.bind(user, emptyPassword)).toThrow();
+            expect(user.setPassword.bind(user, undefinedPassword)).toThrow();
         });
         it("should set/get display name", function() {
             var testName = "name_password";
-            expect(user.setDisplayName(testName)).toBe(true);
-            //Password is encoded as Base64 not plain text
+            expect(user.setDisplayName.bind(user, testName)).not.toThrow();
             expect(user.getDisplayName()).toBe(testName);
         });
         it("should NOT set null, undefined, or empty password", function() {
@@ -50,9 +46,9 @@ define(["models/User"], function(User) {
                 emptyName = "",
                 undefinedName;
 
-            expect(user.setDisplayName(nullName)).toBe(false);
-            expect(user.setDisplayName(emptyName)).toBe(false);
-            expect(user.setDisplayName(undefinedName)).toBe(false);
+            expect(user.setDisplayName.bind(user, nullName)).toThrow();
+            expect(user.setDisplayName.bind(user, emptyName)).toThrow();
+            expect(user.setDisplayName.bind(user, undefinedName)).toThrow();
         });
     });
 });
