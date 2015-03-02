@@ -79,73 +79,46 @@ RoomManager.prototype = {
         this._rooms[roomId] = {room: room};
     },
     
-    getCreateRouteF: function() {
+    getRoomRouteF: function() {
         var self = this;
     
         return function(req, res) {
             var authToken = self._userManager.userSession.getRequestToken(req);
             
-            self._userManager.findByAuthToken(authToken, function(error, user) {
-                self.authenticateUser(error, user, function() {
-                    var roomId = 0;
-                    if(req.method === "GET" || req.method === "POST") {
+            if(req.method === "GET") {
+                self._respondToGetRoomList(res);
+            } else if(req.method === "POST") {
+                self._userManager.findByAuthToken(authToken, function(error, user) {
+                    self.authenticateUser(error, user, function() {
+                        var roomId = 0;
                         roomId = self.createNewRoom(user.id);
                         self._respondToSuccessfulCreate(roomId, res);
-                    } else {
+                    },
+                    function() {
                         res.sendStatus(400);
-                    }
-                }, 
-                function() {
-                    res.sendStatus(400);
+                    });
                 });
-            });
-        };
-    },
-    
-    _respondToSuccessfulCreate: function(roomId, res) {
-        var responseContent = this._createRoomJSONResponse(roomId);
-        res.writeHead(200, this._createResponseHeaders(responseContent));
-        res.end(responseContent);
-    
-    },
-    
-    _createRoomJSONResponse: function(roomId) {
-        return JSON.stringify({roomId: roomId});
-    },
-    
-    _createResponseHeaders: function(responseContent) {
-        return {"Content-Type": "application/json",
-            "Content-Length": responseContent.length};
-    },
-
-    getRoom: function(roomId) {
-        return this._rooms[roomId].room;
-    },
-    
-    getRoomListRouteF: function() {
-        var self = this;
-    
-        return function(req, res) {
-            if(req.method === "GET") {
-                self._responseToGetRoomList(res);
             } else {
                 res.sendStatus(400);
             }
         };
     },
     
-    _responseToGetRoomList: function(res) {
-        var responseContent = this._createRoomListJSONResponse();
-        res.writeHead(200, this._createResponseHeaders(responseContent));
-        res.end(responseContent);
-    },
-    
-    _createRoomListJSONResponse: function() {
-        return JSON.stringify({rooms: this.getRoomList()});
+    _respondToGetRoomList: function(res) {
+        res.json({rooms: this.getRoomList()});
     },
     
     getRoomList: function() {
         return Object.keys(this._rooms);
+    },
+    
+    _respondToSuccessfulCreate: function(roomId, res) {
+        res.json({roomId: roomId});
+    
+    },
+    
+    getRoom: function(roomId) {
+        return this._rooms[roomId].room;
     },
 };
 

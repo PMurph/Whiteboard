@@ -16,7 +16,7 @@ describe("RoomManager", function() {
     var mockUserSession;
 
     beforeEach(function() {
-        mockResponse = jasmine.createSpyObj("Response", ["sendStatus", "writeHead", "end"]);
+        mockResponse = jasmine.createSpyObj("Response", ["sendStatus", "json"]);
         mockSocket = jasmine.createSpyObj("Socket", ["join", "on"]);
         mockSocketManager = jasmine.createSpyObj("socketManager", ["on", "use"]);
         mockUserManager = jasmine.createSpyObj("UserManager", ["findByAuthToken"]);
@@ -140,7 +140,7 @@ describe("RoomManager", function() {
         beforeEach(function() {
             spyOn(testRoomManager, "createNewRoom").and.callThrough();
             mockUserManager.userSession = mockUserSession;
-            testCreateFunction = testRoomManager.getCreateRouteF();
+            testCreateFunction = testRoomManager.getRoomRouteF();
         });
         
         it("should be a function", function() {
@@ -154,29 +154,13 @@ describe("RoomManager", function() {
                 });
             });
             
-            it("should return 200 if a post request is sent with a valid authentication token", function(done) {
-                mockResponse.writeHead.and.callFake(function(status, headers) {
-                    expect(status).toBe(200);
-                    expect(headers).not.toBeNull();
-                });
-                mockResponse.end.and.callFake(function() {
+            it("should return json if a post request is sent with a valid authentication token", function(done) {
+                mockResponse.json.and.callFake(function(jsonObject) {
+                    expect(jsonObject).not.toBeNull();
                     done();
                 });
                     
                 mockRequest = {method: "POST", query: {authToken: TEST_AUTH_TOKEN}};
-                testCreateFunction(mockRequest, mockResponse);
-            });
-            
-            it("should return 200 if a get request is sent with a valid authentication token", function(done) {
-                mockResponse.writeHead.and.callFake(function(status, headers) {
-                    expect(status).toBe(200);
-                    expect(headers).not.toBeNull();
-                });
-                mockResponse.end.and.callFake(function() {
-                    done();
-                });
-                    
-                mockRequest = {method: "GET", query: {authToken: TEST_AUTH_TOKEN}};
                 testCreateFunction(mockRequest, mockResponse);
             });
             
@@ -191,12 +175,6 @@ describe("RoomManager", function() {
             
             it("should create a room if a post request is sent with a valid authentication token", function() {
                 mockRequest = {method: "POST", query: {authToken: TEST_AUTH_TOKEN}};
-                testCreateFunction(mockRequest, mockResponse);
-                expect(testRoomManager.createNewRoom).toHaveBeenCalled();
-            });
-            
-            it("should create a room if a get request is sent with a valid authentication token", function() {
-                mockRequest = {method: "GET", query: {authToken: TEST_AUTH_TOKEN}};
                 testCreateFunction(mockRequest, mockResponse);
                 expect(testRoomManager.createNewRoom).toHaveBeenCalled();
             });
@@ -224,23 +202,8 @@ describe("RoomManager", function() {
                 testCreateFunction(mockRequest, mockResponse);
             });
             
-            it("should not return 200 if a get request is sent with a invalid authentication token", function(done) {
-                mockResponse.sendStatus.and.callFake(function(status) {
-                    expect(status).not.toBe(200);
-                    done();
-                });
-                mockRequest = {method: "GET", query: {authToken: TEST_AUTH_TOKEN}};
-                testCreateFunction(mockRequest, mockResponse);
-            });
-            
             it("should not create a room if a post request is sent with a valid authentication token", function() {
                 mockRequest = {method: "POST", query: {authToken: TEST_AUTH_TOKEN}};
-                testCreateFunction(mockRequest, mockResponse);
-                expect(testRoomManager.createNewRoom).not.toHaveBeenCalled();
-            });
-            
-            it("should not create a room if a get request is sent with a valid authentication token", function() {
-                mockRequest = {method: "GET", query: {authToken: TEST_AUTH_TOKEN}};
                 testCreateFunction(mockRequest, mockResponse);
                 expect(testRoomManager.createNewRoom).not.toHaveBeenCalled();
             });
@@ -252,19 +215,12 @@ describe("RoomManager", function() {
         
         beforeEach(function() {
             spyOn(testRoomManager, 'getRoomList').and.callThrough();
-            testGetRoomListFunction = testRoomManager.getRoomListRouteF();
+            testGetRoomListFunction = testRoomManager.getRoomRouteF();
         });
         
-        it("should be a function", function() {
-            expect(testGetRoomListFunction instanceof Function).toBe(true);
-        });
-        
-        it("should return 200 if a get request is received", function(done) {
-            mockResponse.writeHead.and.callFake(function(status, headers) {
-                expect(status).toBe(200);
-                expect(headers).not.toBeNull();
-            });
-            mockResponse.end.and.callFake(function() {
+        it("should return json if a get request is received", function(done) {
+            mockResponse.json.and.callFake(function(jsonObject) {
+                expect(jsonObject).not.toBeNull();
                 done();
             });
                     
@@ -278,17 +234,8 @@ describe("RoomManager", function() {
             expect(testRoomManager.getRoomList).toHaveBeenCalled();
         });
         
-        it("should not return 200 if a request is received that is not a GET", function(done) {
-            mockResponse.sendStatus.and.callFake(function(status) {
-                expect(status).not.toBe(200);
-                done();
-            });
-            mockRequest = {method: "POST"};
-            testGetRoomListFunction(mockRequest, mockResponse);
-        });
-        
         it("should not call the getRoomList function on an invalid request", function() {
-            mockRequest = {method: "POST"};
+            mockRequest = {method: "BAD"};
             testGetRoomListFunction(mockRequest, mockResponse);
             expect(testRoomManager.getRoomList).not.toHaveBeenCalled();
         });
