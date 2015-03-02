@@ -64,6 +64,12 @@ UserManager.prototype = {
         } 
         return false;
     },
+    _isUsernameTaken: function (name, callback) {
+        this._UserModel
+            .find({login: name})
+            .limit(1)
+            .exec(callback);
+    },
     _checkPassword: function (password) {
         if (password.length < this.MIN_PASSWORD_LENGTH) {
             return false;   
@@ -122,7 +128,10 @@ UserManager.prototype = {
          * should not be updated. */
         if (userChanges.status) {
             userDeleted = this._handleStatusChange(user, userChanges.status);
-            userChanges.authToken = user.authToken;
+            if (userDeleted) {
+                callback(200);
+                return;
+            }
         }
 
         if (userChanges.password || userChanges.b64password) {
@@ -136,13 +145,24 @@ UserManager.prototype = {
             delete userChanges.b64password;
         }
 
-        if (!userDeleted) {
-            this._UserModel
-                .findByIdAndUpdate(user.id, {$set: userChanges})
-                .exec(callback);
-        } else {
-            callback(200);
+        if (userChanges.login && userChanges.login !== user.login) {
+            var self = this;
+            var newLogin = userChanges.login;
+            this._isUsernameTaken(newLogin, function (err, users) {
+                if (users.length > 0) {
+                    callback("The username is already taken");
+                }else{
+                    self._UserModel
+                        .findByIdAndUpdate(user.id, {$set: userChanges})
+                        .exec(callback);
+                }
+            });
+            return;
         }
+
+        this._UserModel
+            .findByIdAndUpdate(user.id, {$set: userChanges})
+            .exec(callback);
 
     }
 };
