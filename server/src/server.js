@@ -3,17 +3,18 @@
 var bodyParser = require('body-parser'),
     Express = require('express'),
     mongoose = require('mongoose'),
-    UserManager = require('./session/UserManager');
+    UserManager = require('./session/UserManager'),
+    RoomManager = require('./room_objects/RoomManager.js');
 
-var Server = function (exp, dbOptions) {
+var Server = function (exp, socketIO, dbOptions) {
     this.app = exp;
+    this._socketIO = socketIO;
     this._setupHttpServer();
     this._setupDatabase(dbOptions);
 
     this._userManager = new UserManager(this._db);
 
     this._setupMiddleware();
-    this._setupRoutes();
 };
 
 Server.prototype = {
@@ -44,12 +45,17 @@ Server.prototype = {
     _setupRoutes: function() {
         this.app.use('/', Express.static(__dirname + '/../../client/web/app'));
         this.app.use('/api/user', this._userManager.getRouteF());
+        this.app.use('/api/room', this._roomManager.getRoomRouteF());
     },
     start: function(port, hostname, listenCB) {
         this._port = port || this._port;
         this._hostname = hostname || this._hostname;
         this._connectDB(this._dbHostname, this._dbName);
         this._httpServ = this.app.listen(this._port, this._hostname, null, listenCB);
+        this._socketManager = this._socketIO.listen(this._httpServ);
+        this._roomManager = new RoomManager(this._socketManager, this._userManager);
+        
+        this._setupRoutes();
     },
     stop: function(closeCB) {
         this._disconnectDB();

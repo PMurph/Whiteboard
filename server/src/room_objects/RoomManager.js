@@ -32,15 +32,19 @@ RoomManager.prototype = {
                 self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
                     self.authenticateUser(error, user, function() {
                         self.joinRoom(msgData.roomId, user, socket);
+                    }, 
+                    function() {
                     });
                 });
             });
         });
     },
 
-    authenticateUser: function(error, user, callback) {
+    authenticateUser: function(error, user, authenticatedCallback, unauthenticatedCallback) {
         if(user && !error) {
-            callback();
+            authenticatedCallback();
+        } else {
+            unauthenticatedCallback(user, error);
         }
     },
 
@@ -74,7 +78,45 @@ RoomManager.prototype = {
     _manageRoom: function(roomId, room) {
         this._rooms[roomId] = {room: room};
     },
-
+    
+    getRoomRouteF: function() {
+        var self = this;
+    
+        return function(req, res) {
+            var authToken = self._userManager.userSession.getRequestToken(req);
+            
+            if(req.method === "GET") {
+                self._respondToGetRoomList(res);
+            } else if(req.method === "POST") {
+                self._userManager.findByAuthToken(authToken, function(error, user) {
+                    self.authenticateUser(error, user, function() {
+                        var roomId = 0;
+                        roomId = self.createNewRoom(user.id);
+                        self._respondToSuccessfulCreate(roomId, res);
+                    },
+                    function() {
+                        res.sendStatus(400);
+                    });
+                });
+            } else {
+                res.sendStatus(400);
+            }
+        };
+    },
+    
+    _respondToGetRoomList: function(res) {
+        res.json({rooms: this.getRoomList()});
+    },
+    
+    getRoomList: function() {
+        return Object.keys(this._rooms);
+    },
+    
+    _respondToSuccessfulCreate: function(roomId, res) {
+        res.json({roomId: roomId});
+    
+    },
+    
     getRoom: function(roomId) {
         return this._rooms[roomId].room;
     },

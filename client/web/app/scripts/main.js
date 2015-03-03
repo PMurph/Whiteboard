@@ -36,7 +36,6 @@ require([
 
         this.body.show(this.mainView);
         this.mainController.mainContent = this.mainView.mainContent;
-
     });
 
     App.on('start', function() {

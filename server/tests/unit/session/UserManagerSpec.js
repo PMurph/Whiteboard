@@ -101,47 +101,46 @@ describe("User Manager", function() {
 
                 }
             };
-            it("should respond with User Document (Well Formed Name)", function() {
-                req = createMockRequest("POST", anonAuthTest.wellFormedName);
-
-                routeF(req, res);
+            
+            describe("authenticated user", function() {
+                afterEach(function() {
+                    routeF(req, res);
                 
-                expect(userManager.userSession.authAnonymous).toHaveBeenCalled();
-                expect(res.json).toHaveBeenCalled();
+                    expect(userManager.userSession.authAnonymous).toHaveBeenCalled();
+                    expect(res.json).toHaveBeenCalled();
+                });
+                
+                it("should respond with User Document (Well Formed Name)", function() {
+                    req = createMockRequest("POST", anonAuthTest.wellFormedName);
+                });
+                
+                it("should respond with User Document on (Well Formed)", function() {
+                    req = createMockRequest("POST", anonAuthTest.wellFormed);
+                });
             });
-            it("should respond with User Document on (Well Formed)", function() {
-                req = createMockRequest("POST", anonAuthTest.wellFormed);
+        
+            describe("unauthenticated user", function() {
+                afterEach(function() {
+                    routeF(req, res);
 
-                routeF(req, res);
-
-                expect(userManager.userSession.authAnonymous).toHaveBeenCalled();
-                expect(res.json).toHaveBeenCalled();
-            });
-            it("should NOT respond (Malformed Anonymous False)", function() {
-                req = createMockRequest("POST", anonAuthTest.malformedAnonFalse);
-
-                routeF(req, res);
-
-                expect(userManager.userSession.authAnonymous).not.toHaveBeenCalled();
-                expect(res.sendStatus).toHaveBeenCalledWith(400);
-            });
-            it("should NOT respond (Malformed AuthToken Set)", function() {
-                req = createMockRequest("POST", anonAuthTest.malformedAuthTokenSet);
-
-                routeF(req, res);
-
-                expect(userManager.userSession.authAnonymous).not.toHaveBeenCalled();
-                expect(res.sendStatus).toHaveBeenCalledWith(400);
-            });
-            it("should NOT respond (Malformed Empty)", function() {
-                req = createMockRequest("POST", anonAuthTest.malformedEmpty);
-
-                routeF(req, res);
-
-                expect(userManager.userSession.authAnonymous).not.toHaveBeenCalled();
-                expect(res.sendStatus).toHaveBeenCalledWith(400);
+                    expect(userManager.userSession.authAnonymous).not.toHaveBeenCalled();
+                    expect(res.sendStatus).toHaveBeenCalledWith(400);
+                });
+                
+                it("should NOT respond (Malformed Anonymous False)", function() {
+                    req = createMockRequest("POST", anonAuthTest.malformedAnonFalse);
+                });
+                
+                it("should NOT respond (Malformed AuthToken Set)", function() {
+                    req = createMockRequest("POST", anonAuthTest.malformedAuthTokenSet);
+                });
+                
+                it("should NOT respond (Malformed Empty)", function() {
+                    req = createMockRequest("POST", anonAuthTest.malformedEmpty);
+                });
             });
         });
+        
         describe("Authenticate Regular User", function() {
             var userAuthTest = {
                 wellFormed: {
@@ -173,45 +172,43 @@ describe("User Manager", function() {
 
                 }
             };
-            it("should respond with User Document (Well Formed)", function() {
-                req = createMockRequest("GET", userAuthTest.wellFormed);
+            
+            describe("authenticated user", function() {
+                afterEach(function() {
+                    routeF(req, res);
 
-                routeF(req, res);
-
-                expect(userManager.userSession.authUser).toHaveBeenCalled();
-                expect(res.json).toHaveBeenCalled();
+                    expect(userManager.userSession.authUser).toHaveBeenCalled();
+                    expect(res.json).toHaveBeenCalled();
+                });
+                
+                it("should respond with User Document (Well Formed)", function() {
+                    req = createMockRequest("GET", userAuthTest.wellFormed);
+                });
+                
+                it("should respond with User Document (Well Formed Anonymous False)", function() {
+                    req = createMockRequest("GET", userAuthTest.wellFormedFalseAnon);
+                });
             });
-            it("should respond with User Document (Well Formed Anonymous False)", function() {
-                req = createMockRequest("GET", userAuthTest.wellFormedFalseAnon);
+            
+            describe("unathenticated user", function() {
+                afterEach(function() {
+                    routeF(req, res);
 
-                routeF(req, res);
-
-                expect(userManager.userSession.authUser).toHaveBeenCalled();
-                expect(res.json).toHaveBeenCalled();
-            });
-            it("should NOT respond (Malformed Anonymous True)", function() {
-                req = createMockRequest("GET", userAuthTest.malformedTrueAnon);
-
-                routeF(req, res);
-
-                expect(userManager.userSession.authUser).not.toHaveBeenCalled();
-                expect(res.sendStatus).toHaveBeenCalledWith(400);
-            });
-            it("should NOT respond (Malformed AuthToken Set)", function() {
-                req = createMockRequest("GET", userAuthTest.malformedAuthTokenSet);
-
-                routeF(req, res);
-
-                expect(userManager.userSession.authUser).not.toHaveBeenCalled();
-                expect(res.sendStatus).toHaveBeenCalledWith(400);
-            });
-            it("should NOT respond (Malformed Empty)", function() {
-                req = createMockRequest("GET", userAuthTest.malformedEmpty);
-
-                routeF(req, res);
-
-                expect(userManager.userSession.authUser).not.toHaveBeenCalled();
-                expect(res.sendStatus).toHaveBeenCalledWith(400);
+                    expect(userManager.userSession.authUser).not.toHaveBeenCalled();
+                    expect(res.sendStatus).toHaveBeenCalledWith(400);
+                });
+            
+                it("should NOT respond (Malformed Anonymous True)", function() {
+                    req = createMockRequest("GET", userAuthTest.malformedTrueAnon);
+                });
+                
+                it("should NOT respond (Malformed AuthToken Set)", function() {
+                    req = createMockRequest("GET", userAuthTest.malformedAuthTokenSet);
+                });
+                
+                it("should NOT respond (Malformed Empty)", function() {
+                    req = createMockRequest("GET", userAuthTest.malformedEmpty);
+                });
             });
         });
     });

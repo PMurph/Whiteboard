@@ -40,7 +40,6 @@ define([
         dashboard: function() {
             this.mainContent.show(new DashboardView());
         },
-
         room: function(id) {
             var roomModel = new RoomModel({
                 id: id,
