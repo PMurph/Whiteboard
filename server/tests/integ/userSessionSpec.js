@@ -11,8 +11,7 @@ describe("User Session Intergration", function () {
         UserSession = require('../../src/session/UserSession'),
         UserRequest = require('../../src/session/UserRequest'),
         Server = require('../../src/server'),
-        server;
-        var req;
+        server, req, app;
 
     var testDisplayName = "Test Display Name",
         testAuthToken = "testAuthToken",
@@ -30,6 +29,7 @@ describe("User Session Intergration", function () {
             };
                 
         spyOn(mockMongoose, "connect");
+        mockMongoose.disconnect = jasmine.createSpy("disconnect");
         var userModel = mockMongoose.model("User");
         var user = jasmine.createSpyObj("User", ["toObject"]);
 
@@ -44,11 +44,15 @@ describe("User Session Intergration", function () {
            });
            return query;
         });
-        server = new Server(new Express(), userRequest, dbOptions);
+        server = new Server(app = new Express(), userRequest, dbOptions);
         server.start(3333, "localhost", done);
     });
+    afterAll("should stop server", function(done) {
+        console.log("Stopping:");
+        server.stop(done);
+    });
     beforeEach(function() {
-        req = request("http://127.0.0.1:3333");
+        req = request(app);
     });
     describe("Autenticate Anonymous", function() {
         var testRequest = {
@@ -88,10 +92,7 @@ describe("User Session Intergration", function () {
                     body = {};
                 }
 
-                if(err){
-                    done(err);
-                }
-
+                expect(err).toBeNull();
                 expect(body.displayName).toBe(testDisplayName);
                 expect(body.id).not.toBeNull();
                 expect(body.authToken).not.toBeNull();
@@ -112,10 +113,8 @@ describe("User Session Intergration", function () {
                     body = {};
                 }
 
-                if(err) {
-                    done(err);
-                }
 
+                expect(err).toBeNull();
                 expect(body.name).not.toBeNull();
                 expect(body.id).not.toBeNull();
                 expect(body.authToken).not.toBeNull();
@@ -138,7 +137,10 @@ describe("User Session Intergration", function () {
             req
             .post('/api/user')
             .send(testRequest.authAnon.malformedEmpty)
-            .expect(400, done);
+            .expect(400, function(err) {
+                expect(err).toBeNull();
+                done();   
+            });
         });
     });
     describe("Authentiate User", function() {
@@ -193,7 +195,7 @@ describe("User Session Intergration", function () {
             .expect(400, done);
         });
     });
-    afterAll("should stop server", function(done) {
+    it("hack to end test", function(done) {
         server.stop(done);
     });
 });
