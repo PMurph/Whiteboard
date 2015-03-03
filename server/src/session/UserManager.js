@@ -51,6 +51,10 @@ UserManager.prototype = {
         }
     },
     _handleStatusChange: function(user, newStatus) {
+        if (newStatus !== "offline" && newStatus !== "online" && newStatus !== "away") {
+            throw "The status entered is invalid";
+        }
+
         if (newStatus === "offline") {
             if (user.saveSession === false || user.anonymous === true) {
                 user.authToken = "";
@@ -127,13 +131,22 @@ UserManager.prototype = {
          * offline it will be deleted from DB and 
          * should not be updated. */
         if (userChanges.status) {
-            userDeleted = this._handleStatusChange(user, userChanges.status);
+            try {
+                userDeleted = this._handleStatusChange(user, userChanges.status);
+            } catch (e) {
+                callback(e);
+                return;
+            }
             if (userDeleted) {
                 callback(200);
                 return;
             }
+            userChanges.authToken = user.authToken;
         }
-
+        
+        /* User register on site by upgrading account
+         * from anonymous: true to false. The upgrade
+         * also requires a login and password to be set */
         if(userChanges.anonymous !== user.anonymous) {
             if (userChanges.anonymous === false) {
                 if ((!userChanges.password && !userChanges.b64password) || !userChanges.login) {
@@ -144,6 +157,9 @@ UserManager.prototype = {
                 callback(400);
                 return;
             }
+        }else if (user.anonymous === true && (userChanges.login || userChanges.password || userChanges.b64password)) {
+            callback(400);
+            return;
         }
 
         if (userChanges.password || userChanges.b64password) {
