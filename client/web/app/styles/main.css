@@ -151,6 +151,8 @@ nav {
 	background-color: #eee;
 	border: 1px solid #333;
 	box-shadow: 1px 1px 1px #333;
+
+	padding-left: 5px;
 }
 
 .room-item {
@@ -183,6 +185,11 @@ canvas {
 
 .chat-component {
 	width: 200px;
+}
+
+.chat-component #chat-messages-region {
+    overflow-y: scroll;
+    height: 450px;
 }
 
 #login-layout {

@@ -18,7 +18,8 @@ define([
 
         ui: {
             chatInput: '#chat-input',
-            sendBtn: '#send-btn'
+            sendBtn: '#send-btn',
+            chatMessages: '#chat-messages-region'
         },
 
         regions: {
@@ -53,6 +54,8 @@ define([
                 name: 'a name',
                 message: this.ui.chatInput.val()
             });
+
+            this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight)
 
             this.ui.chatInput.val('');
         }
