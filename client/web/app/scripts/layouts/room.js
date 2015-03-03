@@ -2,14 +2,12 @@ define([
     'marionette',
     'layouts/chat',
     'views/room/whiteboard',
-    'controllers/SocketController',
     'vent',
     'tpl!/scripts/templates/room/layout.html'
 ], function(
     Marionette,
     ChatViewComponent,
     WhiteboardView,
-    SocketController,
     vent,
     Template) {
     'use strict';

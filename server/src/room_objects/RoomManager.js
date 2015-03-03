@@ -11,7 +11,7 @@ var RoomManager = function(socketManager, userSession) {
     this._userSession = userSession;
     this._userManager = userSession.userManager;
     this._drawCommandLogic = new DrawCommandLogic(this);
-    
+
     this._initSocketCallbacks(socketManager);
 
     this.createNewRoom(null);
@@ -21,24 +21,32 @@ RoomManager.prototype = {
     _initSocketCallbacks: function(socketManager) {
         var self = this;
 
-        socketManager.use(function(socket, next) {
-            var authToken = socket.request._query.authToken;
-            self._userManager.findByAuthToken(authToken, function(error, user) {
-                self.authenticateUser(error, user, function() {
-                    next();
-                });
-            });
-        });
-        
+        // socketManager.use(function(socket, next) {
+        //     var authToken = socket.request._query.authToken;
+        //     self._userManager.findByAuthToken(authToken, function(error, user) {
+        //         self.authenticateUser(error, user, function() {
+        //             next();
+        //         });
+        //     });
+        // });
+
         socketManager.on("connection", function(socket) {
             socket.on("joinRequest", function(msgData) {
                 self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
                     self.authenticateUser(error, user, function() {
                         self.joinRoom(msgData.roomId, user, socket);
-                    }, 
+                    },
                     function() {
                     });
                 });
+            });
+
+            socket.on("draw", function(msg) {
+                socket.broadcast.emit("draw", msg);
+            });
+
+            socket.on("chat", function(msg) {
+                socket.broadcast.emit("chat", msg);
             });
         });
     },
@@ -81,13 +89,13 @@ RoomManager.prototype = {
     _manageRoom: function(roomId, room) {
         this._rooms[roomId] = room;
     },
-    
+
     getRoomRouteF: function() {
         var self = this;
-    
+
         return function(req, res) {
             var authToken = self._userSession.getRequestToken(req);
-            
+
             if(req.method === "GET") {
                 self._respondToGetRoomList(res);
             } else if(req.method === "POST") {
@@ -106,7 +114,7 @@ RoomManager.prototype = {
             }
         };
     },
-    
+
     _respondToGetRoomList: function(res) {
         res.json(this.getRoomList());
     },
@@ -114,12 +122,12 @@ RoomManager.prototype = {
     getRoomList: function() {
         return this._rooms;
     },
-    
+
     _respondToSuccessfulCreate: function(roomId, res) {
         res.json({roomId: roomId});
-    
+
     },
-    
+
     getRoom: function(roomId) {
         return this._rooms[roomId];
     },

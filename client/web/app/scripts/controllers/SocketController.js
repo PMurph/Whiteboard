@@ -26,11 +26,15 @@ define([
             this._socketHash[roomID] = roomSocket;
 
             roomSocket.on('chat', function(param) {
-                roomView.chat.addMessage(param);
+                if (roomID === param.roomID) {
+                    roomView.chat.addMessage(param.message);
+                }
             });
 
             roomSocket.on('draw', function(param) {
-                roomView.whiteboard.drawFromMessage(param);
+                if (roomID === param.roomID) {
+                    roomView.whiteboard.drawFromMessage(param.message);
+                }
             });
         },
 
@@ -40,11 +44,11 @@ define([
         },
 
         _emitChat: function(params) {
-            this._socketHash[params.roomID].emit('chat', params.message);
+            this._socketHash[params.roomID].emit('chat', params);
         },
 
         _emitDraw: function(params) {
-            this._socketHash[params.roomID].emit('draw', params.message);
+            this._socketHash[params.roomID].emit('draw', params);
         }
     });
 

@@ -31,7 +31,9 @@ define([
             'click #send-btn': '_sendMessage'
         },
 
-        initialize: function() {
+        initialize: function(options) {
+            this.roomModel = options.roomModel;
+
             // Stub chat messages
             this.chatCollection = new ChatMessagesCollection();
             for (var i = 0; i < 10; i++) {
@@ -62,7 +64,7 @@ define([
 
             this.chatCollection.add(message);
             vent.trigger('chat', {
-                roomID: 1,
+                roomID: this.roomModel.get('id'),
                 message: message
             });
 

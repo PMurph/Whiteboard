@@ -83,6 +83,7 @@ define([
             this._updateMouse(e);
             this._paint();
             this.ui.canvas.off('mousemove');
+
             vent.trigger('draw', {
                 roomID: this.roomModel.get('id'),
                 message: drawMessage

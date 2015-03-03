@@ -12,7 +12,6 @@ define([
     'layouts/dashboard',
     'layouts/room',
     'layouts/login',
-    'layouts/controls',
     'models/room',
     'controllers/SocketController',
     'tpl!templates/status.html'
@@ -30,7 +29,6 @@ define([
     DashboardView,
     RoomLayoutView,
     LoginView,
-    ControlsView,
     RoomModel,
     SocketController,
     StatusTemplate) {
