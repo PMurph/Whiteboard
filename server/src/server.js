@@ -2,7 +2,8 @@
 
 var bodyParser = require('body-parser'),
     Express = require('express'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    RoomManager = require('./room_objects/RoomManager');
 
 var Server = function (exp, userRequest, socketIO, dbOptions) {
     this.app = exp;
@@ -11,6 +12,7 @@ var Server = function (exp, userRequest, socketIO, dbOptions) {
     this._setupDatabase(dbOptions);
     
     this._userRequest = userRequest;
+    this._userSession = userRequest.userSession;
 
     this._setupMiddleware();
 };
@@ -42,7 +44,7 @@ Server.prototype = {
     },
     _setupRoutes: function() {
         this.app.use('/', Express.static(__dirname + '/../../client/web/app'));
-        this.app.use('/api/user', this._userManager.getRouteF());
+        this.app.use('/api/user', this._userRequest.getRouteF());
         this.app.use('/api/room', this._roomManager.getRoomRouteF());
     },
     start: function(port, hostname, listenCB) {
@@ -51,7 +53,7 @@ Server.prototype = {
         this._connectDB(this._dbHostname, this._dbName);
         this._httpServ = this.app.listen(this._port, this._hostname, null, listenCB);
         this._socketManager = this._socketIO.listen(this._httpServ);
-        this._roomManager = new RoomManager(this._socketManager, this._userManager);
+        this._roomManager = new RoomManager(this._socketManager, this._userSession);
         
         this._setupRoutes();
     },

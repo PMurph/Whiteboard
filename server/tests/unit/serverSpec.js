@@ -15,8 +15,8 @@ describe("Server", function() {
         mockExpress = jasmine.createSpyObj("express", ["use","listen"]),
         mockSocketIO = jasmine.createSpyObj("socket.io", ["listen"]),
         mockSocketManager = jasmine.createSpyObj("socketMnaager", ["getCreateRouteF","use","on"]),
-        mockExpress = jasmine.createSpyObj("express", ["use","listen"]),
         mockUserRequest = jasmine.createSpyObj("UserRequest", ["getRouteF"]);
+        mockUserRequest.userSession = jasmine.createSpyObj("UserSession", ["userManager", "getRequestToken"]);
 
     var server;
 

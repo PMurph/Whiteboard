@@ -147,7 +147,7 @@ UserManager.prototype = {
         /* User register on site by upgrading account
          * from anonymous: true to false. The upgrade
          * also requires a login and password to be set */
-        if(userChanges.anonymous !== user.anonymous) {
+        if(userChanges.anonymous && userChanges.anonymous !== user.anonymous) {
             if (userChanges.anonymous === false) {
                 if ((!userChanges.password && !userChanges.b64password) || !userChanges.login) {
                     callback("Login and Password must be set to register regular user.");

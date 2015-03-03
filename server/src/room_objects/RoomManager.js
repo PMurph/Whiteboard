@@ -4,11 +4,12 @@ var Room = require('./Room.js');
 var RoomCommunicator = require("../communication/RoomCommunicator.js");
 var DrawCommandLogic = require("../logic/DrawCommandLogic.js");
 
-var RoomManager = function(socketManager, userManager) {
+var RoomManager = function(socketManager, userSession) {
     this._roomId = 0;
     this._rooms = {};
     this._socketManager = socketManager;
-    this._userManager = userManager;
+    this._userSession = userSession;
+    this._userManager = userSession.userManager;
     this._drawCommandLogic = new DrawCommandLogic(this);
     
     this._initSocketCallbacks(socketManager);
@@ -83,7 +84,7 @@ RoomManager.prototype = {
         var self = this;
     
         return function(req, res) {
-            var authToken = self._userManager.userSession.getRequestToken(req);
+            var authToken = self._userSession.getRequestToken(req);
             
             if(req.method === "GET") {
                 self._respondToGetRoomList(res);

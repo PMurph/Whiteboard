@@ -12,6 +12,7 @@ describe('Room Pipeline', function() {
     var testSocket;
     var testRoomManager;
     var mockUserManager;
+    var mockUserSession;
     var testRoomId;
     
     beforeAll(function(done) {
@@ -22,10 +23,13 @@ describe('Room Pipeline', function() {
         mockUserManager.findByAuthToken.and.callFake(function(authToken, callback) {
             callback(null, "test");
         });
+        mockUserSession = {
+            userManager: mockUserManager
+        };
     
         socketManager = socketIO.listen(TEST_PORT);
         
-        testRoomManager = new RoomManager(socketManager, mockUserManager);
+        testRoomManager = new RoomManager(socketManager, mockUserSession);
         testRoomId = testRoomManager.createNewRoom("test");
         
         testSocket = clientIO.connect('http://localhost:' + TEST_PORT);

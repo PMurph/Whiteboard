@@ -22,9 +22,9 @@ describe("RoomManager", function() {
         mockUserManager = jasmine.createSpyObj("UserManager", ["findByAuthToken"]);
         mockUserSession = jasmine.createSpyObj("UserSession", ["getRequestToken"]);
         mockUserSession.getRequestToken.and.returnValue(TEST_AUTH_TOKEN);
-        mockUserManager.userSession = mockUserSession;
+        mockUserSession.userManager = mockUserManager;
 
-        testRoomManager = new RoomManager(mockSocketManager, mockUserManager);
+        testRoomManager = new RoomManager(mockSocketManager, mockUserSession);
         testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
         testRoomId = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
     });

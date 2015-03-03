@@ -7,6 +7,7 @@ describe("User Session Intergration", function () {
     var request = require('supertest'),
         Express = require('express'),
         mockMongoose = require('mongoose-mock'),
+        mockSocketIO,
         UserManager = require('../../src/session/UserManager'),
         UserSession = require('../../src/session/UserSession'),
         UserRequest = require('../../src/session/UserRequest'),
@@ -27,7 +28,12 @@ describe("User Session Intergration", function () {
                 hostname: "localhost",
                 name: "testWhiteboard"
             };
-                
+        
+        mockSocketIO = jasmine.createSpyObj("socketIO", ["listen"]);
+        mockSocketIO.listen.and.callFake(function() {
+            return jasmine.createSpyObj("socketManager", ["use", "emit", "on"]);
+        });
+
         spyOn(mockMongoose, "connect");
         mockMongoose.disconnect = jasmine.createSpy("disconnect");
         var userModel = mockMongoose.model("User");
@@ -44,7 +50,7 @@ describe("User Session Intergration", function () {
            });
            return query;
         });
-        server = new Server(app = new Express(), userRequest, dbOptions);
+        server = new Server(app = new Express(), userRequest, mockSocketIO, dbOptions);
         server.start(3333, "localhost", done);
     });
     afterAll("should stop server", function(done) {
@@ -52,7 +58,7 @@ describe("User Session Intergration", function () {
         server.stop(done);
     });
     beforeEach(function() {
-        req = request(app);
+        req = request("http://127.0.0.1:3333");
     });
     describe("Autenticate Anonymous", function() {
         var testRequest = {
