@@ -3,6 +3,7 @@ define([
     'backbone',
     'marionette',
     'app',
+    'controllers/SocketController',
     'models/AnonymousUser',
     'models/User'
 ], function (
@@ -10,6 +11,7 @@ define([
     Backbone,
     Marionette,
     App,
+    SocketController,
     AnonymousUser,
     User
 ) {
@@ -19,9 +21,10 @@ define([
         initialize: function() {
             this._authToken = null;
             this._currentUser = null;
-            
+            this._socketController = SocketController;
+
             this._setupWindowEvents();
-            this._setupObjectEvents();    
+            this._setupObjectEvents();
         },
         _setupObjectEvents: function() {
             this.on("Authenticated", this._authenticatedEvent, this);
@@ -47,7 +50,7 @@ define([
         },
         _setAuthToken: function(token) {
             this._authToken = token;
-
+            this._socketController._authToken = token;
             $.ajaxSetup({
                 data: {
                     authToken: token
@@ -78,7 +81,7 @@ define([
                     }
                 })
                 .then(function() {
-                   callback(null); 
+                   callback(null);
                 })
                 .fail(function() {
                     callback("failed to set user by id: " + userId);
@@ -100,7 +103,7 @@ define([
         },
         authAnonymous: function() {
             var anonUser = new AnonymousUser();
-            
+
             this._handleAuthPromise(anonUser.save({}), anonUser);
             return true;
         },
@@ -108,7 +111,7 @@ define([
             var user = new User({});
             var save = saveSession || false;
             var promise;
-            
+
             try {
                 user.setLogin(login);
                 user.setPassword(password);
@@ -130,7 +133,7 @@ define([
             var save = saveSession || false;
             //We can convert anonymous user to non-anonymous and call it a registration
             var newUser = (this._currentUser) ? this._currentUser : new User();
-            
+
             var b64pass = window.btoa(password);
             var promise = newUser.save({
                 login: login,
@@ -199,7 +202,7 @@ define([
                 this._setUserById(savedUserId, function(err) {
                     if (err) {
                         console.error("The saved authentication token is invalid. Using anonymous account.");
-                        self.clearSavedSession();  
+                        self.clearSavedSession();
                         self._setAuthToken(null);
                         self._setUser(null);
                     }else{

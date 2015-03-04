@@ -26,9 +26,7 @@ define([
 
         _populateRooms: function() {
             this.collection = new RoomsCollection();
-            //this.collection.fetch(); // TODO
-
-            this.collection.add([{id:0},{id:1}]);
+            this.collection.fetch();
 
             var collectionView = new RoomsCollectionView({
                 collection: this.collection

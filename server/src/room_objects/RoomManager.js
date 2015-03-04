@@ -4,6 +4,11 @@ var Room = require('./Room.js');
 var RoomCommunicator = require("../communication/RoomCommunicator.js");
 var DrawCommandLogic = require("../logic/DrawCommandLogic.js");
 
+var stubUser = {
+    id: 1,
+    name: "Precreated room"
+};
+
 var RoomManager = function(socketManager, userSession) {
     this._roomId = 0;
     this._rooms = [];
@@ -14,37 +19,24 @@ var RoomManager = function(socketManager, userSession) {
 
     this._initSocketCallbacks(socketManager);
 
-    this.createNewRoom(null);
-    this.createNewRoom(null);
+    this.createNewRoom(stubUser);
+    this.createNewRoom(stubUser);
 };
 
 RoomManager.prototype = {
     _initSocketCallbacks: function(socketManager) {
         var self = this;
 
-        // TODO For use with namespace authing. POSSIBLY discard, check with Patrick
-        // socketManager.use(function(socket, next) {
-        //     var authToken = socket.request._query.authToken;
-        //     self._userManager.findByAuthToken(authToken, function(error, user) {
-        //         self.authenticateUser(error, user, function() {
-        //             next();
-        //         });
-        //     });
-        // });
-
         socketManager.on("connection", function(socket) {
             socket.on("joinRequest", function(msgData) {
-
-                // TODO Ask Reyad
-                // self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
-                //     self.authenticateUser(error, user, function() {
-                //         self.joinRoom(msgData.roomId, user, socket);
-                //     },
-                //     function() {
-                //     });
-                // });
-
-                self.joinRoom(msgData, null, socket);
+                self._userManager.findByAuthToken(msgData.authToken, function(error, userAuthToken) {
+                    self.authenticateUser(error, userAuthToken, function() {
+                        self.joinRoom(msgData.roomId, userAuthToken, socket);
+                    },
+                    function() {
+                        socket.emit("joined", "rejected");
+                    });
+                });
             });
         });
     },
@@ -60,7 +52,6 @@ RoomManager.prototype = {
     joinRoom: function(roomId, user, socket) {
         var roomObject = this._rooms[roomId];
         if(roomObject) {
-            socket.room = roomId;
             socket.join(roomId);
 
             socket.emit('joined', "You've joined room " + roomId);
@@ -128,7 +119,6 @@ RoomManager.prototype = {
 
     _respondToSuccessfulCreate: function(roomId, res) {
         res.json({roomId: roomId});
-
     },
 
     getRoom: function(roomId) {

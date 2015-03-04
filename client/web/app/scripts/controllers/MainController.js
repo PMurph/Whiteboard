@@ -11,7 +11,6 @@ define([
     'views/navbar',
     'layouts/dashboard',
     'layouts/room',
-    'layouts/login',
     'models/room',
     'controllers/SocketController',
     'tpl!templates/status.html'
@@ -28,7 +27,6 @@ define([
     NavbarView,
     DashboardView,
     RoomLayoutView,
-    LoginView,
     RoomModel,
     SocketController,
     StatusTemplate) {

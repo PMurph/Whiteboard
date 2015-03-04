@@ -26,15 +26,17 @@ define([
             this._roomID = roomID;
             this._roomView = roomView;
 
-            this.io.once('joined', function(msg) {
-                console.log(msg);
+            this.io.once('joined', function() {
                 self.io.once('getAllDrawCommands', function(drawMsgs) {
                     self._roomView.whiteboard.drawFromGetAllMessages(drawMsgs.drawCommands);
                 });
                 self.io.emit('getAllDrawCommands');
             });
 
-            this.io.emit('joinRequest', this._roomID);
+            this.io.emit('joinRequest', {
+                roomId: this._roomID,
+                authToken: this._authToken
+            });
         },
 
         _leaveRoom: function(roomID) {
@@ -61,7 +63,7 @@ define([
             });
 
             this.io.on('roomChatMessage', function(param) {
-                console.log(param);
+
             });
         },
 
