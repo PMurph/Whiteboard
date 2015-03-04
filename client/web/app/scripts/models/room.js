@@ -20,8 +20,11 @@
     });
 
     var MeetingRoomModel = Backbone.Model.extend({
-    	url: '/api/room',
-
+        defaults: {
+            name: 'New Room',
+        },
+        idAttribute: "_id",
+        url: "/api/room",
         initialize: function() {
             this._messages = new ChatMessagesList();
             this._drawModels = new DrawModelsList();

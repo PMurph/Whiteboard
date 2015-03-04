@@ -177,6 +177,10 @@ nav {
 	margin: 0 auto;
 }
 
+#dashRoomLabel {
+    text-align: center;
+}
+
 canvas {
 	width: 700px;
 	height: 500px;

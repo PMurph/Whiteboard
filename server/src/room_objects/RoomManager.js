@@ -121,7 +121,7 @@ RoomManager.prototype = {
     },
     
     getRoom: function(roomId) {
-        return this._rooms[roomId].room;
+        return this._rooms[roomId];
     },
 };
 
