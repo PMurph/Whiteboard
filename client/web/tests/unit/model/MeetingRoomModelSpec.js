@@ -1,30 +1,22 @@
-'use strict';
-
 define([
-    'models/DrawModel',
-    'models/ChatMessage',
-    'models/User',
-    ], 
-    function(
-        DrawModel,
-        ChatMessage,
-        User) {
-    var draw;
+    'models/room',
+    'backbone'
+], function(
+   Room,
+   Backbone
+) {
+    'use strict';
 
-    describe("Draw Model", function() {
+    describe("Meeting Room", function() {
+        var room;
+
         beforeEach(function() {
-            draw = new DrawModel();
-            user = new User();
-            msg = new ChatMessage();
-
-            user.setDisplayName("Bob");
+            room = new Room();
         });
 
-        it('it should add users to a list', function(){
-            expect(draw.getColour()).toBe("Black");
-            expect(draw.getTool()).toBe("Draw");
-            expect(draw.getThickness()).toBe(1);
-            expect(draw.getListOfCoordinates()).toEqual([]);
+        it('it should return a list of users', function(){
+           var userList = room.getListOfUsersActiveInRoom();
+           expect(userList instanceof Backbone.Collection).toBe(true);
         });
     });
 });

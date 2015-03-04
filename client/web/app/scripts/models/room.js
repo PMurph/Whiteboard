@@ -2,17 +2,14 @@
     'backbone', 
     './DrawModel', 
     './User', 
-    './ChatMessage'], 
-    function (
-        Backbone,
-        DrawModel, 
-        User, 
-        ChatMessage) {
+    'collections/chatMessages'
+ ], function (
+    Backbone,
+    DrawModel, 
+    User, 
+    ChatMessagesList
+) {
     "use strict";
-
-    var MessagesList = Backbone.Collection.extend({
-        model: ChatMessage
-    });
 
     var DrawModelsList = Backbone.Collection.extend({
         model: DrawModel
@@ -26,40 +23,14 @@
     	url: '/api/room',
 
         initialize: function() {
-            this._messages = new MessagesList();
+            this._messages = new ChatMessagesList();
             this._drawModels = new DrawModelsList();
-            this.users = new UsersList();
+            this._users = new UsersList();
         },
-
-        addDrawing: function(newDraw){
-            if (newDraw instanceof DrawModel)
-            {
-                this._drawModels.push(newDraw);
-            }
-        },
-
-        addMessage: function(newMsg){
-            if (newMsg instanceof ChatMessage)
-            {
-                this._messages.push(newMsg);
-            }
-        },
-
         getListOfUsersActiveInRoom: function(){
-            return this.users;
-        },
-
-        parse: function(response){
-        	var messageList = new MessagesList();
-        	var userList = new UsersList();
-        	var drawList = new DrawModelsList();
-        	messageList.add(response._messages);
-        	userList.add(response._drawModels);
-        	drawList.add(response.users);
+            return this._users;
         }
-
     });
 
     return MeetingRoomModel;
-    // socket IO stuff here
 });

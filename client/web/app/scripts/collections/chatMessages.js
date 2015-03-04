@@ -1,6 +1,6 @@
 define([
     'backbone',
-    'models/chatMessage'
+    'models/ChatMessage'
 ], function(
     Backbone,
     ChatMessageModel) {
