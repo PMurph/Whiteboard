@@ -6,7 +6,7 @@ var DrawCommandLogic = require("../logic/DrawCommandLogic.js");
 
 var RoomManager = function(socketManager, userSession) {
     this._roomId = 0;
-    this._rooms = {};
+    this._rooms = [];
     this._socketManager = socketManager;
     this._userSession = userSession;
     this._userManager = userSession.userManager;
@@ -79,7 +79,7 @@ RoomManager.prototype = {
     },
 
     _manageRoom: function(roomId, room) {
-        this._rooms[roomId] = {room: room};
+        this._rooms[roomId] = room;
     },
     
     getRoomRouteF: function() {
@@ -110,9 +110,9 @@ RoomManager.prototype = {
     _respondToGetRoomList: function(res) {
         res.json(this.getRoomList());
     },
-    
+
     getRoomList: function() {
-        return Object.keys(this._rooms);
+        return this._rooms;
     },
     
     _respondToSuccessfulCreate: function(roomId, res) {
