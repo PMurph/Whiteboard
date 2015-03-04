@@ -223,6 +223,8 @@ define([
             var xhr;
 
             App.mainController.showShield();
+            App.mainController.setStatusBox("Signing Out", "ellipsis_big.svg");
+
             xhr = this.setUserStatus("offline", async);
             if (xhr) {
                 xhr.then(function () {

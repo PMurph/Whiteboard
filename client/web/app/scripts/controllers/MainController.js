@@ -12,7 +12,9 @@ define([
     'layouts/dashboard',
     'layouts/room',
 
-    'models/room'
+    'models/room',
+
+    'tpl!templates/status.html'
 ], function(
     $,
     Backbone,
@@ -27,7 +29,9 @@ define([
     DashboardView,
     RoomLayoutView,
 
-    RoomModel
+    RoomModel,
+
+    StatusTemplate
 ) {
     'use strict';
 
@@ -69,6 +73,18 @@ define([
         hideShield: function() {
             this.view.centerBox.empty();
             this.view.ui.appShield.hide();
+        },
+        setStatusBox: function(message, imageSrc) {
+            this.view.centerBox.show(new Marionette.ItemView({
+                template: StatusTemplate,
+                templateHelpers: function() {
+                    return {
+                        message: message,
+                        image: "<img src='/images/" + imageSrc + "'></img>"
+                    };
+                }
+            })); 
+
         },
         renderHeader: function(authUser) {
             var user = authUser;

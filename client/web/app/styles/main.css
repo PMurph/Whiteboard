@@ -50,6 +50,15 @@ nav {
     padding: 10px;
 }
 
+#statusBox {
+    text-align: center;
+}
+
+#statusBoxLabel {
+    font-size: 26px;
+    font-weight: bolder;
+}
+
 #userSettings {
     position: absolute;
     z-index: 2;
