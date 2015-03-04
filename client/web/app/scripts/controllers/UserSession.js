@@ -194,6 +194,7 @@ define([
             savedUserId = localStorage.getItem("session::userId");
 
             if (savedUserId && savedToken) {
+                App.mainController.setStatusBox("Restoring Saved Session", "ellipsis_big.svg");
                 this._setAuthToken(savedToken);
                 this._setUserById(savedUserId, function(err) {
                     if (err) {

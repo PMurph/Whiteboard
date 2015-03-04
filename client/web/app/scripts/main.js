@@ -30,6 +30,7 @@ require([
     App.on('start', function() {
         this.userSessionController.findSavedSession();
         if (!this.userSessionController.isAuthenticated()) {
+            this.mainController.setStatusBox("Authenticating", "ellipsis_big.svg");
             this.userSessionController.authAnonymous();
         }
     });
