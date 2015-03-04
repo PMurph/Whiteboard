@@ -109,6 +109,12 @@ define([
                 self._ctx.lineTo(vertex.x, vertex.y);
                 self._ctx.stroke();
             });
+        },
+
+        drawFromGetAllMessages: function(drawMessages) {
+            _.each(drawMessages, function(drawMessage) {
+                this.drawFromMessage(drawMessage.message);
+            }, this);
         }
     });
 });

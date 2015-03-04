@@ -20,6 +20,24 @@ RoomCommunicator.prototype = {
         this._socket.on("getAllDrawCommands", function() {
             self.handleGetAllDrawCommands();
         });
+
+
+        // TODO: finish these listens properly
+        this._socket.on("leaveRoom", function() {
+            self._socket.leave(self._socket.room);
+            self._socket.broadcast.to(self._socket.room).emit("roomChatMessage", "User has left");
+            self._socket.room = undefined;
+        });
+
+        this._socket.on("disconnect", function() {
+            self._socket.leave(self._socket.room);
+            self._socket.broadcast.to(self._socket.room).emit("roomChatMessage", "User has left");
+            self._socket.room = undefined;
+        });
+
+        this._socket.on("chat", function(msg) {
+            self._socket.broadcast.to(self._socket.room).emit("chat", msg);
+        });
     },
     handleDrawCommand: function(messageData) {
         this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, messageData));
@@ -31,7 +49,7 @@ RoomCommunicator.prototype = {
         return this._socket.rooms[1];
     },
     sendMessage: function(messageType, messageData) {
-        this._socketManager.sockets.in(this.getRoomId()).emit(messageType, messageData);
+        this._socket.broadcast.to(this._socket.room).emit(messageType, messageData);
     },
     sendMessageToSocket: function(messageType, messageData) {
         this._socket.emit(messageType, messageData);

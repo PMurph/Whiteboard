@@ -15,12 +15,14 @@ var RoomManager = function(socketManager, userSession) {
     this._initSocketCallbacks(socketManager);
 
     this.createNewRoom(null);
+    this.createNewRoom(null);
 };
 
 RoomManager.prototype = {
     _initSocketCallbacks: function(socketManager) {
         var self = this;
 
+        // TODO For use with namespace authing. POSSIBLY discard, check with Patrick
         // socketManager.use(function(socket, next) {
         //     var authToken = socket.request._query.authToken;
         //     self._userManager.findByAuthToken(authToken, function(error, user) {
@@ -32,21 +34,17 @@ RoomManager.prototype = {
 
         socketManager.on("connection", function(socket) {
             socket.on("joinRequest", function(msgData) {
-                self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
-                    self.authenticateUser(error, user, function() {
-                        self.joinRoom(msgData.roomId, user, socket);
-                    },
-                    function() {
-                    });
-                });
-            });
 
-            socket.on("draw", function(msg) {
-                socket.broadcast.emit("draw", msg);
-            });
+                // TODO Ask Reyad
+                // self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
+                //     self.authenticateUser(error, user, function() {
+                //         self.joinRoom(msgData.roomId, user, socket);
+                //     },
+                //     function() {
+                //     });
+                // });
 
-            socket.on("chat", function(msg) {
-                socket.broadcast.emit("chat", msg);
+                self.joinRoom(msgData, null, socket);
             });
         });
     },
@@ -62,7 +60,12 @@ RoomManager.prototype = {
     joinRoom: function(roomId, user, socket) {
         var roomObject = this._rooms[roomId];
         if(roomObject) {
+            socket.room = roomId;
             socket.join(roomId);
+
+            socket.emit('joined', "You've joined room " + roomId);
+            socket.broadcast.to(roomId).emit("roomChatMessage", "User has joined room" + roomId);
+
             new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic);
             roomObject.connectUserToRoom(user);
         }

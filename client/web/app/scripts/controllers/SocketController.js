@@ -12,43 +12,63 @@ define([
 
     var Socket = Marionette.Object.extend({
         initialize: function() {
-            this.listenTo(vent, 'leaveRoom', this._leaveRoom);
-            this.listenTo(vent, 'chat', this._emitChat);
-            this.listenTo(vent, 'draw', this._emitDraw);
             this.io = io();
+            this._roomID = undefined;
+            this._roomView = undefined;
+
+            this._setupSocketListeners();
+            this._setupViewListeners();
         },
 
-        _socketHash: {},
-
         joinRoom: function(roomID, roomView) {
-            //var roomSocket =  io('/room/' + roomID);
-            var roomSocket = this.io;
-            this._socketHash[roomID] = roomSocket;
+            var self = this;
 
-            roomSocket.on('chat', function(param) {
-                if (roomID === param.roomID) {
-                    roomView.chat.addMessage(param.message);
-                }
+            this._roomID = roomID;
+            this._roomView = roomView;
+
+            this.io.once('joined', function(msg) {
+                console.log(msg);
+                self.io.once('getAllDrawCommands', function(drawMsgs) {
+                    self._roomView.whiteboard.drawFromGetAllMessages(drawMsgs.drawCommands);
+                });
+                self.io.emit('getAllDrawCommands');
             });
 
-            roomSocket.on('draw', function(param) {
-                if (roomID === param.roomID) {
-                    roomView.whiteboard.drawFromMessage(param.message);
-                }
-            });
+            this.io.emit('joinRequest', this._roomID);
         },
 
         _leaveRoom: function(roomID) {
-            // this._socketHash[roomID].off();
-            // delete this._socketHash[roomID];
+            this.io.emit('leaveRoom', roomID);
         },
 
         _emitChat: function(params) {
-            this._socketHash[params.roomID].emit('chat', params);
+            this.io.emit('chat', params);
         },
 
         _emitDraw: function(params) {
-            this._socketHash[params.roomID].emit('draw', params);
+            this.io.emit('drawCommand', params);
+        },
+
+        // We don't have to unsubscribe from these when we leave
+        _setupSocketListeners: function() {
+            var self = this;
+            this.io.on('chat', function(param) {
+                self._roomView.chat.addMessage(param.message);
+            });
+
+            this.io.on('drawCommand', function(param) {
+                self._roomView.whiteboard.drawFromMessage(param.drawCommand.message);
+            });
+
+            this.io.on('roomChatMessage', function(param) {
+                console.log(param);
+            });
+        },
+
+        _setupViewListeners: function() {
+            this.listenTo(vent, 'leaveRoom', this._leaveRoom);
+            this.listenTo(vent, 'chat', this._emitChat);
+            this.listenTo(vent, 'draw', this._emitDraw);
         }
     });
 
