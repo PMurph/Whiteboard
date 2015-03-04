@@ -39,7 +39,7 @@ describe("User Session Intergration", function () {
         var userModel = mockMongoose.model("User");
         var user = jasmine.createSpyObj("User", ["toObject"]);
 
-        userModel.prototype.save = jasmine.createSpy("save").and.callFake(function(cb) {
+        user.save = userModel.prototype.save = jasmine.createSpy("save").and.callFake(function(cb) {
             cb(null, this);  
         });
 
@@ -53,8 +53,7 @@ describe("User Session Intergration", function () {
         server = new Server(app = new Express(), userRequest, mockSocketIO, dbOptions);
         server.start(3333, "localhost", done);
     });
-    afterAll("should stop server", function(done) {
-        console.log("Stopping:");
+    afterAll(function(done) {
         server.stop(done);
     });
     beforeEach(function() {
@@ -131,13 +130,19 @@ describe("User Session Intergration", function () {
             req
             .post('/api/user')
             .send(testRequest.authAnon.malformedAnonFalse)
-            .expect(400, done);
+            .expect(400, function(err) {
+                expect(err).toBeNull();
+                done();
+            });
         });
         it("should NOT authenticate anonymous (Malformed AuthToken Set)", function(done) {
             req
             .post('/api/user')
             .send(testRequest.authAnon.malformedAnonAuthTokenSet)
-            .expect(400, done);
+            .expect(400, function(err) {
+                expect(err).toBeNull();
+                done();
+            });
         });
         it("should NOT authenticate anonymous (Malformed Empty)", function(done) {
             req
@@ -172,36 +177,48 @@ describe("User Session Intergration", function () {
         };
         it("should authenticate user (Well Formed)", function(done) {
             req
-            .post('/api/user')
-            .send(testRequest.wellFormed)
-            .expect(200, done);
+            .get('/api/user')
+            .query(testRequest.wellFormed)
+            .expect(200, function(err) {
+                expect(err).toBeNull();
+                done();   
+            });
         });
         it("should authenticate user (Well Formed Auth Token Set)", function(done) {
             req
-            .post('/api/user')
-            .send(testRequest.wellFormedAuthTokenSet)
-            .expect(200, done);
+            .get('/api/user')
+            .query(testRequest.wellFormedAuthTokenSet)
+            .expect(200, function(err) {
+                expect(err).toBeNull();
+                done();   
+            });
         });
         it("should NOT authenticate anonymous (Malformed No Password)", function(done) {
             req
-            .post('/api/user')
-            .send(testRequest.malformedNoPassword)
-            .expect(400, done);
+            .get('/api/user')
+            .query(testRequest.malformedNoPassword)
+            .expect(400, function(err) {
+                expect(err).toBeNull();
+                done();   
+            });
         });
         it("should NOT authenticate anonymous (Malformed No Username)", function(done) {
             req
-            .post('/api/user')
-            .send(testRequest.malformedNoUsername)
-            .expect(400, done);
+            .get('/api/user')
+            .query(testRequest.malformedNoUsername)
+            .expect(400, function(err) {
+                expect(err).toBeNull();
+                done();   
+            });
         });
         it("should NOT authenticate anonymous (Malformed Empty)", function(done) {
             req
-            .post('/api/user')
-            .send(testRequest.malformedEmpty)
-            .expect(400, done);
+            .get('/api/user')
+            .query(testRequest.malformedEmpty)
+            .expect(400, function(err) {
+                expect(err).toBeNull();
+                done();   
+            });
         });
-    });
-    it("hack to end test", function(done) {
-        server.stop(done);
     });
 });

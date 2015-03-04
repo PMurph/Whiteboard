@@ -111,7 +111,7 @@ describe("User Request Handling", function() {
                 routeF(req, res);
 
                 expect(mockUserSession.authAnonymous).not.toHaveBeenCalled();
-                expect(res.sendStatus).toHaveBeenCalledWith(405);
+                expect(res.sendStatus).toHaveBeenCalledWith(400);
             });
             it("should NOT respond (Malformed Empty)", function() {
                 req = createMockRequest("POST", anonAuthTest.malformedEmpty);

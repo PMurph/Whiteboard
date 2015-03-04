@@ -75,7 +75,9 @@ UserRequest.prototype = {
         }
     },
     _handleAuthReq: function(req, res, authUser, dbCallback) {
-        if(req.method === 'PATCH') {
+        if (req.method === 'POST') {
+            res.sendStatus(400);
+        }else if(req.method === 'PATCH') {
             this._handleAuthPatch(req.body, authUser, dbCallback);
         }else if(req.method === 'PUT') {
             this._handleAuthPut(req.body, authUser, dbCallback);

@@ -60,7 +60,6 @@ Server.prototype = {
     stop: function(closeCB) {
         this._disconnectDB();
         if(this._httpServ){
-            console.log('Stopping server...');
             this._httpServ.close(closeCB);
         }
     },
