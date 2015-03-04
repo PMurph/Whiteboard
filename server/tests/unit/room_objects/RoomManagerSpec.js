@@ -53,7 +53,8 @@ describe("RoomManager", function() {
         var roomList;
         
         beforeEach(function() {
-            testRoomManager._rooms = {};
+            testRoomManager._roomId = 0;
+            testRoomManager._rooms = [];
             testRoomId1 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
             testRoomId2 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
             testRoomId3 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
@@ -66,9 +67,9 @@ describe("RoomManager", function() {
         });
         
         it("should contain the ids of the rooms created", function() {
-            expect(roomList.indexOf(testRoomId1)).toBeGreaterThan(-1);
-            expect(roomList.indexOf(testRoomId2)).toBeGreaterThan(-1);
-            expect(roomList.indexOf(testRoomId3)).toBeGreaterThan(-1);
+            expect(roomList.indexOf(testRoomManager.getRoom(testRoomId1))).toBeGreaterThan(-1);
+            expect(roomList.indexOf(testRoomManager.getRoom(testRoomId2))).toBeGreaterThan(-1);
+            expect(roomList.indexOf(testRoomManager.getRoom(testRoomId3))).toBeGreaterThan(-1);
         });
         
         it("should not contain an id that is not one of the rooms that has been created", function() {

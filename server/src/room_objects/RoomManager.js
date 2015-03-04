@@ -56,7 +56,7 @@ RoomManager.prototype = {
         if(roomObject) {
             socket.join(roomId);
             new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic);
-            roomObject.room.connectUserToRoom(user);
+            roomObject.connectUserToRoom(user);
         }
     },
 
