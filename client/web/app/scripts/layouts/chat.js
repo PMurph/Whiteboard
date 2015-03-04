@@ -55,7 +55,7 @@ define([
                 message: this.ui.chatInput.val()
             });
 
-            this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight)
+            this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight);
 
             this.ui.chatInput.val('');
         }
