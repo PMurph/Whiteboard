@@ -1,10 +1,65 @@
-define(['backbone'], function(Backbone) {
-    'use strict';
+ define([
+    'backbone', 
+    './DrawModel', 
+    './User', 
+    './ChatMessage'], 
+    function (
+        Backbone,
+        DrawModel, 
+        User, 
+        ChatMessage) {
+    "use strict";
 
-    return Backbone.Model.extend({
-        defaults: {
-            name: 'room name',
-            id: 0
-        }
+    var MessagesList = Backbone.Collection.extend({
+        model: ChatMessage
     });
+
+    var DrawModelsList = Backbone.Collection.extend({
+        model: DrawModel
+    });
+
+    var UsersList = Backbone.Collection.extend({
+        model: User
+    });
+
+    var MeetingRoomModel = Backbone.Model.extend({
+    	url: '/api/room',
+
+        initialize: function() {
+            this._messages = new MessagesList();
+            this._drawModels = new DrawModelsList();
+            this.users = new UsersList();
+        },
+
+        addDrawing: function(newDraw){
+            if (newDraw instanceof DrawModel)
+            {
+                this._drawModels.push(newDraw);
+            }
+        },
+
+        addMessage: function(newMsg){
+            if (newMsg instanceof ChatMessage)
+            {
+                this._messages.push(newMsg);
+            }
+        },
+
+        getListOfUsersActiveInRoom: function(){
+            return this.users;
+        },
+
+        parse: function(response){
+        	var messageList = new MessagesList();
+        	var userList = new UsersList();
+        	var drawList = new DrawModelsList();
+        	messageList.add(response._messages);
+        	userList.add(response._drawModels);
+        	drawList.add(response.users);
+        }
+
+    });
+
+    return MeetingRoomModel;
+    // socket IO stuff here
 });

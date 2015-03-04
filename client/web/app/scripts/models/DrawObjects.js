@@ -16,6 +16,8 @@ define(['backbone'], function (Backbone) {
     };
 
     var DrawObjects = Backbone.Model.extend({
+        url: '/api/drawobject',
+        
         initialize: function() {
             this._tool = TOOLS.DRAW;
             this._colour = COLOURS.BLACK;

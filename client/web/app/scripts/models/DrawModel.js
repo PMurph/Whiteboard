@@ -2,12 +2,17 @@
     "use strict";
 
     var DrawModel = Backbone.Model.extend({
+        url: '/api/drawmodel',
 
         initialize: function() {
             this._drawingInformation = new DrawObjects();
             this._listOfCoordinates = [];
             this._thickness = 1;
         },
+
+        // fetch: function(){
+            
+        // },
 
         addCoordinate: function(x, y) {
             var newCoord = {x:x, y:y};
