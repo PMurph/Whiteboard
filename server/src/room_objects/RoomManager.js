@@ -13,6 +13,8 @@ var RoomManager = function(socketManager, userSession) {
     this._drawCommandLogic = new DrawCommandLogic(this);
     
     this._initSocketCallbacks(socketManager);
+
+    this.createNewRoom(null);
 };
 
 RoomManager.prototype = {
@@ -106,7 +108,7 @@ RoomManager.prototype = {
     },
     
     _respondToGetRoomList: function(res) {
-        res.json({rooms: this.getRoomList()});
+        res.json(this.getRoomList());
     },
     
     getRoomList: function() {
