@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Patrick Murphy. All rights reserved.
 //
 
-#import "SecondViewController.h"
+#import "DashboardViewController.h"
 
-@interface SecondViewController ()
+@interface DashboardViewController ()
 
 @end
 
-@implementation SecondViewController
+@implementation DashboardViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

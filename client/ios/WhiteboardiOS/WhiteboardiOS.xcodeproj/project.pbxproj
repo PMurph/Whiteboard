@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6ED1AAE9BEB00D61DF9 /* main.m */; };
 		A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */; };
-		A88FF6F41AAE9BEB00D61DF9 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* FirstViewController.m */; };
-		A88FF6F71AAE9BEB00D61DF9 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F61AAE9BEB00D61DF9 /* SecondViewController.m */; };
+		A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */; };
+		A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */; };
 		A88FF6FA1AAE9BEB00D61DF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6F81AAE9BEB00D61DF9 /* Main.storyboard */; };
 		A88FF6FC1AAE9BEB00D61DF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */; };
 		A88FF6FF1AAE9BEB00D61DF9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FD1AAE9BEB00D61DF9 /* LaunchScreen.xib */; };
 		A88FF70B1AAE9BEB00D61DF9 /* WhiteboardiOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF70A1AAE9BEB00D61DF9 /* WhiteboardiOSTests.m */; };
+		DEA609681AAF43CD006D895A /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DEA609671AAF43CD006D895A /* SRWebSocket.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,16 +34,19 @@
 		A88FF6ED1AAE9BEB00D61DF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A88FF6EF1AAE9BEB00D61DF9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A88FF6F21AAE9BEB00D61DF9 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		A88FF6F31AAE9BEB00D61DF9 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		A88FF6F51AAE9BEB00D61DF9 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		A88FF6F61AAE9BEB00D61DF9 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserLoginViewController.h; sourceTree = "<group>"; };
+		A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserLoginViewController.m; sourceTree = "<group>"; };
+		A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
+		A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DashboardViewController.m; sourceTree = "<group>"; };
 		A88FF6F91AAE9BEB00D61DF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A88FF6FE1AAE9BEB00D61DF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		A88FF7041AAE9BEB00D61DF9 /* WhiteboardiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhiteboardiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88FF7091AAE9BEB00D61DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A88FF70A1AAE9BEB00D61DF9 /* WhiteboardiOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WhiteboardiOSTests.m; sourceTree = "<group>"; };
+		DEA609651AAF43CD006D895A /* SocketRocket-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SocketRocket-Prefix.pch"; sourceTree = "<group>"; };
+		DEA609661AAF43CD006D895A /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRWebSocket.h; sourceTree = "<group>"; };
+		DEA609671AAF43CD006D895A /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRWebSocket.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,12 +88,15 @@
 		A88FF6EA1AAE9BEB00D61DF9 /* WhiteboardiOS */ = {
 			isa = PBXGroup;
 			children = (
+				DEA609651AAF43CD006D895A /* SocketRocket-Prefix.pch */,
+				DEA609661AAF43CD006D895A /* SRWebSocket.h */,
+				DEA609671AAF43CD006D895A /* SRWebSocket.m */,
 				A88FF6EF1AAE9BEB00D61DF9 /* AppDelegate.h */,
 				A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */,
-				A88FF6F21AAE9BEB00D61DF9 /* FirstViewController.h */,
-				A88FF6F31AAE9BEB00D61DF9 /* FirstViewController.m */,
-				A88FF6F51AAE9BEB00D61DF9 /* SecondViewController.h */,
-				A88FF6F61AAE9BEB00D61DF9 /* SecondViewController.m */,
+				A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */,
+				A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */,
+				A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */,
+				A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */,
 				A88FF6F81AAE9BEB00D61DF9 /* Main.storyboard */,
 				A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */,
 				A88FF6FD1AAE9BEB00D61DF9 /* LaunchScreen.xib */,
@@ -173,6 +180,7 @@
 				TargetAttributes = {
 					A88FF6E71AAE9BEB00D61DF9 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 98CS97VCGJ;
 					};
 					A88FF7031AAE9BEB00D61DF9 = {
 						CreatedOnToolsVersion = 6.2;
@@ -224,9 +232,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A88FF6F71AAE9BEB00D61DF9 /* SecondViewController.m in Sources */,
+				A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */,
 				A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */,
-				A88FF6F41AAE9BEB00D61DF9 /* FirstViewController.m in Sources */,
+				DEA609681AAF43CD006D895A /* SRWebSocket.m in Sources */,
+				A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */,
 				A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,9 +360,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = WhiteboardiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -361,9 +373,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = WhiteboardiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -420,6 +435,7 @@
 				A88FF7101AAE9BEB00D61DF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A88FF7111AAE9BEB00D61DF9 /* Build configuration list for PBXNativeTarget "WhiteboardiOSTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +444,7 @@
 				A88FF7131AAE9BEB00D61DF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

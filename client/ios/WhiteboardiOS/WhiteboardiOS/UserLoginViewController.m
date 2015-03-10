@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Patrick Murphy. All rights reserved.
 //
 
-#import "FirstViewController.h"
+#import "UserLoginViewController.h"
 
-@interface FirstViewController ()
+@interface UserLoginViewController ()
 
 @end
 
-@implementation FirstViewController
+@implementation UserLoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
