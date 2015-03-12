@@ -15,7 +15,6 @@
 		A88FF6FC1AAE9BEB00D61DF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */; };
 		A88FF6FF1AAE9BEB00D61DF9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FD1AAE9BEB00D61DF9 /* LaunchScreen.xib */; };
 		A88FF70B1AAE9BEB00D61DF9 /* WhiteboardiOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF70A1AAE9BEB00D61DF9 /* WhiteboardiOSTests.m */; };
-		DEA609681AAF43CD006D895A /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DEA609671AAF43CD006D895A /* SRWebSocket.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,9 +43,6 @@
 		A88FF7041AAE9BEB00D61DF9 /* WhiteboardiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhiteboardiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88FF7091AAE9BEB00D61DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A88FF70A1AAE9BEB00D61DF9 /* WhiteboardiOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WhiteboardiOSTests.m; sourceTree = "<group>"; };
-		DEA609651AAF43CD006D895A /* SocketRocket-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SocketRocket-Prefix.pch"; sourceTree = "<group>"; };
-		DEA609661AAF43CD006D895A /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRWebSocket.h; sourceTree = "<group>"; };
-		DEA609671AAF43CD006D895A /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRWebSocket.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,9 +84,6 @@
 		A88FF6EA1AAE9BEB00D61DF9 /* WhiteboardiOS */ = {
 			isa = PBXGroup;
 			children = (
-				DEA609651AAF43CD006D895A /* SocketRocket-Prefix.pch */,
-				DEA609661AAF43CD006D895A /* SRWebSocket.h */,
-				DEA609671AAF43CD006D895A /* SRWebSocket.m */,
 				A88FF6EF1AAE9BEB00D61DF9 /* AppDelegate.h */,
 				A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */,
 				A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */,
@@ -234,7 +227,6 @@
 			files = (
 				A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */,
 				A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */,
-				DEA609681AAF43CD006D895A /* SRWebSocket.m in Sources */,
 				A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */,
 				A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */,
 			);
