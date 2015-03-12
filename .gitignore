@@ -9,3 +9,6 @@ db_data/
 whiteboard.sublime-project
 whiteboard.sublime-workspace
 npm-debug.log
+._.DS_Store
+client/ios/WhiteboardiOS/WhiteboardiOS.xcodeproj/xcuserdata
+client/ios/WhiteboardiOS/WhiteboardiOS.xcodeproj/project.xcworkspace/xcuserdata
