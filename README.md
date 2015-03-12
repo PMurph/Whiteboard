@@ -56,7 +56,9 @@ npm install
 ```
 
 #### iOS App
+Must have ruby installed and in PATH
 ```
+sudo gem install cocoapods
 cd client/ios/WhiteboardiOS/
 pod install
 open WhiteboardiOS.xcworkspace
