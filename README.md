@@ -59,5 +59,6 @@ npm install
 ```
 cd client/ios/WhiteboardiOS/
 pod install
+open WhiteboardiOS.xcworkspace
 ```
 

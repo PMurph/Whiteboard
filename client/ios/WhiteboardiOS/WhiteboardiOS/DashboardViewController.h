@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DashbaordViewController : UIViewController
+@interface DashboardViewController : UIViewController
 
 
 @end
