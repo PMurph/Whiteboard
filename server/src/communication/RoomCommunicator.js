@@ -21,8 +21,6 @@ RoomCommunicator.prototype = {
             self.handleGetAllDrawCommands();
         });
 
-
-        // TODO: finish these listens properly
         this._socket.on("leaveRoom", function() {
             self._socket.leave(self.getRoomId());
             self._socket.broadcast.to(self.getRoomId()).emit("roomChatMessage", "User has left");
