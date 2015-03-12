@@ -12,3 +12,5 @@ npm-debug.log
 ._.DS_Store
 client/ios/WhiteboardiOS/WhiteboardiOS.xcodeproj/xcuserdata
 client/ios/WhiteboardiOS/WhiteboardiOS.xcodeproj/project.xcworkspace/xcuserdata
+*.lock
+client/ios/WhiteboardiOS/Pods/

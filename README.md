@@ -58,6 +58,7 @@ npm install
 #### iOS App
 Coming soon
 ```
-Do a dance
+cd client/ios/WhiteboardiOS/
+pod install
 ```
 
