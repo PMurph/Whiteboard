@@ -10,7 +10,7 @@ whiteboard.sublime-project
 whiteboard.sublime-workspace
 npm-debug.log
 ._.DS_Store
-client/ios/WhiteboardiOS/WhiteboardiOS.xcodeproj/xcuserdata
-client/ios/WhiteboardiOS/WhiteboardiOS.xcodeproj/project.xcworkspace/xcuserdata
+client/**/xcuserdata
 *.lock
 client/ios/WhiteboardiOS/Pods/
+client/**/*.xcuserdatad/
