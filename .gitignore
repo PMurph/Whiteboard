@@ -14,3 +14,4 @@ client/**/xcuserdata
 *.lock
 client/ios/WhiteboardiOS/Pods/
 client/**/*.xcuserdatad/
+**/._*
