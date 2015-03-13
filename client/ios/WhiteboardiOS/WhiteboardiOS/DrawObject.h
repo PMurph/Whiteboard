@@ -10,7 +10,7 @@
 
 @interface DrawObject : NSObject
 
-    typedef enum TOOLS : NSUInteger {
+    typedef enum TOOLS : NSString {
         DRAW,
         ERASE
     } Tools;
@@ -23,7 +23,7 @@
         GREEN,
         PURPLE
     } Colours;
-    
+
 -(id)init;
 -(void)setColour:(NSString*)newColour;
 -(void)setTool:(NSString*)newTool;
