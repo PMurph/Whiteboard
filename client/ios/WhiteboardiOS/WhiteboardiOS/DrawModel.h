@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface DrawModel : NSObject
-
+    - (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y
 @end
