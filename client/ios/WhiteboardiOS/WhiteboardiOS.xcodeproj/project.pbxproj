@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A8596A671AB251D0005CA07F /* RoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A661AB251D0005CA07F /* RoomModel.m */; };
 		A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6ED1AAE9BEB00D61DF9 /* main.m */; };
 		A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */; };
 		A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */; };
@@ -31,6 +32,8 @@
 /* Begin PBXFileReference section */
 		0566D47A577D3E6D5C7C4EBE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		66B2C68B92EB6FB5E714D231 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		A8596A661AB251D0005CA07F /* RoomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomModel.m; path = WhiteboardiOS/models/RoomModel.m; sourceTree = "<group>"; };
+		A8596A691AB2520F005CA07F /* RoomModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RoomModel.h; path = WhiteboardiOS/models/RoomModel.h; sourceTree = "<group>"; };
 		A88FF6E81AAE9BEB00D61DF9 /* WhiteboardiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhiteboardiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88FF6EC1AAE9BEB00D61DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A88FF6ED1AAE9BEB00D61DF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -76,9 +79,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A8596A681AB251D8005CA07F /* model */ = {
+			isa = PBXGroup;
+			children = (
+				A8596A661AB251D0005CA07F /* RoomModel.m */,
+				A8596A691AB2520F005CA07F /* RoomModel.h */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
 		A88FF6DF1AAE9BEB00D61DF9 = {
 			isa = PBXGroup;
 			children = (
+				A8596A681AB251D8005CA07F /* model */,
 				A88FF6EA1AAE9BEB00D61DF9 /* WhiteboardiOS */,
 				A88FF7071AAE9BEB00D61DF9 /* WhiteboardiOSTests */,
 				A88FF6E91AAE9BEB00D61DF9 /* Products */,
@@ -285,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */,
+				A8596A671AB251D0005CA07F /* RoomModel.m in Sources */,
 				A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */,
 				A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */,
 				A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */,
