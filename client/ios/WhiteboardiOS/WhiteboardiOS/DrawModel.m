@@ -15,9 +15,11 @@
 
 @implementation DrawModel
 NSMutableArray *listOfCoordinates;
+NSNumber *x;
 
-void addCoordinate(int x, int y) {
-    NSDictionary *newCord = @{ x, y }
+
+- (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y {
+    NSDictionary *newCord = @{ @"x":x, @"y":y };
     [listOfCoordinates addObject:(newCord)];
 }
 @end
