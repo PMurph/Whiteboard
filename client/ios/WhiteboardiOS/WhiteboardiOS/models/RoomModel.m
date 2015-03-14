@@ -9,5 +9,5 @@
 #import "RoomModel.h"
 
 @implementation RoomModel
-    @dynamic roomId;
+    @synthesize roomId;
 @end

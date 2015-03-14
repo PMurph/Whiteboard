@@ -9,10 +9,10 @@
 #ifndef WhiteboardiOS_RoomModel_h
 #define WhiteboardiOS_RoomModel_h
 
-#include <RestKit/RestKit.h>
-#include <RestKit/CoreData.h>
+#import <RestKit/RestKit.h>
+#import <RestKit/CoreData.h>
 
-@interface RoomModel : NSManagedObject
+@interface RoomModel : NSObject
     @property (nonatomic, copy) NSString* roomId;
 @end
 

@@ -37,7 +37,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kFJ-m1-dKN">
-                                <rect key="frame" x="0.0" y="28" width="320" height="480"/>
+                                <rect key="frame" x="0.0" y="-27" width="320" height="480"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Qix-Nn-L4q">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -60,6 +60,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Dashboard" image="second" id="cPa-gy-q4n"/>
+                    <connections>
+                        <outlet property="roomCollection" destination="kFJ-m1-dKN" id="eY9-KW-kpM"/>
+                        <outlet property="roomCollectionView" destination="kFJ-m1-dKN" id="PhM-fk-jVq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>

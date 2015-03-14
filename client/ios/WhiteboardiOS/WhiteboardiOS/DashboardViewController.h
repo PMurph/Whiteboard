@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RoomCollection.h"
 
-@interface DashboardViewController : UIViewController
+@interface DashboardViewController : UIViewController {
+        RoomCollection* roomCollection;
+    }
 
+    @property (weak, nonatomic) IBOutlet UICollectionView *roomCollectionView;
 
 @end
 

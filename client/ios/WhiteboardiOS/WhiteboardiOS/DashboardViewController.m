@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    roomCollection = [[RoomCollection alloc] init];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
