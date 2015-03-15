@@ -17,6 +17,7 @@ define([
             this._roomView = undefined;
 
             this._setupSocketListeners();
+            this._setupSocketEvents();
             this._setupViewListeners();
 
             this._setupWindowEvents();
@@ -69,6 +70,18 @@ define([
             });
         },
 
+        _setupSocketEvents: function() {
+            this.io.on('connect', function() {
+                console.log("Connected");
+            });
+            this.io.on('disconnect', function() {
+                console.log("Disconnected");
+            });
+            this.io.on('error', function() {
+                console.log("error");
+            });
+        },
+
         _setupViewListeners: function() {
             this.listenTo(vent, 'leaveRoom', this._leaveRoom);
             this.listenTo(vent, 'chat', this._emitChat);
@@ -78,6 +91,7 @@ define([
         _setupWindowEvents: function() {
             var self = this;
             window.addEventListener("beforeunload", function () {
+                self.io.close();  
                 self.io.disconnect();  
             });
         }
