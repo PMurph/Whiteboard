@@ -18,6 +18,8 @@ define([
 
             this._setupSocketListeners();
             this._setupViewListeners();
+
+            this._setupWindowEvents();
         },
 
         joinRoom: function(roomID, roomView) {
@@ -71,6 +73,13 @@ define([
             this.listenTo(vent, 'leaveRoom', this._leaveRoom);
             this.listenTo(vent, 'chat', this._emitChat);
             this.listenTo(vent, 'draw', this._emitDraw);
+        },
+
+        _setupWindowEvents: function() {
+            var self = this;
+            window.addEventListener("beforeunload", function () {
+                self.io.disconnect();  
+            });
         }
     });
 
