@@ -114,7 +114,16 @@ RoomManager.prototype = {
     },
 
     getRoomList: function() {
-        return this._rooms;
+        var out = new Array(this._rooms.length);
+        for (var i = 0; i < this._rooms.length; i++) {
+            var r = this._rooms[i];
+            if (r) {
+                out[i] = {
+                    _id: r.getId()
+                };
+            }
+        }
+        return out;
     },
 
     _respondToSuccessfulCreate: function(roomId, res) {
