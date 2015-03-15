@@ -33,7 +33,7 @@ define([
             var self = this;
 
             window.addEventListener("beforeunload", function() {
-                if(self.isAuthenticated && self._currentUser) {
+                if(self.isAuthenticated() && self._currentUser) {
                     self.logoutSync();
                 }
             });
