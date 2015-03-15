@@ -126,6 +126,10 @@ RoomManager.prototype = {
         return out;
     },
 
+    getRooms: function() {
+        return this._rooms;
+    },
+
     _respondToSuccessfulCreate: function(roomId, res) {
         res.json({roomId: roomId});
     },

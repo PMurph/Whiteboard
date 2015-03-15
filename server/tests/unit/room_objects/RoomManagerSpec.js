@@ -59,7 +59,7 @@ describe("RoomManager", function() {
             testRoomId2 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
             testRoomId3 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
             
-            roomList = testRoomManager.getRoomList();
+            roomList = testRoomManager.getRooms();
         });
         
         it("should return a list with 3 room ids", function() {
