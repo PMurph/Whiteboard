@@ -4,25 +4,31 @@ define([
 
     'models/DrawModel',
 
-    'vent'
+    'vent',
+
+    'tpl!templates/room/whiteboard.html'
 ], function(
     Marionette,
     _,
 
     DrawModel,
     
-    vent) {
+    vent,
+    
+    WhiteboardTemplate
+) {
     'use strict';
 
     return Marionette.ItemView.extend({
-        template: _.template('<canvas></canvas>'),
+        template: WhiteboardTemplate,
 
         attributes: {
             id: 'paint'
         },
 
         ui: {
-            canvas: 'canvas'
+            spinner: '#spinnerBox',
+            canvas: '#mainCanvas'
         },
 
         events: {
@@ -117,6 +123,8 @@ define([
             _.each(drawMessages, function(drawMessage) {
                 this.drawFromMessage(drawMessage.message);
             }, this);
+
+            this.ui.spinner.hide();
         }
     });
 });
