@@ -82,11 +82,15 @@ define([
         },
 
         _mouseUp: function(e) {
+            var drawMessage = this._currentDrawMessage;
+
+            if (!drawMessage) {
+                return;
+            }
             this._updateMouse(e);
             this._paint();
             this.ui.canvas.off('mousemove');
 
-            var drawMessage = this._currentDrawMessage;
             this._currentDrawMessage = null;
             this._ctx.closePath();
 
