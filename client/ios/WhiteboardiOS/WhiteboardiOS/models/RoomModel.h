@@ -14,6 +14,8 @@
 
 @interface RoomModel : NSObject
     @property (nonatomic, copy) NSString* roomId;
+
+    - (id) init:(NSString *)assignedRoomId;
 @end
 
 

@@ -10,15 +10,15 @@
 #define WhiteboardiOS_RoomCollection_h
 
 #import <RestKit/RestKit.h>
-#import"RoomModel.h"
+#import "RestkitWrapper.h"
 
 @interface RoomCollection : NSObject {
-        RKObjectManager* objectManager;
+        RestkitWrapper* restkitWrapper;
     }
 
-    - (id) init;
-    - (void) configureRestKit;
-    - (void) getRoomIds;
+    - (id) init: (RestkitWrapper *)wrapper;
+    - (void) refreshRoomIds;
+    - (NSArray *) getRoomIds;
 @end
 
 #endif

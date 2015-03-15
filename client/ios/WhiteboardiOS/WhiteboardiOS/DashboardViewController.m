@@ -8,7 +8,7 @@
 
 #import "DashboardViewController.h"
 
-@interface DashboardViewController ()
+@interface DashboardViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @end
 
