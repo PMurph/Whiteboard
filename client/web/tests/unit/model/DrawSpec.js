@@ -11,7 +11,7 @@ define(['models/DrawModel'], function(DrawModel) {
         it('it should return good default values', function(){
             expect(draw.getColour()).toBe("Black");
             expect(draw.getTool()).toBe("Draw");
-            expect(draw.getThickness()).toBe(1);
+            expect(draw.getThickness()).toBe(10);
             expect(draw.getListOfCoordinates()).toEqual([]);
         });
 

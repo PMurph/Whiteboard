@@ -1,6 +1,9 @@
 define(['backbone'], function (Backbone) {
     'use strict';
+    
 
+    /* We should try and pull these data objects from server.
+     * That way all clients(iOS, Web) have same data.*/
     var TOOLS = {
         DRAW : { value: 0, name: "Draw"},
         ERASE : { value: 1, name: "Erase" }
@@ -15,12 +18,14 @@ define(['backbone'], function (Backbone) {
         PURPLE : { value: 5, name: "Purple" }
     };
 
-    var DrawObjects = Backbone.Model.extend({
-        url: '/api/drawobject',
-        
+    var MIN_THICKNESS = 0,
+        MAX_THICKNESS = 100;
+
+    var DrawTools = Backbone.Model.extend({
         initialize: function() {
             this._tool = TOOLS.DRAW;
             this._colour = COLOURS.BLACK;
+            this._thickness = 10;
         },
 
         setColour: function(newColour) {
@@ -49,15 +54,28 @@ define(['backbone'], function (Backbone) {
             return false;
         },
 
+        setThickness: function(newThickness) {
+            if (newThickness >= MIN_THICKNESS && newThickness < MAX_THICKNESS) {
+                this._thickness = newThickness;
+                return true;
+            }
+
+            return false;
+        },
+
         getColour: function() {
             return this._colour.name;
         },
 
         getTool: function() {
             return this._tool.name;
+        },
+
+        getThickness: function() {
+            return this._thickness;
         }
 
     });
 
-    return DrawObjects;
+    return DrawTools;
 });
