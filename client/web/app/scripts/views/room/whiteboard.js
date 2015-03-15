@@ -33,7 +33,8 @@ define([
 
         events: {
             mousedown: '_mouseDown',
-            mouseup: '_mouseUp'
+            mouseup: '_mouseUp',
+            mouseleave: '_mouseUp'
         },
 
         initialize: function(options) {
@@ -97,8 +98,9 @@ define([
         },
 
         _updateMouse: function(e) {
-            this._mouse.x = e.pageX - this._canvasElement.offsetLeft;
-            this._mouse.y = e.pageY - this._canvasElement.offsetTop;
+            var rect = this._canvasElement.getBoundingClientRect();
+            this._mouse.x = e.pageX - rect.left;
+            this._mouse.y = e.pageY - rect.top;
             this._currentDrawMessage.addCoordinate(this._mouse.x, this._mouse.y);
         },
 
