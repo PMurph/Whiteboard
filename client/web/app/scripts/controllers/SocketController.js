@@ -62,8 +62,8 @@ define([
                 self._roomView.whiteboard.drawFromMessage(param.drawCommand.message);
             });
 
-            this.io.on('roomChatMessage', function(param) {
-
+            this.io.on('roomChatMessage', function() {
+                
             });
         },
 

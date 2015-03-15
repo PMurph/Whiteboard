@@ -1,8 +1,8 @@
 define([
-    'backbone'
+    'backbone.wreqr'
 ], function(
-    Backbone) {
+    BackboneWreqr) {
     'use strict';
 
-    return new Backbone.Wreqr.EventAggregator();
+    return new BackboneWreqr.EventAggregator();
 });

@@ -28,7 +28,7 @@ requirejs.config({
             deps: ['backbone'],
             exports: 'Marionette'
         },
-        backbonewreqr: {
+        'backbone.wreqr': {
             deps: ['backbone'],
             exports: 'BackboneWreqr'
         },
