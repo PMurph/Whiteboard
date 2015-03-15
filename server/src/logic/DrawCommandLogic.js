@@ -18,7 +18,11 @@ DrawCommandLogic.prototype = {
     },
     handleGetAllDrawCommands: function(getAllDrawCommandsMessage) {
         var room = this._roomManager.getRoom(getAllDrawCommandsMessage.getRoomId());
-        room.handleGetAllDrawCommands(getAllDrawCommandsMessage, this);
+        if (room) {
+            room.handleGetAllDrawCommands(getAllDrawCommandsMessage, this);
+        } else {
+            throw "Invalid Room ID in Draw Message";
+        }
     },
     handleGetAllDrawCommandsResponse: function(getAllDrawCommandsResponse) {
         var roomCommunicator = getAllDrawCommandsResponse.getRoomCommunicator();
