@@ -27,6 +27,10 @@ define([
         joinRoom: function(roomID, roomView) {
             var self = this;
 
+            if(!this.isConnected()) {
+                throw "Error: Not connected to Socket.";
+            }
+
             this._roomID = roomID;
             this._roomView = roomView;
 
@@ -76,11 +80,13 @@ define([
         },
 
         _setupSocketEvents: function() {
+            var self = this;
+
             this.io.on('connect', function() {
-                this._connected = true;
+                self._connected = true;
             });
             this.io.on('disconnect', function() {
-                this._connected = false;
+                self._connected = false;
             });
             this.io.on('error', function(err) {
                 console.error("SokcetIO error: " + err);
