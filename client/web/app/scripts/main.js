@@ -28,15 +28,14 @@ require([
     });
 
     App.on('start', function() {
+        this.userSessionController.once("Authenticated", function() {
+            Backbone.history.start({ pushState: false, root: '/' });
+        });
         this.userSessionController.findSavedSession();
         if (!this.userSessionController.isAuthenticated()) {
             this.mainController.setStatusBox("Authenticating", "ellipsis_big.svg");
             this.userSessionController.authAnonymous();
         }
-    });
-
-    App.on('start', function() {
-        Backbone.history.start({ pushState: false, root: '/' });
     });
 
     App.start();
