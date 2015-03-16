@@ -17,8 +17,8 @@
             return this._drawingTools.setColour(newColour);
         },
 
-        setTool: function(newTool) {
-            return this._drawingTools.setTool(newTool);
+        setToolType: function(newTool) {
+            return this._drawingTools.setToolType(newTool);
         },
 
         setThickness: function(newThickness) {
@@ -29,8 +29,8 @@
             return this._drawingTools.getColour();
         },
 
-        getTool: function(){
-            return this._drawingTools.getTool();
+        getToolType: function(){
+            return this._drawingTools.getToolType();
         },
 
         getThickness: function(){
@@ -44,9 +44,11 @@
         toJSON: function() {
             return {
                 vertices: this.getListOfCoordinates(),
-                tool: this.getTool(),
-                colour: this.getColour(),
-                thickness: this.getThickness()
+                tool: {
+                    colour: this.getColour(),
+                    thickness: this.getThickness(),
+                    type: this.getToolType()
+                }
             };
         }
     });

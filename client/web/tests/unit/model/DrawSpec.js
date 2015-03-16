@@ -10,7 +10,7 @@ define(['models/DrawModel'], function(DrawModel) {
 
         it('it should return good default values', function(){
             expect(draw.getColour()).toBe("Black");
-            expect(draw.getTool()).toBe("Draw");
+            expect(draw.getToolType()).toBe("Draw");
             expect(draw.getThickness()).toBe(10);
             expect(draw.getListOfCoordinates()).toEqual([]);
         });
@@ -18,8 +18,8 @@ define(['models/DrawModel'], function(DrawModel) {
         it('it should return false on setting bad values', function(){
             expect(draw.setColour("asdfasfd")).toBe(false);
             expect(draw.getColour()).toBe("Black");
-            expect(draw.setTool("asdfasfd")).toBe(false);
-            expect(draw.getTool()).toBe("Draw");
+            expect(draw.setToolType("asdfasfd")).toBe(false);
+            expect(draw.getToolType()).toBe("Draw");
             expect(draw.setThickness(999)).toBe(false);
         });
 
@@ -28,10 +28,10 @@ define(['models/DrawModel'], function(DrawModel) {
             expect(draw.getColour()).toBe("Red");
             expect(draw.setColour("Blue")).toBe(true);
             expect(draw.getColour()).toBe("Blue");
-            expect(draw.setTool("Draw")).toBe(true);
-            expect(draw.getTool()).toBe("Draw");
-            expect(draw.setTool("Erase")).toBe(true);
-            expect(draw.getTool()).toBe("Erase");
+            expect(draw.setToolType("Draw")).toBe(true);
+            expect(draw.getToolType()).toBe("Draw");
+            expect(draw.setToolType("Erase")).toBe(true);
+            expect(draw.getToolType()).toBe("Erase");
             expect(draw.setThickness(2)).toBe(true);
         });
         

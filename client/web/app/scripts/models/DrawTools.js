@@ -1,9 +1,6 @@
 define(['backbone'], function (Backbone) {
     'use strict';
-    
 
-    /* We should try and pull these data objects from server.
-     * That way all clients(iOS, Web) have same data.*/
     var TOOLS = {
         DRAW : { value: 0, name: "Draw"},
         ERASE : { value: 1, name: "Erase" }
@@ -41,7 +38,7 @@ define(['backbone'], function (Backbone) {
             return false;
         },
 
-        setTool: function(newTool) {
+        setToolType: function(newTool) {
             for (var toolName in TOOLS) {
                 var tool = TOOLS[toolName];
 
@@ -67,7 +64,7 @@ define(['backbone'], function (Backbone) {
             return this._colour.name;
         },
 
-        getTool: function() {
+        getToolType: function() {
             return this._tool.name;
         },
 
