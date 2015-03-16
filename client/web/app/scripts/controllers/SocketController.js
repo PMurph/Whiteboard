@@ -13,6 +13,7 @@ define([
     var Socket = Marionette.Object.extend({
         initialize: function() {
             this.io = io();
+            this._connected = false;
             this._roomID = undefined;
             this._roomView = undefined;
 
@@ -40,6 +41,10 @@ define([
                 roomId: this._roomID,
                 authToken: this._authToken
             });
+        },
+
+        isConnected: function() {
+            return this._connected;
         },
 
         _leaveRoom: function(roomID) {
@@ -72,13 +77,13 @@ define([
 
         _setupSocketEvents: function() {
             this.io.on('connect', function() {
-                console.log("Connected");
+                this._connected = true;
             });
             this.io.on('disconnect', function() {
-                console.log("Disconnected");
+                this._connected = false;
             });
-            this.io.on('error', function() {
-                console.log("error");
+            this.io.on('error', function(err) {
+                console.error("SokcetIO error: " + err);
             });
         },
 
