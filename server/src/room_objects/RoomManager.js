@@ -3,6 +3,8 @@ var Whiteboard = require('./Whiteboard.js');
 var Room = require('./Room.js');
 var RoomCommunicator = require("../communication/RoomCommunicator.js");
 var DrawCommandLogic = require("../logic/DrawCommandLogic.js");
+var ChatLogic = require("../logic/ChatLogic.js");
+var Events = require("../Events.js");
 
 var stubUser = {
     id: 1,
@@ -16,6 +18,7 @@ var RoomManager = function(socketManager, userSession) {
     this._userSession = userSession;
     this._userManager = userSession.userManager;
     this._drawCommandLogic = new DrawCommandLogic(this);
+    this._chatLogic = new ChatLogic(this);
 
     this._initSocketCallbacks(socketManager);
 
@@ -27,14 +30,16 @@ RoomManager.prototype = {
     _initSocketCallbacks: function(socketManager) {
         var self = this;
 
-        socketManager.on("connection", function(socket) {
-            socket.on("joinRequest", function(msgData) {
+        socketManager.on(Events.SocketCreated, function(socket) {
+            new RoomCommunicator(self._socketManager, socket, self._drawCommandLogic, self._chatLogic);
+
+            socket.on(Events.JoinRequest, function(msgData) {
                 self._userManager.findByAuthToken(msgData.authToken, function(error, userAuthToken) {
                     self.authenticateUser(error, userAuthToken, function() {
                         self.joinRoom(msgData.roomId, userAuthToken, socket);
                     },
                     function() {
-                        socket.emit("joined", "rejected");
+                        socket.emit(Events.JoinRequest, "rejected");
                     });
                 });
             });
@@ -58,12 +63,10 @@ RoomManager.prototype = {
         if(roomObject) {
             socket.join(roomId);
 
+            socket.emit(Events.JoinRequest, "You've joined room " + roomId);
+            socket.broadcast.to(roomId).emit("roomChatMessage", "User has joined room");
 
-            new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic);
             roomObject.connectUserToRoom(user);
-
-            socket.emit('joined', "You've joined room " + roomId);
-            socket.broadcast.to(roomId).emit("roomChatMessage", "User has joined room" + roomId);
         }
     },
 

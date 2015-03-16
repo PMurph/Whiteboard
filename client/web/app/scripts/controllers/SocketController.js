@@ -39,11 +39,15 @@ define([
             this._roomID = roomID;
             this._roomView = roomView;
 
-            this.io.once('joined', function() {
+            this.io.once('joinRequest', function() {
                 self.io.once('getAllDrawCommands', function(drawMsgs) {
                     self._roomView.whiteboard.drawFromGetAllMessages(drawMsgs.drawCommands);
                 });
+                self.io.once('getAllChat', function(chatMsgs) {
+                    self._roomView.chat.chatFromGetAllMessages(chatMsgs.chatMessages);
+                });
                 self.io.emit('getAllDrawCommands');
+                self.io.emit('getAllChat');
             });
 
             this.io.emit('joinRequest', {
@@ -58,10 +62,12 @@ define([
 
         _leaveRoom: function(roomID) {
             this.io.emit('leaveRoom', roomID);
+            this._roomID = undefined;
+            this._roomView = undefined;
         },
 
         _emitChat: function(params) {
-            this.io.emit('chat', params);
+            this.io.emit('chatMessage', params);
         },
 
         _emitDraw: function(params) {
@@ -71,16 +77,12 @@ define([
         // We don't have to unsubscribe from these when we leave
         _setupSocketListeners: function() {
             var self = this;
-            this.io.on('chat', function(param) {
-                self._roomView.chat.addMessage(param.message);
+            this.io.on('chatMessage', function(param) {
+                self._roomView.chat.addMessage(param.chatMessages);
             });
 
             this.io.on('drawCommand', function(param) {
                 self._roomView.whiteboard.drawFromMessage(param.drawCommand.message);
-            });
-
-            this.io.on('roomChatMessage', function() {
-                
             });
         },
 
@@ -107,8 +109,8 @@ define([
         _setupWindowEvents: function() {
             var self = this;
             window.addEventListener("beforeunload", function () {
-                self.io.close();  
-                self.io.disconnect();  
+                self.io.close();
+                self.io.disconnect();
             });
         }
     });

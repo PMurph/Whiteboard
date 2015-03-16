@@ -1,11 +1,13 @@
 define([
     'marionette',
+    'underscore',
     'collections/chatMessages',
     'views/chat/chatMessages',
     'vent',
     'tpl!/scripts/templates/chat/layout.html'
 ], function(
     Marionette,
+    _,
     ChatMessagesCollection,
     ChatMessagesView,
     vent,
@@ -33,15 +35,7 @@ define([
 
         initialize: function(options) {
             this.roomModel = options.roomModel;
-
-            // Stub chat messages
             this.chatCollection = new ChatMessagesCollection();
-            for (var i = 0; i < 10; i++) {
-                this.chatCollection.add({
-                    name: 'cool guy ' + i,
-                    message: 'message yo ' + i
-                });
-            }
         },
 
         onShow: function() {
@@ -56,6 +50,10 @@ define([
             this.chatCollection.add(msg);
         },
 
+        chatFromGetAllMessages: function(msgs) {
+            this.chatCollection.add(msgs);
+        },
+
         _sendMessage: function() {
             var message = {
                 name: 'a name',
@@ -63,10 +61,7 @@ define([
             };
 
             this.chatCollection.add(message);
-            vent.trigger('chat', {
-                roomID: this.roomModel.get('id'),
-                message: message
-            });
+            vent.trigger('chat', message);
 
             this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight);
 
