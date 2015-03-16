@@ -38,6 +38,10 @@ RoomManager.prototype = {
                     });
                 });
             });
+
+            socket.on("error", function(err) {
+                console.error("SocketIO error: " + err);
+            });
         });
     },
 
