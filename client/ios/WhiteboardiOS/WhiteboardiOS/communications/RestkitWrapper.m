@@ -17,6 +17,7 @@
 
     - (id) init: (NSString *) uri {
         webAppURI = uri;
+        [self configureRestKit];
         return self;
     }
 

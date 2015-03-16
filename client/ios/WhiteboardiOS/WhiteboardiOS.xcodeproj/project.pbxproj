@@ -19,6 +19,7 @@
 		A88FF6FC1AAE9BEB00D61DF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */; };
 		A88FF6FF1AAE9BEB00D61DF9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FD1AAE9BEB00D61DF9 /* LaunchScreen.xib */; };
 		A8EC3CD01AB4FE7000A3A5A2 /* RestkitWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC3CCF1AB4FE7000A3A5A2 /* RestkitWrapper.m */; };
+		A8EC3CD21AB6A5F100A3A5A2 /* RoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC3CD11AB6A5F100A3A5A2 /* RoomCell.m */; };
 		BA272456604C448F2F42B33A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F69200732A00E2E61E393E /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,8 @@
 		A88FF7091AAE9BEB00D61DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8EC3CCE1AB4FE5600A3A5A2 /* RestkitWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RestkitWrapper.h; path = WhiteboardiOS/communications/RestkitWrapper.h; sourceTree = "<group>"; };
 		A8EC3CCF1AB4FE7000A3A5A2 /* RestkitWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestkitWrapper.m; path = WhiteboardiOS/communications/RestkitWrapper.m; sourceTree = "<group>"; };
+		A8EC3CD11AB6A5F100A3A5A2 /* RoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomCell.m; sourceTree = "<group>"; };
+		A8EC3CD31AB6A60400A3A5A2 /* RoomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomCell.h; sourceTree = "<group>"; };
 		C9F69200732A00E2E61E393E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBAEBFD26546F12FD9508BE5 /* libPods-WhiteboardiOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WhiteboardiOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E694FFDEC4A856CA9A0BB6 /* Pods-WhiteboardiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhiteboardiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WhiteboardiOSTests/Pods-WhiteboardiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -150,6 +153,8 @@
 				A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */,
 				A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */,
 				A88FF6F81AAE9BEB00D61DF9 /* Main.storyboard */,
+				A8EC3CD11AB6A5F100A3A5A2 /* RoomCell.m */,
+				A8EC3CD31AB6A60400A3A5A2 /* RoomCell.h */,
 				A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */,
 				A88FF6FD1AAE9BEB00D61DF9 /* LaunchScreen.xib */,
 				A88FF6EB1AAE9BEB00D61DF9 /* Supporting Files */,
@@ -373,6 +378,7 @@
 			files = (
 				A8EC3CD01AB4FE7000A3A5A2 /* RestkitWrapper.m in Sources */,
 				A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */,
+				A8EC3CD21AB6A5F100A3A5A2 /* RoomCell.m in Sources */,
 				A8596A671AB251D0005CA07F /* RoomModel.m in Sources */,
 				A8596A6B1AB3946A005CA07F /* RoomCollection.m in Sources */,
 				A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */,

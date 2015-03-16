@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "RoomCollection.h"
+#import "RoomCell.h"
 
-@interface DashboardViewController : UIViewController {
-        RoomCollection* roomCollection;
-    }
-    @property (readonly, nonatomic) NSArray* roomIds;
+@interface DashboardViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
     @property (weak, nonatomic) IBOutlet UICollectionView *roomCollectionView;
 
 @end

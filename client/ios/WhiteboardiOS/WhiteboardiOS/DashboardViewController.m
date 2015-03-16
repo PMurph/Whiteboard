@@ -8,20 +8,31 @@
 
 #import "DashboardViewController.h"
 
-@interface DashboardViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface DashboardViewController () {
+        NSArray *roomSections;
+        RestkitWrapper *restkitWrapper;
+        RoomCollection *roomCollection;
+    }
 @end
 
 @implementation DashboardViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    roomCollection = [[RoomCollection alloc] init];
+    
+    [[self roomCollectionView]setDataSource:self];
+    [[self roomCollectionView]setDelegate:self];
+    
+    restkitWrapper = [[RestkitWrapper alloc] init:@"http://ec2-54-68-246-235.us-west-2.compute.amazonaws.com"];
+    roomCollection = [[RoomCollection alloc] init:restkitWrapper];
     [roomCollection refreshRoomIds];
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-    _roomIds = [roomCollection getRoomIds];
+    [super viewDidAppear:animated];
+    NSArray* roomModels = [roomCollection getRoomIds];
+    roomSections = [[NSArray alloc] initWithObjects:[roomModels mutableCopy], nil];
+    [[self roomCollectionView] reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,35 +42,21 @@
 
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [_roomIds count];
+    NSMutableArray *roomModelArray = [roomSections objectAtIndex:section];
+    return [roomModelArray count];
 }
 
 - (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return [_roomIds count];
+    return [roomSections count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Room " forIndexPath:indexPath];
+    RoomCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RoomCell" forIndexPath:indexPath];
+    NSMutableArray *roomModelArray = [roomSections objectAtIndex:indexPath.section];
+    NSString *roomId = [[roomModelArray objectAtIndex:indexPath.row] roomId];
     cell.backgroundColor = [UIColor whiteColor];
+    [cell.roomLabel setText:roomId];
     return cell;
-}
-
-#pragma mark - UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    //TODO
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-    //TODO
-}
-
-#pragma mark - UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(100, 100);
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(50, 50, 50, 50);
 }
 
 @end
