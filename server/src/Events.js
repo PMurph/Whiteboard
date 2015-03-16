@@ -10,6 +10,8 @@ var Events = {
     ChatMessage: "chatMessage",
     GetAllChat: "getAllChat",
 
+    RoomMessage: "roomMessage",
+
     JoinRequest: "joinRequest",
     LeaveRoom: "leaveRoom",
     UserJoined: "userJoined",

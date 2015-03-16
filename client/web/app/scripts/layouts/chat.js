@@ -55,13 +55,7 @@ define([
         },
 
         _sendMessage: function() {
-            var message = {
-                name: 'a name',
-                message: this.ui.chatInput.val()
-            };
-
-            this.chatCollection.add(message);
-            vent.trigger('chat', message);
+            vent.trigger('chat', this.ui.chatInput.val());
 
             this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight);
 

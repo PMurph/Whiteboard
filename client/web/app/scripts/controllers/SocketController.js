@@ -52,7 +52,7 @@ define([
 
             this.io.emit('joinRequest', {
                 roomId: this._roomID,
-                authToken: this._authToken
+                authToken: this.userSession.getUser().get('authToken')
             });
         },
 
@@ -66,8 +66,13 @@ define([
             this._roomView = undefined;
         },
 
-        _emitChat: function(params) {
-            this.io.emit('chatMessage', params);
+        _emitChat: function(msg) {
+            var message = {
+                name: this.userSession.getUser().get('displayName'),
+                message: msg
+            };
+
+            this.io.emit('chatMessage', message);
         },
 
         _emitDraw: function(params) {
@@ -78,11 +83,15 @@ define([
         _setupSocketListeners: function() {
             var self = this;
             this.io.on('chatMessage', function(param) {
-                self._roomView.chat.addMessage(param.chatMessages);
+                self._roomView.chat.addMessage(param.chatMessage);
             });
 
             this.io.on('drawCommand', function(param) {
                 self._roomView.whiteboard.drawFromMessage(param.drawCommand.message);
+            });
+
+            this.io.on('roomMessage', function(param) {
+                self._roomView.chat.addMessage(param);
             });
         },
 

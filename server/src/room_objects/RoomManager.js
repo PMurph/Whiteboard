@@ -64,7 +64,9 @@ RoomManager.prototype = {
             socket.join(roomId);
 
             socket.emit(Events.JoinRequest, "You've joined room " + roomId);
-            socket.broadcast.to(roomId).emit("roomChatMessage", "User has joined room");
+            socket.broadcast.to(roomId).emit(Events.RoomMessage, {
+                message: "User has joined room"
+            });
 
             roomObject.connectUserToRoom(user);
         }

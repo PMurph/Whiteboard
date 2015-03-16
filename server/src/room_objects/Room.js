@@ -78,7 +78,7 @@ Room.prototype = {
         var chat = this._whiteboard.getAllChat();
         getAllChatMessage.setChatMessages(chat);
         chatLogic.handleGetAllChatMessagesResponse(getAllChatMessage);
-    },
+    }
 };
 
 module.exports = Room;
