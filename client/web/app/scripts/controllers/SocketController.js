@@ -1,9 +1,11 @@
 define([
+    'app',
     'underscore',
     'socket.io',
     'marionette',
     'vent',
 ], function(
+    App,
     _,
     io,
     Marionette,
@@ -29,6 +31,9 @@ define([
 
             if(!this.isConnected()) {
                 throw "Error: Not connected to Socket.";
+            }
+            if(!App.userSessionController.isAuthenticated()) {
+                throw "Error: Not authenticated.";
             }
 
             this._roomID = roomID;
