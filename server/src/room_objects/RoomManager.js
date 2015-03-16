@@ -58,11 +58,12 @@ RoomManager.prototype = {
         if(roomObject) {
             socket.join(roomId);
 
-            socket.emit('joined', "You've joined room " + roomId);
-            socket.broadcast.to(roomId).emit("roomChatMessage", "User has joined room" + roomId);
 
             new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic);
             roomObject.connectUserToRoom(user);
+
+            socket.emit('joined', "You've joined room " + roomId);
+            socket.broadcast.to(roomId).emit("roomChatMessage", "User has joined room" + roomId);
         }
     },
 
