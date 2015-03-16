@@ -12,7 +12,7 @@
 @interface DashboardViewController : UIViewController {
         RoomCollection* roomCollection;
     }
-
+    @property (readonly, nonatomic) NSArray* roomIds;
     @property (weak, nonatomic) IBOutlet UICollectionView *roomCollectionView;
 
 @end
