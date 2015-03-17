@@ -35,36 +35,37 @@ DrawObject *_drawingInformation;
 - (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y {
     NSDictionary *newCord = @{ @"x":x, @"y":y };
     [listOfCoordinates addObject:(newCord)];
+}
 
 
 - (void)setThickness:(NSNumber*)newThickness {
-            if (newThickness >= 0 && newThickness < 100) {
-                _thickness = newThickness;
-            }
-        },
+        if (newThickness >= 0 && newThickness < 100) {
+            _thickness = newThickness;
+        }
+    }
 
 - (void)SetColour:(NSNumber*)newColour {
-            _drawingInformation.setColour(newColour);
-        },
+        _drawingInformation.setColour(newColour);
+    }
 
 - (void)setTool:(NSNumber*)newTool {
-            _drawingInformation.setTool(newTool);
-        },
+        _drawingInformation.setTool(newTool);
+    }
 
 - (NSString*)getColour: {
-            return _drawingInformation.getColour();
-        },
+        return _drawingInformation.getColour();
+    }
 
 - (NSString*)getTool: {
-            return _drawingInformation.getTool();
-        },
+        return _drawingInformation.getTool();
+    }
 
 - (NSNumber*)getThickness: {
-            return _thickness;
-        },
+        return _thickness;
+	}
 
 - (NSMutableArray*) getListOfCoordinates:{
-            return _listOfCoordinates;
-        }
+        return _listOfCoordinates;
+    }
 
 @end
