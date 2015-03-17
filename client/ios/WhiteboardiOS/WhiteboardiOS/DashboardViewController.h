@@ -9,6 +9,7 @@
 
     @property (weak, nonatomic) IBOutlet UICollectionView *roomCollectionView;
     @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
+    @property (strong, nonatomic, readwrite) RoomCollection *roomCollection;
 
 @end
 

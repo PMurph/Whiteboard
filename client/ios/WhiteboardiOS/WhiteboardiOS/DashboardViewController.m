@@ -2,7 +2,6 @@
 
 @interface DashboardViewController () {
         NSArray *roomSections;
-        RoomCollection *roomCollection;
     }
 
     - (void)initView;
@@ -30,13 +29,13 @@
 - (void)initRoomCollection {
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     RestkitWrapper *restkitWrapper = appDelegate.restkitWrapper;
-    roomCollection = [[RoomCollection alloc] init:restkitWrapper];
-    [roomCollection registerObserver:self];
+    self.roomCollection = [[RoomCollection alloc] init:restkitWrapper];
+    [self.roomCollection registerObserver:self];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [roomCollection fetchRooms];
+    [self.roomCollection fetchRooms];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,7 +49,7 @@
 }
 
 - (void)updateRoomList {
-    NSArray *roomModels = [roomCollection roomModels];
+    NSArray *roomModels = [self.roomCollection roomModels];
     roomSections = [[NSArray alloc] initWithObjects:[roomModels mutableCopy], nil];
     [[self roomCollectionView] reloadData];
 }
@@ -76,7 +75,7 @@
 
 #pragma mark - Toolbar Button Actions
 - (void)refreshRooms:(id)sender {
-    [roomCollection fetchRooms];
+    [self.roomCollection fetchRooms];
 }
 
 @end

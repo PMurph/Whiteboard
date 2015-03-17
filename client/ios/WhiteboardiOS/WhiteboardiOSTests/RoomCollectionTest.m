@@ -23,16 +23,16 @@
 
     - (void)setUp {
         [super setUp];
-        _roomModels = @[[[RoomModel alloc] init:@"1"], [[RoomModel alloc] init:@"3"]];
-        _restkitMock = OCMClassMock([RestkitWrapper class]);
-        _mockObserver = OCMProtocolMock(@protocol(RoomCollectionObserver));
+        self.roomModels = @[[[RoomModel alloc] init:@"1"], [[RoomModel alloc] init:@"3"]];
+        self.restkitMock = OCMClassMock([RestkitWrapper class]);
+        self.mockObserver = OCMProtocolMock(@protocol(RoomCollectionObserver));
         OCMStub([_mockObserver notifyOfChange]);
         
-        _collection = [[RoomCollection alloc] init:_restkitMock];
-        [_collection registerObserver:_mockObserver];
+        self.collection = [[RoomCollection alloc] init:_restkitMock];
+        [self.collection registerObserver:self.mockObserver];
         
-        OCMStub([_restkitMock fetchRooms:_collection]).andDo(^(NSInvocation *invocation) {
-            [_collection setCollection:_roomModels];
+        OCMStub([_restkitMock fetchRooms:self.collection]).andDo(^(NSInvocation *invocation) {
+            [self.collection setCollection:self.roomModels];
         });
     }
 
@@ -41,23 +41,23 @@
     }
 
     - (void)testThatObserversAreNotifiedWhenCollectionIsSet {
-        [_collection setCollection:_roomModels];
+        [self.collection setCollection:self.roomModels];
         
-        OCMVerify([_mockObserver notifyOfChange]);
+        OCMVerify([self.mockObserver notifyOfChange]);
     }
 
     - (void)testThatFetchRoomCallRestKitWrappersFetchRooms {
-        [_collection fetchRooms];
+        [self.collection fetchRooms];
         
-        OCMVerify([_restkitMock fetchRooms:_collection]);
+        OCMVerify([self.restkitMock fetchRooms:self.collection]);
     }
 
     - (void)testThatInitiallyNoRoomsExistInCollection {
-        XCTAssertEqual([[_collection roomModels] count], 0);
+        XCTAssertEqual([[self.collection roomModels] count], 0);
     }
 
     - (void)testThatRoomsArePopulatedAfterFetch {
-        [_collection fetchRooms];
-        XCTAssertEqual([[_collection roomModels] count], [_roomModels count]);
+        [self.collection fetchRooms];
+        XCTAssertEqual([[self.collection roomModels] count], [self.roomModels count]);
     }
 @end

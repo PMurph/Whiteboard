@@ -11,6 +11,7 @@
 		A8596A671AB251D0005CA07F /* RoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A661AB251D0005CA07F /* RoomModel.m */; };
 		A8596A6B1AB3946A005CA07F /* RoomCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A6A1AB3946A005CA07F /* RoomCollection.m */; };
 		A8596A6F1AB3CB3D005CA07F /* RoomCollectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A6E1AB3CB3D005CA07F /* RoomCollectionTest.m */; };
+		A860ACD91AB8D96A00432672 /* DashboardControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */; };
 		A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6ED1AAE9BEB00D61DF9 /* main.m */; };
 		A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */; };
 		A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */; };
@@ -44,6 +45,7 @@
 		A8596A6E1AB3CB3D005CA07F /* RoomCollectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomCollectionTest.m; sourceTree = "<group>"; };
 		A860ACD61AB7BCA900432672 /* RoomCollectionObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RoomCollectionObserver.h; path = WhiteboardiOS/collections/RoomCollectionObserver.h; sourceTree = "<group>"; };
 		A860ACD71AB7C02E00432672 /* Collection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Collection.h; path = WhiteboardiOS/collections/Collection.h; sourceTree = "<group>"; };
+		A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardControllerTest.m; sourceTree = "<group>"; };
 		A88FF6E81AAE9BEB00D61DF9 /* WhiteboardiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhiteboardiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88FF6EC1AAE9BEB00D61DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A88FF6ED1AAE9BEB00D61DF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				A8596A6E1AB3CB3D005CA07F /* RoomCollectionTest.m */,
+				A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */,
 			);
 			name = unit;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A860ACD91AB8D96A00432672 /* DashboardControllerTest.m in Sources */,
 				A8596A6F1AB3CB3D005CA07F /* RoomCollectionTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
