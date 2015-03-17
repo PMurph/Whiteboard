@@ -35,6 +35,9 @@ RoomManager.prototype = {
 
             socket.on(Events.JoinRequest, function(msgData) {
                 self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
+
+                    socket.user = user;
+
                     self.authenticateUser(error, user, function() {
                         self.joinRoom(msgData.roomId, user, socket);
                     },
@@ -45,12 +48,7 @@ RoomManager.prototype = {
             });
 
             socket.on(Events.LeaveRoom, function(msgData) {
-                self.leaveRoom(msgData, socket);
-            });
-
-            socket.on(Events.SocketDestroyed, function(msgData) {
-                // Will fail since we can't identify who just closed the socket yet
-                self.leaveRoom(msgData, socket);
+                self.leaveRoom(msgData.roomId, socket.user, socket);
             });
 
             socket.on("error", function(err) {
@@ -81,19 +79,16 @@ RoomManager.prototype = {
         }
     },
 
-    leaveRoom: function(msgData, socket) {
-        var roomObject = this._rooms[msgData.roomId];
+    leaveRoom: function(roomId, user, socket) {
+        var roomObject = this._rooms[roomId];
+        if(roomObject) {
+            socket.leave(roomId);
 
-        if (roomObject) {
-            socket.leave(msgData.roomId);
-
-            this._userManager.findByAuthToken(msgData.authToken, function(error, user) {
-                socket.broadcast.to(msgData.roomId).emit(Events.RoomMessage, {
-                    message: user.displayName + " has left"
-                });
-
-                roomObject.disconnectUserFromRoom(user);
+            socket.broadcast.to(roomId).emit(Events.RoomMessage, {
+                message: user.displayName + " has left"
             });
+
+            roomObject.disconnectUserFromRoom(user);
         }
     },
 

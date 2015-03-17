@@ -60,9 +60,9 @@ define([
             return this._connected;
         },
 
-        _leaveRoom: function(roomID) {
+        _leaveRoom: function() {
             this.io.emit('leaveRoom', {
-                roomId: roomID,
+                roomId: this._roomID,
                 authToken: this.userSession.getUser().get('authToken')
             });
             this._roomID = undefined;
@@ -108,7 +108,7 @@ define([
                 self._connected = false;
             });
             this.io.on('error', function(err) {
-                console.error("SokcetIO error: " + err);
+                console.error("SocketIO error: " + err);
             });
         },
 
@@ -121,6 +121,7 @@ define([
         _setupWindowEvents: function() {
             var self = this;
             window.addEventListener("beforeunload", function () {
+                self._leaveRoom();
                 self.io.close();
                 self.io.disconnect();
             });
