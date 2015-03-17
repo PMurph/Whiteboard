@@ -46,8 +46,16 @@ Tools myTool;
         myColour = PURPLE;
     }
 }
+
 -(void)setTool:(NSString*)newTool {
+    newTool = newTool.lowercaseString;
     
+    if ([newTool  isEqual: @"draw"]) {
+        myTool = DRAW;
+    }
+    else if ([newTool  isEqual: @"erase"]) {
+        myTool = ERASE;
+    }
 }
 
 -(NSString*)getColour {
