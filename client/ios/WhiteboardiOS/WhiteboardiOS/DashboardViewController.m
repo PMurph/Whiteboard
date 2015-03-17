@@ -10,7 +10,6 @@
 
 @interface DashboardViewController () {
         NSArray *roomSections;
-        RestkitWrapper *restkitWrapper;
         RoomCollection *roomCollection;
     }
 
@@ -28,24 +27,29 @@
     [[self refreshButton]setTarget:self];
     [[self refreshButton]setAction:@selector(refreshRooms:)];
     
-    restkitWrapper = [[RestkitWrapper alloc] init:@"http://ec2-54-68-246-235.us-west-2.compute.amazonaws.com"];
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    RestkitWrapper *restkitWrapper = appDelegate.restkitWrapper;
     roomCollection = [[RoomCollection alloc] init:restkitWrapper];
-    [roomCollection refreshRoomIds];
+    [roomCollection registerObserver:self];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self updateRoomList];
+    [roomCollection fetchRooms];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - RoomCollectionObserver
+
+- (void) notifyOfChange {
+    [self updateRoomList];
 }
 
 - (void)updateRoomList {
-    [roomCollection refreshRoomIds];
-    NSArray *roomModels = [roomCollection getRoomIds];
+    NSArray *roomModels = [roomCollection roomModels];
     roomSections = [[NSArray alloc] initWithObjects:[roomModels mutableCopy], nil];
     [[self roomCollectionView] reloadData];
 }
@@ -71,7 +75,7 @@
 
 #pragma mark - Toolbar Button Actions
 - (void)refreshRooms:(id)sender {
-    [self updateRoomList];
+    [roomCollection fetchRooms];
 }
 
 @end

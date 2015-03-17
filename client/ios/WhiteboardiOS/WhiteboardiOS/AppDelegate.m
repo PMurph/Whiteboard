@@ -8,15 +8,20 @@
 
 #import "AppDelegate.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () {
+        NSString *webAppURI;
+    }
 
 @end
 
 @implementation AppDelegate
 
+@synthesize restkitWrapper;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    webAppURI = @"http://ec2-54-68-246-235.us-west-2.compute.amazonaws.com";
+    restkitWrapper = [[RestkitWrapper alloc] init:webAppURI];
     return YES;
 }
 

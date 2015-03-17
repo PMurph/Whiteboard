@@ -9,48 +9,55 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
+
 #import "RoomCollection.h"
 
 @interface RoomCollectionTest : XCTestCase
     @property (nonatomic, readwrite) id restkitMock;
     @property (nonatomic, readwrite) RoomCollection *collection;
+    @property (nonatomic, readwrite) id<RoomCollectionObserver> mockObserver;
+    @property (nonatomic, readwrite) NSArray *roomModels;
 @end
 
 @implementation RoomCollectionTest
 
     - (void)setUp {
         [super setUp];
-        RoomModel *model1 = [[RoomModel alloc] init:@"1"];
-        RoomModel *model2 = [[RoomModel alloc] init:@"3"];
-        NSArray *roomModels = @[model1, model2];
+        _roomModels = @[[[RoomModel alloc] init:@"1"], [[RoomModel alloc] init:@"3"]];
         _restkitMock = OCMClassMock([RestkitWrapper class]);
-        OCMStub([_restkitMock updateRoomIds]);
-        OCMStub([_restkitMock roomIds]).andReturn(roomModels);
-    
+        _mockObserver = OCMProtocolMock(@protocol(RoomCollectionObserver));
+        OCMStub([_mockObserver notifyOfChange]);
+        
         _collection = [[RoomCollection alloc] init:_restkitMock];
+        [_collection registerObserver:_mockObserver];
+        
+        OCMStub([_restkitMock fetchRooms:_collection]).andDo(^(NSInvocation *invocation) {
+            [_collection setCollection:_roomModels];
+        });
     }
 
     - (void)tearDown {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         [super tearDown];
     }
 
-    - (void)testRefreshRoomIdsCallsRestKitWrapper {
-        [_collection refreshRoomIds];
-        OCMVerify([_restkitMock updateRoomIds]);
-    }
-
-    - (void)testGetRoomIdReturnsTheCorrectRoomIds {
-        NSArray *returnedRooms = [_collection getRoomIds];
-        RoomModel *testRoom = [returnedRooms objectAtIndex:1];
-    
-        XCTAssertEqual(testRoom.roomId, @"3");
-    }
-
-    - (void)testGetRoomIdDoesNotReturnExtraRooms {
-        NSArray * returnedRooms = [_collection getRoomIds];
+    - (void)testThatObserversAreNotifiedWhenCollectionIsSet {
+        [_collection setCollection:_roomModels];
         
-        XCTAssertEqual([returnedRooms count], 2);
+        OCMVerify([_mockObserver notifyOfChange]);
     }
 
+    - (void)testThatFetchRoomCallRestKitWrappersFetchRooms {
+        [_collection fetchRooms];
+        
+        OCMVerify([_restkitMock fetchRooms:_collection]);
+    }
+
+    - (void)testThatInitiallyNoRoomsExistInCollection {
+        XCTAssertEqual([[_collection roomModels] count], 0);
+    }
+
+    - (void)testThatRoomsArePopulatedAfterFetch {
+        [_collection fetchRooms];
+        XCTAssertEqual([[_collection roomModels] count], [_roomModels count]);
+    }
 @end

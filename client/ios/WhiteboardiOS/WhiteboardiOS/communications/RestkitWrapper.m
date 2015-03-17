@@ -45,11 +45,11 @@
         [objectManager addResponseDescriptor:roomResponseDescriptor];
     }
 
-    - (void) updateRoomIds {
+    - (void) fetchRooms:(id<Collection>)collection {
         [[RKObjectManager sharedManager] getObjectsAtPath:@"/api/room"
             parameters:nil
             success:^(RKObjectRequestOperation* operation, RKMappingResult* mappingResult) {
-                _roomIds = mappingResult.array;
+                [collection setCollection:mappingResult.array];
             }
         failure:^(RKObjectRequestOperation* operation, NSError *error) {
             NSLog(@"Could not retrieve list of room ids from server.");
