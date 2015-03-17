@@ -2,13 +2,14 @@ define([
     'marionette',
     'layouts/chat',
     'views/room/whiteboard',
-    'tpl!templates/room/layout.html'
+    'vent',
+    'tpl!/scripts/templates/room/layout.html'
 ], function(
     Marionette,
     ChatViewComponent,
     WhiteboardView,
-    Template
-) {
+    vent,
+    Template) {
     'use strict';
 
     return Marionette.LayoutView.extend({
@@ -23,8 +24,20 @@ define([
         },
 
         onShow: function() {
-            this.chatRegion.show(new ChatViewComponent());
-            this.whiteboardRegion.show(new WhiteboardView());
+            this.whiteboard = new WhiteboardView({
+                roomModel: this.model
+            });
+            this.chat = new ChatViewComponent({
+                roomModel: this.model
+            });
+
+            this.chatRegion.show(this.chat);
+            this.whiteboardRegion.show(this.whiteboard);
+        },
+
+        onBeforeDestroy: function() {
+            vent.trigger('leaveRoom', this.model.get('id'));
         }
+
     });
 });

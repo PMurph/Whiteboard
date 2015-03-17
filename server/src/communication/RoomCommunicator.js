@@ -20,6 +20,20 @@ RoomCommunicator.prototype = {
         this._socket.on("getAllDrawCommands", function() {
             self.handleGetAllDrawCommands();
         });
+
+        this._socket.on("leaveRoom", function() {
+            self._socket.leave(self.getRoomId());
+            self._socket.broadcast.to(self.getRoomId()).emit("roomChatMessage", "User has left");
+        });
+
+        this._socket.on("disconnect", function() {
+            self._socket.leave(self.getRoomId());
+            self._socket.broadcast.to(self.getRoomId()).emit("roomChatMessage", "User has left");
+        });
+
+        this._socket.on("chat", function(msg) {
+            self._socket.broadcast.to(self.getRoomId()).emit("chat", msg);
+        });
     },
     handleDrawCommand: function(messageData) {
         this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, messageData));

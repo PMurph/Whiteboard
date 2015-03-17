@@ -8,16 +8,20 @@ describe("RoomManager", function() {
 
     var testRoomManager;
     var testRoomId;
+    var mockBroadcast;
     var mockRequest;
     var mockResponse;
     var mockSocket;
     var mockSocketManager;
     var mockUserManager;
     var mockUserSession;
-
+    
     beforeEach(function() {
+        mockBroadcast = jasmine.createSpyObj("SocketBroadcast", ["to"]);
         mockResponse = jasmine.createSpyObj("Response", ["sendStatus", "json"]);
-        mockSocket = jasmine.createSpyObj("Socket", ["join", "on"]);
+        mockSocket = jasmine.createSpyObj("Socket", ["join", "on", "emit"]);
+        mockBroadcast.to.and.returnValue(mockSocket);
+        mockSocket.broadcast = mockBroadcast;
         mockSocketManager = jasmine.createSpyObj("socketManager", ["on", "use"]);
         mockUserManager = jasmine.createSpyObj("UserManager", ["findByAuthToken"]);
         mockUserSession = jasmine.createSpyObj("UserSession", ["getRequestToken"]);
@@ -28,11 +32,7 @@ describe("RoomManager", function() {
         testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
         testRoomId = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
     });
-
-    it("should setup socket middleware callback on initialization", function() {
-        expect(mockSocketManager.use).toHaveBeenCalledWith(jasmine.any(Function));
-    });
-
+    
     it("should setup socket conntection callback on initialization", function() {
         expect(mockSocketManager.on).toHaveBeenCalledWith("connection", jasmine.any(Function));
     });
@@ -59,7 +59,7 @@ describe("RoomManager", function() {
             testRoomId2 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
             testRoomId3 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
             
-            roomList = testRoomManager.getRoomList();
+            roomList = testRoomManager.getRooms();
         });
         
         it("should return a list with 3 room ids", function() {
@@ -78,12 +78,6 @@ describe("RoomManager", function() {
     });
 
     describe("joining a room", function() {
-        var mockSocket;
-
-        beforeEach(function() {
-            mockSocket = jasmine.createSpyObj('socketManager', ["join", "on"]);
-        });
-
         it("should call the sockets join method with the room id if the room exists", function() {
             testRoomManager.joinRoom(testRoomId, TEST_USER, mockSocket);
             expect(mockSocket.join).toHaveBeenCalledWith(testRoomId);
@@ -180,7 +174,7 @@ describe("RoomManager", function() {
                 expect(testRoomManager.createNewRoom).toHaveBeenCalled();
             });
             
-            it("should not cretae a room if a request is sent with a valid authentication token but is neither a post nor get", function() {
+            it("should not create a room if a request is sent with a valid authentication token but is neither a post nor get", function() {
                 mockRequest = {method: "BAD", query: {authToken: TEST_AUTH_TOKEN}};
                 testCreateFunction(mockRequest, mockResponse);
                 expect(testRoomManager.createNewRoom).not.toHaveBeenCalled();

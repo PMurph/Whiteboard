@@ -23,11 +23,11 @@ define([
         onShow: function() {
             this._populateRooms();
         },
-        
+
         _populateRooms: function() {
             this.collection = new RoomsCollection();
             this.collection.fetch();
-            
+
             var collectionView = new RoomsCollectionView({
                 collection: this.collection
             });

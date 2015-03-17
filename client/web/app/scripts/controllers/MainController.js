@@ -2,7 +2,7 @@ define([
     'jquery',
     'backbone',
     'marionette',
-    
+
     'app',
 
     'routers/MainRouter',
@@ -11,9 +11,8 @@ define([
     'views/navbar',
     'layouts/dashboard',
     'layouts/room',
-
     'models/room',
-
+    'controllers/SocketController',
     'tpl!templates/status.html'
 ], function(
     $,
@@ -28,11 +27,9 @@ define([
     NavbarView,
     DashboardView,
     RoomLayoutView,
-
     RoomModel,
-
-    StatusTemplate
-) {
+    SocketController,
+    StatusTemplate) {
     'use strict';
 
     return Marionette.Controller.extend({
@@ -44,7 +41,7 @@ define([
                 contentType: 'application/json',
                 statusCode: {
                     403: function() {
- 
+
                     }
                 }
             });
@@ -83,7 +80,7 @@ define([
                         image: "<img src='/images/" + imageSrc + "'></img>"
                     };
                 }
-            })); 
+            }));
 
         },
         renderHeader: function(authUser) {
@@ -105,10 +102,19 @@ define([
                 id: id,
                 name: 'stub name ' + id
             });
-
-            this.mainContent.show(new RoomLayoutView({
+            var roomLayout = new RoomLayoutView({
                 model: roomModel
-            }));
+            });
+
+            try {
+                SocketController.joinRoom(id, roomLayout);
+            } catch (e) {
+                console.error("Failed to join room. Loading dashboard.\n Exception: " + e);
+                //Need to change url here
+                this.dashboard();
+                return;
+            }
+            this.mainContent.show(roomLayout);
         }
     });
 });

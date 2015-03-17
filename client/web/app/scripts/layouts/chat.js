@@ -2,13 +2,14 @@ define([
     'marionette',
     'collections/chatMessages',
     'views/chat/chatMessages',
-    'tpl!templates/chat/layout.html'
+    'vent',
+    'tpl!/scripts/templates/chat/layout.html'
 ], function(
     Marionette,
     ChatMessagesCollection,
     ChatMessagesView,
-    Template
-) {
+    vent,
+    Template) {
     'use strict';
 
     return Marionette.LayoutView.extend({
@@ -30,7 +31,9 @@ define([
             'click #send-btn': '_sendMessage'
         },
 
-        initialize: function() {
+        initialize: function(options) {
+            this.roomModel = options.roomModel;
+
             // Stub chat messages
             this.chatCollection = new ChatMessagesCollection();
             for (var i = 0; i < 10; i++) {
@@ -49,10 +52,20 @@ define([
             this.bindUIElements();
         },
 
+        addMessage: function(msg) {
+            this.chatCollection.add(msg);
+        },
+
         _sendMessage: function() {
-            this.chatCollection.add({
+            var message = {
                 name: 'a name',
                 message: this.ui.chatInput.val()
+            };
+
+            this.chatCollection.add(message);
+            vent.trigger('chat', {
+                roomID: this.roomModel.get('id'),
+                message: message
             });
 
             this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight);
