@@ -11,7 +11,9 @@
 #import "RoomCell.h"
 
 @interface DashboardViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+
     @property (weak, nonatomic) IBOutlet UICollectionView *roomCollectionView;
+    @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 
 @end
 

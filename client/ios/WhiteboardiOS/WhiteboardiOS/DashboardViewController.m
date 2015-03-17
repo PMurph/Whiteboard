@@ -13,6 +13,9 @@
         RestkitWrapper *restkitWrapper;
         RoomCollection *roomCollection;
     }
+
+    - (void)refreshRooms:(id)sender;
+    - (void)updateRoomList;
 @end
 
 @implementation DashboardViewController
@@ -22,6 +25,8 @@
     
     [[self roomCollectionView]setDataSource:self];
     [[self roomCollectionView]setDelegate:self];
+    [[self refreshButton]setTarget:self];
+    [[self refreshButton]setAction:@selector(refreshRooms:)];
     
     restkitWrapper = [[RestkitWrapper alloc] init:@"http://ec2-54-68-246-235.us-west-2.compute.amazonaws.com"];
     roomCollection = [[RoomCollection alloc] init:restkitWrapper];
@@ -30,14 +35,19 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSArray* roomModels = [roomCollection getRoomIds];
-    roomSections = [[NSArray alloc] initWithObjects:[roomModels mutableCopy], nil];
-    [[self roomCollectionView] reloadData];
+    [self updateRoomList];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)updateRoomList {
+    [roomCollection refreshRoomIds];
+    NSArray *roomModels = [roomCollection getRoomIds];
+    roomSections = [[NSArray alloc] initWithObjects:[roomModels mutableCopy], nil];
+    [[self roomCollectionView] reloadData];
 }
 
 #pragma mark - UICollectionView Datasource
@@ -57,6 +67,11 @@
     cell.backgroundColor = [UIColor whiteColor];
     [cell.roomLabel setText:roomId];
     return cell;
+}
+
+#pragma mark - Toolbar Button Actions
+- (void)refreshRooms:(id)sender {
+    [self updateRoomList];
 }
 
 @end
