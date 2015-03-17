@@ -13,6 +13,8 @@
         RoomCollection *roomCollection;
     }
 
+    - (void)initView;
+    - (void)initRoomCollection;
     - (void)refreshRooms:(id)sender;
     - (void)updateRoomList;
 @end
@@ -22,11 +24,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initView];
+    [self initRoomCollection];
+}
+
+- (void)initView {
     [[self roomCollectionView]setDataSource:self];
     [[self roomCollectionView]setDelegate:self];
     [[self refreshButton]setTarget:self];
     [[self refreshButton]setAction:@selector(refreshRooms:)];
-    
+}
+
+- (void)initRoomCollection {
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     RestkitWrapper *restkitWrapper = appDelegate.restkitWrapper;
     roomCollection = [[RoomCollection alloc] init:restkitWrapper];
