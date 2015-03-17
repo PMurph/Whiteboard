@@ -9,5 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface DrawModel : NSObject
-    - (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y
+- (id)init;
+- (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y;
+- (void)setThickness:(NSNumber*)newThickness;
+- (void)SetColour:(NSNumber*)newColour;
+- (void)setTool:(NSNumber*)newTool;
+- (NSString*)getColour;
+- (NSString*)getTool;
+- (NSNumber*)getThickness;
+- (NSMutableArray*) getListOfCoordinates;
 @end
