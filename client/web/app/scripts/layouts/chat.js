@@ -48,17 +48,16 @@ define([
 
         addMessage: function(msg) {
             this.chatCollection.add(msg);
+            this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight);
         },
 
         chatFromGetAllMessages: function(msgs) {
             this.chatCollection.add(msgs);
+            this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight);
         },
 
         _sendMessage: function() {
             vent.trigger('chat', this.ui.chatInput.val());
-
-            this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight);
-
             this.ui.chatInput.val('');
         }
     });

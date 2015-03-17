@@ -34,14 +34,23 @@ RoomManager.prototype = {
             new RoomCommunicator(self._socketManager, socket, self._drawCommandLogic, self._chatLogic);
 
             socket.on(Events.JoinRequest, function(msgData) {
-                self._userManager.findByAuthToken(msgData.authToken, function(error, userAuthToken) {
-                    self.authenticateUser(error, userAuthToken, function() {
-                        self.joinRoom(msgData.roomId, userAuthToken, socket);
+                self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
+                    self.authenticateUser(error, user, function() {
+                        self.joinRoom(msgData.roomId, user, socket);
                     },
                     function() {
                         socket.emit(Events.JoinRequest, "rejected");
                     });
                 });
+            });
+
+            socket.on(Events.LeaveRoom, function(msgData) {
+                self.leaveRoom(msgData, socket);
+            });
+
+            socket.on(Events.SocketDestroyed, function(msgData) {
+                // Will fail since we can't identify who just closed the socket yet
+                self.leaveRoom(msgData, socket);
             });
 
             socket.on("error", function(err) {
@@ -63,12 +72,28 @@ RoomManager.prototype = {
         if(roomObject) {
             socket.join(roomId);
 
-            socket.emit(Events.JoinRequest, "You've joined room " + roomId);
+            socket.emit(Events.JoinRequest, roomId);
             socket.broadcast.to(roomId).emit(Events.RoomMessage, {
-                message: "User has joined room"
+                message: user.displayName + " has joined room"
             });
 
             roomObject.connectUserToRoom(user);
+        }
+    },
+
+    leaveRoom: function(msgData, socket) {
+        var roomObject = this._rooms[msgData.roomId];
+
+        if (roomObject) {
+            socket.leave(msgData.roomId);
+
+            this._userManager.findByAuthToken(msgData.authToken, function(error, user) {
+                socket.broadcast.to(msgData.roomId).emit(Events.RoomMessage, {
+                    message: user.displayName + " has left"
+                });
+
+                roomObject.disconnectUserFromRoom(user);
+            });
         }
     },
 

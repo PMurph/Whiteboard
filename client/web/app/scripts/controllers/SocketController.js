@@ -61,7 +61,10 @@ define([
         },
 
         _leaveRoom: function(roomID) {
-            this.io.emit('leaveRoom', roomID);
+            this.io.emit('leaveRoom', {
+                roomId: roomID,
+                authToken: this.userSession.getUser().get('authToken')
+            });
             this._roomID = undefined;
             this._roomView = undefined;
         },

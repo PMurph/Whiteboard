@@ -32,20 +32,6 @@ RoomCommunicator.prototype = {
         this._socket.on(Events.GetAllChat, function() {
             self.handleGetAllChat();
         });
-
-        this._socket.on(Events.LeaveRoom, function() {
-            self._socket.leave(self.getRoomId());
-            self._socket.broadcast.to(self.getRoomId()).emit(Events.RoomMessage, {
-                message: "User has left"
-            });
-        });
-
-        this._socket.on(Events.SocketDestroyed, function() {
-            self._socket.leave(self.getRoomId());
-            self._socket.broadcast.to(self.getRoomId()).emit(Events.RoomMessage, {
-                message: "User has left"
-            });
-        });
     },
     handleDrawCommand: function(messageData) {
         this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, messageData));
