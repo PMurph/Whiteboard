@@ -1,17 +1,8 @@
-//
-//  AppDelegate.m
-//  WhiteboardiOS
-//
-//  Created by Patrick Murphy on 2015-03-09.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
-
 #import "AppDelegate.h"
 
 @interface AppDelegate () {
         NSString *webAppURI;
     }
-
 @end
 
 @implementation AppDelegate
