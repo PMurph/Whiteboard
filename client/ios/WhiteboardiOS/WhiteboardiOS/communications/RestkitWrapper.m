@@ -1,0 +1,50 @@
+#import "RestkitWrapper.h"
+
+@interface RestkitWrapper ()
+    - (void) configureRestKit;
+    - (void) setupRoomModelResponseDescriptor;
+@end
+
+@implementation RestkitWrapper
+
+    - (id) init: (NSString *) uri {
+        webAppURI = uri;
+        [self configureRestKit];
+        return self;
+    }
+
+    - (void) configureRestKit {
+        NSURL* webAppURL = [NSURL URLWithString:webAppURI];
+        AFHTTPClient* client = [[AFHTTPClient alloc] initWithBaseURL:webAppURL];
+    
+        objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
+        [self setupRoomModelResponseDescriptor];
+    }
+
+    - (void) setupRoomModelResponseDescriptor {
+        RKObjectMapping* roomIdMapping = [RKObjectMapping mappingForClass:[RoomModel class]];
+        [roomIdMapping addAttributeMappingsFromDictionary:@{
+            @"_id": @"roomId"
+        }];
+    
+        RKResponseDescriptor* roomResponseDescriptor = [RKResponseDescriptor
+            responseDescriptorWithMapping:roomIdMapping
+            method:RKRequestMethodGET
+            pathPattern: nil
+            keyPath: nil
+            statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    
+        [objectManager addResponseDescriptor:roomResponseDescriptor];
+    }
+
+    - (void) fetchRooms:(id<Collection>)collection {
+        [[RKObjectManager sharedManager] getObjectsAtPath:@"/api/room"
+            parameters:nil
+            success:^(RKObjectRequestOperation* operation, RKMappingResult* mappingResult) {
+                [collection setCollection:mappingResult.array];
+            }
+        failure:^(RKObjectRequestOperation* operation, NSError *error) {
+            NSLog(@"Could not retrieve list of room ids from server.");
+        }];
+    }
+@end
