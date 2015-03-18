@@ -2,7 +2,8 @@
 define(["app"], function(App) {
     'use strict';
     describe("User Settings/Options", function () {
-        var request;
+        var request,
+            user;
         beforeEach(function() {
             jasmine.Ajax.install();
         });
@@ -14,6 +15,7 @@ define(["app"], function(App) {
             beforeEach(function(done) {
                 App.userSessionController.authAnonymous();
                 App.userSessionController.on("Authenticated", function() {
+                    user = App.userSessionController.getUser();
                     done();
                 });
 
@@ -26,7 +28,6 @@ define(["app"], function(App) {
             });
             it("should set/get display name (Valid Name)", function() {
                 var newName = "New Anonymous Display Name";
-                var user = App.userSessionController.getUser();
                 
                 expect(user).not.toBe(null);
                 expect(user.getDisplayName()).toBe(testDisplayName);
@@ -43,7 +44,6 @@ define(["app"], function(App) {
             });
             it("should NOT set/get display name (Invalid Name)", function() {
                 var newName = "BAD Display Name";
-                var user = App.userSessionController.getUser();
                 
                 expect(user).not.toBe(null);
                 expect(user.getDisplayName()).toBe(testDisplayName);
@@ -58,8 +58,7 @@ define(["app"], function(App) {
             });
         });
         describe("User", function() {
-            var user,
-                testDisplayName = "TestDP",
+            var testDisplayName = "TestDP",
                 testLogin = "TestLogin";
             beforeEach(function(done) {
                 App.userSessionController.authUser("test", "testPassword");
