@@ -41,6 +41,8 @@ define(["app"], function(App) {
                 });
 
                 expect(user.getDisplayName()).toBe(newName);
+                expect(request.url).toBe('/api/user');
+                expect(request.method).toBe('PUT');
             });
             it("should NOT set/get display name (Invalid Name)", function() {
                 var newName = "BAD Display Name";
@@ -55,6 +57,8 @@ define(["app"], function(App) {
                 });
 
                 expect(user.getDisplayName()).toBe(testDisplayName);
+                expect(request.url).toBe('/api/user');
+                expect(request.method).toBe('PUT');
             });
         });
         describe("User", function() {
@@ -88,6 +92,8 @@ define(["app"], function(App) {
                 });
 
                 expect(user.getDisplayName()).toBe(newName);
+                expect(request.url).toBe('/api/user');
+                expect(request.method).toBe('PUT');
             });
             it("should NOT set/get display name (Invalid Name)", function() {
                 var newName = "Invalid<name></name>";
@@ -102,6 +108,8 @@ define(["app"], function(App) {
                 });
 
                 expect(user.getDisplayName()).toBe(testDisplayName);
+                expect(request.url).toBe('/api/user');
+                expect(request.method).toBe('PUT');
             });
             it("should set/get login/username (Valid Login)", function() {
                 var newName = "NewLogin";
@@ -118,6 +126,8 @@ define(["app"], function(App) {
                 });
 
                 expect(user.getLogin()).toBe(newName);
+                expect(request.url).toBe('/api/user');
+                expect(request.method).toBe('PUT');
             });
             it("should NOT set/get login/username (Invalid Login)", function() {
                 var newName = "NewLogin";
@@ -132,6 +142,8 @@ define(["app"], function(App) {
                 });
 
                 expect(user.getLogin()).toBe(testLogin);
+                expect(request.url).toBe('/api/user');
+                expect(request.method).toBe('PUT');
             });
             it("should set password (Valid Password)", function() {
                 var newPassword = "New Password",
@@ -148,6 +160,8 @@ define(["app"], function(App) {
                 });
 
                 expect(user.getB64Password()).toBe(b64pass);
+                expect(request.url).toBe('/api/user');
+                expect(request.method).toBe('PUT');
             });
             it("should NOT set password (Invalid Password)", function() {
                 var newPassword = "b",
@@ -162,6 +176,8 @@ define(["app"], function(App) {
                 });
 
                 expect(user.getB64Password()).not.toBe(b64pass);
+                expect(request.url).toBe('/api/user');
+                expect(request.method).toBe('PUT');
             });
         });
     });

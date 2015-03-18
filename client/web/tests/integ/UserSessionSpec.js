@@ -47,10 +47,11 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
 
                 request = jasmine.Ajax.requests.mostRecent();
 
+                spyOn(App.userSessionController, '_setAuthToken').and.callThrough();
+            });
+            it('should create proper request', function() {
                 expect(request.url).toBe('/api/user');
                 expect(request.method).toBe('POST');
-
-                spyOn(App.userSessionController, '_setAuthToken').and.callThrough();
             });
             describe('on success', function() {
                 beforeEach(function() {
@@ -144,6 +145,15 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
             var testLogin = "newLogin",
                 testPassword = "newPassword",
                 testSave = false;
+            it('should create proper request', function() {
+                var request;
+
+                App.userSessionController.registerUser(testLogin, testPassword, testSave);
+                request = jasmine.Ajax.requests.mostRecent();
+
+                expect(request.url).toBe('/api/user');
+                expect(request.method).toBe('POST');
+            });
             it("should register new user (valid info)", function(done) {
                 App.userSessionController.registerUser(testLogin, testPassword, testSave);
                 App.userSessionController.on("Authenticated", function() {
@@ -189,6 +199,14 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
                     status: 200,
                     responseText: '{"_id": 5,"displayName": "' + testDisplayName + '","authToken": "ValidTestToken", "login": "' + testLogin + '", "anonymous":false}'
                 });
+            });
+            it('should create proper request', function() {
+                var request;
+                App.userSessionController.setUserStatus("online");
+                request = jasmine.Ajax.requests.mostRecent();
+
+                expect(request.url).toBe('/api/user');
+                expect(request.method).toBe('PATCH');
             });
             it("should set status (Valid Status)", function() {
                 var newStatus = "online";
