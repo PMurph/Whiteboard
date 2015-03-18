@@ -66,5 +66,17 @@ define(["squirejs/Squire"], function(Squire) {
             });
             usc.authAnonymous(); 
         });
+        it("should register user", function() {
+            var testLogin = "newLogin",
+                testPassword = "newPassword",
+                B64Password = window.btoa(testPassword),
+                testSave = true;
+            usc.registerUser(testLogin, testPassword, testSave);
+            expect(mockUser.prototype.save).toHaveBeenCalledWith(jasmine.objectContaining({
+                login: testLogin,
+                b64password: B64Password,
+                saveSession: testSave
+            }), {wait: true});
+        });
     });
 });
