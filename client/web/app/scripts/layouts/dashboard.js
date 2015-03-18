@@ -20,6 +20,10 @@ define([
             roomsListRegion: '#rooms-list-region',
         },
 
+        ui: {
+            toolbar: "#dashboardToolbar"
+        },
+
         onShow: function() {
             this._populateRooms();
         },
