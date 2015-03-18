@@ -36,10 +36,10 @@ define([
                 throw "Error: Not authenticated.";
             }
 
-            this._roomID = roomID;
-            this._roomView = roomView;
 
             this.io.once('joinRequest', function() {
+                self._roomID = roomID;
+                self._roomView = roomView;
                 self.io.once('getAllDrawCommands', function(drawMsgs) {
                     self._roomView.whiteboard.drawFromGetAllMessages(drawMsgs.drawCommands);
                 });
@@ -51,7 +51,7 @@ define([
             });
 
             this.io.emit('joinRequest', {
-                roomId: this._roomID,
+                roomId: roomID,
                 authToken: this.userSession.getUser().get('authToken')
             });
         },
