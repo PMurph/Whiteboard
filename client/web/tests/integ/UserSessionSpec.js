@@ -1,6 +1,5 @@
 'use strict';
 
-
 define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUser, User) {
     var testResponses = {
         authenticate: {
@@ -50,11 +49,12 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
 
                 expect(request.url).toBe('/api/user');
                 expect(request.method).toBe('POST');
+
+                spyOn(App.userSessionController, '_setAuthToken').and.callThrough();
             });
             describe('on success', function() {
                 beforeEach(function() {
                     spyOn(App.mainController, 'dashboard');
-                    spyOn(App.userSessionController, '_setAuthToken').and.callThrough();
                     request.respondWith(testResponses.authenticate.anon.success);
                 });
                 it('should be authenticated', function() {
@@ -69,7 +69,6 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
             });
             describe('on failure', function() {
                 beforeEach(function() {
-                    spyOn(App.userSessionController, '_setAuthToken').and.callThrough();
                     request.respondWith(testResponses.authenticate.anon.failure);
                 });
                 it('should NOT be authenticated', function() {
@@ -84,6 +83,8 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
                 App.userSessionController.authUser("TestLogin", "TestPassword");
 
                 request = jasmine.Ajax.requests.mostRecent();
+
+                spyOn(App.userSessionController, '_setAuthToken').and.callThrough();
             });
             describe('setup GET query parameters', function() {
                 var urlParts,
@@ -117,7 +118,6 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
             describe('on success', function() {
                 beforeEach(function() {
                     spyOn(App.mainController, 'dashboard');
-                    spyOn(App.userSessionController, '_setAuthToken').and.callThrough();
                     request.respondWith(testResponses.authenticate.regular.success);
                 });
                 it('set authentication token', function() {
@@ -132,7 +132,6 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
             });
             describe('on failure', function() {
                 beforeEach(function() {
-                    spyOn(App.userSessionController, '_setAuthToken').and.callThrough();
                     request.respondWith(testResponses.authenticate.regular.failure);
                 });
                 it('set authentication token to null', function() {
@@ -149,6 +148,7 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
                 App.userSessionController.registerUser(testLogin, testPassword, testSave);
                 App.userSessionController.on("Authenticated", function() {
                     expect(App.userSessionController.getUser()).not.toBeNull();
+                    expect(App.userSessionController.isAuthenticated()).toBe(true);
                     done();
                 });
 
@@ -156,6 +156,20 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
                 request.respondWith({
                     status: 200,
                     responseText: '{"_id": 5,"authToken": "ValidTestToken", "login": "' + testLogin + '", "anonymous":false}'
+                });
+            });
+            it("should NOT register new user (Invalid info)", function(done) {
+                App.userSessionController.registerUser(testLogin, testPassword, testSave);
+                App.userSessionController.on("AuthFailed", function() {
+                    expect(App.userSessionController.getUser()).toBeNull();
+                    expect(App.userSessionController.isAuthenticated()).toBe(false);
+                    done();
+                });
+
+                var request = jasmine.Ajax.requests.mostRecent();
+                request.respondWith({
+                    status: 400,
+                    responseText: 'Failed'
                 });
             });
         });
