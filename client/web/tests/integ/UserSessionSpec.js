@@ -137,7 +137,25 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
                 });
                 it('set authentication token to null', function() {
                     expect(App.userSessionController.isAuthenticated()).toBe(false);
-                    expect(App.userSessionController.getUser()).toBe(null);
+                    expect(App.userSessionController.getUser()).toBeNull();
+                });
+            });
+        });
+        describe('Registering New User', function() {
+            var testLogin = "newLogin",
+                testPassword = "newPassword",
+                testSave = false;
+            it("should register new user (valid info)", function(done) {
+                App.userSessionController.registerUser(testLogin, testPassword, testSave);
+                App.userSessionController.on("Authenticated", function() {
+                    expect(App.userSessionController.getUser()).not.toBeNull();
+                    done();
+                });
+
+                var request = jasmine.Ajax.requests.mostRecent();
+                request.respondWith({
+                    status: 200,
+                    responseText: '{"_id": 5,"authToken": "ValidTestToken", "login": "' + testLogin + '", "anonymous":false}'
                 });
             });
         });
