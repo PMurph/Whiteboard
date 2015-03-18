@@ -141,5 +141,49 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
                 });
             });
         });
+        describe('Setting Status', function() {
+            var user, request,
+                testDisplayName = "TestDP",
+                testLogin = "TestLogin";
+            beforeEach(function(done) {
+                App.userSessionController.on("Authenticated", function() {
+                    user = App.userSessionController.getUser();
+                    done();
+                });
+                App.userSessionController.authUser("test", "testPassword");
+
+                request = jasmine.Ajax.requests.mostRecent();
+                request.respondWith({
+                    status: 200,
+                    responseText: '{"_id": 5,"displayName": "' + testDisplayName + '","authToken": "ValidTestToken", "login": "' + testLogin + '", "anonymous":false}'
+                });
+            });
+            it("should set status (Valid Status)", function() {
+                var newStatus = "online";
+                
+                App.userSessionController.setUserStatus(newStatus);
+                request = jasmine.Ajax.requests.mostRecent();
+                request.respondWith({
+                    status: 200,
+                    responseText: {
+                        "Status": newStatus
+                    }
+                });
+
+                expect(App.userSessionController.getUserStatus()).toBe(newStatus);
+            });
+            it("should NOT set status (Invalid Status)", function() {
+                var newStatus = "bbbbbbline";
+                
+                App.userSessionController.setUserStatus(newStatus);
+                request = jasmine.Ajax.requests.mostRecent();
+                request.respondWith({
+                    status: 400,
+                    responseText: "Invalid"
+                });
+
+                expect(App.userSessionController.getUserStatus()).not.toBe(newStatus);
+            });
+        });
     });
 });
