@@ -31,8 +31,7 @@ define(["app", "models/AnonymousUser", "models/User"], function(App, AnonymousUs
         });
         afterEach(function() {
             jasmine.Ajax.uninstall();
-        });
-        afterEach(function() {
+
             if(App.userSessionController.isAuthenticated()) {
                 App.userSessionController.logoutSync();
             }
