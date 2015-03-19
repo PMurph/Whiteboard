@@ -3,9 +3,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "RoomModel.h"
+
 @interface RoomCell : UICollectionViewCell
 
-    @property (weak, nonatomic) IBOutlet UILabel *roomLabel;
+    @property (weak, atomic) IBOutlet UILabel *roomLabel;
 
 @end
 

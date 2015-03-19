@@ -67,10 +67,19 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RoomCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RoomCell" forIndexPath:indexPath];
     NSMutableArray *roomModelArray = [roomSections objectAtIndex:indexPath.section];
-    NSString *roomId = [[roomModelArray objectAtIndex:indexPath.row] roomId];
+    RoomModel *roomModel = [roomModelArray objectAtIndex:indexPath.row];
+    
     cell.backgroundColor = [UIColor whiteColor];
-    [cell.roomLabel setText:roomId];
+    [cell.roomLabel setText:[roomModel roomId]];
+    
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSMutableArray *roomModelArray = [roomSections objectAtIndex:indexPath.section];
+    RoomModel *roomModel = [roomModelArray objectAtIndex:indexPath.row];
+    
+    // TODO: Create a new view and add to tabs
 }
 
 #pragma mark - Toolbar Button Actions
