@@ -1,11 +1,3 @@
-//
-//  RoomViewController.m
-//  WhiteboardiOS
-//
-//  Created by Patrick Murphy on 2015-03-18.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
-
 #import "RoomViewController.h"
 
 @interface RoomViewController ()
@@ -13,6 +5,16 @@
 @end
 
 @implementation RoomViewController
+
++ (RoomViewController *)createRoomViewController:(RoomModel *)roomToCreate {
+    UIImage *viewTabIcon = [UIImage imageNamed:@"Crayon-icon.png"];
+    UITabBarItem *viewTabBarItem = [[UITabBarItem alloc] initWithTitle:roomToCreate.roomId image:viewTabIcon tag:0];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    RoomViewController *newRoomController = [storyboard instantiateViewControllerWithIdentifier:@"RoomViewController"];
+    [newRoomController setTabBarItem:viewTabBarItem];
+    
+    return newRoomController;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

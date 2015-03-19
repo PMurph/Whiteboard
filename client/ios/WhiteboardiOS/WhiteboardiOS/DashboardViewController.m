@@ -8,6 +8,7 @@
     - (void)initRoomCollection;
     - (void)refreshRooms:(id)sender;
     - (void)updateRoomList;
+    - (void)createNewRoomController:(RoomModel *)roomModel;
 @end
 
 @implementation DashboardViewController
@@ -79,7 +80,15 @@
     NSMutableArray *roomModelArray = [roomSections objectAtIndex:indexPath.section];
     RoomModel *roomModel = [roomModelArray objectAtIndex:indexPath.row];
     
-    // TODO: Create a new view and add to tabs
+    [self createNewRoomController:roomModel];
+}
+
+- (void)createNewRoomController:(RoomModel *)roomModel {
+    NSMutableArray *currentTabs = [NSMutableArray arrayWithArray:self.tabBarController.viewControllers];
+    RoomViewController *newViewController = [RoomViewController createRoomViewController:roomModel];
+    
+    [currentTabs addObject:newViewController];
+    [self.tabBarController setViewControllers:currentTabs animated:YES];
 }
 
 #pragma mark - Toolbar Button Actions

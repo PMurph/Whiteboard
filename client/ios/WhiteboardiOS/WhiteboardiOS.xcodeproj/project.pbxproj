@@ -10,9 +10,11 @@
 		968BA6246DBE4080B4698BAD /* libPods-WhiteboardiOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBAEBFD26546F12FD9508BE5 /* libPods-WhiteboardiOSTests.a */; };
 		A8596A671AB251D0005CA07F /* RoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A661AB251D0005CA07F /* RoomModel.m */; };
 		A8596A6B1AB3946A005CA07F /* RoomCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A6A1AB3946A005CA07F /* RoomCollection.m */; };
-		A8596A6F1AB3CB3D005CA07F /* RoomCollectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A6E1AB3CB3D005CA07F /* RoomCollectionTest.m */; };
-		A860ACD91AB8D96A00432672 /* DashboardControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */; };
 		A860ACDB1ABA4AEF00432672 /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACDA1ABA4AEF00432672 /* RoomViewController.m */; };
+		A860ACE21ABA5ACD00432672 /* DashboardControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACDF1ABA5ACD00432672 /* DashboardControllerTest.m */; };
+		A860ACE31ABA5ACD00432672 /* RoomCollectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACE01ABA5ACD00432672 /* RoomCollectionTest.m */; };
+		A860ACE41ABA5ACD00432672 /* RoomViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACE11ABA5ACD00432672 /* RoomViewControllerTest.m */; };
+		A860ACE91ABA743B00432672 /* Crayon-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A860ACE81ABA743B00432672 /* Crayon-icon.png */; };
 		A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6ED1AAE9BEB00D61DF9 /* main.m */; };
 		A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */; };
 		A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */; };
@@ -49,6 +51,10 @@
 		A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardControllerTest.m; sourceTree = "<group>"; };
 		A860ACDA1ABA4AEF00432672 /* RoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomViewController.m; sourceTree = "<group>"; };
 		A860ACDC1ABA4B0D00432672 /* RoomViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomViewController.h; sourceTree = "<group>"; };
+		A860ACDF1ABA5ACD00432672 /* DashboardControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DashboardControllerTest.m; path = unit/DashboardControllerTest.m; sourceTree = "<group>"; };
+		A860ACE01ABA5ACD00432672 /* RoomCollectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomCollectionTest.m; path = unit/RoomCollectionTest.m; sourceTree = "<group>"; };
+		A860ACE11ABA5ACD00432672 /* RoomViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomViewControllerTest.m; path = unit/RoomViewControllerTest.m; sourceTree = "<group>"; };
+		A860ACE81ABA743B00432672 /* Crayon-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Crayon-icon.png"; sourceTree = "<group>"; };
 		A88FF6E81AAE9BEB00D61DF9 /* WhiteboardiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhiteboardiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88FF6EC1AAE9BEB00D61DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A88FF6ED1AAE9BEB00D61DF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -124,15 +130,27 @@
 		A8596A701AB3CB71005CA07F /* unit */ = {
 			isa = PBXGroup;
 			children = (
+				A860ACDF1ABA5ACD00432672 /* DashboardControllerTest.m */,
+				A860ACE01ABA5ACD00432672 /* RoomCollectionTest.m */,
+				A860ACE11ABA5ACD00432672 /* RoomViewControllerTest.m */,
 				A8596A6E1AB3CB3D005CA07F /* RoomCollectionTest.m */,
 				A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */,
 			);
 			name = unit;
 			sourceTree = "<group>";
 		};
+		A860ACE71ABA68D600432672 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				A860ACE81ABA743B00432672 /* Crayon-icon.png */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
 		A88FF6DF1AAE9BEB00D61DF9 = {
 			isa = PBXGroup;
 			children = (
+				A860ACE71ABA68D600432672 /* assets */,
 				A8EC3CCD1AB4FE2900A3A5A2 /* communication */,
 				A8596A6C1AB39475005CA07F /* collections */,
 				A8596A681AB251D8005CA07F /* models */,
@@ -159,9 +177,9 @@
 				A88FF6EF1AAE9BEB00D61DF9 /* AppDelegate.h */,
 				A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */,
 				A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */,
+				A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */,
 				A860ACDC1ABA4B0D00432672 /* RoomViewController.h */,
 				A860ACDA1ABA4AEF00432672 /* RoomViewController.m */,
-				A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */,
 				A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */,
 				A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */,
 				A88FF6F81AAE9BEB00D61DF9 /* Main.storyboard */,
@@ -315,6 +333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A860ACE91ABA743B00432672 /* Crayon-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,8 +423,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A860ACD91AB8D96A00432672 /* DashboardControllerTest.m in Sources */,
-				A8596A6F1AB3CB3D005CA07F /* RoomCollectionTest.m in Sources */,
+				A860ACE21ABA5ACD00432672 /* DashboardControllerTest.m in Sources */,
+				A860ACE41ABA5ACD00432672 /* RoomViewControllerTest.m in Sources */,
+				A860ACE31ABA5ACD00432672 /* RoomCollectionTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
