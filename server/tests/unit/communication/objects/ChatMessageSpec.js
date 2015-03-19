@@ -21,6 +21,14 @@ describe("ChatMessage", function() {
         expect(chatMessage.getChatMessage()).toEqual(chat);
     });
 
+    it("should clean HTML tags from chat message", function() {
+        var dirtyChat = {name: "test", message: "<evil>injection</evil>"};
+        var dirtyChatMessage = new ChatMessage(roomCommunicatorMock, dirtyChat);
+        expect(dirtyChatMessage.getChatMessage().message).not.toEqual(chat.message);
+        expect(dirtyChatMessage.getChatMessage().message.indexOf('<')).toEqual(-1);
+        expect(dirtyChatMessage.getChatMessage().message.indexOf('>')).toEqual(-1);
+    });
+
     it("should return the RoomCommunicator object it was created with", function() {
         expect(chatMessage.getRoomCommunicator()).toEqual(roomCommunicatorMock);
     });
