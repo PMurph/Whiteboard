@@ -71,7 +71,7 @@
     RoomModel *roomModel = [roomModelArray objectAtIndex:indexPath.row];
     
     cell.backgroundColor = [UIColor whiteColor];
-    [cell.roomLabel setText:[roomModel roomId]];
+    [[cell roomLabel] setText:[roomModel roomId]];
     
     return cell;
 }
