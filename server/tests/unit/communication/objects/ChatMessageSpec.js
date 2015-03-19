@@ -22,9 +22,10 @@ describe("ChatMessage", function() {
     });
 
     it("should clean HTML tags from chat message", function() {
-        var dirtyChat = {name: "test", message: "<evil>injection</evil>"};
+        var evilMessage = "<evil>injection</evil>";
+        var dirtyChat = {name: "test", message: evilMessage};
         var dirtyChatMessage = new ChatMessage(roomCommunicatorMock, dirtyChat);
-        expect(dirtyChatMessage.getChatMessage().message).not.toEqual(chat.message);
+        expect(dirtyChatMessage.getChatMessage().message).not.toEqual(evilMessage);
         expect(dirtyChatMessage.getChatMessage().message.indexOf('<')).toEqual(-1);
         expect(dirtyChatMessage.getChatMessage().message.indexOf('>')).toEqual(-1);
     });
