@@ -121,7 +121,9 @@ define([
         _setupWindowEvents: function() {
             var self = this;
             window.addEventListener("beforeunload", function () {
-                self._leaveRoom();
+                if (this._roomID !== undefined) {
+                    self._leaveRoom();
+                }
                 self.io.close();
                 self.io.disconnect();
             });

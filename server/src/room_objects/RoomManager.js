@@ -67,7 +67,7 @@ RoomManager.prototype = {
 
     joinRoom: function(roomId, user, socket) {
         var roomObject = this._rooms[roomId];
-        if(roomObject) {
+        if (roomObject && user && socket) {
             socket.join(roomId);
 
             socket.emit(Events.JoinRequest, roomId);
@@ -81,7 +81,7 @@ RoomManager.prototype = {
 
     leaveRoom: function(roomId, user, socket) {
         var roomObject = this._rooms[roomId];
-        if(roomObject) {
+        if (roomObject && user && socket) {
             socket.leave(roomId);
 
             socket.broadcast.to(roomId).emit(Events.RoomMessage, {
