@@ -1,11 +1,15 @@
 "use strict";
 var ChatMessage = function(roomCommunicator, chatMessage) {
     this._roomCommunicator = roomCommunicator;
-    this._chatMessage = chatMessage;
+    this._chatMessage = this._cleanMessageBody(chatMessage);
     this._chatOrder = -1;
 };
 
 ChatMessage.prototype = {
+    _cleanMessageBody: function(chatMessage) {
+        chatMessage.message = chatMessage.message.replace(/[<>]/g, '');
+        return chatMessage;
+    },
     createMessage: function() {
         return {chatMessage: this._chatMessage, chatOrder: this._chatOrder};
     },
