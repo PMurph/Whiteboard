@@ -7,7 +7,7 @@ var ChatMessage = function(roomCommunicator, chatMessage) {
 
 ChatMessage.prototype = {
     _cleanMessageBody: function(chatMessage) {
-        chatMessage.message = chatMessage.message.replace(/[<>]/g, '');
+        chatMessage.message = chatMessage.message.replace(/>/g, "&gt;").replace(/</g, "&lt;");
         return chatMessage;
     },
     createMessage: function() {
