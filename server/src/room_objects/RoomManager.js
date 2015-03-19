@@ -3,6 +3,8 @@ var Whiteboard = require('./Whiteboard.js');
 var Room = require('./Room.js');
 var RoomCommunicator = require("../communication/RoomCommunicator.js");
 var DrawCommandLogic = require("../logic/DrawCommandLogic.js");
+var ChatLogic = require("../logic/ChatLogic.js");
+var Events = require("../Events.js");
 
 var stubUser = {
     id: 1,
@@ -16,6 +18,7 @@ var RoomManager = function(socketManager, userSession) {
     this._userSession = userSession;
     this._userManager = userSession.userManager;
     this._drawCommandLogic = new DrawCommandLogic(this);
+    this._chatLogic = new ChatLogic(this);
 
     this._initSocketCallbacks(socketManager);
 
@@ -27,16 +30,25 @@ RoomManager.prototype = {
     _initSocketCallbacks: function(socketManager) {
         var self = this;
 
-        socketManager.on("connection", function(socket) {
-            socket.on("joinRequest", function(msgData) {
-                self._userManager.findByAuthToken(msgData.authToken, function(error, userAuthToken) {
-                    self.authenticateUser(error, userAuthToken, function() {
-                        self.joinRoom(msgData.roomId, userAuthToken, socket);
+        socketManager.on(Events.SocketCreated, function(socket) {
+            new RoomCommunicator(self._socketManager, socket, self._drawCommandLogic, self._chatLogic);
+
+            socket.on(Events.JoinRequest, function(msgData) {
+                self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
+
+                    socket.user = user;
+
+                    self.authenticateUser(error, user, function() {
+                        self.joinRoom(msgData.roomId, user, socket);
                     },
                     function() {
-                        socket.emit("joined", "rejected");
+                        socket.emit(Events.JoinRequest, "rejected");
                     });
                 });
+            });
+
+            socket.on(Events.LeaveRoom, function(msgData) {
+                self.leaveRoom(msgData.roomId, socket.user, socket);
             });
 
             socket.on("error", function(err) {
@@ -58,12 +70,25 @@ RoomManager.prototype = {
         if(roomObject) {
             socket.join(roomId);
 
+            socket.emit(Events.JoinRequest, roomId);
+            socket.broadcast.to(roomId).emit(Events.RoomMessage, {
+                message: user.displayName + " has joined room"
+            });
 
-            new RoomCommunicator(this._socketManager, socket, this._drawCommandLogic);
             roomObject.connectUserToRoom(user);
+        }
+    },
 
-            socket.emit('joined', "You've joined room " + roomId);
-            socket.broadcast.to(roomId).emit("roomChatMessage", "User has joined room" + roomId);
+    leaveRoom: function(roomId, user, socket) {
+        var roomObject = this._rooms[roomId];
+        if(roomObject) {
+            socket.leave(roomId);
+
+            socket.broadcast.to(roomId).emit(Events.RoomMessage, {
+                message: user.displayName + " has left"
+            });
+
+            roomObject.disconnectUserFromRoom(user);
         }
     },
 

@@ -1,6 +1,5 @@
 "use strict";
-var DRAW_MESSAGE_TYPE = "drawCommand";
-var GET_ALL_DRAW_MESSAGE_TYPE = "getAllDrawCommands";
+var Events = require("../Events.js");
 
 var DrawCommandLogic = function(roomManager) {
     this._roomManager = roomManager;
@@ -14,7 +13,7 @@ DrawCommandLogic.prototype = {
     handleDrawResponse: function(drawCommandResponse) {
         var roomCommunicator = drawCommandResponse.getRoomCommunicator();
         var responseMessage = drawCommandResponse.createMessage();
-        roomCommunicator.sendMessage(DRAW_MESSAGE_TYPE, responseMessage);
+        roomCommunicator.sendMessage(Events.DrawCommand, responseMessage);
     },
     handleGetAllDrawCommands: function(getAllDrawCommandsMessage) {
         var room = this._roomManager.getRoom(getAllDrawCommandsMessage.getRoomId());
@@ -27,7 +26,7 @@ DrawCommandLogic.prototype = {
     handleGetAllDrawCommandsResponse: function(getAllDrawCommandsResponse) {
         var roomCommunicator = getAllDrawCommandsResponse.getRoomCommunicator();
         var responseMessage = getAllDrawCommandsResponse.createMessage();
-        roomCommunicator.sendMessageToSocket(GET_ALL_DRAW_MESSAGE_TYPE, responseMessage);
+        roomCommunicator.sendMessageToSocket(Events.GetAllDrawCommands, responseMessage);
     },
 };
 

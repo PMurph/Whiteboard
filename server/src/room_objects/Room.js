@@ -63,6 +63,22 @@ Room.prototype = {
         getAllDrawCommandsMessage.setDrawCommands(drawCommands);
         drawCommandLogic.handleGetAllDrawCommandsResponse(getAllDrawCommandsMessage);
     },
+
+    handleChatMessage: function(chatMessage, chatLogic) {
+        var chat = chatMessage.getChatMessage();
+        this._whiteboard.addChat(chat);
+
+        var chatOrder = this._whiteboard.getNumChatSeen();
+        chatMessage.setChatOrder(chatOrder);
+
+        chatLogic.handleChatResponse(chatMessage);
+    },
+
+    handleGetAllChatMessages: function(getAllChatMessage, chatLogic) {
+        var chat = this._whiteboard.getAllChat();
+        getAllChatMessage.setChatMessages(chat);
+        chatLogic.handleGetAllChatMessagesResponse(getAllChatMessage);
+    }
 };
 
 module.exports = Room;
