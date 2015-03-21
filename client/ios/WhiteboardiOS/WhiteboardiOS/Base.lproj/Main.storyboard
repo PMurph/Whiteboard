@@ -135,11 +135,19 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MiU-dm-gzk">
+                                <rect key="frame" x="0.0" y="39" width="768" height="985"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jch-zq-LhM">
+                                <rect key="frame" x="0.0" y="39" width="768" height="985"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="roomTitleLabel" destination="RoP-9z-1wM" id="KFx-01-b9T"/>
+                        <outlet property="tempDrawCanvas" destination="jch-zq-LhM" id="qSd-Iy-bI1"/>
+                        <outlet property="whiteboardCanvas" destination="MiU-dm-gzk" id="RDP-Be-K3V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wPv-uf-ya8" userLabel="First Responder" sceneMemberID="firstResponder"/>

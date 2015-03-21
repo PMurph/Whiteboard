@@ -5,6 +5,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic, readwrite) RestkitWrapper *restkitWrapper;
+@property (strong, readonly) NSString *webAppURI;
 
 @end
 
