@@ -15,10 +15,7 @@
 @end
 
 @implementation DrawModel
-NSNumber _thickness;
-NSMutableArray *listOfCoordinates;
-NSNumber *x;
-DrawObject *_drawingInformation;
+
 
 -(id)init
 {
@@ -50,22 +47,6 @@ DrawObject *_drawingInformation;
 
 - (void)setTool:(NSNumber*)newTool {
         _drawingInformation.setTool(newTool);
-    }
-
-- (NSString*)getColour: {
-        return _drawingInformation.getColour();
-    }
-
-- (NSString*)getTool: {
-        return _drawingInformation.getTool();
-    }
-
-- (NSNumber*)getThickness: {
-        return _thickness;
-	}
-
-- (NSMutableArray*) getListOfCoordinates:{
-        return _listOfCoordinates;
     }
 
 @end

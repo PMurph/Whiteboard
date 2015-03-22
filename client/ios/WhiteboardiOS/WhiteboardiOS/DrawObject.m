@@ -9,9 +9,6 @@
 #import "DrawObject.h"
 
 @implementation DrawObject
-Colours myColour;
-Tools myTool;
-
 -(id)init
 {
     self = [super init];

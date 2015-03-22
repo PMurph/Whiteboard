@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface DrawObject : NSObject
-
     typedef enum TOOLS : NSString {
         DRAW,
         ERASE
@@ -24,9 +23,10 @@
         PURPLE
     } Colours;
 
+@property (read, nonatomic, copy) Colours myColour;
+@property (read, nonatomic, copy) Tools myTool;
+
 -(id)init;
 -(void)setColour:(NSString*)newColour;
 -(void)setTool:(NSString*)newTool;
--(NSString*)getColour;
--(NSString*)getTool;
 @end
