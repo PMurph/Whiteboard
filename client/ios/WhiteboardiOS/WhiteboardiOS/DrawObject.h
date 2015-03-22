@@ -23,8 +23,8 @@
         PURPLE
     } Colours;
 
-@property (readonly, nonatomic, copy) Colours myColour;
-@property (readonly, nonatomic, copy) Tools myTool;
+@property (readonly, nonatomic) Colours myColour;
+@property (readonly, nonatomic) Tools myTool;
 
 -(id)init;
 -(void)setColour:(NSString*)newColour;

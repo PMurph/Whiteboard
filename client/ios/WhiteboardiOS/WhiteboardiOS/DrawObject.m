@@ -11,18 +11,18 @@
 @implementation DrawObject
 
 NSDictionary* colourMap = @{
-        @"black" : Colours.BLACK,
-        @"blue" : Colours.BLUE,
-        @"red" : Colours.RED,
-        @"yellow" : Colours.YELLOW,
-        @"green" : Colours.GREEN,
-        @"purple" : Colours.PURPLE,
-    }
+    @"black" : Colours.BLACK,
+    @"blue" : Colours.BLUE,
+    @"red" : Colours.RED,
+    @"yellow" : Colours.YELLOW,
+    @"green" : Colours.GREEN,
+    @"purple" : Colours.PURPLE,
+};
 
 NSDictionary* toolMap = @{
     @"draw" : Tools.DRAW,
     @"erase" : Tools.ERASE,
-}
+};
 
 -(id)init
 {
