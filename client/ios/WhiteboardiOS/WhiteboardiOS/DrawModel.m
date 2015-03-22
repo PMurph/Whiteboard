@@ -10,12 +10,7 @@
 #import "Coordinates.h"
 #import "DrawObject.h"
 
-@interface DrawModel ()
-
-@end
-
 @implementation DrawModel
-
 
 -(id)init
 {
@@ -36,17 +31,16 @@
 
 
 - (void)setThickness:(NSNumber*)newThickness {
-        if (newThickness >= 0 && newThickness < 100) {
-            _thickness = newThickness;
-        }
+    if (newThickness >= 0 && newThickness < 100) {
+        _thickness = newThickness;
     }
+}
 
 - (void)SetColour:(NSNumber*)newColour {
-        _drawingInformation.setColour(newColour);
-    }
+    _drawingInformation.setColour(newColour);
+}
 
 - (void)setTool:(NSNumber*)newTool {
-        _drawingInformation.setTool(newTool);
-    }
-
+    _drawingInformation.setTool(newTool);
+}
 @end
