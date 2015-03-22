@@ -14,7 +14,7 @@
 {
     self = [super init];
 
-    NSDictionary* colourMap = [[NSDictionary alloc] init];
+    colourMap = [[NSDictionary alloc] init];
     colourMap = @{
         @"black" : [NSNumber numberWithInt:BLACK],
         @"blue" : [NSNumber numberWithInt:BLUE],
@@ -24,7 +24,7 @@
         @"purple" : [NSNumber numberWithInt:PURPLE],
     };
 
-    NSDictionary* toolMap = [[NSDictionary alloc] init];
+    toolMap = [[NSDictionary alloc] init];
     toolMap = @{
         @"draw" : [NSNumber numberWithInt:DRAW],
         @"erase" :[NSNumber numberWithInt:ERASE],

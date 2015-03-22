@@ -23,6 +23,9 @@
         PURPLE
     } Colours;
 
+    NSDictionary* colourMap;
+    NSDictionary* toolMap;
+
 @property (readonly, nonatomic) Colours myColour;
 @property (readonly, nonatomic) Tools myTool;
 
