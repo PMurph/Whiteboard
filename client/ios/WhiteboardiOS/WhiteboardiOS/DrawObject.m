@@ -10,25 +10,25 @@
 
 @implementation DrawObject
 
-NSDictionary* colourMap = [[NSDictionary alloc] init];
-colourMap = @{
-    @"black" : [NSNumber numberWithInt:BLACK],
-    @"blue" : [NSNumber numberWithInt:BLUE],
-    @"red" : [NSNumber numberWithInt:RED],
-    @"yellow" : [NSNumber numberWithInt:YELLOW],
-    @"green" : [NSNumber numberWithInt:GREEN],
-    @"purple" : [NSNumber numberWithInt:PURPLE],
-};
-
-NSDictionary* toolMap = [[NSDictionary alloc] init];
-toolMap = @{
-    @"draw" : [NSNumber numberWithInt:DRAW],
-    @"erase" :[NSNumber numberWithInt:ERASE],
-};
-
 -(id)init
 {
     self = [super init];
+
+    NSDictionary* colourMap = [[NSDictionary alloc] init];
+    colourMap = @{
+        @"black" : [NSNumber numberWithInt:BLACK],
+        @"blue" : [NSNumber numberWithInt:BLUE],
+        @"red" : [NSNumber numberWithInt:RED],
+        @"yellow" : [NSNumber numberWithInt:YELLOW],
+        @"green" : [NSNumber numberWithInt:GREEN],
+        @"purple" : [NSNumber numberWithInt:PURPLE],
+    };
+
+    NSDictionary* toolMap = [[NSDictionary alloc] init];
+    toolMap = @{
+        @"draw" : [NSNumber numberWithInt:DRAW],
+        @"erase" :[NSNumber numberWithInt:ERASE],
+    };
     
     if (self) {
         _myColour = BLACK;
@@ -42,7 +42,7 @@ toolMap = @{
     newColour = newColour.lowercaseString;
     
     if ([colourMap objectForKey:newColour]) {
-        _myColour = [colourMap objectForKey:@newColour];
+        _myColour = [colourMap objectForKey:newColour];
     }
 }
 
@@ -50,7 +50,7 @@ toolMap = @{
     newTool = newTool.lowercaseString;
     
     if ([toolMap objectForKey:newTool]) {
-        _myTool = toolMap[newTool];
+        _myTool = [toolMap objectForKey:newTool];
     }
 }
 @end
