@@ -10,8 +10,8 @@
 
 @interface DrawModel : NSObject
 @property (read, nonatomic, copy) NSNumber _thickness;
-@property (read, nonatomic, copy) NSMutableArray *listOfCoordinates;
-@property (read, nonatomic, copy) DrawObject *_drawingInformation;
+@property (read, nonatomic, copy) NSMutableArray* _listOfCoordinates;
+@property (read, nonatomic, copy) DrawObject* _drawingInformation;
 
 - (id)init;
 - (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y;

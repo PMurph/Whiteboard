@@ -9,13 +9,28 @@
 #import "DrawObject.h"
 
 @implementation DrawObject
+
+NSDictionary* colourMap = @{
+        @"black" : Colours.BLACK,
+        @"blue" : Colours.BLUE,
+        @"red" : Colours.RED,
+        @"yellow" : Colours.YELLOW,
+        @"green" : Colours.GREEN,
+        @"purple" : Colours.PURPLE,
+    }
+
+NSDictionary* toolMap = @{
+    @"draw" : Tools.DRAW,
+    @"erase" : Tools.ERASE,
+}
+
 -(id)init
 {
     self = [super init];
     
     if (self) {
-        myColour = BLACK;
-        myTool = DRAW;
+        myColour = Colours.BLACK;
+        myTool = Tools.DRAW;
     }
     
     return self;
