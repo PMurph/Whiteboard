@@ -23,6 +23,20 @@
         PURPLE
     } Colours;
 
+    NSDictionary* colourMap = @{
+        @"black" : Colours.BLACK,
+        @"blue" : Colours.BLUE,
+        @"red" : Colours.RED,
+        @"yellow" : Colours.YELLOW,
+        @"green" : Colours.GREEN,
+        @"purple" : Colours.PURPLE,
+    }
+
+    NSDictionary* toolMap = @{
+        @"draw" : Tools.DRAW,
+        @"erase" : Tools.ERASE,
+    }
+
 @property (read, nonatomic, copy) Colours myColour;
 @property (read, nonatomic, copy) Tools myTool;
 

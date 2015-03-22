@@ -24,34 +24,16 @@
 -(void)setColour:(NSString*)newColour {
     newColour = newColour.lowercaseString;
     
-    if ([newColour  isEqual: @"black"]) {
-        myColour = BLACK;
-    }
-    else if ([newColour  isEqual: @"blue"]) {
-        myColour = BLUE;
-    }
-    else if ([newColour  isEqual: @"red"]) {
-        myColour = RED;
-    }
-    else if ([newColour  isEqual: @"yellow"]) {
-        myColour = YELLOW;
-    }
-    else if ([newColour  isEqual: @"green"]) {
-        myColour = GREEN;
-    }
-    else if ([newColour  isEqual: @"purple"]) {
-        myColour = PURPLE;
+    if ([colourMap objectForKey:newColour]) {
+        myColour = colourMap[newColour];
     }
 }
 
 -(void)setTool:(NSString*)newTool {
     newTool = newTool.lowercaseString;
     
-    if ([newTool  isEqual: @"draw"]) {
-        myTool = DRAW;
-    }
-    else if ([newTool  isEqual: @"erase"]) {
-        myTool = ERASE;
+    if ([toolMap objectForKey:newTool]) {
+        myTool = toolMap[newTool];
     }
 }
 @end
