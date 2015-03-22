@@ -47,6 +47,12 @@ define([
         },
         _authenticatedEvent: function() {
             App.mainController.renderHeader(this._currentUser);
+
+            if (App.mainController.inDashboard()) {
+                App.mainController.dashboard();
+            }else if (App.mainController.inRoom()) {
+                App.mainController.room();
+            }
             App.mainController.hideShield();
         },
         _setAuthToken: function(token) {

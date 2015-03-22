@@ -195,10 +195,14 @@ textarea {
 #dashboard h1 {
     padding-bottom: 0px;
     margin-bottom: 0px;
+    display: inline-block;
 }
 
 #dashboardToolbar {
     text-align: right;
+    display: inline-block;
+    padding-top: 45px;
+    float: right;
 }
 
 #dashboard a {
@@ -220,6 +224,13 @@ textarea {
 
 #rooms-list-region span {
 	margin: 0 auto;
+}
+
+#roomListSpinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #dashRoomLabel {

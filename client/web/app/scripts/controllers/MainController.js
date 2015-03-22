@@ -62,6 +62,8 @@ define([
             this._setupView();
 
             this._setupAjax();
+
+            this._currentRoom = null;
         },
         showShield: function() {
             this.view.centerBox.empty();
@@ -98,6 +100,13 @@ define([
             this.mainContent.show(new DashboardView());
         },
         room: function(id) {
+            if (!id) {
+                if (this._currentRoom) {
+                    id = this._currentRoom;
+                }else{
+                    throw "Invalid Room ID";
+                }
+            }
             var roomModel = new RoomModel({
                 id: id
             });
@@ -109,11 +118,17 @@ define([
                 SocketController.joinRoom(id, roomLayout);
             } catch (e) {
                 console.error("Failed to join room. Loading dashboard.\n Exception: " + e);
-                //Need to change url here
-                this.dashboard();
+                this.router.navigate("/");
                 return;
             }
+            this._currentRoom = id;
             this.mainContent.show(roomLayout);
+        },
+        inDashboard: function() {
+            return (this.mainContent.currentView instanceof DashboardView);
+        },
+        inRoom: function() {
+            return (this.mainContent.currentView instanceof RoomLayoutView);
         }
     });
 });

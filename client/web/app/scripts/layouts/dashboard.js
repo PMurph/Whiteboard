@@ -1,11 +1,16 @@
 define([
+    'app',
     'marionette',
     'collections/rooms',
+    'views/dashboard/toolbar',
     'views/dashboard/rooms',
     'tpl!templates/dashboard/dashboard.html'
 ], function(
+    App,
     Marionette,
     RoomsCollection,
+
+    ToolbarView,
     RoomsCollectionView,
     Template
 ) {
@@ -13,29 +18,42 @@ define([
 
     return Marionette.LayoutView.extend({
         template: Template,
-
         className: 'content-container',
 
         regions: {
-            roomsListRegion: '#rooms-list-region',
+            toolbar: '#toolbarRegion',
+            publicRoomListRegion: '#publicRoomListRegion',
+            privateRoomListRegion: '#privateRoomListRegion'
         },
 
         ui: {
-            toolbar: "#dashboardToolbar"
+            "roomListSpinner": "#roomListSpinner"
         },
 
         onShow: function() {
-            this._populateRooms();
+            this.toolbar.show(new ToolbarView({
+                layout: this   
+            }));
+            this.populateRooms();
         },
 
-        _populateRooms: function() {
+        populateRooms: function() {
+            var self = this;
+
+            this.ui.roomListSpinner.show();
+            this.publicRoomListRegion.empty();
+
             this.collection = new RoomsCollection();
-            this.collection.fetch();
+            this.collection
+                .fetch()
+                .then(function () {
+                    self.ui.roomListSpinner.hide();
+                });
 
             var collectionView = new RoomsCollectionView({
                 collection: this.collection
             });
-            this.roomsListRegion.show(collectionView);
+            this.publicRoomListRegion.show(collectionView);
         },
     });
 });
