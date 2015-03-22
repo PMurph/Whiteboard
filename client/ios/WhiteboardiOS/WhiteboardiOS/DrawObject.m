@@ -10,7 +10,8 @@
 
 @implementation DrawObject
 
-NSDictionary* colourMap = @{
+NSDictionary* colourMap = [[NSDictionary alloc] init];
+colourMap = @{
     @"black" : [NSNumber numberWithInt:BLACK],
     @"blue" : [NSNumber numberWithInt:BLUE],
     @"red" : [NSNumber numberWithInt:RED],
@@ -19,7 +20,8 @@ NSDictionary* colourMap = @{
     @"purple" : [NSNumber numberWithInt:PURPLE],
 };
 
-NSDictionary* toolMap = @{
+NSDictionary* toolMap = [[NSDictionary alloc] init];
+toolMap = @{
     @"draw" : [NSNumber numberWithInt:DRAW],
     @"erase" :[NSNumber numberWithInt:ERASE],
 };
@@ -29,8 +31,8 @@ NSDictionary* toolMap = @{
     self = [super init];
     
     if (self) {
-        _myColour = Colours.BLACK;
-        _myTool = Tools.DRAW;
+        _myColour = BLACK;
+        _myTool = DRAW;
     }
     
     return self;
@@ -40,7 +42,7 @@ NSDictionary* toolMap = @{
     newColour = newColour.lowercaseString;
     
     if ([colourMap objectForKey:newColour]) {
-        _myColour = colourMap[newColour];
+        _myColour = [colourMap objectForKey:@newColour];
     }
 }
 
