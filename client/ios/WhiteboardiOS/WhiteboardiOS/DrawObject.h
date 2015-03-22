@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface DrawObject : NSObject
-    typedef enum TOOLS : NSString {
+    typedef enum TOOLS : NSUInteger {
         DRAW,
         ERASE
     } Tools;
