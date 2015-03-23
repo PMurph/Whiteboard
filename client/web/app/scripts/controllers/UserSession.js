@@ -21,7 +21,8 @@ define([
         initialize: function() {
             this._authToken = null;
             this._currentUser = null;
-            this._socketController = SocketController;
+
+            SocketController.userSession = this;
 
             this._setupWindowEvents();
             this._setupObjectEvents();
@@ -50,7 +51,6 @@ define([
         },
         _setAuthToken: function(token) {
             this._authToken = token;
-            this._socketController._authToken = token;
             $.ajaxSetup({
                 data: {
                     authToken: token

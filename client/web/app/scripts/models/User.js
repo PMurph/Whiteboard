@@ -16,12 +16,12 @@ define([
             if(!login || login.length === 0) {
                 throw "Login/Username must be set";
             }
-             
+
             if (!this.isNew()) {
                 return this.save({
                     login: login
                 },{
-                    wait: true   
+                    wait: true
                 });
             }else{
                 this.set("login", login);
@@ -36,12 +36,12 @@ define([
             }
 
             var b64password = window.btoa(password);
-            
+
             if (!this.isNew()) {
                 return this.save({
                     b64password: b64password
                 },{
-                    wait: true   
+                    wait: true
                 });
             }else{
                 this.set("b64password", b64password);
@@ -59,7 +59,7 @@ define([
                 return this.save({
                     displayName: displayName
                 },{
-                    wait: true   
+                    wait: true
                 });
             }else{
                 this.set("displayName", displayName);

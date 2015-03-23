@@ -44,7 +44,8 @@ module.exports = function (grunt) {
                         requireConfig: {
                             baseUrl: 'app/scripts',
                             paths: {
-                                tests: '../../tests/'
+                                tests: '../../tests/',
+                                squirejs: '../../node_modules/squirejs/src/'
                             }
                         }
                     }
@@ -63,7 +64,8 @@ module.exports = function (grunt) {
                         requireConfig: {
                             baseUrl: 'app/scripts',
                             paths: {
-                                tests: '../../tests/'
+                                tests: '../../tests/',
+                                squirejs: '../../node_modules/squirejs/src/'
                             }
                         }
                     }
