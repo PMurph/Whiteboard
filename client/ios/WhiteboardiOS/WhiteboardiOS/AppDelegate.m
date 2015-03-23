@@ -8,9 +8,13 @@
 @synthesize restkitWrapper;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    RKLogConfigureByName("RestKit/Network", RKLogLevelTrace); 
+    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
     // Override point for customization after application launch.
     _webAppURI = @"http://ec2-54-68-246-235.us-west-2.compute.amazonaws.com";
     restkitWrapper = [[RestkitWrapper alloc] init:[self webAppURI]];
+    self.userPromise = [restkitWrapper fetchUser];
+    
     return YES;
 }
 

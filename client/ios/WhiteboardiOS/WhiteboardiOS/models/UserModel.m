@@ -1,11 +1,3 @@
-//
-//  UserModel.m
-//  WhiteboardiOS
-//
-//  Created by Patrick Murphy on 2015-03-19.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
-
 #import "UserModel.h"
 
 @interface UserModel ()
@@ -17,6 +9,12 @@
     @synthesize anonymous;
     @synthesize authToken;
     @synthesize userId;
-    @synthesize saveSession;
 
+    - (id)init {
+        displayName = @"";
+        anonymous = YES;
+        authToken = @"";
+        userId = @"";
+        return self;
+    }
 @end

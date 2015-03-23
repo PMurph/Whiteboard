@@ -3,6 +3,7 @@
 @interface RestkitWrapper ()
     - (void) configureRestKit;
     - (void) setupRoomModelResponseDescriptor;
+    - (void) setupUserModelRequestDescriptor;
     - (void) setupUserModelResponseDescriptor;
 @end
 
@@ -19,7 +20,10 @@
         AFHTTPClient* client = [[AFHTTPClient alloc] initWithBaseURL:webAppURL];
     
         objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
+        objectManager.requestSerializationMIMEType = RKMIMETypeJSON;
         [self setupRoomModelResponseDescriptor];
+        [self setupUserModelRequestDescriptor];
+        [self setupUserModelResponseDescriptor];
     }
 
     - (void) setupRoomModelResponseDescriptor {
@@ -38,9 +42,26 @@
         [objectManager addResponseDescriptor:roomResponseDescriptor];
     }
 
+    - (void)setupUserModelRequestDescriptor {
+        RKObjectMapping *userModelMapping = [RKObjectMapping requestMapping];
+        [userModelMapping addAttributeMappingsFromDictionary:@{
+            @"anonymous": @"anonymous"
+        }];
+        
+        RKRequestDescriptor *userRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:userModelMapping objectClass:[UserModel class]
+            rootKeyPath:nil
+            method:RKRequestMethodPOST];
+        
+        [objectManager addRequestDescriptor:userRequestDescriptor];
+    }
+
     - (void) setupUserModelResponseDescriptor {
         RKObjectMapping* userModelMapping = [RKObjectMapping mappingForClass:[UserModel class]];
         [userModelMapping addAttributeMappingsFromDictionary:@{
+            @"displayName": @"displayName",
+            @"anonymous": @"anonymous",
+            @"authToken": @"authToken",
+            @"_id": @"userId"
         }];
         
         RKResponseDescriptor *userResponseDescriptor = [RKResponseDescriptor
@@ -64,14 +85,17 @@
         }];
     }
 
-    - (void) fetchUser {
-        [[RKObjectManager sharedManager] getObjectsAtPath:@"/api/user"
-        parameters:nil
-        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            NSLog(@"Retrieved user");
-        }
-        failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            NSLog(@"Could not retrieve user form the server.");
-        }];
+    - (UserPromise *) fetchUser {
+        UserPromise *thePromise = [[UserPromise alloc] init];
+        [[RKObjectManager sharedManager] postObject:nil
+            path:@"/api/user"
+            parameters:@{@"anonymous":@YES}
+            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                [thePromise setUserModel:[mappingResult.array objectAtIndex:0]];
+            }
+            failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                NSLog(@"Could not retrieve user form the server.");
+            }];
+        return thePromise;
     }
 @end
