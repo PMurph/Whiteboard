@@ -15,7 +15,7 @@ nav {
 	background-color: #46799B;
 	width: 100%;
 	min-width: 916px;
-	height: 50px;
+	height: 30px;
 	top: 0px;
 	left: 0px;
 	margin-bottom: 10px;
@@ -32,6 +32,7 @@ textarea {
 }
 
 #nav-title {
+<<<<<<< HEAD
 	float: left;  
     font-size: 2em; 
     margin-top: 7px;
@@ -43,6 +44,19 @@ textarea {
 
 #nav-text a:hover {
     text-shadow: 2px 2px 4px #000000;  
+=======
+	float: left;
+	font-family: helvetica, sans-serif;
+	font-size: 21px;
+	letter-spacing: 1.5px;
+	color: white;
+	font-weight: bolder;
+	text-shadow: 1px 1px 0px black,
+	-1px 1px 0px black,
+	-1px -1px 0px black,
+	1px -1px 0px black,
+	2px 2px 0px black;
+>>>>>>> Web Client: Clean up look of header/navbar and lower dashboard
 }
 
 #nav-details {
@@ -52,6 +66,29 @@ textarea {
     color: #000000;
     margin-top: 23px;
     margin-right: -9px;
+}
+
+#userSettingsButton {
+    font-weight: bold;
+    color: #333333;
+}
+
+#loginButton {
+    font-weight: bold;
+    color: #333333;
+}
+
+#logoutButton {
+    font-weight: bold;
+    color: #333333;
+}
+
+#loginRegisterTxt {
+    padding-right: 5px;
+}
+
+#logoutTxt {
+    padding-right: 5px;
 }
 
 #app-shield {
@@ -180,6 +217,7 @@ textarea {
 .content-container {
 	width: 916px;
 	margin: 0 auto;
+	padding-top: 15px;
 }
 
 #dashboard {
