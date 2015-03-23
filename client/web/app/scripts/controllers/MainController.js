@@ -106,7 +106,14 @@ define([
                 model: roomModel
             });
 
-            SocketController.joinRoom(id, roomLayout);
+            try {
+                SocketController.joinRoom(id, roomLayout);
+            } catch (e) {
+                console.error("Failed to join room. Loading dashboard.\n Exception: " + e);
+                //Need to change url here
+                this.dashboard();
+                return;
+            }
             this.mainContent.show(roomLayout);
         }
     });

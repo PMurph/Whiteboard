@@ -1,11 +1,15 @@
 "use strict";
 var DrawCommandMessage = require("./objects/DrawCommandMessage.js");
 var GetAllDrawCommandsMessage = require("./objects/GetAllDrawCommandsMessage.js");
+var ChatMessage = require("./objects/ChatMessage.js");
+var GetAllChatMessage = require("./objects/GetAllChatMessage.js");
+var Events = require("../Events.js");
 
-var RoomCommunicator = function(socketManager, socket, drawCommandLogic) {
+var RoomCommunicator = function(socketManager, socket, drawCommandLogic, chatLogic) {
     this._socketManager = socketManager;
     this._socket = socket;
     this._drawCommandLogic = drawCommandLogic;
+    this._chatLogic = chatLogic;
 
     this._initializeEvents();
 };
@@ -13,26 +17,20 @@ var RoomCommunicator = function(socketManager, socket, drawCommandLogic) {
 RoomCommunicator.prototype = {
     _initializeEvents: function() {
         var self = this;
-        this._socket.on("drawCommand", function(messageData) {
+        this._socket.on(Events.DrawCommand, function(messageData) {
             self.handleDrawCommand(messageData);
         });
 
-        this._socket.on("getAllDrawCommands", function() {
+        this._socket.on(Events.GetAllDrawCommands, function() {
             self.handleGetAllDrawCommands();
         });
 
-        this._socket.on("leaveRoom", function() {
-            self._socket.leave(self.getRoomId());
-            self._socket.broadcast.to(self.getRoomId()).emit("roomChatMessage", "User has left");
+        this._socket.on(Events.ChatMessage, function(messageData) {
+            self.handleChatMessage(messageData);
         });
 
-        this._socket.on("disconnect", function() {
-            self._socket.leave(self.getRoomId());
-            self._socket.broadcast.to(self.getRoomId()).emit("roomChatMessage", "User has left");
-        });
-
-        this._socket.on("chat", function(msg) {
-            self._socket.broadcast.to(self.getRoomId()).emit("chat", msg);
+        this._socket.on(Events.GetAllChat, function() {
+            self.handleGetAllChat();
         });
     },
     handleDrawCommand: function(messageData) {
@@ -40,6 +38,12 @@ RoomCommunicator.prototype = {
     },
     handleGetAllDrawCommands: function() {
         this._drawCommandLogic.handleGetAllDrawCommands(new GetAllDrawCommandsMessage(this));
+    },
+    handleChatMessage: function(messageData) {
+        this._chatLogic.handleChatMessage(new ChatMessage(this, messageData));
+    },
+    handleGetAllChat: function() {
+        this._chatLogic.handleGetAllChatMessages(new GetAllChatMessage(this));
     },
     getRoomId: function() {
         return this._socket.rooms[1];
@@ -49,7 +53,7 @@ RoomCommunicator.prototype = {
     },
     sendMessageToSocket: function(messageType, messageData) {
         this._socket.emit(messageType, messageData);
-    },
+    }
 };
 
 module.exports = RoomCommunicator;

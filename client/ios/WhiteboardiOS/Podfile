@@ -9,6 +9,6 @@ target 'WhiteboardiOS' do
 end
 
 target 'WhiteboardiOSTests' do
-
+    pod 'OCMock', '~> 3.0.0'
 end
 

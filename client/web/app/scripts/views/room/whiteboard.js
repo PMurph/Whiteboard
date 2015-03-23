@@ -1,38 +1,40 @@
 define([
     'marionette',
     'underscore',
-    'vent'
+
+    'models/DrawModel',
+
+    'vent',
+
+    'tpl!templates/room/whiteboard.html'
 ], function(
     Marionette,
     _,
-    vent) {
+
+    DrawModel,
+    
+    vent,
+    
+    WhiteboardTemplate
+) {
     'use strict';
 
-    var drawMessage = {
-        vertices: [],
-        tool: {
-            type: 'line',
-            size: 10,
-            colour: 'black'
-        }
-    };
-
-    var msg = {"vertices":[{"x":145,"y":102},{"x":158,"y":101},{"x":178,"y":101},{"x":195,"y":103},{"x":201,"y":118},{"x":195,"y":154},{"x":164,"y":191},{"x":139,"y":214},{"x":130,"y":224},{"x":123,"y":237},{"x":123,"y":249},{"x":128,"y":256},{"x":131,"y":259},{"x":139,"y":255},{"x":160,"y":233},{"x":180,"y":212},{"x":203,"y":198},{"x":229,"y":196},{"x":249,"y":198},{"x":261,"y":209},{"x":269,"y":229},{"x":278,"y":245},{"x":286,"y":254},{"x":295,"y":256},{"x":304,"y":254},{"x":311,"y":244},{"x":316,"y":222},{"x":320,"y":198},{"x":328,"y":183},{"x":338,"y":180},{"x":344,"y":180},{"x":352,"y":206},{"x":361,"y":252},{"x":369,"y":279},{"x":380,"y":285},{"x":390,"y":284},{"x":394,"y":276},{"x":396,"y":270},{"x":393,"y":269},{"x":355,"y":281},{"x":311,"y":293},{"x":273,"y":304},{"x":204,"y":328},{"x":138,"y":346},{"x":83,"y":358},{"x":43,"y":362},{"x":7,"y":359},{"x":0,"y":339},{"x":0,"y":303},{"x":12,"y":250},{"x":56,"y":219},{"x":128,"y":212},{"x":187,"y":219},{"x":219,"y":232},{"x":242,"y":241},{"x":254,"y":248},{"x":263,"y":252},{"x":266,"y":253},{"x":271,"y":254},{"x":278,"y":252},{"x":284,"y":247},{"x":289,"y":239},{"x":292,"y":223},{"x":294,"y":200},{"x":294,"y":183},{"x":291,"y":174},{"x":291,"y":171},{"x":291,"y":172},{"x":291,"y":172}],"tool":{"type":"polyline","size":10,"colour":"black"}};
-
     return Marionette.ItemView.extend({
-        template: _.template('<canvas></canvas>'),
+        template: WhiteboardTemplate,
 
         attributes: {
             id: 'paint'
         },
 
         ui: {
-            canvas: 'canvas'
+            spinner: '#spinnerBox',
+            canvas: '#mainCanvas'
         },
 
         events: {
             mousedown: '_mouseDown',
-            mouseup: '_mouseUp'
+            mouseup: '_mouseUp',
+            mouseleave: '_mouseUp'
         },
 
         initialize: function(options) {
@@ -50,8 +52,6 @@ define([
             this._ctx.lineJoin = 'round';
             this._ctx.lineCap = 'round';
             this._ctx.strokeStyle = 'black';
-
-            this.drawFromMessage(msg);
         },
 
         onBeforeDestroy: function() {
@@ -62,12 +62,14 @@ define([
 
         _lastMove: 0, // Time between mousemove events
 
+        _currentDrawMessage: null,
+
         _mouseDown: function(e) {
             var self = this;
 
-            this._ctx.beginPath();
+            this._currentDrawMessage = new DrawModel();
             this._updateMouse(e);
-            drawMessage.vertices = [];
+            this._ctx.beginPath();
 
             this.ui.canvas.on('mousemove', function(e) {
                 var now = new Date();
@@ -80,20 +82,30 @@ define([
         },
 
         _mouseUp: function(e) {
+            var drawMessage = this._currentDrawMessage;
+
+            if (!drawMessage) {
+                return;
+            }
             this._updateMouse(e);
             this._paint();
             this.ui.canvas.off('mousemove');
 
+            this._currentDrawMessage = null;
+            this._ctx.closePath();
+
             vent.trigger('draw', {
                 roomID: this.roomModel.get('id'),
-                message: drawMessage
+                message: drawMessage.toJSON()
             });
+
         },
 
         _updateMouse: function(e) {
-            this._mouse.x = e.pageX - this._canvasElement.offsetLeft;
-            this._mouse.y = e.pageY - this._canvasElement.offsetTop;
-            drawMessage.vertices.push({ x: this._mouse.x, y: this._mouse.y });
+            var rect = this._canvasElement.getBoundingClientRect();
+            this._mouse.x = e.pageX - rect.left;
+            this._mouse.y = e.pageY - rect.top;
+            this._currentDrawMessage.addCoordinate(this._mouse.x, this._mouse.y);
         },
 
         _paint: function() {
@@ -109,12 +121,16 @@ define([
                 self._ctx.lineTo(vertex.x, vertex.y);
                 self._ctx.stroke();
             });
+
+            this._ctx.closePath();
         },
 
         drawFromGetAllMessages: function(drawMessages) {
             _.each(drawMessages, function(drawMessage) {
                 this.drawFromMessage(drawMessage.message);
             }, this);
+
+            this.ui.spinner.hide();
         }
     });
 });
