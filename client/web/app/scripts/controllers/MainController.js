@@ -9,7 +9,7 @@ define([
 
     'views/master',
     'views/navbar',
-    'views/createRoom',
+    'layouts/createRoom',
     'layouts/dashboard',
     'layouts/room',
     'models/room',
