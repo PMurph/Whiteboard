@@ -7,12 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+<<<<<<< HEAD
+		39D63C1A1AB3676A00C7AACC /* DrawObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D63C191AB3676A00C7AACC /* DrawObject.m */; };
+		39D686FB1AB35A0800D7521E /* DrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D686FA1AB35A0800D7521E /* DrawModel.m */; };
+=======
 		968BA6246DBE4080B4698BAD /* libPods-WhiteboardiOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBAEBFD26546F12FD9508BE5 /* libPods-WhiteboardiOSTests.a */; };
 		A8596A671AB251D0005CA07F /* RoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A661AB251D0005CA07F /* RoomModel.m */; };
 		A8596A6B1AB3946A005CA07F /* RoomCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A6A1AB3946A005CA07F /* RoomCollection.m */; };
 		A8596A6F1AB3CB3D005CA07F /* RoomCollectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A6E1AB3CB3D005CA07F /* RoomCollectionTest.m */; };
 		A860ACD91AB8D96A00432672 /* DashboardControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */; };
+<<<<<<< HEAD
 		A860ACDB1ABA4AEF00432672 /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACDA1ABA4AEF00432672 /* RoomViewController.m */; };
+=======
+>>>>>>> master
+>>>>>>> eaa2725f8679de589a1e847916bdd10476f1d20a
 		A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6ED1AAE9BEB00D61DF9 /* main.m */; };
 		A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */; };
 		A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */; };
@@ -37,7 +45,14 @@
 
 /* Begin PBXFileReference section */
 		0566D47A577D3E6D5C7C4EBE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+<<<<<<< HEAD
+		39D63C181AB3676A00C7AACC /* DrawObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawObject.h; sourceTree = "<group>"; };
+		39D63C191AB3676A00C7AACC /* DrawObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawObject.m; sourceTree = "<group>"; };
+		39D686F91AB35A0800D7521E /* DrawModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawModel.h; sourceTree = "<group>"; };
+		39D686FA1AB35A0800D7521E /* DrawModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawModel.m; sourceTree = "<group>"; };
+=======
 		395A891D93E2852F5EA27618 /* Pods-WhiteboardiOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhiteboardiOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhiteboardiOSTests/Pods-WhiteboardiOSTests.release.xcconfig"; sourceTree = "<group>"; };
+>>>>>>> master
 		66B2C68B92EB6FB5E714D231 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A8596A661AB251D0005CA07F /* RoomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomModel.m; path = WhiteboardiOS/models/RoomModel.m; sourceTree = "<group>"; };
 		A8596A691AB2520F005CA07F /* RoomModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RoomModel.h; path = WhiteboardiOS/models/RoomModel.h; sourceTree = "<group>"; };
@@ -157,6 +172,8 @@
 			isa = PBXGroup;
 			children = (
 				A88FF6EF1AAE9BEB00D61DF9 /* AppDelegate.h */,
+				39D686F91AB35A0800D7521E /* DrawModel.h */,
+				39D686FA1AB35A0800D7521E /* DrawModel.m */,
 				A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */,
 				A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */,
 				A860ACDC1ABA4B0D00432672 /* RoomViewController.h */,
@@ -170,6 +187,8 @@
 				A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */,
 				A88FF6FD1AAE9BEB00D61DF9 /* LaunchScreen.xib */,
 				A88FF6EB1AAE9BEB00D61DF9 /* Supporting Files */,
+				39D63C181AB3676A00C7AACC /* DrawObject.h */,
+				39D63C191AB3676A00C7AACC /* DrawObject.m */,
 			);
 			path = WhiteboardiOS;
 			sourceTree = "<group>";
@@ -388,14 +407,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
+				39D686FB1AB35A0800D7521E /* DrawModel.m in Sources */,
+=======
 				A8EC3CD01AB4FE7000A3A5A2 /* RestkitWrapper.m in Sources */,
+<<<<<<< HEAD
 				A860ACDB1ABA4AEF00432672 /* RoomViewController.m in Sources */,
+=======
+>>>>>>> master
+>>>>>>> eaa2725f8679de589a1e847916bdd10476f1d20a
 				A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */,
 				A8EC3CD21AB6A5F100A3A5A2 /* RoomCell.m in Sources */,
 				A8596A671AB251D0005CA07F /* RoomModel.m in Sources */,
 				A8596A6B1AB3946A005CA07F /* RoomCollection.m in Sources */,
 				A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */,
 				A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */,
+				39D63C1A1AB3676A00C7AACC /* DrawObject.m in Sources */,
 				A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
