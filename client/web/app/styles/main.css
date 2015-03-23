@@ -217,7 +217,7 @@ textarea {
 .content-container {
 	width: 916px;
 	margin: 0 auto;
-	padding-top: 15px;
+	margin-top: 15px;
 }
 
 #dashboard {
@@ -273,6 +273,40 @@ textarea {
 
 #dashRoomLabel {
     text-align: center;
+}
+
+#createRoom {
+    position: relative;
+    height: 400px;
+    background-color: #eee;
+    border: 1px solid #333;
+    box-shadow: 1px 1px 1px #333;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%
+}
+
+#newRoomOptions {
+    display: inline-block;
+}
+
+#newRoomInviteUsers {
+    display: inline-block;
+    padding-right: 100px;
+
+    float: right;
+}
+
+#newRoomButtons {
+    position: absolute;
+
+    bottom: 10px;
+}
+
+#newRoomUserList {
+    width: 370px;
+    height: 200px;
 }
 
 canvas {
