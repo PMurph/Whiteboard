@@ -34,7 +34,12 @@ define([
         },
 
         events: {
-            "click @ui.refreshBtn": "refreshRooms"
+            "click @ui.refreshBtn": "refreshRooms",
+            "click @ui.createRoomBtn": "createRoom"
+        },
+
+        createRoom: function() {
+            App.mainController.router.navigate("/createRoom");    
         },
 
         refreshRooms: function() {
