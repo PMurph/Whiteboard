@@ -42,13 +42,13 @@
         if ([_colourMap objectForKey:newColour]) {
             _myColour = [[_colourMap objectForKey:newColour] unsignedIntegerValue];
         }
-}
-
--(void)setTool:(NSString*)newTool {
-    newTool = newTool.lowercaseString;
-    
-    if ([_toolMap objectForKey:newTool]) {
-        _myTool = [[_toolMap objectForKey:newTool] unsignedIntegerValue];
     }
-}
+
+    -(void)setTool:(NSString*)newTool {
+        newTool = newTool.lowercaseString;
+    
+        if ([_toolMap objectForKey:newTool]) {
+            _myTool = [[_toolMap objectForKey:newTool] unsignedIntegerValue];
+        }
+    }
 @end

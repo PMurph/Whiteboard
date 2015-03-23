@@ -6,16 +6,16 @@
 //  Copyright (c) 2015 Patrick Murphy. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "DrawObject.h"
 
 @interface DrawModel : NSObject
-@property (read, nonatomic, copy) NSNumber _thickness;
-@property (read, nonatomic, copy) NSMutableArray* _listOfCoordinates;
-@property (read, nonatomic, copy) DrawObject* _drawingInformation;
+    @property (readonly, nonatomic, copy) NSNumber* thickness;
+    @property (readonly, nonatomic, copy) NSMutableArray* listOfCoordinates;
+    @property (readonly, nonatomic, copy) DrawObject* drawingInformation;
 
-- (id)init;
-- (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y;
-- (void)setThickness:(NSNumber*)newThickness;
-- (void)SetColour:(NSNumber*)newColour;
-- (void)setTool:(NSNumber*)newTool;
+    - (id)init;
+    - (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y;
+    - (void)setThickness:(NSNumber*)newThickness;
+    - (void)SetColour:(NSNumber*)newColour;
+    - (void)setTool:(NSNumber*)newTool;
 @end
