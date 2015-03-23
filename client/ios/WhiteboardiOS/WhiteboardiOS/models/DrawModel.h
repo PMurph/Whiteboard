@@ -8,6 +8,9 @@
 
 #import "DrawObject.h"
 
+#define MAX_THICKNESS 100
+#define MIN_THICKNESS 0
+
 @interface DrawModel : NSObject
     @property (readonly, nonatomic, copy) NSNumber* thickness;
     @property (readonly, nonatomic, copy) NSMutableArray* listOfCoordinates;
@@ -16,6 +19,6 @@
     - (id)init;
     - (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y;
     - (void)setThickness:(NSNumber*)newThickness;
-    - (void)SetColour:(NSNumber*)newColour;
-    - (void)setTool:(NSNumber*)newTool;
+    - (void)setColour:(NSString*)newColour;
+    - (void)setTool:(NSString*)newTool;
 @end
