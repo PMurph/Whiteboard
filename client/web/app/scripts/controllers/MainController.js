@@ -9,6 +9,7 @@ define([
 
     'views/master',
     'views/navbar',
+    'views/createRoom',
     'layouts/dashboard',
     'layouts/room',
     'models/room',
@@ -25,6 +26,7 @@ define([
 
     MasterView,
     NavbarView,
+    CreateRoomView,
     DashboardView,
     RoomLayoutView,
     RoomModel,
@@ -96,6 +98,9 @@ define([
             });
             this.header.show(this.navbarView);
         },
+        renderCreateRoom: function() {
+            this.mainContent.show(new CreateRoomView());
+        },
         dashboard: function() {
             this.mainContent.show(new DashboardView());
         },
@@ -118,7 +123,7 @@ define([
                 SocketController.joinRoom(id, roomLayout);
             } catch (e) {
                 console.error("Failed to join room. Loading dashboard.\n Exception: " + e);
-                this.router.navigate("/");
+                this.router.navigate("/", {tigger: true});
                 return;
             }
             this._currentRoom = id;

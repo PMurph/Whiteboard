@@ -39,7 +39,7 @@ define([
         },
 
         createRoom: function() {
-            App.mainController.router.navigate("/createRoom");    
+            App.mainController.router.navigate("/createRoom", {trigger: true});    
         },
 
         refreshRooms: function() {

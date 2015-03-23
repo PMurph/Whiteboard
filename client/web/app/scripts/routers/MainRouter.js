@@ -4,7 +4,8 @@ define(['marionette'], function(Marionette) {
     return Marionette.AppRouter.extend({
         appRoutes: {
             '': 'dashboard',
-            'room/:id': 'room'
+            'room/:id': 'room',
+            'createRoom': 'renderCreateRoom'
         }
     });
 });
