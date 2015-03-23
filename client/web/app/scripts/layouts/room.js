@@ -2,12 +2,14 @@ define([
     'marionette',
     'layouts/chat',
     'views/room/whiteboard',
+    'layouts/drawTools',
     'vent',
     'tpl!/scripts/templates/room/layout.html'
 ], function(
     Marionette,
     ChatViewComponent,
     WhiteboardView,
+    DrawToolsView,
     vent,
     Template) {
     'use strict';
@@ -20,7 +22,7 @@ define([
         regions: {
             whiteboardRegion: '#whiteboard-region',
             chatRegion: '#chat-region',
-            toolsRegion: '#tools-region'
+            toolsRegion: '#tools-region',
         },
 
         onShow: function() {
@@ -33,11 +35,11 @@ define([
 
             this.chatRegion.show(this.chat);
             this.whiteboardRegion.show(this.whiteboard);
+            this.toolsRegion.show(new DrawToolsView());
         },
 
         onBeforeDestroy: function() {
-            vent.trigger('leaveRoom', this.model.get('id'));
+            vent.trigger('leaveRoom');
         }
-
     });
 });

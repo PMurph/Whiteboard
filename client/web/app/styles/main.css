@@ -189,7 +189,6 @@ canvas {
 }
 
 #whiteboard-region {
-    position: absolute;
 	float: left;
 }
 
@@ -242,4 +241,26 @@ canvas {
 
 #closeLoginBtn {
     float: right;
+}
+
+#tools-region {
+    clear: left;
+}
+
+#tools-region .draw-tools {
+    position: absolute;
+    width: 100%;
+    background-color: #d9f1a0;
+    margin-top: 10px;
+    min-height: 100px;
+}
+
+#tools-region .tool {
+    float: left;
+    width: 33%;
+    height: 100px;
+}
+
+.selected {
+    background-color: #d021fa !important;
 }
