@@ -248,7 +248,6 @@ canvas {
 }
 
 #tools-region .draw-tools {
-    position: absolute;
     width: 100%;
     background-color: #d9f1a0;
     margin-top: 10px;
@@ -263,4 +262,45 @@ canvas {
 
 .selected {
     background-color: #d021fa !important;
+}
+
+.tool-setting {
+    height: 50%;
+}
+
+.colour-tile {
+    float: left;
+    height: 45px;
+    width: 45px;
+    opacity: 0.5;
+    margin-right: 2px;
+}
+
+.selected-colour {
+    opacity: 1;
+    box-shadow: 0px 0px 10px #FFFFFF;
+}
+
+#Black {
+    background-color: black;
+}
+
+#Red {
+    background-color: red;
+}
+
+#Blue {
+    background-color: blue;
+}
+
+#Green {
+    background-color: green;
+}
+
+#Yellow {
+    background-color: yellow;
+}
+
+#Purple {
+    background-color: purple;
 }

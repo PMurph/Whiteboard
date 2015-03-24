@@ -2,8 +2,6 @@ define([
     'marionette',
     'underscore',
 
-    'models/DrawModel',
-
     'vent',
 
     'tpl!templates/room/whiteboard.html'
@@ -11,10 +9,8 @@ define([
     Marionette,
     _,
 
-    DrawModel,
-    
     vent,
-    
+
     WhiteboardTemplate
 ) {
     'use strict';
@@ -39,6 +35,7 @@ define([
 
         initialize: function(options) {
             this.roomModel = options.roomModel;
+            this.drawTool = options.drawTool;
         },
 
         onShow: function() {
@@ -51,7 +48,7 @@ define([
             this._ctx.lineWidth = 10;
             this._ctx.lineJoin = 'round';
             this._ctx.lineCap = 'round';
-            this._ctx.strokeStyle = 'black';
+            this._ctx.strokeStyle = '#000000';
         },
 
         onBeforeDestroy: function() {
@@ -66,10 +63,13 @@ define([
 
         _mouseDown: function(e) {
             var self = this;
+            var drawModel = this.drawTool.getDrawModel();
 
-            this._currentDrawMessage = new DrawModel();
-            this._updateMouse(e);
+            this._currentDrawMessage = drawModel;
+            this._ctx.lineWidth = drawModel.getThickness();
             this._ctx.beginPath();
+            this._updateMouse(e);
+            this._ctx.strokeStyle = drawModel.getColour();
 
             this.ui.canvas.on('mousemove', function(e) {
                 var now = new Date();
@@ -98,7 +98,6 @@ define([
                 roomID: this.roomModel.get('id'),
                 message: drawMessage.toJSON()
             });
-
         },
 
         _updateMouse: function(e) {
@@ -115,14 +114,21 @@ define([
 
         drawFromMessage: function(drawMessage) {
             var self = this;
-            this._ctx.beginPath();
+            var oldStrokeStyle = this._ctx.strokeStyle;
+            var oldLineWidth = this._ctx.lineWidth;
 
+            this._ctx.strokeStyle = drawMessage.tool.colour;
+            this._ctx.lineWidth = drawMessage.tool.thickness;
+
+            this._ctx.beginPath();
             _.each(drawMessage.vertices, function(vertex) {
                 self._ctx.lineTo(vertex.x, vertex.y);
                 self._ctx.stroke();
             });
-
             this._ctx.closePath();
+
+            this._ctx.strokeStyle = oldStrokeStyle;
+            this._ctx.lineWidth = oldLineWidth;
         },
 
         drawFromGetAllMessages: function(drawMessages) {

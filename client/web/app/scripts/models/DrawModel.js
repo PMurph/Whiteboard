@@ -1,11 +1,15 @@
- define(['backbone', 'models/DrawTools'], function (Backbone, DrawTools) {
+ define([
+    'backbone',
+    'models/DrawTools'
+], function (
+    Backbone,
+    DrawTools) {
     "use strict";
 
-    var DrawModel = Backbone.Model.extend({
+    return Backbone.Model.extend({
         initialize: function() {
             this._drawingTools = new DrawTools();
             this.vertices = [];
-
         },
 
         addCoordinate: function(x, y) {
@@ -52,6 +56,4 @@
             };
         }
     });
-
-    return DrawModel;
 });

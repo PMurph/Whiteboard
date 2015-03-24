@@ -26,8 +26,10 @@ define([
         },
 
         onShow: function() {
+            this.drawTool = new DrawToolsView();
             this.whiteboard = new WhiteboardView({
-                roomModel: this.model
+                roomModel: this.model,
+                drawTool: this.drawTool
             });
             this.chat = new ChatViewComponent({
                 roomModel: this.model
@@ -35,7 +37,7 @@ define([
 
             this.chatRegion.show(this.chat);
             this.whiteboardRegion.show(this.whiteboard);
-            this.toolsRegion.show(new DrawToolsView());
+            this.toolsRegion.show(this.drawTool);
         },
 
         onBeforeDestroy: function() {
