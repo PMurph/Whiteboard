@@ -12,7 +12,15 @@ define([
 
     return Marionette.ItemView.extend({
         template: Template,
-
+        ui: {
+            roomNameTxt: "#roomNameText",
+            privPublicR: "#privacyPublicRadio",
+            privPrivateR: "#privacyPrivateRadio",
+            anonYesR: "#anonYesRadio",
+            anonNoR: "#anonNoRadio",
+            statusText: "#roomSettingsStatusText",
+            submitBtn: "#roomSubmitBtn"
+        },
         behaviors: {
             roomSettings: {
                 behaviorClass: RoomSettingsBehavior

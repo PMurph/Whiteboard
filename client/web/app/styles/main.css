@@ -201,6 +201,13 @@ textarea {
     color: red;
 }
 
+#roomSettingsStatusText {
+    width: 150px;
+}
+#roomSettingsStatusText.error {
+    color: red;
+}
+
 #subStatusLabel.message{
     color: black;
 }

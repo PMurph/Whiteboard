@@ -32,6 +32,24 @@
         },
         getListOfUsersActiveInRoom: function(){
             return this._users;
+        },
+        setName: function(newName) {
+            if(!newName || newName.length === 0) {
+                throw "Invalid Room Name: Name cannot be blank/empty";
+            }
+
+            if (!this.isNew()) {
+                return this.save({
+                    name: newName 
+                },{
+                    wait: true
+                });
+            }else{
+                this.set("name", newName);
+            }
+        },
+        getName: function() {
+            return this.get("name");
         }
     });
 
