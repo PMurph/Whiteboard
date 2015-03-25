@@ -159,9 +159,9 @@ describe("RoomManager", function() {
                 testCreateFunction(mockRequest, mockResponse);
             });
             
-            it("should return 400 if a request is sent with a valid authentication token but is neither a post nor get", function(done) {
+            it("should return 405 if a request method is unsupported", function(done) {
                 mockResponse.sendStatus.and.callFake(function(status) {
-                    expect(status).toBe(400);
+                    expect(status).toBe(405);
                     done();
                 });
                 mockRequest = {method: "BAD", query: {authToken: TEST_AUTH_TOKEN}};
@@ -209,6 +209,9 @@ describe("RoomManager", function() {
         var testGetRoomListFunction;
         
         beforeEach(function() {
+            mockUserManager.findByAuthToken.and.callFake(function(authToken, callback) {
+                callback(null, "test");
+            });
             spyOn(testRoomManager, 'getRoomList').and.callThrough();
             testGetRoomListFunction = testRoomManager.getRoomRouteF();
         });
