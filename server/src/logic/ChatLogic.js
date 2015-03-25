@@ -7,8 +7,16 @@ var ChatMessageLogic = function(roomManager) {
 
 ChatMessageLogic.prototype = {
     handleChatMessage: function(chatMessage) {
-        var room = this._roomManager.getRoom(chatMessage.getRoomId());
-        room.handleChatMessage(chatMessage, this);
+        var self = this;
+
+        var dbCB = function (error, room) {
+            if (error || !room) {
+                console.error("No room found");
+            }else{
+                room.handleChatMessage(chatMessage, self);
+            }
+        };
+        chatMessage.getRoom(dbCB);
     },
     handleChatResponse: function(chatMessageResponse) {
         var roomCommunicator = chatMessageResponse.getRoomCommunicator();
@@ -16,8 +24,16 @@ ChatMessageLogic.prototype = {
         roomCommunicator.sendMessage(Events.ChatMessage, responseMessage);
     },
     handleGetAllChatMessages: function(getAllChatMessages) {
-        var room = this._roomManager.getRoom(getAllChatMessages.getRoomId());
-        room.handleGetAllChatMessages(getAllChatMessages, this);
+        var self = this;
+
+        var dbCB = function (error, room) {
+            if (error || !room) {
+                console.error("No room found");
+            }else{
+                room.handleGetAllChatMessages(getAllChatMessages, self);
+            }
+        };
+        getAllChatMessages.getRoom(dbCB);
     },
     handleGetAllChatMessagesResponse: function(getAllChatMessagesResponse) {
         var roomCommunicator = getAllChatMessagesResponse.getRoomCommunicator();

@@ -1,15 +1,22 @@
 "use strict";
+var Whiteboard = require('../room_objects/Whiteboard.js');
+var Chat = require('../room_objects/Chat.js');
+var Room = require('../room_objects/Room.js');
 var DrawCommandMessage = require("./objects/DrawCommandMessage.js");
 var GetAllDrawCommandsMessage = require("./objects/GetAllDrawCommandsMessage.js");
 var ChatMessage = require("./objects/ChatMessage.js");
 var GetAllChatMessage = require("./objects/GetAllChatMessage.js");
 var Events = require("../Events.js");
 
-var RoomCommunicator = function(socketManager, socket, drawCommandLogic, chatLogic) {
+var RoomCommunicator = function(roomManager, socketManager, socket, drawCommandLogic, chatLogic) {
+    this._roomManager = roomManager;
     this._socketManager = socketManager;
     this._socket = socket;
     this._drawCommandLogic = drawCommandLogic;
     this._chatLogic = chatLogic;
+
+    this._roomId = null;
+    this._user = null;
 
     this._initializeEvents();
 };
@@ -33,6 +40,40 @@ RoomCommunicator.prototype = {
             self.handleGetAllChat();
         });
     },
+    getRoom: function(cb) {
+        var dbCB = function (error, roomDoc) {
+            if(error || !roomDoc) {
+                cb(error, null);
+            }else{
+                var whiteboard = new Whiteboard(roomDoc),
+                    chat = new Chat(roomDoc),
+                    room = new Room(roomDoc, whiteboard, chat); 
+                cb(null, room);
+            }
+        };
+        
+        if (this._roomId) {
+            this._roomManager.getRoomById(this._roomId, dbCB);
+        }else{
+            console.error("No room ID in Room Communictor");
+            cb("No room ID in Room Communcitor", null);
+        }
+    },
+    getRoomId: function() {
+        return this._roomId;
+    },
+    getSocket: function() {
+        return this._socket;
+    },
+    setUser: function(user) {
+        this._user = user;
+    },
+    getUser: function() {
+        return this._user;
+    },
+    setRoomId: function(roomId) {
+        this._roomId = roomId;
+    },
     handleDrawCommand: function(messageData) {
         this._drawCommandLogic.handleDrawCommand(new DrawCommandMessage(this, messageData));
     },
@@ -44,9 +85,6 @@ RoomCommunicator.prototype = {
     },
     handleGetAllChat: function() {
         this._chatLogic.handleGetAllChatMessages(new GetAllChatMessage(this));
-    },
-    getRoomId: function() {
-        return this._socket.rooms[1];
     },
     sendMessage: function(messageType, messageData) {
         this._socketManager.sockets.in(this.getRoomId()).emit(messageType, messageData);

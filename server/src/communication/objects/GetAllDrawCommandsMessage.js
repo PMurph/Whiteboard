@@ -14,6 +14,9 @@ GetAllDrawCommandsMessage.prototype = {
     getRoomId: function() {
         return this._roomCommunicator.getRoomId();
     },
+    getRoom: function(cb) {
+        this._roomCommunicator.getRoom(cb);
+    },
     setDrawCommands: function(drawCommands) {
         this._drawCommands = drawCommands;
     },

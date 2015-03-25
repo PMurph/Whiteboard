@@ -1,46 +1,98 @@
 'use strict';
-var Whiteboard = require('./Whiteboard.js');
-var Room = require('./Room.js');
 var RoomCommunicator = require("../communication/RoomCommunicator.js");
 var DrawCommandLogic = require("../logic/DrawCommandLogic.js");
 var ChatLogic = require("../logic/ChatLogic.js");
 var Events = require("../Events.js");
 
-var RoomManager = function(socketManager, userSession) {
-    this._roomId = 0;
+var RoomManager = function(socketManager, userSession, db) {
     this._rooms = [];
     this._socketManager = socketManager;
     this._userSession = userSession;
     this._userManager = userSession.userManager;
     this._drawCommandLogic = new DrawCommandLogic(this);
     this._chatLogic = new ChatLogic(this);
+    
+    this._setupDB(db);
 
     this._initSocketCallbacks(socketManager);
 };
 
 RoomManager.prototype = {
+    _setupDB: function(db) {
+        var roomSchema = new db.Schema({
+            creatingUser: String,
+            name: String,
+            type: String,
+            allowAnon: Boolean,
+            connectedUsers: [{id: String}],
+            invitedUsers: [{id: String}],
+            chatMessages: [{name: String, message: String}],
+            drawCommands: [{
+                tool: db.Schema.Types.Mixed,
+                vertices: [{x: Number, y: Number}]
+            }]
+        },{
+            id: true,
+            toJSON: true
+        });
+
+        this._RoomModel = db.model('Room', roomSchema);
+    },
+
+    _handleJoinRoomRequest: function(msgData, rm) {
+        var self = this;
+
+        var socket = rm.getSocket();
+        this._userManager.findByAuthToken(msgData.authToken, function(error, user) {
+            self.authenticateUser(error, user, function() {
+                var roomId = msgData.roomId;
+                var dbCB = function(error, room) {
+                    if(error || !room) {
+                        socket.emit(Events.JoinRequest, "rejected: no room");
+                    }else{
+                        rm.setUser(user);
+                        self.joinRoom(room, user, socket);
+                    }
+                };
+
+                rm.setRoomId(roomId);
+                rm.getRoom(dbCB);
+            },
+            function() {
+                socket.emit(Events.JoinRequest, "rejected: not authenticated");
+            });
+        });
+
+    },
+
+    _handleLeaveRoomRequest: function(msgData, rm) {
+        var self = this;
+
+        var socket = rm.getSocket(),
+            user = rm.getUser();
+        var dbDB = function(error, room) {
+            if(error || !room) {
+                socket.emit(Events.LeaveRequest, "rejected: no room");
+            }else{
+                self.leaveRoom(room, user, socket);
+            }
+
+        };
+        rm.getRoom(dbDB);
+    },
+
     _initSocketCallbacks: function(socketManager) {
         var self = this;
 
         socketManager.on(Events.SocketCreated, function(socket) {
-            new RoomCommunicator(self._socketManager, socket, self._drawCommandLogic, self._chatLogic);
+            var rm = new RoomCommunicator(self, self._socketManager, socket, self._drawCommandLogic, self._chatLogic);
 
             socket.on(Events.JoinRequest, function(msgData) {
-                self._userManager.findByAuthToken(msgData.authToken, function(error, user) {
-
-                    socket.user = user;
-
-                    self.authenticateUser(error, user, function() {
-                        self.joinRoom(msgData.roomId, user, socket);
-                    },
-                    function() {
-                        socket.emit(Events.JoinRequest, "rejected");
-                    });
-                });
+                self._handleJoinRoomRequest(msgData, rm);
             });
 
             socket.on(Events.LeaveRoom, function(msgData) {
-                self.leaveRoom(msgData.roomId, socket.user, socket);
+                self._handleLeaveRoomRequest(msgData, rm);
             });
 
             socket.on("error", function(err) {
@@ -57,62 +109,78 @@ RoomManager.prototype = {
         }
     },
 
-    joinRoom: function(roomId, user, socket) {
-        var roomObject = this._rooms[roomId];
-        if (roomObject && user && socket) {
+    joinRoom: function(room, user, socket) {
+        if (room && user && socket) {
+            var roomId = room.getId();
             socket.join(roomId);
 
             socket.emit(Events.JoinRequest, roomId);
-            socket.broadcast.to(roomId).emit(Events.RoomMessage, {
-                message: user.displayName + " has joined room"
-            });
 
-            roomObject.connectUserToRoom(user);
+            var dbCB = function(error, room) {
+                if (!error && room) {
+                    socket.broadcast.to(roomId).emit(Events.RoomMessage, {
+                        message: user.displayName + " has joined room"
+                    });
+                }
+            };
+
+            room.connectUserToRoom(user, dbCB);
+        }else{
+            throw "No room or user or socket";
         }
     },
 
-    leaveRoom: function(roomId, user, socket) {
-        var roomObject = this._rooms[roomId];
-        if (roomObject && user && socket) {
+    leaveRoom: function(room, user, socket) {
+        if (room && user && socket) {
+            var roomId = room.getId();
             socket.leave(roomId);
+            
+            var dbCB = function(error, roomDoc) {
+                if (!error && roomDoc) {
+                    socket.broadcast.to(roomId).emit(Events.RoomMessage, {
+                        message: user.displayName + " has left"
+                    });
+                }
+            };
 
-            socket.broadcast.to(roomId).emit(Events.RoomMessage, {
-                message: user.displayName + " has left"
-            });
-
-            roomObject.disconnectUserFromRoom(user);
+            room.disconnectUserFromRoom(user, dbCB);
         }
     },
 
-    createNewRoom: function(creatingUser) {
-        var roomId = this._getRoomId();
-        var newRoom = this._setupNewRoom(roomId.toString(), creatingUser);
-
-        this._roomId++;
-        this._manageRoom(roomId, newRoom);
-        return roomId.toString();
+    _createNewRoom: function(name, creatingUserId, type, allowAnon, cb) {
+        var doc = new this._RoomModel({
+            name: name,
+            creatingUser: creatingUserId,
+            type: type,
+            allowAnon: allowAnon
+        });
+        doc.save(cb);
     },
 
-    _getRoomId: function() {
-        return this._roomId;
-    },
+    _handlePost: function(body, user, res) {
+        var self = this;
 
-    _setupNewRoom: function(roomId, creatingUser) {
-        var newWhiteboard = new Whiteboard();
-        return new Room(roomId, creatingUser, newWhiteboard);
-    },
+        var name = body.name || "No Name",
+            type = body.type || "public",
+            allowAnon = body.allowAnonymous || true;
 
-    _manageRoom: function(roomId, room) {
-        this._rooms[roomId] = room;
+        var dbCB = function(error, room) {
+            if (error || !room) {
+                res.sendStatus(400);
+            }else{
+                var roomId = room.id;
+                self._respondToSuccessfulCreate(roomId, res);
+            }
+        };
+
+        this._createNewRoom(name, user.id, type, allowAnon, dbCB);
     },
 
     _handleAuthRequest: function(req, res, user) {
         if(req.method === "GET") {
-            this._respondToGetRoomList(res);
+            this._respondToGetRoomList(req.query, user, res);
         } else if(req.method === "POST") {
-            var roomId = 0;
-            roomId = this.createNewRoom(user.id);
-            this._respondToSuccessfulCreate(roomId, res);
+            this._handlePost(req.body, user, res);
         } else {
             res.sendStatus(405);
         }
@@ -136,21 +204,27 @@ RoomManager.prototype = {
         };
     },
 
-    _respondToGetRoomList: function(res) {
-        res.json(this.getRoomList());
+    _respondToGetRoomList: function(query, user, res) {
+        var dbCB = function(error, rooms) {
+            if(error || !rooms){
+                res.sendStatus(400);
+            }else{
+                var roomList = [];
+                for(var i = 0; i < rooms.length; i++){
+                    roomList[i] = {
+                        _id: rooms[i].id,
+                        name: rooms[i].name,
+                        type: rooms[i].type
+                    };
+                }
+                res.json(roomList);
+            }
+        };
+        this.getRoomList(user, dbCB);
     },
 
-    getRoomList: function() {
-        var out = new Array(this._rooms.length);
-        for (var i = 0; i < this._rooms.length; i++) {
-            var r = this._rooms[i];
-            if (r) {
-                out[i] = {
-                    _id: r.getId()
-                };
-            }
-        }
-        return out;
+    getRoomList: function(user, cb) {
+        this._RoomModel.find().exec(cb);
     },
 
     getRooms: function() {
@@ -161,8 +235,8 @@ RoomManager.prototype = {
         res.json({roomId: roomId});
     },
 
-    getRoom: function(roomId) {
-        return this._rooms[roomId];
+    getRoomById: function(roomId, cb) {
+        this._RoomModel.findById(roomId).exec(cb);
     },
 };
 

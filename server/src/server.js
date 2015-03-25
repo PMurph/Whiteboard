@@ -53,7 +53,7 @@ Server.prototype = {
         this._connectDB(this._dbHostname, this._dbName);
         this._httpServ = this.app.listen(this._port, this._hostname, null, listenCB);
         this._socketManager = this._socketIO.listen(this._httpServ);
-        this._roomManager = new RoomManager(this._socketManager, this._userSession);
+        this._roomManager = new RoomManager(this._socketManager, this._userSession, mongoose);
 
         this._setupRoutes();
     },
