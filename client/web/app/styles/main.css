@@ -318,3 +318,7 @@ canvas {
     background-repeat: no-repeat;
     background-size: 80px 80px;
 }
+
+#size {
+    width: 98%;
+}
