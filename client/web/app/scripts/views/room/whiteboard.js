@@ -94,10 +94,7 @@ define([
             this._currentDrawMessage = null;
             this._ctx.closePath();
 
-            vent.trigger('draw', {
-                roomID: this.roomModel.get('id'),
-                message: drawMessage.toJSON()
-            });
+            vent.trigger('draw', drawMessage.toJSON());
         },
 
         _updateMouse: function(e) {
@@ -132,7 +129,7 @@ define([
 
         drawFromGetAllMessages: function(drawMessages) {
             _.each(drawMessages, function(drawMessage) {
-                this.drawFromMessage(drawMessage.message);
+                this.drawFromMessage(drawMessage);
             }, this);
 
             this.ui.spinner.hide();

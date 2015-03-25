@@ -90,7 +90,7 @@ define([
             });
 
             this.io.on('drawCommand', function(param) {
-                self._roomView.whiteboard.drawFromMessage(param.drawCommand.message);
+                self._roomView.whiteboard.drawFromMessage(param.drawCommand);
             });
 
             this.io.on('roomMessage', function(param) {
