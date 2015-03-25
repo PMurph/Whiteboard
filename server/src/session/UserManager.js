@@ -118,11 +118,15 @@ UserManager.prototype = {
             .exec(callback);
     },
     findByAuthToken: function (authToken, callback) {
-      this._UserModel
-         .findOne({
-             authToken: authToken
-         })
-         .exec(callback);
+      if (authToken.length === 0) {
+        callback("Error: No Authentication Token", null);
+      }else{
+          this._UserModel
+             .findOne({
+                 authToken: authToken
+             })
+             .exec(callback);
+      }
     },
     updateUser: function (user, userChanges, callback) {
         var userDeleted = false;
