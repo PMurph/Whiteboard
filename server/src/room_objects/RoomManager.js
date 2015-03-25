@@ -6,11 +6,6 @@ var DrawCommandLogic = require("../logic/DrawCommandLogic.js");
 var ChatLogic = require("../logic/ChatLogic.js");
 var Events = require("../Events.js");
 
-var stubUser = {
-    id: 1,
-    name: "Precreated room"
-};
-
 var RoomManager = function(socketManager, userSession) {
     this._roomId = 0;
     this._rooms = [];
@@ -21,9 +16,6 @@ var RoomManager = function(socketManager, userSession) {
     this._chatLogic = new ChatLogic(this);
 
     this._initSocketCallbacks(socketManager);
-
-    this.createNewRoom(stubUser);
-    this.createNewRoom(stubUser);
 };
 
 RoomManager.prototype = {
