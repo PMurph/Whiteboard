@@ -106,28 +106,33 @@ RoomManager.prototype = {
         this._rooms[roomId] = room;
     },
 
+    _handleAuthRequest: function(req, res, user) {
+        if(req.method === "GET") {
+            this._respondToGetRoomList(res);
+        } else if(req.method === "POST") {
+            var roomId = 0;
+            roomId = this.createNewRoom(user.id);
+            this._respondToSuccessfulCreate(roomId, res);
+        } else {
+            res.sendStatus(405);
+        }
+    },
+
     getRoomRouteF: function() {
         var self = this;
 
         return function(req, res) {
             var authToken = self._userSession.getRequestToken(req);
 
-            if(req.method === "GET") {
-                self._respondToGetRoomList(res);
-            } else if(req.method === "POST") {
-                self._userManager.findByAuthToken(authToken, function(error, user) {
-                    self.authenticateUser(error, user, function() {
-                        var roomId = 0;
-                        roomId = self.createNewRoom(user.id);
-                        self._respondToSuccessfulCreate(roomId, res);
-                    },
-                    function() {
-                        res.sendStatus(400);
-                    });
+            self._userManager.findByAuthToken(authToken, function(error, user) {
+
+                self.authenticateUser(error, user, function() {
+                    self._handleAuthRequest(req, res, user);
+                },
+                function() {
+                    res.sendStatus(403);
                 });
-            } else {
-                res.sendStatus(400);
-            }
+            });
         };
     },
 
