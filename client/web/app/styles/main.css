@@ -1,13 +1,19 @@
 @import 'boilerplate.css';
+@import url(http://fonts.googleapis.com/css?family=Roboto:300);
+
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    /* override pure-css font stack */
+    font-family: 'Roboto', Georgia, Times, "Times New Roman", serif;
+}
 
 nav {
-	background-color: #66CCFF;
+	background-color: #46799B;
 	width: 100%;
 	min-width: 916px;
 	height: 50px;
 	top: 0px;
 	left: 0px;
-	box-shadow: 0px 0px 5px #000000;
 	margin-bottom: 10px;
 }
 
@@ -18,12 +24,26 @@ nav {
 }
 
 #nav-title {
-	float: left;
+	float: left;  
+    font-size: 2em; 
+    margin-top: 7px;
+}
+
+#nav-text a:visited {
+    color: white;  
+}
+
+#nav-text a:hover {
+    text-shadow: 2px 2px 4px #000000;  
 }
 
 #nav-details {
 	float: right;
 	display: inline-block;
+    font-size: 1em;
+    color: #000000;
+    margin-top: 23px;
+    margin-right: -9px;
 }
 
 #app-shield {
