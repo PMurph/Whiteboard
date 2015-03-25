@@ -30,6 +30,7 @@ define([
         },
 
         events: {
+        	'keyup #chat-input': '_keyPressEventHandler',
             'click #send-btn': '_sendMessage'
         },
 
@@ -56,6 +57,12 @@ define([
             this.ui.chatMessages.scrollTop(this.ui.chatMessages[0].scrollHeight);
         },
 
+        _keyPressEventHandler: function(event) {
+        	if(event.keyCode == 13) {
+        		this._sendMessage();
+        	}
+        },
+        
         _sendMessage: function() {
             vent.trigger('chat', this.ui.chatInput.val());
             this.ui.chatInput.val('');
