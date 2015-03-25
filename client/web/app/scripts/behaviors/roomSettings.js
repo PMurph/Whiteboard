@@ -1,8 +1,10 @@
 
 define([
+    'app',
     'marionette'
 ], function (
-     Marionette
+    App,
+    Marionette
 ) {
     'use strict';
 
@@ -42,7 +44,11 @@ define([
                 this._setStatus("Error: " + e); 
                 return;
             }
-            newRoom.save();
+            newRoom.save({
+                authToken: App.userSessionController._authToken
+            },{
+                wait: true   
+            });
         }
 
     });
