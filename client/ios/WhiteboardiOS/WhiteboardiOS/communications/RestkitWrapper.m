@@ -42,7 +42,7 @@
         [objectManager addResponseDescriptor:roomResponseDescriptor];
     }
 
-    - (void)setupUserModelRequestDescriptor {
+    - (void) setupUserModelRequestDescriptor {
         RKObjectMapping *userModelMapping = [RKObjectMapping requestMapping];
         [userModelMapping addAttributeMappingsFromDictionary:@{
             @"anonymous": @"anonymous"
@@ -74,9 +74,9 @@
         [objectManager addResponseDescriptor:userResponseDescriptor];
     }
 
-    - (void) fetchRooms:(id<Collection>)collection {
+    - (void) fetchRooms:(id<Collection>)collection withAuthentication:(NSString *)authToken {
         [[RKObjectManager sharedManager] getObjectsAtPath:@"/api/room"
-            parameters:nil
+            parameters:@{@"authToken": authToken}
             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                 [collection setCollection:mappingResult.array];
             }

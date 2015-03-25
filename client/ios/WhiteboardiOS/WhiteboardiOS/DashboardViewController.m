@@ -4,30 +4,32 @@
         NSArray *roomSections;
     }
 
-    - (void)initView;
-    - (void)initRoomCollection;
-    - (void)refreshRooms:(id)sender;
-    - (void)updateRoomList;
-    - (void)createNewRoomController:(RoomModel *)roomModel;
+    - (void) initView;
+    - (void) initRoomCollection;
+    - (NSString *) getAuthToken;
+    - (void) refreshRooms;
+    - (void) refreshRoomsButtonClick:(id)sender;
+    - (void) updateRoomList;
+    - (void) createNewRoomController:(RoomModel *)roomModel;
 @end
 
 @implementation DashboardViewController
 
-- (void)viewDidLoad {
+- (void) viewDidLoad {
     [super viewDidLoad];
     
     [self initView];
     [self initRoomCollection];
 }
 
-- (void)initView {
+- (void) initView {
     [[self roomCollectionView]setDataSource:self];
     [[self roomCollectionView]setDelegate:self];
     [[self refreshButton]setTarget:self];
-    [[self refreshButton]setAction:@selector(refreshRooms:)];
+    [[self refreshButton]setAction:@selector(refreshRoomsButtonClick:)];
 }
 
-- (void)initRoomCollection {
+- (void) initRoomCollection {
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     RestkitWrapper *restkitWrapper = appDelegate.restkitWrapper;
     self.roomCollection = [[RoomCollection alloc] init:restkitWrapper];
@@ -36,10 +38,23 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.roomCollection fetchRooms];
+    
+    [self refreshRooms];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void) refreshRooms {
+    NSString *authToken = [self getAuthToken];
+    
+    [self.roomCollection fetchRooms:authToken];
+}
+
+- (NSString *) getAuthToken {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    return appDelegate.userPromise.userModel.authToken;
+}
+
+- (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
@@ -92,8 +107,8 @@
 }
 
 #pragma mark - Toolbar Button Actions
-- (void)refreshRooms:(id)sender {
-    [self.roomCollection fetchRooms];
+- (void)refreshRoomsButtonClick:(id)sender {
+    [self refreshRooms];
 }
 
 @end

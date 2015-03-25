@@ -13,7 +13,7 @@
     }
 
     - (id) init: (NSString *)webAppAPIURI;
-    - (void) fetchRooms:(id<Collection>)collection;
+    - (void) fetchRooms:(id<Collection>)collection withAuthentication:(NSString *)authToken;
     - (UserPromise *) fetchUser;
 @end
 

@@ -24,6 +24,7 @@
 		A88FF6FA1AAE9BEB00D61DF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6F81AAE9BEB00D61DF9 /* Main.storyboard */; };
 		A88FF6FC1AAE9BEB00D61DF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */; };
 		A88FF6FF1AAE9BEB00D61DF9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FD1AAE9BEB00D61DF9 /* LaunchScreen.xib */; };
+		A8B3D6141AC36B0600B7F885 /* AppDelegateTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B3D6131AC36B0600B7F885 /* AppDelegateTest.m */; };
 		A8D750CE1ABFC9F7001268EF /* DrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750CB1ABFC9F7001268EF /* DrawModel.m */; };
 		A8D750CF1ABFC9F7001268EF /* DrawObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750CD1ABFC9F7001268EF /* DrawObject.m */; };
 		A8D750D11ABFCA28001268EF /* DrawObjectTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750D01ABFCA28001268EF /* DrawObjectTest.m */; };
@@ -79,6 +80,7 @@
 		A88FF6FE1AAE9BEB00D61DF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		A88FF7041AAE9BEB00D61DF9 /* WhiteboardiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhiteboardiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88FF7091AAE9BEB00D61DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A8B3D6131AC36B0600B7F885 /* AppDelegateTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegateTest.m; path = unit/AppDelegateTest.m; sourceTree = "<group>"; };
 		A8D750CA1ABFC9F7001268EF /* DrawModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawModel.h; path = WhiteboardiOS/models/DrawModel.h; sourceTree = "<group>"; };
 		A8D750CB1ABFC9F7001268EF /* DrawModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawModel.m; path = WhiteboardiOS/models/DrawModel.m; sourceTree = "<group>"; };
 		A8D750CC1ABFC9F7001268EF /* DrawObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawObject.h; path = WhiteboardiOS/models/DrawObject.h; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */,
 				A8D750D01ABFCA28001268EF /* DrawObjectTest.m */,
 				A8D750D21ABFD0A7001268EF /* DrawModelTest.m */,
+				A8B3D6131AC36B0600B7F885 /* AppDelegateTest.m */,
 			);
 			name = unit;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8B3D6141AC36B0600B7F885 /* AppDelegateTest.m in Sources */,
 				A8D750D31ABFD0A7001268EF /* DrawModelTest.m in Sources */,
 				A8D750D11ABFCA28001268EF /* DrawObjectTest.m in Sources */,
 				A860ACE21ABA5ACD00432672 /* DashboardControllerTest.m in Sources */,

@@ -15,8 +15,8 @@
         return self;
     }
 
-    - (void) fetchRooms {
-        [restkitWrapper fetchRooms:self];
+    - (void) fetchRooms:(NSString *)authToken {
+        [restkitWrapper fetchRooms:self withAuthentication:authToken];
     }
 
     - (void) setCollection:(NSArray *)collectionObjects {
