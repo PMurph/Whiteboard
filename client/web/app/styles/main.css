@@ -249,8 +249,6 @@ canvas {
 
 #tools-region .draw-tools {
     width: 100%;
-    background-color: #d9f1a0;
-    margin-top: 10px;
     min-height: 100px;
 }
 
@@ -258,10 +256,12 @@ canvas {
     float: left;
     width: 33%;
     height: 100px;
+    background-color: #F2F2F2;
+    margin-top: 15px;
 }
 
 .selected {
-    background-color: #d021fa !important;
+    background-color: #66CCFF !important;
 }
 
 .tool-setting {
@@ -272,13 +272,13 @@ canvas {
     float: left;
     height: 45px;
     width: 45px;
-    opacity: 0.5;
-    margin-right: 2px;
+    opacity: 0.25;
+    margin-right: 5px;
 }
 
 .selected-colour {
     opacity: 1;
-    box-shadow: 0px 0px 10px #FFFFFF;
+    box-shadow: 0px 0px 15px #000000;
 }
 
 #Black {
@@ -303,4 +303,18 @@ canvas {
 
 #Purple {
     background-color: purple;
+}
+
+#Draw {
+    background-image: url("../images/draw.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80px 80px;
+}
+
+#Erase {
+    background-image: url("../images/erase.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80px 80px;
 }
