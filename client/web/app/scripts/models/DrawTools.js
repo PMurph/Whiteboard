@@ -12,7 +12,8 @@ define(['backbone'], function (Backbone) {
         RED : { value: 2, name: "Red" },
         YELLOW : { value: 3, name: "Yellow" },
         GREEN : { value: 4, name: "Green" },
-        PURPLE : { value: 5, name: "Purple" }
+        PURPLE : { value: 5, name: "Purple" },
+        WHITE : { value: 6, name: "White" }
     };
 
     var MIN_THICKNESS = 0,
@@ -44,6 +45,10 @@ define(['backbone'], function (Backbone) {
 
                 if (tool.name === newTool) {
                     this._tool = tool;
+
+                    if (newTool === TOOLS.ERASE.name) {
+                        this.setColour(COLOURS.WHITE.name);
+                    }
                     return true;
                 }
             }
