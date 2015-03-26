@@ -162,7 +162,10 @@ RoomManager.prototype = {
 
         var name = body.name || "No Name",
             type = body.type || "public",
-            allowAnon = body.allowAnonymous || true;
+            allowAnon = body.allowAnon;
+            if(allowAnon === undefined) {
+                allowAnon = true;
+            }
 
         var dbCB = function(error, room) {
             if (error || !room) {
@@ -209,22 +212,25 @@ RoomManager.prototype = {
             if(error || !rooms){
                 res.sendStatus(400);
             }else{
-                var roomList = [];
-                for(var i = 0; i < rooms.length; i++){
-                    roomList[i] = {
-                        _id: rooms[i].id,
-                        name: rooms[i].name,
-                        type: rooms[i].type
-                    };
-                }
-                res.json(roomList);
+                res.json(rooms);
             }
         };
         this.getRoomList(user, dbCB);
     },
 
     getRoomList: function(user, cb) {
-        this._RoomModel.find().exec(cb);
+        var query = null;
+        if (user.anonymous === true) {
+            query = this._RoomModel.find({type: "public", allowAnon: true});
+        }else{
+            query = this._RoomModel
+                    .find({$or: [
+                            {"type": "public"},
+                            {"type": "private", "invitedUsers": {$elemMatch: {$eq: user.id}}},
+                            {"type": "private", "creatingUser": user.id}
+                    ]});
+        }
+        query.sort("type").select("_id name type").exec(cb);
     },
 
     getRooms: function() {
