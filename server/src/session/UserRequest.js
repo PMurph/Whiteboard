@@ -51,6 +51,8 @@ UserRequest.prototype = {
             this.userSession.authUser(query.login, password, query.saveSession, dbCallback);
         }else if (authUser && (authUser.id === query._id)){
             dbCallback(null, authUser);
+        }else if (authUser && query && query.login) {
+            this.userManager.findByUsername(query.login, dbCallback);
         }else{
             dbCallback(400);
         }

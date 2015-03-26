@@ -101,6 +101,14 @@ UserManager.prototype = {
 
       return anonUserDoc;
     },
+    findByUsername: function(login, callback) {
+        this._UserModel
+            .findOne({
+                login: login
+            })
+            .select("_id login displayName")
+            .exec(callback);
+    },
     findByLogin: function (login, password, callback) {
         var passwordHash = this.hashPassword(password);
         this._UserModel
