@@ -12,6 +12,6 @@ define([
     return Marionette.ItemView.extend({
         template: template,
 
-        className: 'pure-u-1-3'
+        className: 'pure-u-1-3 hvr-grow'
     });
 });

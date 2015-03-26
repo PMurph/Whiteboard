@@ -1,6 +1,10 @@
 @import 'boilerplate.css';
 @import url(http://fonts.googleapis.com/css?family=Roboto:300);
 
+body {
+    background-color: #F0F0F0;
+}
+
 html, button, input, select, textarea,
 .pure-g [class *= "pure-u"] {
     /* override pure-css font stack */
@@ -175,22 +179,29 @@ nav {
 }
 
 #dashboard {
-	height: 400px;
+	height: 100%;
+    min-height: 600px;
 	width: 100%;
-	background-color: #eee;
-	border: 1px solid #333;
-	box-shadow: 1px 1px 1px #333;
-
+	background-color: #A1C1CF;
+	box-shadow: 1px 1px 2px #333;
 	padding-left: 10px;
+}
+
+#dashboard a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+#dashboard a:hover:, #dashboard a:focus, #dashboard a:active {
+    text-decoration: underline;
 }
 
 .room-item {
 	box-shadow: 1px 1px 1px #333;
 	background-color: #FFFFFF;
-	width: 150px;
-	height: 100px;
+	width: 250px;
+	height: 175px;
 	margin: 10px auto;
-	border: 1px solid #000000;
 }
 
 #rooms-list-region span {
@@ -342,4 +353,20 @@ canvas {
 
 #size {
     width: 98%;
+}
+
+.hvr-grow {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
