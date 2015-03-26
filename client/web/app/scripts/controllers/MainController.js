@@ -99,8 +99,7 @@ define([
         },
         room: function(id) {
             var roomModel = new RoomModel({
-                id: id,
-                name: 'stub name ' + id
+                id: id
             });
             var roomLayout = new RoomLayoutView({
                 model: roomModel

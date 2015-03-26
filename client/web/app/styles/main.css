@@ -21,6 +21,10 @@ nav {
 	margin-bottom: 10px;
 }
 
+textarea {
+    resize: none;
+}
+
 #nav-text {
 	width: 916px;
 	margin: 0 auto;
@@ -215,7 +219,7 @@ nav {
 canvas {
 	width: 700px;
 	height: 500px;
-	border: 1px solid #333;
+    background-color: #FFFFFF;
 	box-shadow: 1px 1px 1px #333;
 }
 
@@ -235,15 +239,30 @@ canvas {
 
 #chat-region {
 	float: right;
+    width: 209px;
+    font-size: 0.75em;
+}
+
+#chat-input {
+    float: left;
+    width: 127px;
+    height: 69px;
+}
+
+#chat-region #send-btn {
+    float: right;
+    height: 75px;
+    width: 67px;
 }
 
 .chat-component {
 	width: 200px;
+    background-color: #FFFFFF;
 }
 
 .chat-component #chat-messages-region {
     overflow-y: scroll;
-    height: 450px;
+    height: 427px;
 }
 
 #login-layout {
@@ -288,7 +307,6 @@ canvas {
     float: left;
     width: 33%;
     height: 100px;
-    background-color: #F2F2F2;
     margin-top: 15px;
 }
 
