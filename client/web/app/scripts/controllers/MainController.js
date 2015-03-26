@@ -81,7 +81,7 @@ define([
                 templateHelpers: function() {
                     return {
                         message: message,
-                        image: "<img src='/images/" + imageSrc + "'></img>"
+                        image: (imageSrc) ? "<img src='/images/" + imageSrc + "'></img>" : ""
                     };
                 }
             }));

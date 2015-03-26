@@ -37,17 +37,28 @@ define([
             }
 
 
-            this.io.once('joinRequest', function() {
-                self._roomID = roomID;
-                self._roomView = roomView;
-                self.io.once('getAllDrawCommands', function(drawMsgs) {
-                    self._roomView.whiteboard.drawFromGetAllMessages(drawMsgs.drawCommands);
-                });
-                self.io.once('getAllChat', function(chatMsgs) {
-                    self._roomView.chat.chatFromGetAllMessages(chatMsgs.chatMessages);
-                });
-                self.io.emit('getAllDrawCommands');
-                self.io.emit('getAllChat');
+            this.io.once('joinRequest', function(response, status) {
+                if (response === "rejected") {
+                    App.mainController.showShield();
+                    App.mainController.setStatusBox("Failed to join room<br><a href='#' id='continueDashboardLink'>Continue to dashboard</a>");
+                    var continueLink = document.getElementById("continueDashboardLink");
+                    continueLink.onclick = function() {
+                        App.mainController.hideShield();
+                    };
+                }else if (response !== roomID){
+                    console.error("Joined Wrong Room");
+                }else{
+                    self._roomID = roomID;
+                    self._roomView = roomView;
+                    self.io.once('getAllDrawCommands', function(drawMsgs) {
+                        self._roomView.whiteboard.drawFromGetAllMessages(drawMsgs.drawCommands);
+                    });
+                    self.io.once('getAllChat', function(chatMsgs) {
+                        self._roomView.chat.chatFromGetAllMessages(chatMsgs.chatMessages);
+                    });
+                    self.io.emit('getAllDrawCommands');
+                    self.io.emit('getAllChat');
+                }
             });
 
             this.io.emit('joinRequest', {

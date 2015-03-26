@@ -86,7 +86,7 @@ define([
                     App.mainController.router.navigate("/room/" + roomId,{trigger: true});
                 })
                 .fail(function(response) {
-                    self._setStatus("Error: " + response);
+                    self._setStatus("Error: " + response.responseText);
                 });
         }
 
