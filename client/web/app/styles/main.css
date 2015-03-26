@@ -32,7 +32,6 @@ textarea {
 }
 
 #nav-title {
-<<<<<<< HEAD
 	float: left;  
     font-size: 2em; 
     margin-top: 7px;
@@ -43,8 +42,7 @@ textarea {
 }
 
 #nav-text a:hover {
-    text-shadow: 2px 2px 4px #000000;  
-=======
+	//text-shadow: 2px 2px 4px #000000;  
 	float: left;
 	font-family: helvetica, sans-serif;
 	font-size: 21px;
@@ -56,7 +54,6 @@ textarea {
 	-1px -1px 0px black,
 	1px -1px 0px black,
 	2px 2px 0px black;
->>>>>>> Web Client: Clean up look of header/navbar and lower dashboard
 }
 
 #nav-details {
@@ -229,7 +226,7 @@ textarea {
 
 #dashboard {
 	height: 100%;
-    min-height: 600px;
+	min-height: 600px;
 	width: 100%;
 	background-color: #A1C1CF;
 	box-shadow: 1px 1px 2px #333;
@@ -257,6 +254,8 @@ textarea {
 
 #dashboard a:hover:, #dashboard a:focus, #dashboard a:active {
     text-decoration: underline;
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
 .room-item {

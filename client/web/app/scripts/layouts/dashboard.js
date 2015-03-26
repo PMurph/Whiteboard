@@ -22,8 +22,7 @@ define([
 
         regions: {
             toolbar: '#toolbarRegion',
-            publicRoomListRegion: '#publicRoomListRegion',
-            privateRoomListRegion: '#privateRoomListRegion'
+            roomListRegion: '#roomListRegion',
         },
 
         ui: {
@@ -41,7 +40,7 @@ define([
             var self = this;
 
             this.ui.roomListSpinner.show();
-            this.publicRoomListRegion.empty();
+            this.roomListRegion.empty();
 
             this.collection = new RoomsCollection();
             this.collection
@@ -53,7 +52,7 @@ define([
             var collectionView = new RoomsCollectionView({
                 collection: this.collection
             });
-            this.publicRoomListRegion.show(collectionView);
+            this.roomListRegion.show(collectionView);
         },
     });
 });
