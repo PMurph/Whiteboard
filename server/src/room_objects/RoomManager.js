@@ -243,10 +243,6 @@ RoomManager.prototype = {
         query.sort("type").select("_id name type").exec(cb);
     },
 
-    getRooms: function() {
-        return this._rooms;
-    },
-
     _respondToSuccessfulCreate: function(roomId, res) {
         res.json({roomId: roomId});
     },
