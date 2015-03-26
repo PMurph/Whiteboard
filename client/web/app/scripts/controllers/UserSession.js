@@ -3,6 +3,7 @@ define([
     'backbone',
     'marionette',
     'app',
+    'vent',
     'controllers/SocketController',
     'models/AnonymousUser',
     'models/User'
@@ -11,6 +12,7 @@ define([
     Backbone,
     Marionette,
     App,
+    vent,
     SocketController,
     AnonymousUser,
     User
@@ -29,6 +31,7 @@ define([
         },
         _setupObjectEvents: function() {
             this.on("Authenticated", this._authenticatedEvent, this);
+            this.on("PreLoggedOff", this._preLoggedOffEvent, this);
         },
         _setupWindowEvents: function() {
             var self = this;
@@ -44,6 +47,11 @@ define([
                     self.setUserStatus(status, false);
                 }
             });
+        },
+        _preLoggedOffEvent: function() {
+            if (App.mainController.inRoom()) {
+                vent.trigger("leaveRoom");
+            }
         },
         _authenticatedEvent: function() {
             App.mainController.renderHeader(this._currentUser);
@@ -235,6 +243,7 @@ define([
             App.mainController.showShield();
             App.mainController.setStatusBox("Signing Out", "ellipsis_big.svg");
 
+            this.trigger("PreLoggedOff");
             xhr = this.setUserStatus("offline", async);
             if (xhr) {
                 xhr.then(function () {

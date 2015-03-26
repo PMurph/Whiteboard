@@ -61,12 +61,13 @@ define([
         },
 
         _leaveRoom: function() {
-            this.io.emit('leaveRoom', {
-                roomId: this._roomID,
-                authToken: this.userSession.getUser().get('authToken')
-            });
-            this._roomID = undefined;
-            this._roomView = undefined;
+            if(this._roomID) {
+                this.io.emit('leaveRoom', {
+                    roomId: this._roomID,
+                });
+                this._roomID = undefined;
+                this._roomView = undefined;
+            }
         },
 
         _emitChat: function(msg) {
