@@ -147,12 +147,13 @@ RoomManager.prototype = {
         }
     },
 
-    _createNewRoom: function(name, creatingUserId, type, allowAnon, cb) {
+    _createNewRoom: function(name, creatingUserId, type, allowAnon, userInvites, cb) {
         var doc = new this._RoomModel({
             name: name,
             creatingUser: creatingUserId,
             type: type,
-            allowAnon: allowAnon
+            allowAnon: allowAnon,
+            invitedUsers: userInvites
         });
         doc.save(cb);
     },
@@ -162,9 +163,14 @@ RoomManager.prototype = {
 
         var name = body.name || "No Name",
             type = body.type || "public",
+            userInvites = null,
             allowAnon = body.allowAnon;
             if(allowAnon === undefined) {
                 allowAnon = true;
+            }
+
+            if(type === "private") {
+                userInvites = body.userInvites;
             }
 
         var dbCB = function(error, room) {
@@ -176,7 +182,7 @@ RoomManager.prototype = {
             }
         };
 
-        this._createNewRoom(name, user.id, type, allowAnon, dbCB);
+        this._createNewRoom(name, user.id, type, allowAnon, userInvites, dbCB);
     },
 
     _handleAuthRequest: function(req, res, user) {
@@ -226,7 +232,7 @@ RoomManager.prototype = {
             query = this._RoomModel
                     .find({$or: [
                             {"type": "public"},
-                            {"type": "private", "invitedUsers": {$elemMatch: {$eq: user.id}}},
+                            {"type": "private", "invitedUsers": {$elemMatch: {"id": user.id}}},
                             {"type": "private", "creatingUser": user.id}
                     ]});
         }
