@@ -2,53 +2,65 @@
 
 @interface RoomViewController () {
         BOOL drawing;
+        RoomModel *roomModel;
         CGPoint lastPoint;
     }
 
-    + (void)setUpRoomSocket:(RoomViewController *)roomViewController;
+    - (void) initializeController:(RoomModel *)roomInfo withSocket:(SIOSocket *)socket;
+    - (void) getCurrentRoomState;
+    - (void) setupGetAllDrawCommandsListener;
 @end
 
 @implementation RoomViewController
 
-+ (RoomViewController *)createRoomViewController:(RoomModel *)roomToCreate {
-    NSString *roomTitle = [NSString stringWithFormat:@"Room %@", roomToCreate.roomId];
-    UIImage *viewTabIcon = [UIImage imageNamed:@"Crayon-icon.png"];
-    UITabBarItem *viewTabBarItem = [[UITabBarItem alloc] initWithTitle:roomTitle image:viewTabIcon tag:0];
++ (RoomViewController *)createRoomViewController:(RoomModel *)roomToCreate withSocket:(SIOSocket *) socket {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     RoomViewController *newRoomController = [storyboard instantiateViewControllerWithIdentifier:@"RoomViewController"];
     
-    [newRoomController setTabBarItem:viewTabBarItem];
-    [newRoomController setRoomModel:roomToCreate];
-    [RoomViewController setUpRoomSocket:newRoomController];
+    [newRoomController initializeController:roomToCreate withSocket:socket];
     
     return newRoomController;
 }
 
-+ (void)setUpRoomSocket:(RoomViewController *)roomViewController {
-    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [SIOSocket socketWithHost:[appDelegate webAppURI] response:^(SIOSocket *socketIO) {
-        [roomViewController setSocketIO:socketIO];
-    }];
+- (void) initializeController:(RoomModel *)roomInfo withSocket:(SIOSocket *)socket {
+    NSString *roomTitle = [NSString stringWithFormat:@"Room %@", roomInfo.roomId];
+    UIImage *viewTabIcon = [UIImage imageNamed:@"Crayon-icon.png"];
+    UITabBarItem *viewTabBarItem = [[UITabBarItem alloc] initWithTitle:roomTitle image:viewTabIcon tag:0];
+    
+    [self setTabBarItem:viewTabBarItem];
+    [self setSocket:socket];
+    roomModel = roomInfo;
 }
 
-- (void)viewDidLoad {
+- (void) viewDidLoad {
     [super viewDidLoad];
-    [[self roomTitleLabel] setText:[NSString stringWithFormat:@"Room %@", [[self roomModel] roomId]]];
+    [[self roomTitleLabel] setText:[NSString stringWithFormat:@"Room %@", roomModel.roomId]];
     drawing = NO;
 }
 
-- (void)didReceiveMemoryWarning {
+- (void) getCurrentRoomState {
+    [self setupGetAllDrawCommandsListener];
+}
+
+- (void) setupGetAllDrawCommandsListener {
+    [self.socket on:GET_ALL_DRAW_COMMANDS callback:^(SIOParameterArray * args) {
+        if([args objectAtIndex:0]) {
+        }
+    }];
+}
+
+- (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     drawing = NO;
     UITouch *touch = [touches anyObject];
     lastPoint = [touch locationInView:self.whiteboardCanvas];
     NSLog(@"Start Drawing");
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     drawing = YES;
     UITouch *touch = [touches anyObject];
     CGPoint currentPoint = [touch locationInView:self.whiteboardCanvas];
@@ -71,7 +83,7 @@
     lastPoint = currentPoint;
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     if (!drawing) {
         UIGraphicsBeginImageContext(self.whiteboardCanvas.frame.size);
         [self.tempDrawCanvas.image drawInRect:CGRectMake(0, 0, self.whiteboardCanvas.frame.size.width, self.whiteboardCanvas.frame.size.height)];
