@@ -189,9 +189,24 @@ RoomManager.prototype = {
         }
     },
 
+    _handleGetRequest: function(query, user, res) {
+        if(query && query.id) {
+            var dbCB = function(error, room) {
+                if(error || !room){
+                    res.sendStatus(400);
+                }else{
+                    res.json(room);
+                }
+            };
+            query = this._RoomModel.findById(query.id).select("_id name privacy").exec(dbCB);
+        }else{
+            this._respondToGetRoomList(query, user, res);
+        }
+    },
+
     _handleAuthRequest: function(req, res, user) {
         if(req.method === "GET") {
-            this._respondToGetRoomList(req.query, user, res);
+            this._handleGetRequest(req.query, user, res);
         } else if(req.method === "POST") {
             this._handlePost(req.body, user, res);
         } else {
