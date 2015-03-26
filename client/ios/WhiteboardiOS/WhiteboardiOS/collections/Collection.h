@@ -1,7 +1,7 @@
 #ifndef WhiteboardiOS_Collection_h
 #define WhiteboardiOS_Collection_h
 
-#include <Foundation/Foundation.h>
+#import <Foundation/Foundation.h>
 
 @protocol Collection
 

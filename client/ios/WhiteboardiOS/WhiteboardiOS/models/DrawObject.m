@@ -8,12 +8,15 @@
 
 #import "DrawObject.h"
 
+@interface DrawObject () {
+        NSDictionary *colourMap;
+        NSDictionary *toolMap;
+    }
+@end
+
 @implementation DrawObject
     -(id)init {
-        self = [super init];
-
-        _colourMap = [[NSDictionary alloc] init];
-        _colourMap = @{
+        colourMap = @{
             @"black" : [NSNumber numberWithInt:BLACK],
             @"blue" : [NSNumber numberWithInt:BLUE],
             @"red" : [NSNumber numberWithInt:RED],
@@ -22,16 +25,13 @@
             @"purple" : [NSNumber numberWithInt:PURPLE],
         };
 
-        _toolMap = [[NSDictionary alloc] init];
-        _toolMap = @{
+        toolMap = @{
             @"draw" : [NSNumber numberWithInt:DRAW],
             @"erase" :[NSNumber numberWithInt:ERASE],
         };
     
-        if (self) {
-            _myColour = BLACK;
-            _myTool = DRAW;
-        }
+        _myColour = BLACK;
+        _myTool = DRAW;
     
         return self;
     }
@@ -39,16 +39,16 @@
     -(void)setColour:(NSString*)newColour {
         newColour = newColour.lowercaseString;
     
-        if ([_colourMap objectForKey:newColour]) {
-            _myColour = [[_colourMap objectForKey:newColour] unsignedIntegerValue];
+        if ([colourMap objectForKey:newColour]) {
+            _myColour = [[colourMap objectForKey:newColour] unsignedIntegerValue];
         }
     }
 
     -(void)setTool:(NSString*)newTool {
         newTool = newTool.lowercaseString;
     
-        if ([_toolMap objectForKey:newTool]) {
-            _myTool = [[_toolMap objectForKey:newTool] unsignedIntegerValue];
+        if ([toolMap objectForKey:newTool]) {
+            _myTool = [[toolMap objectForKey:newTool] unsignedIntegerValue];
         }
     }
 @end

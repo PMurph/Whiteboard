@@ -8,36 +8,40 @@
 
 #import "DrawModel.h"
 
-@interface DrawModel () {
-        NSNumber *maxThickness;
-        NSNumber *minThickness;
-    }
+@interface DrawModel ()
+    - (void)initDrawModel;
 @end
 
 @implementation DrawModel
 
-    -(id)init
+    - (id)init
     {
-        self = [super init];
-        minThickness = [[NSNumber alloc] initWithInt:MIN_THICKNESS];
-        maxThickness = [[NSNumber alloc] initWithInt:MAX_THICKNESS];
-    
-        if (self) {
-            _thickness = [[NSNumber alloc] initWithInt:1];
-            _drawingInformation = [[DrawObject alloc] init];
-        }
+        [self initDrawModel];
+        _drawingInformation = [[DrawObject alloc] init];
     
         return self;
     }
 
+    - (id)initWithDrawInfo:(DrawObject *)drawInfo {
+        [self initDrawModel];
+        _drawingInformation = drawInfo;
+        
+        return self;
+    }
+
+    - (void)initDrawModel {
+        _thickness = [[NSNumber alloc] initWithInt:1];
+        _listOfCoordinates = [[NSMutableArray alloc] init];
+    }
+
     - (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y {
         NSDictionary *newCord = @{ @"x":x, @"y":y };
-        [_listOfCoordinates addObject:(newCord)];
+        [_listOfCoordinates addObject:newCord];
     }
 
 
     - (void)setThickness:(NSNumber*)newThickness {
-        if (newThickness >= minThickness && newThickness < maxThickness) {
+        if (newThickness.intValue >= MIN_THICKNESS && newThickness.intValue < MAX_THICKNESS) {
             _thickness = newThickness;
         }
     }

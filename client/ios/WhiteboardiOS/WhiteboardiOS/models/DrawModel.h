@@ -17,6 +17,7 @@
     @property (readonly, nonatomic, copy) DrawObject* drawingInformation;
 
     - (id)init;
+    - (id)initWithDrawInfo:(DrawObject *)drawInfo;
     - (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y;
     - (void)setThickness:(NSNumber*)newThickness;
     - (void)setColour:(NSString*)newColour;

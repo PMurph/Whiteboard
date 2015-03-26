@@ -31,7 +31,7 @@
         self.collection = [[RoomCollection alloc] init:_restkitMock];
         [self.collection registerObserver:self.mockObserver];
         
-        OCMStub([_restkitMock fetchRooms:self.collection]).andDo(^(NSInvocation *invocation) {
+        OCMStub([_restkitMock fetchRooms:self.collection withAuthentication:@""]).andDo(^(NSInvocation *invocation) {
             [self.collection setCollection:self.roomModels];
         });
     }
@@ -47,9 +47,9 @@
     }
 
     - (void)testThatFetchRoomCallRestKitWrappersFetchRooms {
-        [self.collection fetchRooms];
+        [self.collection fetchRooms:@""];
         
-        OCMVerify([self.restkitMock fetchRooms:self.collection]);
+        OCMVerify([self.restkitMock fetchRooms:self.collection withAuthentication:@""]);
     }
 
     - (void)testThatInitiallyNoRoomsExistInCollection {
@@ -57,7 +57,7 @@
     }
 
     - (void)testThatRoomsArePopulatedAfterFetch {
-        [self.collection fetchRooms];
+        [self.collection fetchRooms:@""];
         XCTAssertEqual([[self.collection roomModels] count], [self.roomModels count]);
     }
 @end

@@ -12,7 +12,7 @@
     @property (nonatomic, readonly) NSArray *roomModels;
 
     - (id) init: (RestkitWrapper *)wrapper;
-    - (void) fetchRooms;
+    - (void) fetchRooms:(NSString *)authToken;
     - (void) setCollection:(NSArray *)collectionObjects;
     - (void) registerObserver:(id <RoomCollectionObserver>)observer;
 @end

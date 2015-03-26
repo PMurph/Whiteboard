@@ -4,6 +4,7 @@
 #import "RoomCell.h"
 #import "RoomCollection.h"
 #import "RoomCollectionObserver.h"
+#import "RoomViewController.h"
 
 @interface DashboardViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, RoomCollectionObserver>
 
