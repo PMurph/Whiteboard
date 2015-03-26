@@ -48,6 +48,7 @@ define([
 
             this.io.once('joinRequest', function(response, status) {
                 if (response === "rejected") {
+                    console.error("rejected: " + status);
                     self.showErrorMessage("Failed to join room");
                 }else if (response !== roomID){
                     self.showErrorMessage("Failed to join room (Server return incorrect id)");
