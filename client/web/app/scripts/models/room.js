@@ -1,12 +1,12 @@
  define([
-    'backbone', 
-    './DrawModel', 
-    './User', 
+    'backbone',
+    './DrawModel',
+    './User',
     'collections/chatMessages'
  ], function (
     Backbone,
-    DrawModel, 
-    User, 
+    DrawModel,
+    User,
     ChatMessagesList
 ) {
     "use strict";
@@ -21,7 +21,7 @@
 
     var MeetingRoomModel = Backbone.Model.extend({
         defaults: {
-            name: 'New Room',
+            name: 'Untitled Room',
         },
         idAttribute: "_id",
         url: "/api/room",

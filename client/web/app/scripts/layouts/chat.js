@@ -30,7 +30,8 @@ define([
         },
 
         events: {
-            'click #send-btn': '_sendMessage'
+            'click #send-btn': '_sendMessage',
+            'keyup textarea': '_checkForEnter'
         },
 
         initialize: function(options) {
@@ -59,6 +60,12 @@ define([
         _sendMessage: function() {
             vent.trigger('chat', this.ui.chatInput.val());
             this.ui.chatInput.val('');
+        },
+
+        _checkForEnter: function(e) {
+            if (e.which === 13) {
+                this._sendMessage();
+            }
         }
     });
 });
