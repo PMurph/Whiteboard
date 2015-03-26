@@ -105,6 +105,8 @@ define([
             this.mainContent.show(new DashboardView());
         },
         room: function(id) {
+            var self = this;
+
             if (!id) {
                 if (this._currentRoom) {
                     id = this._currentRoom;
@@ -119,15 +121,18 @@ define([
                 model: roomModel
             });
 
-            try {
-                SocketController.joinRoom(id, roomLayout);
-            } catch (e) {
-                console.error("Failed to join room. Loading dashboard.\n Exception: " + e);
-                this.router.navigate("/", {tigger: true});
-                return;
-            }
-            this._currentRoom = id;
-            this.mainContent.show(roomLayout);
+            roomModel
+                .fetch({data: {
+                    id: id   
+                }})
+                .then(function() {
+                    SocketController.joinRoom(id, roomLayout);
+                    self._currentRoom = id;
+                    self.mainContent.show(roomLayout);
+                })
+                .fail(function() {
+                    SocketController.showErrorMessage("Failed to find room");
+                });
         },
         inDashboard: function() {
             return (this.mainContent.currentView instanceof DashboardView);
