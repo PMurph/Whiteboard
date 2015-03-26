@@ -9,6 +9,9 @@
 
 #define GET_ALL_DRAW_COMMANDS @"getAllDrawCommands"
 #define DRAW_COMMAND_KEY @"drawCommands"
+#define MESSAGE_KEY @"message"
+#define TOOL_KEY @"tool"
+#define VERTICES_KEY @"vertices"
 
 @interface RoomViewController : UIViewController
     

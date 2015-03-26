@@ -9,6 +9,8 @@
     - (void) initializeController:(RoomModel *)roomInfo withSocket:(SIOSocket *)socket;
     - (void) getCurrentRoomState;
     - (void) setupGetAllDrawCommandsListener;
+    - (void) handleDrawCommand:(NSDictionary *)drawCommand;
+    - (NSString *) getToolType:(NSDictionary *)tool;
 @end
 
 @implementation RoomViewController
@@ -36,17 +38,28 @@
     [super viewDidLoad];
     [[self roomTitleLabel] setText:[NSString stringWithFormat:@"Room %@", roomModel.roomId]];
     drawing = NO;
+    [self getCurrentRoomState];
 }
 
 - (void) getCurrentRoomState {
     [self setupGetAllDrawCommandsListener];
+    [self.socket emit:GET_ALL_DRAW_COMMANDS];
 }
 
 - (void) setupGetAllDrawCommandsListener {
     [self.socket on:GET_ALL_DRAW_COMMANDS callback:^(SIOParameterArray * args) {
-        if([args objectAtIndex:0]) {
+        NSArray *drawCommands = [[args objectAtIndex:0] objectForKey:DRAW_COMMAND_KEY];
+        if(drawCommands) {
+            for(id drawCommand in drawCommands) {
+                [self handleDrawCommand:[drawCommand objectForKey:MESSAGE_KEY]];
+            }
         }
     }];
+}
+
+- (void) handleDrawCommand:(NSDictionary *)drawCommand {
+    NSDictionary *drawTool = [drawCommand objectForKey:TOOL_KEY];
+    
 }
 
 - (void) didReceiveMemoryWarning {

@@ -1,20 +1,13 @@
-//
-//  DrawObject.m
-//  WhiteboardiOS
-//
-//  Created by Chris Funk on 2015-03-13.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
+#import "DrawToolModel.h"
 
-#import "DrawObject.h"
-
-@interface DrawObject () {
+@interface DrawToolModel () {
         NSDictionary *colourMap;
         NSDictionary *toolMap;
     }
 @end
 
-@implementation DrawObject
+@implementation DrawToolModel
+
     -(id)init {
         colourMap = @{
             @"black" : [NSNumber numberWithInt:BLACK],
@@ -29,14 +22,15 @@
             @"draw" : [NSNumber numberWithInt:DRAW],
             @"erase" :[NSNumber numberWithInt:ERASE],
         };
-    
+
         _myColour = BLACK;
         _myTool = DRAW;
+        [self setThickness:@1];
     
         return self;
     }
 
-    -(void)setColour:(NSString*)newColour {
+    - (void)setColour:(NSString*)newColour {
         newColour = newColour.lowercaseString;
     
         if ([colourMap objectForKey:newColour]) {
@@ -44,11 +38,18 @@
         }
     }
 
-    -(void)setTool:(NSString*)newTool {
+    - (void)setTool:(NSString*)newTool {
         newTool = newTool.lowercaseString;
     
         if ([toolMap objectForKey:newTool]) {
             _myTool = [[toolMap objectForKey:newTool] unsignedIntegerValue];
         }
     }
+
+    - (void) setThickness:(NSNumber *)newThickness {
+        if (newThickness.intValue >= MIN_THICKNESS && newThickness.intValue < MAX_THICKNESS) {
+            _thickness = newThickness;
+        }
+    }
+    
 @end

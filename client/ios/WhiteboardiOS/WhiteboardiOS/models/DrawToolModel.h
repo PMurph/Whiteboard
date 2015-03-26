@@ -1,0 +1,36 @@
+#ifndef WhiteboardiOS_DrawToolModel_h
+#define WhiteboardiOS_DrawToolModel_h
+
+#import <Foundation/Foundation.h>
+
+#define MAX_THICKNESS 100
+#define MIN_THICKNESS 0
+#define TOOL_TYPE_KEY @"type"
+#define DRAW_TOOL_TYPE @"Draw"
+
+@interface DrawToolModel : NSObject
+    typedef enum TOOLS : NSUInteger {
+        DRAW,
+        ERASE
+    } Tools;
+    
+    typedef enum COLOURS : NSUInteger {
+        BLACK,
+        BLUE,
+        RED,
+        YELLOW,
+        GREEN,
+        PURPLE
+    } Colours;
+
+    @property (readonly, nonatomic) Colours myColour;
+    @property (readonly, nonatomic) Tools myTool;
+    @property (readonly, nonatomic) NSNumber* thickness;
+
+    - (id) init;
+    - (void) setColour:(NSString*)newColour;
+    - (void) setTool:(NSString*)newTool;
+    - (void) setThickness:(NSNumber *)newThickness;
+@end
+
+#endif
