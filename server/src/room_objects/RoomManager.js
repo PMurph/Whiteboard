@@ -48,7 +48,7 @@ RoomManager.prototype = {
                 var roomId = msgData.roomId;
                 var dbCB = function(error, room) {
                     if(error || !room) {
-                        socket.emit(Events.JoinRequest, "rejected: no room");
+                        socket.emit(Events.JoinRequest, "rejected", "no room");
                     }else{
                         rm.setUser(user);
                         self.joinRoom(room, user, socket);
@@ -59,7 +59,7 @@ RoomManager.prototype = {
                 rm.getRoom(dbCB);
             },
             function() {
-                socket.emit(Events.JoinRequest, "rejected: not authenticated");
+                socket.emit(Events.JoinRequest, "rejected", "not authenticated");
             });
         });
 
@@ -72,7 +72,7 @@ RoomManager.prototype = {
             user = rm.getUser();
         var dbDB = function(error, room) {
             if(error || !room) {
-                socket.emit(Events.LeaveRequest, "rejected: no room");
+                socket.emit(Events.LeaveRequest, "rejected", "no room");
             }else{
                 self.leaveRoom(room, user, socket);
             }
@@ -182,7 +182,11 @@ RoomManager.prototype = {
             }
         };
 
-        this._createNewRoom(name, user.id, type, allowAnon, userInvites, dbCB);
+        if(user.anonymous === true) {
+            res.status(400).send("Anonymous Users cannot create a room");
+        }else{
+            this._createNewRoom(name, user.id, type, allowAnon, userInvites, dbCB);
+        }
     },
 
     _handleAuthRequest: function(req, res, user) {
