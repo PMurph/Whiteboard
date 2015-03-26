@@ -50,6 +50,42 @@
         },
         getName: function() {
             return this.get("name");
+        },
+        setType: function(newType) {
+            if(!newType || (newType !== "public" && newType !== "private")) {
+                throw "Invalid Room Type";
+            }
+
+            if (!this.isNew()) {
+                return this.save({
+                    type: newType
+                },{
+                    wait: true
+                });
+            }else{
+                this.set("type", newType);
+            }
+        },
+        getType: function() {
+            return this.get("type");
+        },
+        setAllowAnon: function(newAllowAnon) {
+            if(typeof newAllowAnon !== "boolean") {
+                throw "Invalid Allow Anonymous: Must be boolean";
+            }
+
+            if (!this.isNew()) {
+                return this.save({
+                    type: newAllowAnon
+                },{
+                    wait: true
+                });
+            }else{
+                this.set("allowAnon", newAllowAnon);
+            }
+        },
+        getAllowAnon: function() {
+            return this.get("allowAnon");
         }
     });
 
