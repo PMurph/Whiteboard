@@ -26,6 +26,15 @@ define([
             this._setupWindowEvents();
         },
 
+        showErrorMessage: function(message) {
+            App.mainController.showShield();
+            App.mainController.setStatusBox(message + "<br /><a href='#' id='continueDashboardLink'>Continue to dashboard</a>");
+            var continueLink = document.getElementById("continueDashboardLink");
+            continueLink.onclick = function() {
+                App.mainController.hideShield();
+            };
+        },
+
         joinRoom: function(roomID, roomView) {
             var self = this;
 
@@ -39,14 +48,9 @@ define([
 
             this.io.once('joinRequest', function(response, status) {
                 if (response === "rejected") {
-                    App.mainController.showShield();
-                    App.mainController.setStatusBox("Failed to join room<br><a href='#' id='continueDashboardLink'>Continue to dashboard</a>");
-                    var continueLink = document.getElementById("continueDashboardLink");
-                    continueLink.onclick = function() {
-                        App.mainController.hideShield();
-                    };
+                    self.showErrorMessage("Failed to join room");
                 }else if (response !== roomID){
-                    console.error("Joined Wrong Room");
+                    self.showErrorMessage("Failed to join room (Server return incorrect id)");
                 }else{
                     self._roomID = roomID;
                     self._roomView = roomView;
@@ -117,9 +121,11 @@ define([
                 self._connected = true;
             });
             this.io.on('disconnect', function() {
+                self.showErrorMessage("Socket was disconnected");
                 self._connected = false;
             });
             this.io.on('error', function(err) {
+                self.showErrorMessage("Socket encountered an error");
                 console.error("SocketIO error: " + err);
             });
         },
