@@ -205,6 +205,13 @@ textarea {
     color: red;
 }
 
+#roomInvitesStatusText {
+    width: 150px;
+}
+#roomInvitesStatusText.error {
+    color: red;
+}
+
 #subStatusLabel.message{
     color: black;
 }
@@ -283,7 +290,7 @@ textarea {
 
 #createRoom {
     position: relative;
-    height: 400px;
+    height: 430px;
     background-color: #eee;
     border: 1px solid #333;
     box-shadow: 1px 1px 1px #333;
@@ -310,7 +317,7 @@ textarea {
     bottom: 10px;
 }
 
-#newRoomUserList {
+#roomUserList {
     width: 370px;
     height: 200px;
 }

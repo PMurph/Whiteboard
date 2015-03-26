@@ -9,6 +9,8 @@ define([
     'use strict';
 
     var RoomSettingsBehavior = Marionette.Behavior.extend({
+        initialize: function() {
+        },
         events: {
             "click @ui.privPrivateR": "setRoomPrivate",
             "click @ui.privPublicR": "setRoomPublic",
@@ -27,15 +29,22 @@ define([
         },
 
         setRoomPrivate: function() {
+            this._roomInvitesView = this.view.options.layout._roomInvitesView;
+
             this._setDisableAllowAnon(true);
             this.view.ui.anonNoR.prop('checked', true);
+            this._roomInvitesView.setDisable(false);
         },
 
         setRoomPublic: function() {
+            this._roomInvitesView = this.view.options.layout._roomInvitesView;
+
             this._setDisableAllowAnon(false);
+            this._roomInvitesView.setDisable(true);
         },
 
         createRoom: function() {
+            var self = this;
             var newRoom = this.view.model;
             
             try {

@@ -29,6 +29,8 @@
             this._messages = new ChatMessagesList();
             this._drawModels = new DrawModelsList();
             this._users = new UsersList();
+
+            this.set("userInvites", []);
         },
         getListOfUsersActiveInRoom: function(){
             return this._users;
@@ -86,6 +88,39 @@
         },
         getAllowAnon: function() {
             return this.get("allowAnon");
+        },
+        addUserInvite: function(userId) {
+            var invites = this.getUserInvites();
+            var idObj = {id: userId};
+
+            for(var i = 0; i < invites.length; i++){
+                var invite = invites[i];
+                if(invite.id === userId){
+                    throw "User is alreayd invited";
+                }
+            }
+
+            if (!this.isNew()) {
+
+            }else{
+                invites.push(idObj);
+            } 
+        },
+        getUserInvites: function() {
+            return this.get("userInvites");
+        },
+        removeAllInvites: function() {
+            this.set("userInvites", []);
+        },
+        removeUserInvite: function(userId) {
+            var invites = this.getUserInvites();
+
+            for(var i = 0; i < invites.length; i++) {
+                var invite = invites[i];
+                if(invite.id === userId){
+                    invites.splice(i, 1);
+                }
+            }
         }
     });
 

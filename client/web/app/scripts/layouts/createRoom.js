@@ -22,6 +22,8 @@ define([
 
         initialize: function() {
             this._newRoom = new Room();
+            this._roomSettingsView = null;
+            this._roomInvitesView = null;
         },
         
         regions: {
@@ -30,8 +32,12 @@ define([
         },
 
         onShow: function() {
-            this.roomSettings.show(new RoomSettingsView({model: this._newRoom}));
-            this.roomInvites.show(new RoomInvitesView({model: this._newRoom}));
+            this._roomSettingsView = new RoomSettingsView({model: this._newRoom, layout: this});
+            this._roomInvitesView = new RoomInvitesView({model: this._newRoom, layout: this});
+
+            this.roomSettings.show(this._roomSettingsView);
+            this.roomInvites.show(this._roomInvitesView);
+            this._roomInvitesView.setDisable(true);
         }
     });
 });
