@@ -4,13 +4,13 @@
         BOOL drawing;
         RoomModel *roomModel;
         CGPoint lastPoint;
+        DrawLogic *drawLogic;
     }
 
     - (void) initializeController:(RoomModel *)roomInfo withSocket:(SIOSocket *)socket;
     - (void) getCurrentRoomState;
     - (void) setupGetAllDrawCommandsListener;
     - (void) handleDrawCommand:(NSDictionary *)drawCommand;
-    - (NSString *) getToolType:(NSDictionary *)tool;
 @end
 
 @implementation RoomViewController
@@ -36,8 +36,9 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
+    
+    drawLogic = [[DrawLogic alloc] initWithDrawCanvas:self.whiteboardCanvas andTempCanvas:self.tempDrawCanvas];
     [[self roomTitleLabel] setText:[NSString stringWithFormat:@"Room %@", roomModel.roomId]];
-    drawing = NO;
     [self getCurrentRoomState];
 }
 

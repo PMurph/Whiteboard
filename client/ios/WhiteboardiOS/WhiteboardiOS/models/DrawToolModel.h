@@ -23,7 +23,7 @@
         PURPLE
     } Colours;
 
-    @property (readonly, nonatomic) Colours myColour;
+    @property (readonly, nonatomic) NSArray *myColour;
     @property (readonly, nonatomic) Tools myTool;
     @property (readonly, nonatomic) NSNumber* thickness;
 

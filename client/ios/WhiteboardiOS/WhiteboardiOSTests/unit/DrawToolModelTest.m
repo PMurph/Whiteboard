@@ -2,11 +2,11 @@
 
 #import "DrawToolModel.h"
 
-@interface DrawObjectTest : XCTestCase
+@interface DrawToolModelTest : XCTestCase
     @property (nonatomic, readwrite) DrawToolModel *testDrawToolModel;
 @end
 
-@implementation DrawObjectTest
+@implementation DrawToolModelTest
 
 - (void)setUp {
     [super setUp];
@@ -18,7 +18,9 @@
 }
 
 - (void)testDefaultDrawObjectReturnsBlack {
-    XCTAssertEqual([self.testDrawToolModel myColour], BLACK);
+    XCTAssertEqual([[[self.testDrawToolModel myColour] objectAtIndex:0] floatValue], 0.0f);
+    XCTAssertEqual([[[self.testDrawToolModel myColour] objectAtIndex:1] floatValue], 0.0f);
+    XCTAssertEqual([[[self.testDrawToolModel myColour] objectAtIndex:2] floatValue], 0.0f);
 }
 
 - (void)testDefaultDrawObjectReturnsDraw {
@@ -27,7 +29,9 @@
 
 - (void)testSettingValidNewColour {
     [self.testDrawToolModel setColour:@"blue"];
-    XCTAssertEqual([self.testDrawToolModel myColour], BLUE);
+    XCTAssertEqual([[[self.testDrawToolModel myColour] objectAtIndex:0] floatValue], 0.0f);
+    XCTAssertEqual([[[self.testDrawToolModel myColour] objectAtIndex:1] floatValue], 0.0f);
+    XCTAssertEqual([[[self.testDrawToolModel myColour] objectAtIndex:2] floatValue], 1.0f);
 }
 
 - (void)testSettingValidNewTool {
@@ -37,7 +41,9 @@
 
 - (void)testSettingInvalidNewColour {
     [self.testDrawToolModel setColour:@"not a colour"];
-    XCTAssertEqual([self.testDrawToolModel myColour], BLACK);
+    XCTAssertEqual([[[self.testDrawToolModel myColour] objectAtIndex:0] floatValue], 0.0f);
+    XCTAssertEqual([[[self.testDrawToolModel myColour] objectAtIndex:1] floatValue], 0.0f);
+    XCTAssertEqual([[[self.testDrawToolModel myColour] objectAtIndex:2] floatValue], 0.0f);
 }
 
 - (void)testSettingInvalidNewTool {

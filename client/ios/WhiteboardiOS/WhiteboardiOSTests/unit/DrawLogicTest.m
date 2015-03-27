@@ -34,7 +34,9 @@
 }
 
 - (void)testCreateDrawToolModelReturnsDrawToolModelWithCorrectColour {
-    XCTAssertEqual(self.testDrawToolModel.myColour, BLUE);
+    XCTAssertEqual([[self.testDrawToolModel.myColour objectAtIndex:0] floatValue], 0.0f);
+    XCTAssertEqual([[self.testDrawToolModel.myColour objectAtIndex:1] floatValue], 0.0f);
+    XCTAssertEqual([[self.testDrawToolModel.myColour objectAtIndex:2] floatValue], 1.0f);
 }
 
 - (void)testCreateDrawToolModelReturnsDrawToolModelWithCorrectTool {

@@ -10,12 +10,12 @@
 
     -(id)init {
         colourMap = @{
-            @"black" : [NSNumber numberWithInt:BLACK],
-            @"blue" : [NSNumber numberWithInt:BLUE],
-            @"red" : [NSNumber numberWithInt:RED],
-            @"yellow" : [NSNumber numberWithInt:YELLOW],
-            @"green" : [NSNumber numberWithInt:GREEN],
-            @"purple" : [NSNumber numberWithInt:PURPLE],
+            @"black" : @[@0.0f, @0.0f, @0.0f],
+            @"blue" : @[@0.0f, @0.0f, @1.0f],
+            @"red" : @[@1.0f, @0.0f, @0.0f],
+            @"yellow" : @[@1.0f, @1.0f, @0.0f],
+            @"green" : @[@0.0f, @1.0f, @0.0f],
+            @"purple" : @[@(102.0f/255.0f), @0.0f, @1.0f],
         };
 
         toolMap = @{
@@ -23,7 +23,7 @@
             @"erase" :[NSNumber numberWithInt:ERASE],
         };
 
-        _myColour = BLACK;
+        _myColour = [colourMap objectForKey:@"black"];
         _myTool = DRAW;
         [self setThickness:@1];
     
@@ -34,7 +34,7 @@
         newColour = newColour.lowercaseString;
     
         if ([colourMap objectForKey:newColour]) {
-            _myColour = [[colourMap objectForKey:newColour] unsignedIntegerValue];
+            _myColour = [colourMap objectForKey:newColour];
         }
     }
 

@@ -6,6 +6,7 @@
 
 #import "AppDelegate.h"
 #import "RoomModel.h"
+#import "DrawLogic.h"
 
 #define GET_ALL_DRAW_COMMANDS @"getAllDrawCommands"
 #define DRAW_COMMAND_KEY @"drawCommands"

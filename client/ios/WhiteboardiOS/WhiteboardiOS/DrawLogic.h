@@ -10,11 +10,15 @@
 #include "DrawModel.h"
 
 @interface DrawLogic : NSObject
+    @property (nonatomic, weak, readwrite) UIImageView *tempDrawCanvas;
+    @property (nonatomic, weak, readwrite) UIImageView *drawCanvas;
+
     + (DrawToolModel *) createDrawToolModel:(NSDictionary *)toolProperties;
     + (DrawModel *) createDrawModel:(DrawToolModel *)drawToolModel;
     + (DrawModel *) createDrawModel:(DrawToolModel *)drawToolModel withCoordinates:(NSArray *)coordinates;
 
     - (id) init;
+    - (id) initWithDrawCanvas:(UIImageView *)canvas andTempCanvas:(UIImageView *)tempCanvas;
     - (void) startDrawing:(DrawToolModel *)drawModel atPoint:(CGPoint)startPoint;
     - (void) updateDrawing:(CGPoint)newPoint;
     - (DrawModel *) endDrawing:(CGPoint)finalPoint;

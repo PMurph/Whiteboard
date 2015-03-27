@@ -6,8 +6,7 @@
 
 @implementation DrawModel
 
-    - (id) init
-    {
+    - (id) init {
         [self initDrawModel];
         _drawTool = [[DrawToolModel alloc] init];
     
