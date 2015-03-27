@@ -54,7 +54,6 @@
         NSArray *drawCommands = [[args objectAtIndex:0] objectForKey:DRAW_COMMANDS_KEY];
         if(drawCommands) {
             for(id drawCommand in drawCommands) {
-                NSLog(@"Draw Command %@", drawCommand);
                 [self handleDrawCommand:[drawCommand objectForKey:DRAW_MESSAGE_KEY]];
             }
         }
@@ -63,7 +62,7 @@
 
 - (void) setupDrawCommandListener {
     [self.socket on:DRAW_COMMAND callback:^(SIOParameterArray *args) {
-        NSLog(@"Draw Command %@", [args objectAtIndex:0]);
+        [self handleDrawCommand:[[[args objectAtIndex:0] objectForKey:DRAW_COMMAND] objectForKey:DRAW_MESSAGE_KEY]];
     }];
 }
 
