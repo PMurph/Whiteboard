@@ -34,6 +34,21 @@
     XCTAssertEqual([[[self.testDrawToolModel myColour] objectAtIndex:2] floatValue], 1.0f);
 }
 
+- (void)testGetRedReturnsCorrectValue {
+    [self.testDrawToolModel setColour:@"red"];
+    XCTAssertEqual([[self.testDrawToolModel getRed] floatValue], 1.0f);
+}
+
+- (void)testGetGreenReturnsCorrectValue {
+    [self.testDrawToolModel setColour:@"green"];
+    XCTAssertEqual([[self.testDrawToolModel getGreen] floatValue], 1.0f);
+}
+
+- (void)testGetBlueReturnsCorrectValue {
+    [self.testDrawToolModel setColour:@"blue"];
+    XCTAssertEqual([[self.testDrawToolModel getBlue] floatValue], 1.0f);
+}
+
 - (void)testSettingValidNewTool {
     [self.testDrawToolModel setTool:@"erase"];
     XCTAssertEqual([self.testDrawToolModel myTool], ERASE);

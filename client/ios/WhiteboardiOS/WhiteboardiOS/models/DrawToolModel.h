@@ -13,21 +13,15 @@
         DRAW,
         ERASE
     } Tools;
-    
-    typedef enum COLOURS : NSUInteger {
-        BLACK,
-        BLUE,
-        RED,
-        YELLOW,
-        GREEN,
-        PURPLE
-    } Colours;
 
     @property (readonly, nonatomic) NSArray *myColour;
     @property (readonly, nonatomic) Tools myTool;
     @property (readonly, nonatomic) NSNumber* thickness;
 
     - (id) init;
+    - (NSNumber *) getRed;
+    - (NSNumber *) getGreen;
+    - (NSNumber *) getBlue;
     - (void) setColour:(NSString*)newColour;
     - (void) setTool:(NSString*)newTool;
     - (void) setThickness:(NSNumber *)newThickness;

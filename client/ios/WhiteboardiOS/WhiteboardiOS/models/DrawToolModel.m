@@ -30,7 +30,19 @@
         return self;
     }
 
-    - (void)setColour:(NSString*)newColour {
+    - (NSNumber *) getRed {
+        return [_myColour objectAtIndex:0];
+    }
+
+    - (NSNumber *) getGreen {
+        return [_myColour objectAtIndex:1];
+    }
+
+    - (NSNumber *) getBlue {
+        return [_myColour objectAtIndex:2];
+    }
+
+    - (void) setColour:(NSString*)newColour {
         newColour = newColour.lowercaseString;
     
         if ([colourMap objectForKey:newColour]) {
@@ -38,7 +50,7 @@
         }
     }
 
-    - (void)setTool:(NSString*)newTool {
+    - (void) setTool:(NSString*)newTool {
         newTool = newTool.lowercaseString;
     
         if ([toolMap objectForKey:newTool]) {

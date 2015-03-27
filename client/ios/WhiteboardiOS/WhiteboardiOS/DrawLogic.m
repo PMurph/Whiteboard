@@ -9,6 +9,7 @@
     - (void) startFreehandDrawing:(CGPoint)startPoint;
     - (void) newSample:(CGPoint)newPoint;
     - (void) endFreehandDrawing:(CGPoint)endPoint;
+    - (void) pasteDrawingToDrawCanvas;
 @end
 
 @implementation DrawLogic
@@ -91,32 +92,60 @@
     }
 
     - (void) newSample:(CGPoint)newPoint {
+        DrawToolModel *drawTool = currDrawModel.drawTool;
+    
         UIGraphicsBeginImageContext(self.drawCanvas.frame.size);
         [self.tempDrawCanvas.image drawInRect:CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height)];
         CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
         CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), newPoint.x, newPoint.y);
         CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), currDrawModel.drawTool.thickness.intValue);
-        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.0, 0.0, 0.0, 1.0);
+        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), drawTool.thickness.intValue);
+        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), [drawTool.getRed floatValue], [drawTool.getGreen floatValue], [drawTool.getBlue floatValue], 1.0);
         CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeNormal);
     
         CGContextStrokePath(UIGraphicsGetCurrentContext());
         self.tempDrawCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
         [self.tempDrawCanvas setAlpha:1.0];
         UIGraphicsEndImageContext();
+        
+        lastPoint = newPoint;
     }
 
     - (DrawModel *) endDrawing:(CGPoint)finalPoint {
         DrawModel *finalModel = nil;
         if (drawing) {
             [currDrawModel addCoordinateX:@(finalPoint.x) Y:@(finalPoint.y)];
+            
+            [self endFreehandDrawing:finalPoint];
+            [self pasteDrawingToDrawCanvas];
+            
             finalModel = currDrawModel;
             currDrawModel = nil;
-            [self endFreehandDrawing:finalPoint];
+            drawing = NO;
         }
         return finalModel;
     }
 
     - (void) endFreehandDrawing:(CGPoint)endPoint {
+        UIGraphicsBeginImageContext(self.drawCanvas.frame.size);
+        [self.tempDrawCanvas.image drawInRect:CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height)];
+        CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 10.0);
+        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 1.0, 1.0, 1.0, 1.0);
+        CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
+        CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), endPoint.x, endPoint.y);
+        CGContextStrokePath(UIGraphicsGetCurrentContext());
+        CGContextFlush(UIGraphicsGetCurrentContext());
+        self.tempDrawCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+
+    - (void) pasteDrawingToDrawCanvas {
+        UIGraphicsBeginImageContext(self.drawCanvas.frame.size);
+        [self.drawCanvas.image drawInRect:CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+        [self.tempDrawCanvas.image drawInRect:CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+        self.drawCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
+        self.tempDrawCanvas.image = nil;
+        UIGraphicsEndImageContext();
     }
 @end
