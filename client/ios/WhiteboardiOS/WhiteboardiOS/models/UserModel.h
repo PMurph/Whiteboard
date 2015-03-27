@@ -10,7 +10,7 @@
     @property (nonatomic, strong) NSString *authToken;
     @property (nonatomic, strong) NSString *userId;
 
-    - (id)init;
+    - (id) init;
 @end
 
 #endif

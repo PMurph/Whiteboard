@@ -6,16 +6,21 @@
 
 #import "AppDelegate.h"
 #import "RoomModel.h"
+#import "DrawLogic.h"
+
+#define GET_ALL_DRAW_COMMANDS @"getAllDrawCommands"
+#define DRAW_COMMANDS_KEY @"drawCommands"
+#define DRAW_COMMAND @"drawCommand"
+#define ROOM_ID_KEY @"roomID"
 
 @interface RoomViewController : UIViewController
     
     @property (weak, nonatomic) IBOutlet UILabel *roomTitleLabel;
-    @property (strong, nonatomic) RoomModel *roomModel;
-    @property (strong, nonatomic) SIOSocket *socketIO;
+    @property (strong, nonatomic) SIOSocket *socket;
     @property (weak, nonatomic) IBOutlet UIImageView *whiteboardCanvas;
     @property (weak, nonatomic) IBOutlet UIImageView *tempDrawCanvas;
-    
-    + (RoomViewController *)createRoomViewController:(RoomModel *)roomToCreate;
+
+    + (RoomViewController *)createRoomViewController:(RoomModel *)roomToCreate withSocket:(SIOSocket *)socket;
 
 @end
 

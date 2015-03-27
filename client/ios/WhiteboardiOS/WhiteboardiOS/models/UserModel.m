@@ -10,7 +10,7 @@
     @synthesize authToken;
     @synthesize userId;
 
-    - (id)init {
+    - (id) init {
         displayName = @"";
         anonymous = YES;
         authToken = @"";

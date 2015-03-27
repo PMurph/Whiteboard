@@ -7,6 +7,7 @@
 
 @interface RoomViewControllerTest : XCTestCase
     @property (nonatomic, readwrite) id roomModelMock;
+    @property (nonatomic, readwrite) id socketMock;
     @property (nonatomic, readwrite) NSString *testRoomId;
     @property (nonatomic, readwrite) NSString *testRoomTitleFormatString;
     @property (nonatomic, readwrite) RoomViewController *testRoomViewController;
@@ -18,10 +19,11 @@
     [super setUp];
     self.testRoomId = @"4";
     self.testRoomTitleFormatString = @"Room %@";
+    self.socketMock = OCMClassMock([SIOSocket class]);
     self.roomModelMock = OCMClassMock([RoomModel class]);
     OCMStub([[self roomModelMock] roomId]).andReturn([self testRoomId]);
     
-    self.testRoomViewController = [RoomViewController createRoomViewController:[self roomModelMock]];
+    self.testRoomViewController = [RoomViewController createRoomViewController:[self roomModelMock] withSocket:self.socketMock];
 }
 
 - (void)tearDown {
@@ -29,15 +31,13 @@
 }
 
 - (void)testCreateNewRoomControllerDoesntReturnNullWhenGivenValidRoom {
-    XCTAssertNotNil([RoomViewController createRoomViewController:self.roomModelMock]);
+    XCTAssertNotNil([RoomViewController createRoomViewController:self.roomModelMock withSocket:self.socketMock]);
 }
 
-- (void)testCreateNewRoomControllerReturnsRoomControllerWithRoomModel {
-    XCTAssertEqual([[RoomViewController createRoomViewController:[self roomModelMock]] roomModel], [self roomModelMock]);
-}
-
-- (void)testCreateNewRoomControllerCreatesSocketForRoom {
-    //XCTAssertNotNil([[self testRoomViewController] socketIO]);
+- (void)testCreateRoomControllerReturnsRoomControllerWithSocket {
+    RoomViewController *testController = [RoomViewController createRoomViewController:self.roomModelMock withSocket:self.socketMock];
+    
+    XCTAssertEqual(testController.socket, self.socketMock);
 }
 
 @end

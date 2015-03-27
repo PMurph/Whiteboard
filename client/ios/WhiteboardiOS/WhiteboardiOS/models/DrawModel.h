@@ -1,25 +1,24 @@
-//
-//  NSObject+DrawModel.h
-//  WhiteboardiOS
-//
-//  Created by Chris Funk on 2015-03-13.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
+#ifndef WhiteboardiOS_DrawModel_h
+#define WhiteboardiOS_DrawModel_h
 
-#import "DrawObject.h"
+#import "DrawToolModel.h"
 
-#define MAX_THICKNESS 100
-#define MIN_THICKNESS 0
+#define DRAW_MESSAGE_KEY @"message"
+#define TOOL_KEY @"tool"
+#define ROOM_ID_KEY @"roomID"
 
 @interface DrawModel : NSObject
-    @property (readonly, nonatomic, copy) NSNumber* thickness;
     @property (readonly, nonatomic, copy) NSMutableArray* listOfCoordinates;
-    @property (readonly, nonatomic, copy) DrawObject* drawingInformation;
+    @property (readonly, nonatomic, copy) DrawToolModel* drawTool;
 
     - (id)init;
-    - (id)initWithDrawInfo:(DrawObject *)drawInfo;
+    - (id)initWithDrawTool:(DrawToolModel *)drawToolModel;
     - (void)addCoordinateX:(NSNumber*)x  Y:(NSNumber*) y;
     - (void)setThickness:(NSNumber*)newThickness;
     - (void)setColour:(NSString*)newColour;
     - (void)setTool:(NSString*)newTool;
+    - (void)setCoordinates:(NSArray *)coordinates;
+    - (NSDictionary *)toDrawMessage:(NSString *)roomId;
 @end
+
+#endif

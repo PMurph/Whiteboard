@@ -3,7 +3,6 @@
 @interface RestkitWrapper ()
     - (void) configureRestKit;
     - (void) setupRoomModelResponseDescriptor;
-    - (void) setupUserModelRequestDescriptor;
     - (void) setupUserModelResponseDescriptor;
 @end
 
@@ -22,7 +21,6 @@
         objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
         objectManager.requestSerializationMIMEType = RKMIMETypeJSON;
         [self setupRoomModelResponseDescriptor];
-        [self setupUserModelRequestDescriptor];
         [self setupUserModelResponseDescriptor];
     }
 
@@ -35,24 +33,11 @@
         RKResponseDescriptor* roomResponseDescriptor = [RKResponseDescriptor
             responseDescriptorWithMapping:roomModelMapping
             method:RKRequestMethodGET
-            pathPattern: nil
+            pathPattern: @"/api/room"
             keyPath: nil
             statusCodes:[NSIndexSet indexSetWithIndex:200]];
     
         [objectManager addResponseDescriptor:roomResponseDescriptor];
-    }
-
-    - (void) setupUserModelRequestDescriptor {
-        RKObjectMapping *userModelMapping = [RKObjectMapping requestMapping];
-        [userModelMapping addAttributeMappingsFromDictionary:@{
-            @"anonymous": @"anonymous"
-        }];
-        
-        RKRequestDescriptor *userRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:userModelMapping objectClass:[UserModel class]
-            rootKeyPath:nil
-            method:RKRequestMethodPOST];
-        
-        [objectManager addRequestDescriptor:userRequestDescriptor];
     }
 
     - (void) setupUserModelResponseDescriptor {
@@ -67,7 +52,7 @@
         RKResponseDescriptor *userResponseDescriptor = [RKResponseDescriptor
             responseDescriptorWithMapping:userModelMapping
             method:RKRequestMethodPOST
-            pathPattern: nil
+            pathPattern: @"/api/user"
             keyPath: nil
             statusCodes:[NSIndexSet indexSetWithIndex:200]];
         
