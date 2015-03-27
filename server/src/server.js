@@ -3,16 +3,16 @@
 var bodyParser = require('body-parser'),
     Express = require('express'),
     mongoose = require('mongoose'),
+    UserManager = require('./session/UserManager'),
+    UserSession = require('./session/UserSession'),
+    UserRequest = require('./session/UserRequest'),
     RoomManager = require('./room_objects/RoomManager');
 
-var Server = function (exp, userRequest, socketIO, dbOptions) {
+var Server = function (exp, socketIO, dbOptions) {
     this.app = exp;
     this._socketIO = socketIO;
     this._setupHttpServer();
     this._setupDatabase(dbOptions);
-
-    this._userRequest = userRequest;
-    this._userSession = userRequest.userSession;
 
     this._setupMiddleware();
 };
@@ -52,8 +52,14 @@ Server.prototype = {
         this._hostname = hostname || this._hostname;
         this._connectDB(this._dbHostname, this._dbName);
         this._httpServ = this.app.listen(this._port, this._hostname, null, listenCB);
+
         this._socketManager = this._socketIO.listen(this._httpServ);
-        this._roomManager = new RoomManager(this._socketManager, this._userSession, mongoose);
+
+        var userManager = new UserManager(this._db);
+        this._userSession = new UserSession(userManager);
+        this._userRequest = new UserRequest(userManager, this._userSession);
+
+        this._roomManager = new RoomManager(this._socketManager, this._userSession, this._db);
 
         this._setupRoutes();
     },
