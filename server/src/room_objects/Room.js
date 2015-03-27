@@ -8,8 +8,11 @@ var Room = function(dbDocument, whiteboard, chat) {
 
 Room.prototype = {
     connectUserToRoom: function(connectingUser, cb) {
-        this._doc.connectedUsers.push(connectingUser.id);
-        this._doc.save(cb);
+        var connectedUsers = this.getConnectedUsers();
+        if (connectedUsers.indexOf(connectingUser.id) === -1) {
+            this._doc.connectedUsers.push(connectingUser.id);
+            this._doc.save(cb);
+        }
     },
 
     disconnectUserFromRoom: function(disconnectingUser, cb) {
