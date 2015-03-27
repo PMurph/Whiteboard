@@ -27,7 +27,7 @@ describe("Room", function() {
                 }
             }; 
         });
-        documentMock.connectedUsers = new Array();
+        documentMock.connectedUsers = new Array(); // jshint ignore:line
         documentMock.connectedUsers.push(CREATING_USER.id);
 
         room = new Room(documentMock, whiteboardMock, chatMock);
@@ -77,7 +77,6 @@ describe("Room", function() {
         var TEST_DRAW_COMMAND = "This is a test";
         var TEST_NUM_DRAW_COMMANDS_SEEN = 3;
         var drawCommandMessageMock;
-        var drawCommandResponseMock;
         var drawCommandLogicMock;
 
         beforeEach(function(){

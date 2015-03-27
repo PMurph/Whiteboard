@@ -10,7 +10,7 @@ describe("Whiteboard", function() {
             return this;
         };
         roomDocMock = {
-            drawCommands: new Array(),
+            drawCommands: new Array(), // jshint ignore:line
             save: jasmine.createSpy('save')
         };
         testWhiteboard = new Whiteboard(roomDocMock);

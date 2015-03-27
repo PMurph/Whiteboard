@@ -48,7 +48,7 @@ RoomManager.prototype = {
             }
         }else{
             if (room.getType() === "public") {
-                return true
+                return true;
             }else if (room.getType() === "private") {
                 var invitedUsers = room.getInvitedUsers();
                 var isInvited =  false;

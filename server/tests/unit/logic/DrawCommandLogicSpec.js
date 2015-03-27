@@ -2,7 +2,6 @@
 var DrawCommandLogic = require("../../../src/logic/DrawCommandLogic.js");
 
 describe("DrawCommandLogic", function() {
-    var TEST_ROOM_ID = 45;
     var TEST_RESPONSE_MESSAGE = {some: "test", response: "message"};
 
     var roomMock;

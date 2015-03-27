@@ -22,7 +22,7 @@ describe("RoomManager", function() {
     
     beforeEach(function() {
         testRoomMock = {
-            getId: function () {return testRoomId}
+            getId: function () {return testRoomId;}
         };
         mockBroadcast = jasmine.createSpyObj("SocketBroadcast", ["to"]);
         mockResponse = jasmine.createSpyObj("Response", ["sendStatus", "json"]);
@@ -54,7 +54,7 @@ describe("RoomManager", function() {
                 }
             };
         });
-        roomModel.findById = jasmine.createSpy("findById").and.callFake(function(id) {
+        roomModel.findById = jasmine.createSpy("findById").and.callFake(function() {
             return {
                 exec: function(cb) {
                     cb(null, testRoomMock);
@@ -82,10 +82,6 @@ describe("RoomManager", function() {
     });
     
     describe("getting a list of rooms", function() {
-        var testRoomId1;
-        var testRoomId2;
-        var testRoomId3;
-        
         var roomList;
         var cb = jasmine.createSpy("databaseCallback");
         
