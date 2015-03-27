@@ -2,18 +2,35 @@
 var Room = require("../../../src/room_objects/Room.js");
 
 describe("Room", function() {
-    var CREATING_USER = {userId: "2", username: "testuser"};
-    var TEST_USER1 = {userId: "4", username: "otheruser"};
+    var CREATING_USER = {id: "2", username: "testuser"};
+    var TEST_USER1 = {id: "4", username: "otheruser"};
     var ROOM_ID = 3;
     var whiteboardMock;
-    var messageFactoryMock;
+    var chatMock;
+    var documentMock;
     var room;
 
     beforeEach(function() {
         whiteboardMock = jasmine.createSpyObj('Whiteboard', ['addDrawCommand', 'getNumDrawCommandsSeen', "getAllDrawCommands"]);
-        messageFactoryMock = jasmine.createSpyObj('MessageFactory', ['createResponseFromMessage']);
+        whiteboardMock.addDrawCommand.and.callFake(function (drawCommand, cb) {
+            cb(null, room);
+        });
+        chatMock = jasmine.createSpyObj('Chat', ['addChatMessage']);
+        documentMock = jasmine.createSpyObj('dbDocument', ['save', 'fetch']);
+        documentMock.id = ROOM_ID;
+        documentMock.creatingUser = CREATING_USER;
+        Array.prototype.id = jasmine.createSpy().and.callFake(function (id) {
+            return {
+                remove: function () {
+                    var index = documentMock.connectedUsers.indexOf(id);
+                    documentMock.connectedUsers.splice(index, 1);
+                }
+            }; 
+        });
+        documentMock.connectedUsers = new Array();
+        documentMock.connectedUsers.push(CREATING_USER.id);
 
-        room = new Room(ROOM_ID, CREATING_USER, whiteboardMock, messageFactoryMock);
+        room = new Room(documentMock, whiteboardMock, chatMock);
     });
 
     describe("Room Id", function() {
@@ -24,15 +41,15 @@ describe("Room", function() {
 
     describe("Users", function() {
         it("should return the creating user's information", function() {
-            expect(room.getCreatingUser()).toEqual(CREATING_USER);
+            expect(room.getCreatingUserId()).toEqual(CREATING_USER);
         });
 
         it("should return the creating user's information in a list if no other users have been added", function() {
-            expect(room.getConnectedUsers()).toEqual([CREATING_USER]);
+            expect(room.getConnectedUsers()).toEqual([CREATING_USER.id]);
         });
 
         describe("Users connecting and disconnecting", function() {
-            var TEST_USER2 = {userId: "1", username: "newuser"};
+            var TEST_USER2 = {id: "1", username: "newuser"};
 
             beforeEach(function() {
                 room.connectUserToRoom(TEST_USER1);
@@ -40,17 +57,18 @@ describe("Room", function() {
             });
 
             it("should return the creating user's information and all other connected users", function() {
-                expect(room.getConnectedUsers()).toEqual([CREATING_USER, TEST_USER1, TEST_USER2]);
+                expect(room.getConnectedUsers()).toEqual([CREATING_USER.id, TEST_USER1.id, TEST_USER2.id]);
             });
 
             it("should not return user's information that have disconnected from room", function() {
-                room.disconnectUserFromRoom(TEST_USER1);
-                expect(room.getConnectedUsers()).toEqual([CREATING_USER, TEST_USER2]);
+                var cb = jasmine.createSpy();
+                room.disconnectUserFromRoom(TEST_USER1, cb);
+                expect(room.getConnectedUsers()).toEqual([CREATING_USER.id, TEST_USER2.id]);
             });
 
             it("should not contain two users with the same information", function() {
                 room.connectUserToRoom(TEST_USER1);
-                expect(room.getConnectedUsers()).toEqual([CREATING_USER, TEST_USER1, TEST_USER2]);
+                expect(room.getConnectedUsers()).toEqual([CREATING_USER.id, TEST_USER1.id, TEST_USER2.id]);
             });
         });
     });
@@ -70,7 +88,6 @@ describe("Room", function() {
 
             drawCommandMessageMock.getDrawCommand.and.returnValue(TEST_DRAW_COMMAND);
             whiteboardMock.getNumDrawCommandsSeen.and.returnValue(TEST_NUM_DRAW_COMMANDS_SEEN);
-            messageFactoryMock.createResponseFromMessage.and.returnValue(drawCommandResponseMock);
 
             room.handleDrawCommand(drawCommandMessageMock, drawCommandLogicMock);
         });
@@ -81,7 +98,7 @@ describe("Room", function() {
             });
 
             it('should pass the draw command from to the whiteboard', function() {
-                expect(whiteboardMock.addDrawCommand).toHaveBeenCalledWith(TEST_DRAW_COMMAND);
+                expect(whiteboardMock.addDrawCommand).toHaveBeenCalledWith(TEST_DRAW_COMMAND, jasmine.any(Function));
             });
 
             it('should get the number of draw commands seen by the whiteboard', function() {

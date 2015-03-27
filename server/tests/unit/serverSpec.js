@@ -24,7 +24,7 @@ describe("Server", function() {
         spyOn(mockMongoose, "connect");
         mockSocketIO.listen.and.returnValue(mockSocketManager);
         
-        server = new Server(mockExpress, mockUserRequest, mockSocketIO, TEST_DB_OPTIONS); 
+        server = new Server(mockExpress, mockSocketIO, TEST_DB_OPTIONS); 
     });
 
     describe("server startup", function() {

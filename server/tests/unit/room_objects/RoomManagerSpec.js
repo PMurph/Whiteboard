@@ -1,5 +1,6 @@
 'use strict';
-var RoomManager = require("../../../src/room_objects/RoomManager.js");
+var RoomManager = require("../../../src/room_objects/RoomManager.js"),
+    mockMongoose = require("mongoose-mock");
 
 describe("RoomManager", function() {
     var TEST_AUTH_TOKEN = "Test";
@@ -8,6 +9,7 @@ describe("RoomManager", function() {
 
     var testRoomManager;
     var testRoomId;
+    var testRoomMock;
     var mockBroadcast;
     var mockRequest;
     var mockResponse;
@@ -15,8 +17,13 @@ describe("RoomManager", function() {
     var mockSocketManager;
     var mockUserManager;
     var mockUserSession;
+    var mockUser;
+    var roomModel;
     
     beforeEach(function() {
+        testRoomMock = {
+            getId: function () {return testRoomId}
+        };
         mockBroadcast = jasmine.createSpyObj("SocketBroadcast", ["to"]);
         mockResponse = jasmine.createSpyObj("Response", ["sendStatus", "json"]);
         mockSocket = jasmine.createSpyObj("Socket", ["join", "on", "emit"]);
@@ -27,10 +34,36 @@ describe("RoomManager", function() {
         mockUserSession = jasmine.createSpyObj("UserSession", ["getRequestToken"]);
         mockUserSession.getRequestToken.and.returnValue(TEST_AUTH_TOKEN);
         mockUserSession.userManager = mockUserManager;
+        mockUser = jasmine.createSpyObj("user", ["anonymous"]);
 
-        testRoomManager = new RoomManager(mockSocketManager, mockUserSession);
-        testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
-        testRoomId = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
+        testRoomManager = new RoomManager(mockSocketManager, mockUserSession, mockMongoose);
+        roomModel = mockMongoose.model("Room");
+        roomModel.prototype.save = jasmine.createSpy("save");
+        roomModel.find  = jasmine.createSpy("find").and.callFake(function () {
+            return {
+                sort: function() {
+                    return {
+                        select: function() {
+                            return {
+                                exec: function(cb) {
+                                    cb(null, testRoomMock);
+                                }
+                            };
+                        }
+                    };
+                }
+            };
+        });
+        roomModel.findById = jasmine.createSpy("findById").and.callFake(function(id) {
+            return {
+                exec: function(cb) {
+                    cb(null, testRoomMock);
+                }
+            };
+        });
+
+        testRoomManager._createNewRoom(TEST_USER_NAME);
+        testRoomId = 3;
     });
     
     it("should setup socket conntection callback on initialization", function() {
@@ -38,10 +71,13 @@ describe("RoomManager", function() {
     });
 
     describe("getting a room", function() {
-        it("should be able to get a room with a room id that has been created", function() {
-            var room = testRoomManager.getRoom(testRoomId);
-
-            expect(room.getId()).toEqual(testRoomId);
+        it("should be able to get a room by id that has been created", function(done) {
+            var cb = function(erro, room) {
+                expect(room.getId()).toEqual(testRoomId);
+             
+                done();
+            };
+            testRoomManager.getRoomById(testRoomId, cb);
         });
     });
     
@@ -51,41 +87,27 @@ describe("RoomManager", function() {
         var testRoomId3;
         
         var roomList;
+        var cb = jasmine.createSpy("databaseCallback");
         
         beforeEach(function() {
-            testRoomManager._roomId = 0;
-            testRoomManager._rooms = [];
-            testRoomId1 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
-            testRoomId2 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
-            testRoomId3 = testRoomManager.createNewRoom(TEST_USER_NAME, mockSocket);
-            
-            roomList = testRoomManager.getRooms();
+            roomList = testRoomManager.getRoomList(mockUser, cb);
         });
         
-        it("should return a list with 3 room ids", function() {
-            expect(roomList.length).toBe(3);
+        it("should query database", function() {
+            expect(roomModel.find).toHaveBeenCalled();
         });
-        
-        it("should contain the ids of the rooms created", function() {
-            expect(roomList.indexOf(testRoomManager.getRoom(testRoomId1))).toBeGreaterThan(-1);
-            expect(roomList.indexOf(testRoomManager.getRoom(testRoomId2))).toBeGreaterThan(-1);
-            expect(roomList.indexOf(testRoomManager.getRoom(testRoomId3))).toBeGreaterThan(-1);
-        });
-        
-        it("should not contain an id that is not one of the rooms that has been created", function() {
-            expect(roomList.indexOf(-5467)).not.toBeGreaterThan(-1);
+
+        it("should call database callback", function() {
+            expect(cb).toHaveBeenCalled();
         });
     });
 
     describe("joining a room", function() {
         it("should call the sockets join method with the room id if the room exists", function() {
-            testRoomManager.joinRoom(testRoomId, TEST_USER, mockSocket);
+            var testRoom = jasmine.createSpyObj("Room", ["getId", "connectUserToRoom"]);
+            testRoom.getId.and.returnValue(testRoomId);
+            testRoomManager.joinRoom(testRoom, TEST_USER, mockSocket);
             expect(mockSocket.join).toHaveBeenCalledWith(testRoomId);
-        });
-
-        it("should not call the sockets join method if the room doesn't exist", function() {
-            testRoomManager.joinRoom(42, TEST_USER, mockSocket);
-            expect(mockSocket.join).not.toHaveBeenCalled();
         });
     });
 
@@ -133,7 +155,10 @@ describe("RoomManager", function() {
         var testCreateFunction;
              
         beforeEach(function() {
-            spyOn(testRoomManager, "createNewRoom").and.callThrough();
+            spyOn(testRoomManager, "_createNewRoom").and.callThrough();
+            testRoomManager._createNewRoom.and.callFake(function(a, b, c, d, e, cb) {
+                cb(null, {id: testRoomId});
+            });
             mockUserManager.userSession = mockUserSession;
             testCreateFunction = testRoomManager.getRoomRouteF();
         });
@@ -155,7 +180,7 @@ describe("RoomManager", function() {
                     done();
                 });
                     
-                mockRequest = {method: "POST", query: {authToken: TEST_AUTH_TOKEN}};
+                mockRequest = {method: "POST", body: {authToken: TEST_AUTH_TOKEN, name: "Test Room 1"}};
                 testCreateFunction(mockRequest, mockResponse);
             });
             
@@ -169,15 +194,15 @@ describe("RoomManager", function() {
             });
             
             it("should create a room if a post request is sent with a valid authentication token", function() {
-                mockRequest = {method: "POST", query: {authToken: TEST_AUTH_TOKEN}};
+                mockRequest = {method: "POST", body: {authToken: TEST_AUTH_TOKEN}};
                 testCreateFunction(mockRequest, mockResponse);
-                expect(testRoomManager.createNewRoom).toHaveBeenCalled();
+                expect(testRoomManager._createNewRoom).toHaveBeenCalled();
             });
             
             it("should not create a room if a request is sent with a valid authentication token but is neither a post nor get", function() {
                 mockRequest = {method: "BAD", query: {authToken: TEST_AUTH_TOKEN}};
                 testCreateFunction(mockRequest, mockResponse);
-                expect(testRoomManager.createNewRoom).not.toHaveBeenCalled();
+                expect(testRoomManager._createNewRoom).not.toHaveBeenCalled();
             });
         });
         
@@ -200,7 +225,7 @@ describe("RoomManager", function() {
             it("should not create a room if a post request is sent with a valid authentication token", function() {
                 mockRequest = {method: "POST", query: {authToken: TEST_AUTH_TOKEN}};
                 testCreateFunction(mockRequest, mockResponse);
-                expect(testRoomManager.createNewRoom).not.toHaveBeenCalled();
+                expect(testRoomManager._createNewRoom).not.toHaveBeenCalled();
             });
         });
     });

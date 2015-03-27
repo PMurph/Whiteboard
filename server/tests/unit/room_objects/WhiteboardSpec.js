@@ -2,10 +2,18 @@
 var Whiteboard = require('../../../src/room_objects/Whiteboard.js');
 
 describe("Whiteboard", function() {
+    var roomDocMock;
     var testWhiteboard;
 
     beforeEach(function(){
-        testWhiteboard = new Whiteboard();
+        Array.prototype.toObject = function() {
+            return this;
+        };
+        roomDocMock = {
+            drawCommands: new Array(),
+            save: jasmine.createSpy('save')
+        };
+        testWhiteboard = new Whiteboard(roomDocMock);
     });
 
     describe("empty whiteboard", function() {
