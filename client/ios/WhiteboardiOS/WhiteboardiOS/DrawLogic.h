@@ -19,6 +19,7 @@
 
     - (id) init;
     - (id) initWithDrawCanvas:(UIImageView *)canvas andTempCanvas:(UIImageView *)tempCanvas;
+    - (void) drawDrawCommand:(DrawModel *)drawCommand;
     - (void) startDrawing:(DrawToolModel *)drawModel atPoint:(CGPoint)startPoint;
     - (void) updateDrawing:(CGPoint)newPoint;
     - (DrawModel *) endDrawing:(CGPoint)finalPoint;

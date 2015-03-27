@@ -6,6 +6,7 @@
         CGPoint lastPoint;
     }
 
+    - (CGPoint) getPointFromCoordinate:(NSDictionary *)coord;
     - (void) startFreehandDrawing:(CGPoint)startPoint;
     - (void) newSample:(CGPoint)newPoint;
     - (void) endFreehandDrawing:(CGPoint)endPoint;
@@ -70,6 +71,39 @@
         return self;
     }
 
+    - (void) drawDrawCommand:(DrawModel *)drawCommand {
+        NSMutableArray *coordinates = [drawCommand listOfCoordinates];
+        NSDictionary *currCoord;
+        CGPoint newPoint;
+        currDrawModel = drawCommand;
+        
+        if([coordinates count] > 0) {
+            currCoord = [coordinates objectAtIndex:0];
+            newPoint = [self getPointFromCoordinate:currCoord];
+            
+            [self startFreehandDrawing:newPoint];
+            for(int i = 1; i < [coordinates count] - 1; i++) {
+                currCoord = [coordinates objectAtIndex:i];
+                newPoint = [self getPointFromCoordinate:currCoord];
+                
+                [self newSample:newPoint];
+            }
+            
+            currCoord = [coordinates objectAtIndex:[coordinates count] - 1];
+            newPoint = [self getPointFromCoordinate:currCoord];
+            [self endFreehandDrawing:newPoint];
+        }
+    }
+
+    - (CGPoint) getPointFromCoordinate:(NSDictionary *)coord {
+        CGPoint point;
+        
+        point.x = ((NSNumber *)[coord objectForKey:@"x"]).floatValue;
+        point.y = ((NSNumber *)[coord objectForKey:@"y"]).floatValue;
+        
+        return point;
+    }
+
     - (void) startDrawing:(DrawToolModel *)drawModel atPoint:(CGPoint)startPoint {
         if(!drawing) {
             currDrawModel = [DrawLogic createDrawModel:drawModel];
@@ -99,8 +133,8 @@
         CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
         CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), newPoint.x, newPoint.y);
         CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), drawTool.thickness.intValue);
-        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), [drawTool.getRed floatValue], [drawTool.getGreen floatValue], [drawTool.getBlue floatValue], 1.0);
+        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), drawTool.thickness.floatValue);
+        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), [drawTool getRed].floatValue, [drawTool getGreen].floatValue, [drawTool getBlue].floatValue, 1.0);
         CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeNormal);
     
         CGContextStrokePath(UIGraphicsGetCurrentContext());
@@ -127,11 +161,13 @@
     }
 
     - (void) endFreehandDrawing:(CGPoint)endPoint {
+        DrawToolModel *drawTool = currDrawModel.drawTool;
+    
         UIGraphicsBeginImageContext(self.drawCanvas.frame.size);
         [self.tempDrawCanvas.image drawInRect:CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height)];
         CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 10.0);
-        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 1.0, 1.0, 1.0, 1.0);
+        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), drawTool.thickness.floatValue);
+        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), [drawTool getRed].floatValue, [drawTool getGreen].floatValue, [drawTool getBlue].floatValue, 1.0);
         CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
         CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), endPoint.x, endPoint.y);
         CGContextStrokePath(UIGraphicsGetCurrentContext());

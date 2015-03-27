@@ -68,8 +68,10 @@
 }
 
 - (void) handleDrawCommand:(NSDictionary *)drawCommand {
-    //NSDictionary *drawTool = [drawCommand objectForKey:TOOL_KEY];
+    DrawToolModel *newDrawToolModel = [DrawLogic createDrawToolModel:[drawCommand objectForKey:TOOL_KEY]];
+    DrawModel *drawModel = [DrawLogic createDrawModel:newDrawToolModel withCoordinates:[drawCommand objectForKey:VERTICES_KEY]];
     
+    [drawLogic drawDrawCommand:drawModel];
 }
 
 - (void) didReceiveMemoryWarning {
