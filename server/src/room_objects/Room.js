@@ -27,7 +27,7 @@ Room.prototype = {
         }
     },
 
-    getCreatingUser: function() {
+    getCreatingUserId: function() {
         return this._doc.creatingUser;
     },
 
@@ -35,8 +35,20 @@ Room.prototype = {
         return this._doc.connectedUsers;
     },
 
-    getId: function(){
+    getId: function() {
         return this._doc.id;
+    },
+
+    getType: function() {
+        return this._doc.type;
+    },
+
+    getAllowAnon: function() {
+        return this._doc.allowAnon;
+    },
+
+    getInvitedUsers: function() {
+        return this._doc.invitedUsers;
     },
 
     handleDrawCommand: function(drawCommandMessage, drawCommandLogic) {

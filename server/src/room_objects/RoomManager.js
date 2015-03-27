@@ -39,6 +39,37 @@ RoomManager.prototype = {
         this._RoomModel = db.model('Room', roomSchema);
     },
 
+    _checkRoomPermissions: function(room, user) {
+        if(user.anonymous === true) {
+            if (room.getType() === "public") {
+                return room.getAllowAnon() === true;
+            }else{
+                return false;
+            }
+        }else{
+            if (room.getType() === "public") {
+                return true
+            }else if (room.getType() === "private") {
+                var invitedUsers = room.getInvitedUsers();
+                var isInvited =  false;
+                var isCreatingUser = (room.getCreatingUserId() === user.id);
+
+                for(var i = 0; i < invitedUsers.length; i++) {
+                    var inviteId = invitedUsers[i].id;
+                    if (inviteId === user.id) {
+                        isInvited = true;
+                        //Break out of loop
+                        i = invitedUsers.length;
+                    }
+                }
+
+                return isInvited || isCreatingUser;
+            }else{
+                return false;
+            }
+        }
+    },
+
     _handleJoinRoomRequest: function(msgData, rm) {
         var self = this;
 
@@ -49,9 +80,11 @@ RoomManager.prototype = {
                 var dbCB = function(error, room) {
                     if(error || !room) {
                         socket.emit(Events.JoinRequest, "rejected", "no room");
-                    }else{
+                    }else if (self._checkRoomPermissions(room, user)){
                         rm.setUser(user);
                         self.joinRoom(room, user, socket);
+                    }else{
+                        socket.emit(Events.JoinRequest, "rejected", "Permission Denied");
                     }
                 };
 
