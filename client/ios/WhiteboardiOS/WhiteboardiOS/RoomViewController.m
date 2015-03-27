@@ -9,6 +9,7 @@
     - (void) initializeController:(RoomModel *)roomInfo withSocket:(SIOSocket *)socket;
     - (void) getCurrentRoomState;
     - (void) setupGetAllDrawCommandsListener;
+    - (void) setupDrawCommandListener;
     - (void) handleDrawCommand:(NSDictionary *)drawCommand;
 @end
 
@@ -44,17 +45,25 @@
 
 - (void) getCurrentRoomState {
     [self setupGetAllDrawCommandsListener];
+    [self setupDrawCommandListener];
     [self.socket emit:GET_ALL_DRAW_COMMANDS];
 }
 
 - (void) setupGetAllDrawCommandsListener {
-    [self.socket on:GET_ALL_DRAW_COMMANDS callback:^(SIOParameterArray * args) {
-        NSArray *drawCommands = [[args objectAtIndex:0] objectForKey:DRAW_COMMAND_KEY];
+    [self.socket on:GET_ALL_DRAW_COMMANDS callback:^(SIOParameterArray *args) {
+        NSArray *drawCommands = [[args objectAtIndex:0] objectForKey:DRAW_COMMANDS_KEY];
         if(drawCommands) {
             for(id drawCommand in drawCommands) {
-                [self handleDrawCommand:[drawCommand objectForKey:MESSAGE_KEY]];
+                NSLog(@"Draw Command %@", drawCommand);
+                [self handleDrawCommand:[drawCommand objectForKey:DRAW_MESSAGE_KEY]];
             }
         }
+    }];
+}
+
+- (void) setupDrawCommandListener {
+    [self.socket on:DRAW_COMMAND callback:^(SIOParameterArray *args) {
+        NSLog(@"Draw Command %@", [args objectAtIndex:0]);
     }];
 }
 
@@ -86,6 +95,8 @@
     CGPoint currentPoint = [touch locationInView:self.whiteboardCanvas];
     
     DrawModel *drawModel = [drawLogic endDrawing:currentPoint];
+    
+    [self.socket emit:DRAW_COMMAND args:@[[drawModel toDrawMessage:roomModel.roomId]]];
 }
 
 @end

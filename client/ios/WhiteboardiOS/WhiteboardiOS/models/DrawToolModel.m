@@ -3,6 +3,8 @@
 @interface DrawToolModel () {
         NSDictionary *colourMap;
         NSDictionary *toolMap;
+        NSString *colourName;
+        NSString *toolName;
     }
 @end
 
@@ -20,12 +22,14 @@
 
         toolMap = @{
             @"draw" : [NSNumber numberWithInt:DRAW],
-            @"erase" :[NSNumber numberWithInt:ERASE],
+            @"erase": [NSNumber numberWithInt:ERASE],
         };
 
-        _myColour = [colourMap objectForKey:@"black"];
+        toolName = @"draw";
+        colourName = @"black";
+        _myColour = [colourMap objectForKey:colourName];
         _myTool = DRAW;
-        [self setThickness:@1];
+        [self setThickness:@10];
     
         return self;
     }
@@ -46,6 +50,7 @@
         newColour = newColour.lowercaseString;
     
         if ([colourMap objectForKey:newColour]) {
+            colourName = newColour;
             _myColour = [colourMap objectForKey:newColour];
         }
     }
@@ -54,6 +59,7 @@
         newTool = newTool.lowercaseString;
     
         if ([toolMap objectForKey:newTool]) {
+            toolName = newTool;
             _myTool = [[toolMap objectForKey:newTool] unsignedIntegerValue];
         }
     }
@@ -62,6 +68,16 @@
         if (newThickness.intValue >= MIN_THICKNESS && newThickness.intValue < MAX_THICKNESS) {
             _thickness = newThickness;
         }
+    }
+
+    - (NSDictionary *) toTool {
+        NSMutableDictionary *tool = [[NSMutableDictionary alloc] init];
+        
+        [tool setObject:_thickness forKey:THICKNESS_KEY];
+        [tool setObject:colourName forKey:COLOUR_KEY];
+        [tool setObject:toolName forKey:TOOL_TYPE_KEY];
+        
+        return tool;
     }
     
 @end

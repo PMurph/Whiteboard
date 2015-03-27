@@ -17,6 +17,7 @@
     OCMStub([self.drawObjectMock setColour:[OCMArg any]]);
     OCMStub([self.drawObjectMock setTool:[OCMArg any]]);
     OCMStub([self.drawObjectMock setThickness:[OCMArg any]]);
+    OCMStub([self.drawObjectMock toTool]).andReturn(@{});
     
     self.testDrawModel = [[DrawModel alloc] initWithDrawTool:self.drawObjectMock];
     self.testCoordinates = @[@{@"x":@5, @"y":@1}, @{@"x":@-15, @"y":@1}];
@@ -55,6 +56,26 @@
 - (void)testSettingCoordinates {
     [self.testDrawModel setCoordinates:self.testCoordinates];
     XCTAssertEqual([self.testDrawModel.listOfCoordinates count], [self.testCoordinates count]);
+}
+
+- (void)testToDrawMessageDoesNotReturnNil {
+    XCTAssertNotNil([self.testDrawModel toDrawMessage:@"0"]);
+}
+
+- (void)testToDrawMessageContainsKeyMessage {
+    XCTAssertNotNil([[self.testDrawModel toDrawMessage:@"0"] objectForKey:DRAW_MESSAGE_KEY]);
+}
+
+- (void)testToDrawMessageContainsKeyMessageWithKeyTool {
+    XCTAssertNotNil([[[self.testDrawModel toDrawMessage:@"0"] objectForKey:DRAW_MESSAGE_KEY] objectForKey:TOOL_KEY]);
+}
+
+- (void)testToDrawMessageContainsKeyMessageWithKeyVertices {
+    XCTAssertNotNil([[[self.testDrawModel toDrawMessage:@"0"] objectForKey:DRAW_MESSAGE_KEY] objectForKey:VERTICES_KEY]);
+}
+
+- (void)testToDrawMessageContainsKeyMessageWithKeyRoomId {
+    XCTAssertNotNil([[[self.testDrawModel toDrawMessage:@"1"] objectForKey:DRAW_MESSAGE_KEY] objectForKey:ROOM_ID_KEY]);
 }
 
 @end

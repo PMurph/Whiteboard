@@ -1,7 +1,8 @@
 #import "DrawModel.h"
 
 @interface DrawModel ()
-    - (void)initDrawModel;
+    - (void) initDrawModel;
+    - (NSDictionary *) generateDrawMessageContent:(NSString *)roomId;
 @end
 
 @implementation DrawModel
@@ -45,4 +46,26 @@
     - (void) setCoordinates:(NSArray *)coordinates {
         _listOfCoordinates = [[NSMutableArray alloc] initWithArray:coordinates];
     }
+
+    - (NSDictionary *) toDrawMessage:(NSString *)roomId {
+        NSMutableDictionary *drawMessage = [[NSMutableDictionary alloc] init];
+        
+        [drawMessage setValue:[self generateDrawMessageContent:roomId] forKey:DRAW_MESSAGE_KEY];
+        
+        return drawMessage;
+    }
+
+    - (NSDictionary *) generateDrawMessageContent:(NSString *)roomId {
+        NSMutableDictionary *drawMessageContent = [[NSMutableDictionary alloc] init];
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        formatter.numberStyle = NSNumberFormatterRoundFloor;
+        NSNumber *roomIdNum = [formatter numberFromString:roomId];
+        
+        [drawMessageContent setValue:self.listOfCoordinates forKey:VERTICES_KEY];
+        [drawMessageContent setValue:[self.drawTool toTool] forKey:TOOL_KEY];
+        [drawMessageContent setValue:roomIdNum forKey:ROOM_ID_KEY];
+        
+        return drawMessageContent;
+    }
+
 @end

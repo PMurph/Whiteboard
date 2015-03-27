@@ -9,10 +9,9 @@
 #import "DrawLogic.h"
 
 #define GET_ALL_DRAW_COMMANDS @"getAllDrawCommands"
-#define DRAW_COMMAND_KEY @"drawCommands"
-#define MESSAGE_KEY @"message"
-#define TOOL_KEY @"tool"
-#define VERTICES_KEY @"vertices"
+#define DRAW_COMMANDS_KEY @"drawCommands"
+#define DRAW_COMMAND @"drawCommand"
+#define ROOM_ID_KEY @"roomID"
 
 @interface RoomViewController : UIViewController
     

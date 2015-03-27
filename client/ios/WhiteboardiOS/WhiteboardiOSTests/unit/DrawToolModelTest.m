@@ -67,7 +67,7 @@
 }
 
 - (void)testDefaultThickness {
-    XCTAssertEqual([self.testDrawToolModel thickness].intValue, 1);
+    XCTAssertEqual([self.testDrawToolModel thickness].intValue, 10);
 }
 
 - (void)testSetThicknessValidThickness {
@@ -87,12 +87,28 @@
 
 - (void)testSetInvalidGreaterThanThickness {
     [self.testDrawToolModel setThickness:[NSNumber numberWithInt:MAX_THICKNESS]];
-    XCTAssertEqual([self.testDrawToolModel thickness].intValue, 1);
+    XCTAssertEqual([self.testDrawToolModel thickness].intValue, 10);
 }
 
 - (void)testSetInvalidLessThanThickness {
     [self.testDrawToolModel setThickness:[NSNumber numberWithInt:(MIN_THICKNESS - 1)]];
-    XCTAssertEqual([self.testDrawToolModel thickness].intValue, 1);
+    XCTAssertEqual([self.testDrawToolModel thickness].intValue, 10);
+}
+
+- (void)testToToolDoesNotReturnNil {
+    XCTAssertNotNil([self.testDrawToolModel toTool]);
+}
+
+- (void)testToToolHasKeyColour {
+    XCTAssertNotNil([[self.testDrawToolModel toTool] objectForKey:COLOUR_KEY]);
+}
+
+- (void)testToToolHasKeyType {
+    XCTAssertNotNil([[self.testDrawToolModel toTool] objectForKey:TOOL_TYPE_KEY]);
+}
+
+- (void)testToToolHasKeyThickness {
+    XCTAssertNotNil([[self.testDrawToolModel toTool] objectForKey:THICKNESS_KEY]);
 }
 
 @end

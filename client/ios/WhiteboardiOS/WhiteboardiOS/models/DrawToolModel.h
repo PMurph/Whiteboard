@@ -7,6 +7,9 @@
 #define MIN_THICKNESS 0
 #define TOOL_TYPE_KEY @"type"
 #define DRAW_TOOL_TYPE @"Draw"
+#define VERTICES_KEY @"vertices"
+#define COLOUR_KEY @"colour"
+#define THICKNESS_KEY @"thickness"
 
 @interface DrawToolModel : NSObject
     typedef enum TOOLS : NSUInteger {
@@ -25,6 +28,7 @@
     - (void) setColour:(NSString*)newColour;
     - (void) setTool:(NSString*)newTool;
     - (void) setThickness:(NSNumber *)newThickness;
+    - (NSDictionary *) toTool;
 @end
 
 #endif
