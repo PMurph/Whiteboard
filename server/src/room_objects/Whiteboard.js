@@ -20,7 +20,7 @@ Whiteboard.prototype = {
     },
 
     getLastDrawCommands: function(numCommands) {
-        return this._drawCommands.slice(this._drawCommands.length - numCommands, this._drawCommands.length);
+        return this._roomDoc.drawCommands.slice(this._roomDoc.drawCommands.length - numCommands, this._roomDoc.drawCommands.length);
     }
 };
 
