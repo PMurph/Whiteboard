@@ -25,11 +25,11 @@ Room.prototype = {
     },
 
     getCreatingUser: function() {
-        return this._creatingUser;
+        return this._doc.creatingUser;
     },
 
     getConnectedUsers: function() {
-        return this._connectedUsers;
+        return this._doc.connectedUsers;
     },
 
     getId: function(){
