@@ -1,8 +1,7 @@
 "use strict";
 var Events = require("../Events.js");
 
-var ChatMessageLogic = function(roomManager) {
-    this._roomManager = roomManager;
+var ChatMessageLogic = function() {
 };
 
 ChatMessageLogic.prototype = {

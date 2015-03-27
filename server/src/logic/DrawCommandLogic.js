@@ -1,8 +1,7 @@
 "use strict";
 var Events = require("../Events.js");
 
-var DrawCommandLogic = function(roomManager) {
-    this._roomManager = roomManager;
+var DrawCommandLogic = function() {
 };
 
 DrawCommandLogic.prototype = {
