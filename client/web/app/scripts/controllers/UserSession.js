@@ -74,8 +74,6 @@ define([
         _setUser: function(user) {
             if (this._currentUser && user && (this._currentUser !== user)) {
                 this.logout();
-            }else if (this._currentUser === user){
-                this.logout
             }
 
             this._currentUser = user;
