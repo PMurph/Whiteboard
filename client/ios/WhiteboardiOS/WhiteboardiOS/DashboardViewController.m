@@ -155,6 +155,7 @@
     
     [currentTabs addObject:newViewController];
     [self.tabBarController setViewControllers:currentTabs animated:YES];
+    self.tabBarController.selectedViewController = newViewController;
 }
 
 #pragma mark Collection view layout settings
