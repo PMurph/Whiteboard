@@ -17,6 +17,8 @@
     }
     self.userPromise = [restkitWrapper fetchUser];
     
+    
+    
     return YES;
 }
 

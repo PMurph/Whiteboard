@@ -111,4 +111,15 @@
     XCTAssertNotNil([[self.testDrawToolModel toTool] objectForKey:THICKNESS_KEY]);
 }
 
+- (void)testSetToolEraseSetsColourWhite {
+    [self.testDrawToolModel setTool:@"erase"];
+    XCTAssertTrue([self.testDrawToolModel.colourName isEqualToString:WHITE_COLOUR]);
+}
+
+- (void)testSetColourWhenToolIsEraseDoesNotChangeColour {
+    [self.testDrawToolModel setTool:@"erase"];
+    [self.testDrawToolModel setColour:@"blue"];
+    XCTAssertTrue([self.testDrawToolModel.colourName isEqualToString:WHITE_COLOUR]);
+}
+
 @end
