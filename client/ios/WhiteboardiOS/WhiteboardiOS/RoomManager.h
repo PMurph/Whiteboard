@@ -2,12 +2,12 @@
 #define WhiteboardiOS_RoomManager_h
 
 #include "RoomModel.h"
-#include "RoomViewController.h"
 
 @interface RoomManager : NSObject
     - (id) init;
-    - (RoomViewController *) createRoom:(RoomModel *)roomModel withSocket:(SIOSocket *)socket;
+    - (void) addRoom:(RoomModel *)roomModel;
     - (BOOL) isRoomOpen:(NSString *)roomId;
+    - (void) closeAllRooms;
 @end
 
 #endif

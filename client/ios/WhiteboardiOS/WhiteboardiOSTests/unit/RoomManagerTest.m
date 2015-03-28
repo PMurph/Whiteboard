@@ -5,7 +5,6 @@
 @interface RoomManagerTest : XCTestCase
     @property (nonatomic, readwrite) RoomManager *testRoomManager;
     @property (nonatomic, readwrite) RoomModel *testRoomModel;
-    @property (nonatomic, readwrite) id mockSocket;
 @end
 
 @implementation RoomManagerTest
@@ -23,21 +22,12 @@
     [super tearDown];
 }
 
-- (void)testCreateRoomShouldNotReturnNilForValidRoomModel {
-    XCTAssertNotNil([self.testRoomManager createRoom:self.testRoomModel withSocket:self.mockSocket]);
-}
-
-- (void)testCreateRoomShouldReturnNilIfRoomAlreadyExists {
-    [self.testRoomManager createRoom:self.testRoomModel withSocket:self.mockSocket];
-    XCTAssertNil([self.testRoomManager createRoom:self.testRoomModel withSocket:self.mockSocket]);
-}
-
 - (void)testRoomOpenReturnsFalseIfRoomNotCreated {
     XCTAssertFalse([self.testRoomManager isRoomOpen:self.testRoomModel.roomId]);
 }
 
 - (void)testRoomOpenReturnsTrueIfRoomIsCreated {
-    [self.testRoomManager createRoom:self.testRoomModel withSocket:self.mockSocket];
+    [self.testRoomManager addRoom:self.testRoomModel];
     XCTAssertTrue([self.testRoomManager isRoomOpen:self.testRoomModel.roomId]);
 }
 

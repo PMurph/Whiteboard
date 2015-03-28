@@ -2,10 +2,12 @@
 
 @interface DashboardViewController () {
         NSArray *roomSections;
+        RoomManager *roomManager;
     }
 
     - (void) initView;
-    - (void) initRoomCollection;
+    - (void) initRoomCollection:(AppDelegate *)appDelegate;
+    - (void) initRoomManager:(AppDelegate *)appDelegate;
     - (NSString *) getAuthToken;
     - (void) refreshRooms;
     - (void) refreshRoomsButtonClick:(id)sender;
@@ -21,9 +23,11 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     [self initView];
-    [self initRoomCollection];
+    [self initRoomCollection:appDelegate];
+    [self initRoomManager:appDelegate];
 }
 
 - (void) initView {
@@ -33,11 +37,14 @@
     [[self refreshButton] setAction:@selector(refreshRoomsButtonClick:)];
 }
 
-- (void) initRoomCollection {
-    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+- (void) initRoomCollection:(AppDelegate *)appDelegate {
     RestkitWrapper *restkitWrapper = appDelegate.restkitWrapper;
     self.roomCollection = [[RoomCollection alloc] init:restkitWrapper];
     [self.roomCollection registerObserver:self];
+}
+
+- (void) initRoomManager:(AppDelegate *)appDelegate {
+    roomManager = appDelegate.roomManager;
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -104,21 +111,24 @@
 - (void) createNewRoomController:(RoomModel *)roomModel {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    [SocketFactory createSocket:appDelegate.webAppURI
-        onSuccess:^(SIOSocket *socket) {
-            [self joinSocket:socket forRoom:roomModel];
-        }
-        orFail:^() {
-            NSLog(@"Could not create socket for room");
-        }
-    ];
+    if(![roomManager isRoomOpen:roomModel.roomId]) {
+        [SocketFactory createSocket:appDelegate.webAppURI
+            onSuccess:^(SIOSocket *socket) {
+                [self joinSocket:socket forRoom:roomModel];
+            }
+            orFail:^() {
+                NSLog(@"Could not create socket for room");
+            }
+        ];
+    } else {
+        NSLog(@"Room with id %@ is already open", roomModel.roomId);
+    }
 }
 
 - (void) joinSocket:(SIOSocket *)socket forRoom:(RoomModel *)roomModel {
     NSString *authToken = [self getAuthToken];
     [self setupJoinRequestListener:socket forRoom:roomModel];
     [socket emit:JOIN_REQUEST args:@[@{@"authToken":authToken, @"roomId":roomModel.roomId}]];
-    
 }
 
 - (void) setupJoinRequestListener:(SIOSocket *)socket forRoom:(RoomModel *)roomModel {
@@ -132,17 +142,19 @@
 }
 
 - (void) handleFailedJoin {
-    NSLog(@"Join succeeded");
+    NSLog(@"Join failed");
 }
 
 - (void) handleSuccessfulJoin:(SIOSocket *)socket forRoom:(RoomModel *)roomModel {
-    NSLog(@"Join succeeded");
     NSMutableArray *currentTabs = [NSMutableArray arrayWithArray:self.tabBarController.viewControllers];
     RoomViewController *newViewController = [RoomViewController createRoomViewController:roomModel withSocket:socket];
-            
+    
+    [roomModel setSocket:socket];
+    [roomManager addRoom:roomModel];
+    [newViewController setSocket:socket];
+    
     [currentTabs addObject:newViewController];
     [self.tabBarController setViewControllers:currentTabs animated:YES];
-    [newViewController setSocket:socket];
 }
 
 #pragma mark Collection view layout settings

@@ -13,16 +13,10 @@
         return self;
     }
 
-    - (RoomViewController *) createRoom:(RoomModel *)roomModel withSocket:(SIOSocket *)socket {
-        RoomViewController *newRoom;
-        
+    - (void) addRoom:(RoomModel *)roomModel {
         if(![self isRoomOpen:roomModel.roomId]) {
-            newRoom = [RoomViewController createRoomViewController:roomModel withSocket:socket];
-            
             [roomModels setValue:roomModel forKey:roomModel.roomId];
         }
-        
-        return newRoom;
     }
 
     - (BOOL) isRoomOpen:(NSString *)roomId {
@@ -30,5 +24,11 @@
             return YES;
         }
         return NO;
+    }
+
+    - (void) closeAllRooms {
+        /*for(id room in roomModels) {
+        
+        }*/
     }
 @end
