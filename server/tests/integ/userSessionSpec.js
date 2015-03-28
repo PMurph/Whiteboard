@@ -1,16 +1,10 @@
 'use strict';
 
-
-
-
 describe("User Session Intergration", function () {
     var request = require('supertest'),
         Express = require('express'),
         mockMongoose = require('mongoose-mock'),
         mockSocketIO,
-        UserManager = require('../../src/session/UserManager'),
-        UserSession = require('../../src/session/UserSession'),
-        UserRequest = require('../../src/session/UserRequest'),
         Server = require('../../src/server'),
         server, req, app;
 
@@ -20,10 +14,7 @@ describe("User Session Intergration", function () {
         testPassword = "testpassword";
 
     beforeAll(function(done) {
-        var userManager = new UserManager(mockMongoose),
-            userSession = new UserSession(userManager),
-            userRequest = new UserRequest(userManager, userSession),
-            dbOptions = {
+        var dbOptions = {
                 mongoose: mockMongoose,
                 hostname: "localhost",
                 name: "testWhiteboard"
@@ -36,6 +27,9 @@ describe("User Session Intergration", function () {
 
         spyOn(mockMongoose, "connect");
         mockMongoose.disconnect = jasmine.createSpy("disconnect");
+        server = new Server(app = new Express(), mockSocketIO, dbOptions);
+        server.start(3333, "localhost", done);
+
         var userModel = mockMongoose.model("User");
         var user = jasmine.createSpyObj("User", ["toObject"]);
 
@@ -50,8 +44,6 @@ describe("User Session Intergration", function () {
            });
            return query;
         });
-        server = new Server(app = new Express(), userRequest, mockSocketIO, dbOptions);
-        server.start(3333, "localhost", done);
     });
     afterAll(function(done) {
         server.stop(done);
