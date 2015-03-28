@@ -22,6 +22,9 @@ ChatMessage.prototype = {
     getRoomId: function() {
         return this._roomCommunicator.getRoomId();
     },
+    getRoom: function(cb) {
+        this._roomCommunicator.getRoom(cb);
+    },
     getChatOrder: function() {
         return this._chatOrder;
     },

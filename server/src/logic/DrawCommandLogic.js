@@ -1,14 +1,21 @@
 "use strict";
 var Events = require("../Events.js");
 
-var DrawCommandLogic = function(roomManager) {
-    this._roomManager = roomManager;
+var DrawCommandLogic = function() {
 };
 
 DrawCommandLogic.prototype = {
     handleDrawCommand: function(drawCommandMessage) {
-        var room = this._roomManager.getRoom(drawCommandMessage.getRoomId());
-        room.handleDrawCommand(drawCommandMessage, this);
+        var self = this;
+
+        var dbCB = function (error, room) {
+            if (error || !room) {
+                console.error("No room found");
+            }else{
+                room.handleDrawCommand(drawCommandMessage, self);
+            }
+        };
+        drawCommandMessage.getRoom(dbCB);
     },
     handleDrawResponse: function(drawCommandResponse) {
         var roomCommunicator = drawCommandResponse.getRoomCommunicator();
@@ -16,12 +23,16 @@ DrawCommandLogic.prototype = {
         roomCommunicator.sendMessage(Events.DrawCommand, responseMessage);
     },
     handleGetAllDrawCommands: function(getAllDrawCommandsMessage) {
-        var room = this._roomManager.getRoom(getAllDrawCommandsMessage.getRoomId());
-        if (room) {
-            room.handleGetAllDrawCommands(getAllDrawCommandsMessage, this);
-        } else {
-            throw "Invalid Room ID in Draw Message";
-        }
+        var self = this;
+
+        var dbCB = function (error, room) {
+            if (error || !room) {
+                console.error("No room found");
+            }else{
+                room.handleGetAllDrawCommands(getAllDrawCommandsMessage, self);
+            }
+        };
+        getAllDrawCommandsMessage.getRoom(dbCB);
     },
     handleGetAllDrawCommandsResponse: function(getAllDrawCommandsResponse) {
         var roomCommunicator = getAllDrawCommandsResponse.getRoomCommunicator();

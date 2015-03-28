@@ -1,41 +1,26 @@
 "use strict";
 
-var Whiteboard = function() {
-    this._drawCommands = [];
-    this._chat = [];
+var Whiteboard = function(roomDoc) {
+    this._roomDoc = roomDoc;
 };
 
 Whiteboard.prototype = {
-    addDrawCommand: function(drawCommand) {
-        this._drawCommands.push(drawCommand);
+    addDrawCommand: function(drawCommand, cb) {
+        this._roomDoc.drawCommands.push(drawCommand);
+
+        this._roomDoc.save(cb);
     },
 
     getAllDrawCommands: function() {
-        return this._drawCommands;
+        return this._roomDoc.drawCommands.toObject();
     },
 
     getNumDrawCommandsSeen: function() {
-        return this._drawCommands.length;
+        return this._roomDoc.drawCommands.length;
     },
 
     getLastDrawCommands: function(numCommands) {
-        return this._drawCommands.slice(this._drawCommands.length - numCommands, this._drawCommands.length);
-    },
-
-    addChat: function(chat) {
-        this._chat.push(chat);
-    },
-
-    getAllChat: function() {
-        return this._chat;
-    },
-
-    getNumChatSeen: function() {
-        return this._chat.length;
-    },
-
-    getLastChat: function(numCommands) {
-        return this._chat.slice(this._chat.length - numCommands, this._chat.length);
+        return this._roomDoc.drawCommands.slice(this._roomDoc.drawCommands.length - numCommands, this._roomDoc.drawCommands.length);
     }
 };
 

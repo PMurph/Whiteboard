@@ -101,6 +101,14 @@ UserManager.prototype = {
 
       return anonUserDoc;
     },
+    findByUsername: function(login, callback) {
+        this._UserModel
+            .findOne({
+                login: login
+            })
+            .select("_id login displayName")
+            .exec(callback);
+    },
     findByLogin: function (login, password, callback) {
         var passwordHash = this.hashPassword(password);
         this._UserModel
@@ -118,11 +126,15 @@ UserManager.prototype = {
             .exec(callback);
     },
     findByAuthToken: function (authToken, callback) {
-      this._UserModel
-         .findOne({
-             authToken: authToken
-         })
-         .exec(callback);
+      if (authToken.length === 0) {
+        callback("Error: No Authentication Token", null);
+      }else{
+          this._UserModel
+             .findOne({
+                 authToken: authToken
+             })
+             .exec(callback);
+      }
     },
     updateUser: function (user, userChanges, callback) {
         var userDeleted = false;

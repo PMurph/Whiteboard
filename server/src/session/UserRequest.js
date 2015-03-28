@@ -51,6 +51,8 @@ UserRequest.prototype = {
             this.userSession.authUser(query.login, password, query.saveSession, dbCallback);
         }else if (authUser && (authUser.id === query._id)){
             dbCallback(null, authUser);
+        }else if (authUser && query && query.login) {
+            this.userManager.findByUsername(query.login, dbCallback);
         }else{
             dbCallback(400);
         }
@@ -109,6 +111,8 @@ UserRequest.prototype = {
                     hide: '__v passwordHash',
                     transform: true
                 }));
+            }else if(!doc){
+                res.status(400).send("Failed to find document in database");
             }else{
                 console.log("Database Error:" + err);
                 res.sendStatus(500);

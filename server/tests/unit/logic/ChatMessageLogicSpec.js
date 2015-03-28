@@ -5,26 +5,26 @@ describe("ChatLogic", function() {
     var TEST_ROOM_ID = 45;
     var TEST_RESPONSE_MESSAGE = {some: "test", response: "message"};
 
-    var roomManagerMock;
     var roomMock;
     var roomCommunicatorMock;
     var testChatLogic;
 
     beforeEach(function() {
         roomCommunicatorMock = jasmine.createSpyObj('RoomCommunicator', ['sendMessage', 'sendMessageToSocket']);
-        roomManagerMock = jasmine.createSpyObj('RoomManager', ['getRoom']);
         roomMock = jasmine.createSpyObj('Room', ['handleChatMessage', 'handleGetAllChatMessages']);
 
-        roomManagerMock.getRoom.and.returnValue(roomMock);
-        testChatLogic = new ChatLogic(roomManagerMock);
+        testChatLogic = new ChatLogic();
     });
 
     describe('handleChatMessage', function() {
         var chatMessageMock;
 
         beforeEach(function() {
-            chatMessageMock = jasmine.createSpyObj("ChatMessage", ['handleChatMessage', 'handleChatResponse', 'getRoomId']);
+            chatMessageMock = jasmine.createSpyObj("ChatMessage", ['handleChatMessage', 'handleChatResponse', 'getRoomId', 'getRoom']);
             chatMessageMock.getRoomId.and.returnValue(TEST_ROOM_ID);
+            chatMessageMock.getRoom.and.callFake(function(cb) {
+                cb(null, roomMock);
+            });
             testChatLogic.handleChatMessage(chatMessageMock);
         });
 
@@ -33,7 +33,7 @@ describe("ChatLogic", function() {
         });
 
         it("should get the room from the RoomManager", function() {
-            expect(roomManagerMock.getRoom).toHaveBeenCalledWith(TEST_ROOM_ID);
+            expect(chatMessageMock.getRoom).toHaveBeenCalledWith(jasmine.any(Function));
         });
     });
 
@@ -66,17 +66,19 @@ describe("ChatLogic", function() {
         var getAllChatMock;
 
         beforeEach(function() {
-            getAllChatMock = jasmine.createSpyObj('GetAllChatMessage', ["getRoomId", "getRoomCommunicator", "createMessage"]);
+            getAllChatMock = jasmine.createSpyObj('GetAllChatMessage', ["getRoom", "getRoomCommunicator", "createMessage"]);
+            getAllChatMock.getRoom.and.callFake(function (cb) {
+                cb(null, roomMock);
+            });
         });
 
         describe("handleGetAllChat", function() {
             beforeEach(function() {
-                getAllChatMock.getRoomId.and.returnValue(TEST_ROOM_ID);
                 testChatLogic.handleGetAllChatMessages(getAllChatMock);
             });
 
             it("should get the room from the room manager", function() {
-                expect(roomManagerMock.getRoom).toHaveBeenCalledWith(TEST_ROOM_ID);
+                expect(getAllChatMock.getRoom).toHaveBeenCalledWith(jasmine.any(Function));
             });
 
             it("should call the room's handleGetAllChat function", function() {

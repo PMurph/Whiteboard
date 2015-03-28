@@ -9,6 +9,7 @@ define([
 
     'views/master',
     'views/navbar',
+    'layouts/createRoom',
     'layouts/dashboard',
     'layouts/room',
     'models/room',
@@ -25,6 +26,7 @@ define([
 
     MasterView,
     NavbarView,
+    CreateRoomView,
     DashboardView,
     RoomLayoutView,
     RoomModel,
@@ -62,6 +64,8 @@ define([
             this._setupView();
 
             this._setupAjax();
+
+            this._currentRoom = null;
         },
         showShield: function() {
             this.view.centerBox.empty();
@@ -77,7 +81,7 @@ define([
                 templateHelpers: function() {
                     return {
                         message: message,
-                        image: "<img src='/images/" + imageSrc + "'></img>"
+                        image: (imageSrc) ? "<img src='/images/" + imageSrc + "'></img>" : ""
                     };
                 }
             }));
@@ -94,10 +98,22 @@ define([
             });
             this.header.show(this.navbarView);
         },
+        renderCreateRoom: function() {
+            this.mainContent.show(new CreateRoomView());
+        },
         dashboard: function() {
             this.mainContent.show(new DashboardView());
         },
         room: function(id) {
+            var self = this;
+
+            if (!id) {
+                if (this._currentRoom) {
+                    id = this._currentRoom;
+                }else{
+                    throw "Invalid Room ID";
+                }
+            }
             var roomModel = new RoomModel({
                 id: id
             });
@@ -105,15 +121,24 @@ define([
                 model: roomModel
             });
 
-            try {
-                SocketController.joinRoom(id, roomLayout);
-            } catch (e) {
-                console.error("Failed to join room. Loading dashboard.\n Exception: " + e);
-                //Need to change url here
-                this.dashboard();
-                return;
-            }
-            this.mainContent.show(roomLayout);
+            roomModel
+                .fetch({data: {
+                    id: id   
+                }})
+                .then(function() {
+                    SocketController.joinRoom(id, roomLayout);
+                    self._currentRoom = id;
+                    self.mainContent.show(roomLayout);
+                })
+                .fail(function() {
+                    SocketController.showErrorMessage("Failed to find room");
+                });
+        },
+        inDashboard: function() {
+            return (this.mainContent.currentView instanceof DashboardView);
+        },
+        inRoom: function() {
+            return (this.mainContent.currentView instanceof RoomLayoutView);
         }
     });
 });

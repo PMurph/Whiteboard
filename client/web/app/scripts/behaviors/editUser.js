@@ -24,10 +24,14 @@ define([
 
             if (this.menuId === "modifyDisplayName") {
                 events["click @ui.submitButton"] = "changeDisplayName";
+                events["keypress @ui.displayNameText"] = "checkForEnter";
             } else if (this.menuId === "modifyUsername") {
                 events["click @ui.submitButton"] = "changeUsername";   
+                events["keypress @ui.usernameText"] = "checkForEnter";
             } else if (this.menuId === "modifyPassword") {
                 events["click @ui.submitButton"] = "changePassword";   
+                events["keypress @ui.password1Text"] = "checkForEnter";
+                events["keypress @ui.password2Text"] = "checkForEnter";
             }
 
             return events;
@@ -72,6 +76,12 @@ define([
                 this._setDisableOnFormElements(formElemList, false);
             }
 
+        },
+        checkForEnter: function(event) {
+            var ENTER_KEY = 13;
+            if(event.which === ENTER_KEY){
+                this.view.ui.submitButton.trigger("click");
+            }
         },
         changeDisplayName: function() {
             var user = this._getUser(),

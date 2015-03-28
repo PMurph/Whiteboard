@@ -42,7 +42,7 @@ textarea {
 }
 
 #nav-text a:hover {
-    text-shadow: 2px 2px 4px #000000;  
+	text-shadow: 2px 2px 4px #000000;  
 }
 
 #nav-details {
@@ -52,6 +52,29 @@ textarea {
     color: #000000;
     margin-top: 23px;
     margin-right: -9px;
+}
+
+#userSettingsButton {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#loginButton {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#logoutButton {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#loginRegisterTxt {
+    padding-right: 5px;
+}
+
+#logoutTxt {
+    padding-right: 5px;
 }
 
 #app-shield {
@@ -164,6 +187,20 @@ textarea {
     color: red;
 }
 
+#roomSettingsStatusText {
+    width: 150px;
+}
+#roomSettingsStatusText.error {
+    color: red;
+}
+
+#roomInvitesStatusText {
+    width: 150px;
+}
+#roomInvitesStatusText.error {
+    color: red;
+}
+
 #subStatusLabel.message{
     color: black;
 }
@@ -180,15 +217,30 @@ textarea {
 .content-container {
 	width: 916px;
 	margin: 0 auto;
+	margin-top: 15px;
 }
 
 #dashboard {
 	height: 100%;
-    min-height: 600px;
+	min-height: 600px;
 	width: 100%;
 	background-color: #A1C1CF;
 	box-shadow: 1px 1px 2px #333;
 	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#dashboard h1 {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    display: inline-block;
+}
+
+#dashboardToolbar {
+    text-align: right;
+    display: inline-block;
+    padding-top: 45px;
+    float: right;
 }
 
 #dashboard a {
@@ -198,6 +250,8 @@ textarea {
 
 #dashboard a:hover:, #dashboard a:focus, #dashboard a:active {
     text-decoration: underline;
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
 .room-item {
@@ -212,8 +266,49 @@ textarea {
 	margin: 0 auto;
 }
 
+#roomListSpinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 #dashRoomLabel {
     text-align: center;
+}
+
+#createRoom {
+    position: relative;
+    height: 430px;
+    background-color: #eee;
+    border: 1px solid #333;
+    box-shadow: 1px 1px 1px #333;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%
+}
+
+#newRoomOptions {
+    display: inline-block;
+}
+
+#newRoomInvites {
+    display: inline-block;
+    padding-right: 100px;
+
+    float: right;
+}
+
+#newRoomButtons {
+    position: absolute;
+
+    bottom: 10px;
+}
+
+#roomUserList {
+    width: 370px;
+    height: 200px;
 }
 
 canvas {

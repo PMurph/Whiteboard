@@ -18,6 +18,6 @@
     "supertest": "~0.15.0",
     "socket.io-client": "~1.3.2",
     "jasmine-reporters": "git://github.com/larrymyers/jasmine-reporters.git",
-    "mongoose-mock": "~0.4.0"
+    "mongoose-mock": "git://github.com/soda0289/mongoose-mock.git"
   }
 }
