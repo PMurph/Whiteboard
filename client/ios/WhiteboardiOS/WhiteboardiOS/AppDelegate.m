@@ -41,6 +41,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [_roomManager closeAllRooms];
+    NSLog(@"App terminating");
 }
 
 @end
