@@ -15,11 +15,12 @@
 
 @implementation RoomViewController
 
-+ (RoomViewController *)createRoomViewController:(RoomModel *)roomToCreate withSocket:(SIOSocket *) socket {
++ (RoomViewController *) createRoomViewController:(RoomModel *)roomToCreate withSocket:(SIOSocket *) socket {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     RoomViewController *newRoomController = [storyboard instantiateViewControllerWithIdentifier:@"RoomViewController"];
     
     [newRoomController initializeController:roomToCreate withSocket:socket];
+    [roomToCreate setSocket:socket];
     
     return newRoomController;
 }

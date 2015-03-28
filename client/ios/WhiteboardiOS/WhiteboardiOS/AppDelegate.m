@@ -16,8 +16,7 @@
         restkitWrapper = [[RestkitWrapper alloc] init:[self webAppURI]];
     }
     self.userPromise = [restkitWrapper fetchUser];
-    
-    
+    _roomManager = [[RoomManager alloc] init];
     
     return YES;
 }
