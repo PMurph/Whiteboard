@@ -20,7 +20,9 @@ define([
             "click @ui.loginButton": "loginUser",
             "click @ui.registerButton": "registerNewUser",
             "click @ui.closeButton": "closeLoginWindow",
-            "click @ui.saveSessionCheck": "saveSessionToggle"
+            "click @ui.saveSessionCheck": "saveSessionToggle",
+            "keypress @ui.loginTextbox": "checkForEnter",
+            "keypress @ui.passwordTextbox": "checkForEnter"
         },
         _setStatus: function(errorString) {
             var statusLabel = this.view.ui.statusLabel;
@@ -38,6 +40,12 @@ define([
             saveCheckbox.prop("disabled", value);
             loginBtn.prop("disabled", value);
             registerBtn.prop("disabled", value);
+        },
+        checkForEnter: function(event) {
+            var ENTER_KEY = 13;
+            if(event.which === ENTER_KEY) {
+                this.loginUser();
+            }
         },
         loginUser: function() {
             try {

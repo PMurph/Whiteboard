@@ -14,6 +14,9 @@ GetAllChatMessage.prototype = {
     getRoomId: function() {
         return this._roomCommunicator.getRoomId();
     },
+    getRoom: function(cb) {
+        this._roomCommunicator.getRoom(cb);
+    },
     setChatMessages: function(chatMessages) {
         this._chatMessages = chatMessages;
     },

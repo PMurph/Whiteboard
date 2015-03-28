@@ -1,11 +1,11 @@
 <nav>
     <div id="nav-text">
         <a href="#">
-            <div id="nav-title">whiteboard</div>
+            <div id="nav-title" class="hvr-grow">whiteboard</div>
         </a>
         <span id="nav-details">
             <% if(displayName){ %> <span id="userSettingsButton" class="link"><span id="userDisplayName"><%= displayName %></span><img src="images/settings_gear.svg" width="30px" height="30px" /></span><% } %>
-            <% if(!anonymous){ %> | <span id="logoutButton" class="link"><span id="logout">Logout</span></span><% }else{ %> | <span id="loginButton" class="link"><span id="logout">Login/Register</span></span><% } %>
+            <% if(!anonymous){ %> | <span id="logoutButton" class="link"><span id="logoutTxt">Logout</span><img src="images/logout.svg" height="20px" /></span><% }else{ %> | <span id="loginButton" class="link"><span id="loginRegisterTxt">Login/Register</span><img src="images/login.svg" height="20px" /></span><% } %>
         </span>
     </div>
 </nav>

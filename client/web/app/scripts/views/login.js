@@ -27,6 +27,9 @@ define([
 
             saveSessionCheck: "#saveSessionCheckbox"
         },
+        onShow: function() {
+            this.ui.loginTextbox.focus();
+        },
         behaviors: {
             login: {
                 behaviorClass: LoginBehavior

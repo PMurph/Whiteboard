@@ -63,7 +63,7 @@ define([
             } else if (type === "error") {
                 statusLabel.addClass("error");
                 errorType = true;
-                //imageSrc = "images/error.svg";
+                imageSrc = "images/error.svg";
             } else if (type === "clear"){
                 return statusLabel.empty();
             } else {

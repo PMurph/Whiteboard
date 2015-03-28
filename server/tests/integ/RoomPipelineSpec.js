@@ -1,6 +1,7 @@
 "use strict";
 var socketIO = require('socket.io');
 var clientIO = require('socket.io-client');
+var mockMongoose = require('mongoose-mock');
 var RoomManager = require("../../src/room_objects/RoomManager.js");
 
 describe('Room Pipeline', function() {
@@ -28,9 +29,29 @@ describe('Room Pipeline', function() {
         };
     
         socketManager = socketIO.listen(TEST_PORT);
-        
-        testRoomManager = new RoomManager(socketManager, mockUserSession);
-        testRoomId = testRoomManager.createNewRoom("test");
+
+        var mockRoom;
+        testRoomId = 3;
+        testRoomManager = new RoomManager(socketManager, mockUserSession, mockMongoose);
+
+        var mockRoomModel = mockMongoose.model("Room");
+        mockRoomModel.prototype.save = function(cb) {
+            mockRoom = this;
+            cb(null, this);
+        };
+        mockRoomModel.prototype.connectedUsers = [];
+        Array.prototype.toObject = function () {return this;};
+        mockRoomModel.prototype.drawCommands = new Array(); // jshint ignore:line
+        mockRoomModel.prototype.id = testRoomId.toString();
+        mockRoomModel.findById = jasmine.createSpy("findModelById").and.callFake(function () {
+            return {
+                exec: function (cb) {
+                    cb(null, mockRoom);
+                }
+            };
+        });
+        var mockCB = jasmine.createSpy("callback");
+        testRoomManager._createNewRoom("test", "id", "public", "allowAnon", "invited", mockCB);
         
         testSocket = clientIO.connect('http://localhost:' + TEST_PORT);
         
