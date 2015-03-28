@@ -106,6 +106,7 @@ define([
 
             promise.then(function (response) {
                 if (response.authToken) {
+                    self.trigger("PreLoggedOff");
                     self._setUser(model);
                     self._setAuthToken(response.authToken);
                     self.trigger("Authenticated");
@@ -148,8 +149,6 @@ define([
             //We can convert anonymous user to non-anonymous and call it a registration
             var newUser = (this._currentUser) ? this._currentUser : new User();
             
-            //Since we are converting anonymous to regular we fake a log off
-            this.trigger("PreLoggedOff");
 
             var b64pass = window.btoa(password);
             var promise = newUser.save({
@@ -246,7 +245,6 @@ define([
             App.mainController.showShield();
             App.mainController.setStatusBox("Signing Out", "ellipsis_big.svg");
 
-            this.trigger("PreLoggedOff");
             xhr = this.setUserStatus("offline", async);
             if (xhr) {
                 xhr.then(function () {
