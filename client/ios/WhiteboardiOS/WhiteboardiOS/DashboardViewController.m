@@ -145,6 +145,19 @@
     [newViewController setSocket:socket];
 }
 
+#pragma mark Collection view layout settings
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 0.0f;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 0.0f;
+}
+
 #pragma mark - Toolbar Button Actions
 - (void) refreshRoomsButtonClick:(id)sender {
     [self refreshRooms];

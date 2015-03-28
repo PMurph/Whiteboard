@@ -73,10 +73,6 @@
     [drawLogic drawDrawCommand:drawModel];
 }
 
-- (void) didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     CGPoint startPoint = [touch locationInView:self.whiteboardCanvas];
