@@ -9,12 +9,16 @@
     @synthesize anonymous;
     @synthesize authToken;
     @synthesize userId;
+    @synthesize login;
+@synthesize password;
 
     - (id) init {
         displayName = @"";
         anonymous = YES;
         authToken = @"";
         userId = @"";
+        login = @"";
+        password = @"";
         return self;
     }
 @end
