@@ -16,6 +16,7 @@
     
     self.socketMock = OCMClassMock([SIOSocket class]);
     OCMStub([self.socketMock emit:[OCMArg any] args:[OCMArg any]]);
+    OCMStub([self.socketMock close]);
     
     self.testRoomManager = [[RoomManager alloc] init];
     
@@ -40,6 +41,12 @@
 - (void)testCloseAllRoomsEmitMessage {
     [self.testRoomManager addRoom:self.testRoomModel];
     [self.testRoomManager closeAllRooms];
+    OCMVerifyAll(self.socketMock);
+}
+
+- (void)testCloseRoomEmitMessage {
+    [self.testRoomManager addRoom:self.testRoomModel];
+    [self.testRoomManager closeRoom:self.testRoomModel.roomId];
     OCMVerifyAll(self.socketMock);
 }
 

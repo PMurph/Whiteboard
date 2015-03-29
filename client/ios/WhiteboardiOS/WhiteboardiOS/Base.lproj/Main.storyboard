@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -200,10 +200,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gru-ZA-3Kx">
-                                <rect key="frame" x="0.0" y="-5" width="768" height="44"/>
-                                <items/>
-                            </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RoP-9z-1wM">
                                 <rect key="frame" x="339" y="6" width="90" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -216,10 +212,17 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jch-zq-LhM">
                                 <rect key="frame" x="0.0" y="39" width="768" height="985"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gru-ZA-3Kx">
+                                <rect key="frame" x="0.0" y="-5" width="768" height="44"/>
+                                <items>
+                                    <barButtonItem title="Leave" id="wv8-4r-ynk"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="leaveButton" destination="wv8-4r-ynk" id="H6w-Ga-rzB"/>
                         <outlet property="roomTitleLabel" destination="RoP-9z-1wM" id="KFx-01-b9T"/>
                         <outlet property="tempDrawCanvas" destination="jch-zq-LhM" id="qSd-Iy-bI1"/>
                         <outlet property="whiteboardCanvas" destination="MiU-dm-gzk" id="RDP-Be-K3V"/>
@@ -227,7 +230,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wPv-uf-ya8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-437" y="1527"/>
+            <point key="canvasLocation" x="-690" y="1507"/>
         </scene>
         <!--User Settings View Controller-->
         <scene sceneID="GSx-og-9gx">
@@ -320,6 +323,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ARu-q1-bG9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1780" y="-23"/>
         </scene>
     </scenes>
     <resources>

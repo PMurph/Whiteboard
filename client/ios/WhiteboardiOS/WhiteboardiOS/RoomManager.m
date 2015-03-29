@@ -26,10 +26,19 @@
         return NO;
     }
 
+    - (void) closeRoom:(NSString *)roomId {
+        if ([self isRoomOpen:roomId]) {
+            RoomModel *roomModel = [roomModels objectForKey:roomId];
+            [roomModel.socket emit:LEAVE_ROOM_EVENT args:@[@{ROOM_ID_KEY: roomId}]];
+            [roomModel.socket close];
+            
+            [roomModels removeObjectForKey:roomId];
+        }
+    }
+
     - (void) closeAllRooms {
         for(NSString* roomId in roomModels) {
-            RoomModel *roomModel = [roomModels objectForKey:roomId];
-            [roomModel.socket emit:LEAVE_ROOM_EVENT args:@[@{ROOM_ID_KEY: roomModel.roomId}]];
+            [self closeRoom:roomId];
         }
         roomModels = [[NSMutableDictionary alloc] init];
     }

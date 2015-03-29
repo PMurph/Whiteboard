@@ -10,6 +10,7 @@
     - (id) init;
     - (void) addRoom:(RoomModel *)roomModel;
     - (BOOL) isRoomOpen:(NSString *)roomId;
+    - (void) closeRoom:(NSString *)roomId;
     - (void) closeAllRooms;
 @end
 
