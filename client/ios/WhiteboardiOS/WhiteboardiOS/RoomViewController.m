@@ -1,15 +1,19 @@
 #import "RoomViewController.h"
 
 @interface RoomViewController () {
+        RoomManager *roomManager;
         RoomModel *roomModel;
         DrawLogic *drawLogic;
     }
 
     - (void) initializeController:(RoomModel *)roomInfo withSocket:(SIOSocket *)socket;
-    - (void) getCurrentRoomState;
+    - (void) initializeListeners;
     - (void) setupGetAllDrawCommandsListener;
     - (void) setupDrawCommandListener;
     - (void) handleDrawCommand:(NSDictionary *)drawCommand;
+    - (void) getCurrentRoomState;
+    - (void) leaveButtonClick:(id)sender;
+    - (void) removeControllerTab;
 @end
 
 @implementation RoomViewController
@@ -36,17 +40,22 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     drawLogic = [[DrawLogic alloc] initWithDrawCanvas:self.whiteboardCanvas andTempCanvas:self.tempDrawCanvas];
-    [[self roomTitleLabel] setText:[NSString stringWithFormat:@"Room %@", roomModel.roomId]];
     self.drawToolModel = [[DrawToolModel alloc] init];
+    roomManager = appDelegate.roomManager;
+    
+    [self.leaveButton setAction:@selector(leaveButtonClick:)];
+    [self.roomTitleLabel setText:[NSString stringWithFormat:@"Room %@", roomModel.roomId]];
+    
+    [self initializeListeners];
     [self getCurrentRoomState];
 }
 
-- (void) getCurrentRoomState {
+- (void) initializeListeners {
     [self setupGetAllDrawCommandsListener];
     [self setupDrawCommandListener];
-    [self.socket emit:GET_ALL_DRAW_COMMANDS];
 }
 
 - (void) setupGetAllDrawCommandsListener {
@@ -71,6 +80,10 @@
     DrawModel *drawModel = [DrawLogic createDrawModel:newDrawToolModel withCoordinates:[drawCommand objectForKey:VERTICES_KEY]];
     
     [drawLogic drawDrawCommand:drawModel];
+}
+
+- (void) getCurrentRoomState {
+    [self.socket emit:GET_ALL_DRAW_COMMANDS];
 }
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -98,6 +111,26 @@
     if(drawModel) {
         [self.socket emit:DRAW_COMMAND args:@[[drawModel toDrawMessage:roomModel.roomId]]];
     }
+}
+
+- (void) leaveButtonClick:(id)sender {
+    [roomManager closeRoom:roomModel.roomId];
+    
+    [self removeControllerTab];
+    self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:0];
+}
+
+- (void) removeControllerTab {
+    NSArray *currentTabs = self.tabBarController.viewControllers;
+    NSMutableArray *newTabs = [[NSMutableArray alloc] init];
+    
+    for(id tab in currentTabs) {
+        if (tab != self) {
+            [newTabs addObject:tab];
+        }
+    }
+    
+    [self.tabBarController setViewControllers:newTabs animated:YES];
 }
 
 @end
