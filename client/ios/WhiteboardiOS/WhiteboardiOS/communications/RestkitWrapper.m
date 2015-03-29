@@ -43,7 +43,9 @@
     - (void) setupRoomModelResponseDescriptor {
         RKObjectMapping *roomModelMapping = [RKObjectMapping mappingForClass:[RoomModel class]];
         [roomModelMapping addAttributeMappingsFromDictionary:@{
-            @"_id": @"roomId"
+            @"_id": @"roomId",
+            @"name": @"name",
+            @"type": @"type"
         }];
     
         RKResponseDescriptor* roomResponseDescriptor = [RKResponseDescriptor
