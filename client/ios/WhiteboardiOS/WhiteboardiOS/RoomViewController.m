@@ -26,7 +26,7 @@
 }
 
 - (void) initializeController:(RoomModel *)roomInfo withSocket:(SIOSocket *)socket {
-    NSString *roomTitle = [NSString stringWithFormat:@"Room %@", roomInfo.roomId];
+    NSString *roomTitle = roomInfo.name;
     UIImage *viewTabIcon = [UIImage imageNamed:@"Crayon-icon.png"];
     UITabBarItem *viewTabBarItem = [[UITabBarItem alloc] initWithTitle:roomTitle image:viewTabIcon tag:0];
     
@@ -55,7 +55,7 @@
         NSArray *drawCommands = [[args objectAtIndex:0] objectForKey:DRAW_COMMANDS_KEY];
         if(drawCommands) {
             for(id drawCommand in drawCommands) {
-                [self handleDrawCommand:[drawCommand objectForKey:DRAW_MESSAGE_KEY]];
+                [self handleDrawCommand:drawCommand];
             }
         }
     }];
@@ -63,7 +63,7 @@
 
 - (void) setupDrawCommandListener {
     [self.socket on:DRAW_COMMAND callback:^(SIOParameterArray *args) {
-        [self handleDrawCommand:[[[args objectAtIndex:0] objectForKey:DRAW_COMMAND] objectForKey:DRAW_MESSAGE_KEY]];
+        [self handleDrawCommand:[[args objectAtIndex:0] objectForKey:DRAW_COMMAND]];
     }];
 }
 

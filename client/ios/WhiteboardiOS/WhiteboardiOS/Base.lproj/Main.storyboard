@@ -53,20 +53,31 @@
                                     <action selector="loginBtn:" destination="9pv-A4-QxB" eventType="touchUpInside" id="pJ4-mx-0dn"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyf-Zf-mO0">
+                                <rect key="frame" x="363" y="477" width="245" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="cyf-Zf-mO0" secondAttribute="centerX" id="89g-Lh-C75"/>
                             <constraint firstItem="xRZ-gT-3m3" firstAttribute="trailing" secondItem="oU9-Km-6Qz" secondAttribute="trailing" id="Kva-qP-CrA"/>
                             <constraint firstItem="x1v-g5-yvS" firstAttribute="leading" secondItem="xRZ-gT-3m3" secondAttribute="leading" id="Ltt-A5-WLP"/>
                             <constraint firstItem="x1v-g5-yvS" firstAttribute="leading" secondItem="gvA-Ou-sMH" secondAttribute="leading" id="N5g-WH-rLB"/>
+                            <constraint firstItem="cyf-Zf-mO0" firstAttribute="leading" secondItem="xRZ-gT-3m3" secondAttribute="leading" id="Ypf-lk-R7Q"/>
                             <constraint firstAttribute="centerX" secondItem="xRZ-gT-3m3" secondAttribute="centerX" id="ZNh-Q4-4vb"/>
                             <constraint firstItem="xRZ-gT-3m3" firstAttribute="trailing" secondItem="gvA-Ou-sMH" secondAttribute="trailing" id="d4M-rx-3fd"/>
                             <constraint firstAttribute="centerX" secondItem="gvA-Ou-sMH" secondAttribute="centerX" id="h1w-AG-GHs"/>
+                            <constraint firstItem="cyf-Zf-mO0" firstAttribute="leading" secondItem="gvA-Ou-sMH" secondAttribute="leading" id="sJb-J4-LDw"/>
+                            <constraint firstItem="cyf-Zf-mO0" firstAttribute="leading" secondItem="x1v-g5-yvS" secondAttribute="leading" id="z9j-pW-ikV"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Login" image="first" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="passwordTxt" destination="xRZ-gT-3m3" id="BFf-hD-ePZ"/>
+                        <outlet property="statusLabel" destination="cyf-Zf-mO0" id="MV0-N3-bhO"/>
                         <outlet property="usernameTxt" destination="gvA-Ou-sMH" id="Gu1-Rb-APn"/>
                     </connections>
                 </viewController>
@@ -211,6 +222,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wPv-uf-ya8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-437" y="1527"/>
+        </scene>
+        <!--User Settings View Controller-->
+        <scene sceneID="GSx-og-9gx">
+            <objects>
+                <viewController storyboardIdentifier="UserSettingsViewController" id="k7O-rL-hvd" customClass="UserSettingsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LMO-a0-bjf"/>
+                        <viewControllerLayoutGuide type="bottom" id="Muh-bv-lDG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="a4P-CE-GP7">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ARu-q1-bG9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>

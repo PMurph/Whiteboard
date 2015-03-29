@@ -18,6 +18,7 @@
 @property (nonatomic, readwrite) RestkitWrapper* restkitWrapper;
 
 - (id)init:(RestkitWrapper*)restkitWrapper;
+-(void) authUser:(NSString*)login password:(NSString*)password cb:(void (^)(NSString* error))cb;
 -(void) authAnonymous;
 @end
 

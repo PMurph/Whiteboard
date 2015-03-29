@@ -50,7 +50,7 @@
     
         RKResponseDescriptor* roomResponseDescriptor = [RKResponseDescriptor
             responseDescriptorWithMapping:roomModelMapping
-            method:RKRequestMethodGET
+            method:RKRequestMethodAny
             pathPattern: @"api/room"
             keyPath: nil
             statusCodes:[NSIndexSet indexSetWithIndex:200]];
@@ -99,4 +99,13 @@
             }
          ];
    }
+- (void) userGetRequest:(UserModel*)user parameters:(NSDictionary*)params successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB failureCB:(void (^)(RKObjectRequestOperation *operation, NSError *error))failureCB
+{
+    [[RKObjectManager sharedManager] getObject:user
+            path:@"/api/user"
+            parameters:params
+            success: successCB
+            failure:failureCB
+     ];
+}
 @end

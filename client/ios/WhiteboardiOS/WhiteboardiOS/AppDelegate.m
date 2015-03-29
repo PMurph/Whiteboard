@@ -21,7 +21,7 @@
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace); 
     RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
     
-    _webAppURI = @"http://ec2-54-68-246-235.us-west-2.compute.amazonaws.com";
+    _webAppURI = @"http://ec2-54-68-246-235.us-west-2.compute.amazonaws.com/";
     
     [self _setupRestkit:_webAppURI];
     [self _setupUserSession];
