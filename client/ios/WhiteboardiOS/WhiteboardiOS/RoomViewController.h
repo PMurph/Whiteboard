@@ -19,6 +19,7 @@
     @property (strong, nonatomic) SIOSocket *socket;
     @property (weak, nonatomic) IBOutlet UIImageView *whiteboardCanvas;
     @property (weak, nonatomic) IBOutlet UIImageView *tempDrawCanvas;
+    @property (strong, nonatomic) DrawToolModel *drawToolModel;
 
     + (RoomViewController *)createRoomViewController:(RoomModel *)roomToCreate withSocket:(SIOSocket *)socket;
 

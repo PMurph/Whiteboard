@@ -3,7 +3,6 @@
 @interface RoomViewController () {
         RoomModel *roomModel;
         DrawLogic *drawLogic;
-        DrawToolModel *drawToolModel;
     }
 
     - (void) initializeController:(RoomModel *)roomInfo withSocket:(SIOSocket *)socket;
@@ -40,7 +39,7 @@
     
     drawLogic = [[DrawLogic alloc] initWithDrawCanvas:self.whiteboardCanvas andTempCanvas:self.tempDrawCanvas];
     [[self roomTitleLabel] setText:[NSString stringWithFormat:@"Room %@", roomModel.roomId]];
-    drawToolModel = [[DrawToolModel alloc] init];
+    self.drawToolModel = [[DrawToolModel alloc] init];
     [self getCurrentRoomState];
 }
 
@@ -78,7 +77,7 @@
     UITouch *touch = [touches anyObject];
     CGPoint startPoint = [touch locationInView:self.whiteboardCanvas];
     
-    [drawLogic startDrawing:drawToolModel atPoint:startPoint];
+    [drawLogic startDrawing:self.drawToolModel atPoint:startPoint];
 }
 
 - (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -94,7 +93,11 @@
     
     DrawModel *drawModel = [drawLogic endDrawing:currentPoint];
     
-    [self.socket emit:DRAW_COMMAND args:@[[drawModel toDrawMessage:roomModel.roomId]]];
+    // Due to a bug in OCMock the socket emit call cannot be unit tested, so in order to unit test this method
+    // the socket emit call has to be wrapped in this if statement
+    if(drawModel) {
+        [self.socket emit:DRAW_COMMAND args:@[[drawModel toDrawMessage:roomModel.roomId]]];
+    }
 }
 
 @end
