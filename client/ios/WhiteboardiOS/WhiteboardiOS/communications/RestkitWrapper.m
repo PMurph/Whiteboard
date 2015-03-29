@@ -89,26 +89,22 @@
         }];
     }
 
-- (void) userPostRequest:(UserModel*)user successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB
+- (void) userPostRequest:(UserModel*)user successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB failureCB:(void (^)(RKObjectRequestOperation *operation, NSError *error))failureCB
     {
         [[RKObjectManager sharedManager] postObject:user
             path:@"/api/user"
             parameters:nil
             success: successCB
-            failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                NSLog(@"Could not retrieve user form the server.");
-            }
+            failure:failureCB
          ];
    }
-- (void) userPutRequest:(UserModel*)user successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB
+- (void) userPutRequest:(UserModel*)user successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB failureCB:(void (^)(RKObjectRequestOperation *operation, NSError *error))failureCB
 {
     [[RKObjectManager sharedManager] putObject:user
                                            path:@"/api/user"
                                      parameters:nil
                                         success: successCB
-                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                            NSLog(@"Could not retrieve user form the server.");
-                                        }
+                                        failure:failureCB
      ];
 }
 - (void) userGetRequest:(UserModel*)user parameters:(NSDictionary*)params successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB failureCB:(void (^)(RKObjectRequestOperation *operation, NSError *error))failureCB

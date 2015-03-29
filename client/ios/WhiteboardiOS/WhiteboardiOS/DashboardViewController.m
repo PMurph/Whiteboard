@@ -51,6 +51,7 @@
 - (void) showSpinner {
     [self.spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.spinner startAnimating];
+    
 }
 
 - (void) hideSpinner {
@@ -211,6 +212,7 @@
 
 #pragma mark - Toolbar Button Actions
 - (void) refreshRoomsButtonClick:(id)sender {
+    [self showSpinner];
     [self refreshRooms];
 }
 

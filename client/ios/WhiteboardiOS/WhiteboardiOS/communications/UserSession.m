@@ -29,7 +29,7 @@
     [self.authCallbacks addObject: cb];
 }
 
--(void) authUser:(NSString*)login password:(NSString*)password cb:(void (^)(NSString* error))cb {
+-(void) authUser:(NSString*)login password:(NSString*)password cb:(void (^)(NSString* error, UserModel* user))cb {
     UserModel* user = [[UserModel alloc] init];
     NSDictionary* params = @{
                              @"login": login,
@@ -42,10 +42,10 @@
      parameters: params
      successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
          [self authenticated:user];
-         cb(nil);
+         cb(nil, user);
      }
      failureCB:^(RKObjectRequestOperation *operation, NSError *error){
-         cb(@"Authentication failed");
+         cb(@"Authentication failed", nil);
      }
      ];
     
@@ -60,10 +60,13 @@
      successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
          [self authenticated:user];
         }
+     failureCB:^(RKObjectRequestOperation *operation, NSError *error){
+         NSLog(@"Authentication failed");
+     }
     ];
 }
 
--(void) registerUser:(NSString*)login password:(NSString*)password cb:(void(^)(NSString* error))cb {
+-(void) registerUser:(NSString*)login password:(NSString*)password cb:(void(^)(NSString* error, UserModel* user))cb {
     UserModel* user = self.currentUser;
     if (!user) {
         NSLog(@"Register user need's anonymous user model");
@@ -77,7 +80,10 @@
      userPutRequest:user
      successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
          self.currentUser = user;
-         cb(nil);
+         cb(nil, user);
+     }
+     failureCB:^(RKObjectRequestOperation *operation, NSError *error){
+         cb(@"Reistration failed", nil);
      }
      ];
 }
