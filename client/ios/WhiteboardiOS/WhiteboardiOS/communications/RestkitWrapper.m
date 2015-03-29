@@ -27,7 +27,7 @@
 
     - (RKObjectMapping*) getUserModelMapping {
         RKObjectMapping* userMapping = [RKObjectMapping requestMapping];
-        [userMapping addAttributeMappingsFromArray:@[@"login", @"password", @"anonymous"]];
+        [userMapping addAttributeMappingsFromArray:@[@"login", @"password", @"anonymous", @"authToken"]];
         return userMapping;
     }
 
@@ -77,11 +77,12 @@
         [objectManager addResponseDescriptor:userResponseDescriptor];
     }
 
-    - (void) fetchRooms:(id<Collection>)collection withAuthentication:(NSString *)authToken {
+- (void) fetchRooms:(id<Collection>)collection withAuthentication:(NSString *)authToken cb:(void (^)())cb{
         [[RKObjectManager sharedManager] getObjectsAtPath:@"/api/room"
             parameters:@{@"authToken": authToken}
             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                 [collection setCollection:mappingResult.array];
+                cb();
             }
         failure:^(RKObjectRequestOperation *operation, NSError *error) {
             NSLog(@"Could not retrieve list of room ids from server.");
@@ -99,6 +100,17 @@
             }
          ];
    }
+- (void) userPutRequest:(UserModel*)user successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB
+{
+    [[RKObjectManager sharedManager] putObject:user
+                                           path:@"/api/user"
+                                     parameters:nil
+                                        success: successCB
+                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            NSLog(@"Could not retrieve user form the server.");
+                                        }
+     ];
+}
 - (void) userGetRequest:(UserModel*)user parameters:(NSDictionary*)params successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB failureCB:(void (^)(RKObjectRequestOperation *operation, NSError *error))failureCB
 {
     [[RKObjectManager sharedManager] getObject:user

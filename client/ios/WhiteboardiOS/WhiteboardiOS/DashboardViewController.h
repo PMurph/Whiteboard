@@ -14,7 +14,8 @@
 
     @property (weak, nonatomic) IBOutlet UICollectionView *roomCollectionView;
     @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
-    @property (strong, nonatomic, readwrite) RoomCollection *roomCollection;
-    
+@property (strong, nonatomic, readwrite) RoomCollection *roomCollection;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic, readwrite) UserSession* userSession;
 @end
 

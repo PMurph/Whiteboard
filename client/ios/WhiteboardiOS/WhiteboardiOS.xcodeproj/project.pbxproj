@@ -19,7 +19,6 @@
 		A860ACE91ABA743B00432672 /* Crayon-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A860ACE81ABA743B00432672 /* Crayon-icon.png */; };
 		A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6ED1AAE9BEB00D61DF9 /* main.m */; };
 		A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */; };
-		A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */; };
 		A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */; };
 		A88FF6FA1AAE9BEB00D61DF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6F81AAE9BEB00D61DF9 /* Main.storyboard */; };
 		A88FF6FC1AAE9BEB00D61DF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */; };
@@ -37,6 +36,8 @@
 		A8EC3CD01AB4FE7000A3A5A2 /* RestkitWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC3CCF1AB4FE7000A3A5A2 /* RestkitWrapper.m */; };
 		A8EC3CD21AB6A5F100A3A5A2 /* RoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC3CD11AB6A5F100A3A5A2 /* RoomCell.m */; };
 		BA272456604C448F2F42B33A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F69200732A00E2E61E393E /* libPods.a */; };
+		C19831DE1AC7EB4900BAEC26 /* UserSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C19831DD1AC7EB4900BAEC26 /* UserSettingsViewController.m */; };
+		C19831E01AC7ECEC00BAEC26 /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */; };
 		C1F9E5B71AC679DD00E024FC /* UserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F9E5B61AC679DD00E024FC /* UserSession.m */; };
 /* End PBXBuildFile section */
 
@@ -74,7 +75,6 @@
 		A88FF6ED1AAE9BEB00D61DF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A88FF6EF1AAE9BEB00D61DF9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserLoginViewController.h; path = WhiteboardiOS/UserLoginViewController.h; sourceTree = "<group>"; };
 		A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = UserLoginViewController.m; path = WhiteboardiOS/UserLoginViewController.m; sourceTree = "<group>"; };
 		A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DashboardViewController.h; path = WhiteboardiOS/DashboardViewController.h; sourceTree = "<group>"; };
 		A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DashboardViewController.m; path = WhiteboardiOS/DashboardViewController.m; sourceTree = "<group>"; };
@@ -102,6 +102,9 @@
 		A8EC3CCF1AB4FE7000A3A5A2 /* RestkitWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestkitWrapper.m; path = WhiteboardiOS/communications/RestkitWrapper.m; sourceTree = "<group>"; };
 		A8EC3CD11AB6A5F100A3A5A2 /* RoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomCell.m; sourceTree = "<group>"; };
 		A8EC3CD31AB6A60400A3A5A2 /* RoomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomCell.h; sourceTree = "<group>"; };
+		C19831DB1AC7EB4900BAEC26 /* UserLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserLoginViewController.h; path = WhiteboardiOS/UserLoginViewController.h; sourceTree = "<group>"; };
+		C19831DC1AC7EB4900BAEC26 /* UserSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingsViewController.h; path = WhiteboardiOS/UserSettingsViewController.h; sourceTree = "<group>"; };
+		C19831DD1AC7EB4900BAEC26 /* UserSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingsViewController.m; path = WhiteboardiOS/UserSettingsViewController.m; sourceTree = "<group>"; };
 		C1D15A041AC72FDE005644A7 /* UserSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSession.h; path = WhiteboardiOS/communications/UserSession.h; sourceTree = "<group>"; };
 		C1F9E5B61AC679DD00E024FC /* UserSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSession.m; path = WhiteboardiOS/communications/UserSession.m; sourceTree = "<group>"; };
 		C9F69200732A00E2E61E393E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -264,8 +267,10 @@
 		A8B3D6151AC376AF00B7F885 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */,
+				C19831DB1AC7EB4900BAEC26 /* UserLoginViewController.h */,
 				A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */,
+				C19831DC1AC7EB4900BAEC26 /* UserSettingsViewController.h */,
+				C19831DD1AC7EB4900BAEC26 /* UserSettingsViewController.m */,
 				A860ACDC1ABA4B0D00432672 /* RoomViewController.h */,
 				A860ACDA1ABA4AEF00432672 /* RoomViewController.m */,
 				A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */,
@@ -468,10 +473,12 @@
 				A8395A691ABE04F0009227CB /* UserModel.m in Sources */,
 				A8B3D6231AC4880B00B7F885 /* DrawLogic.m in Sources */,
 				A8EC3CD01AB4FE7000A3A5A2 /* RestkitWrapper.m in Sources */,
+				C19831DE1AC7EB4900BAEC26 /* UserSettingsViewController.m in Sources */,
 				A860ACDB1ABA4AEF00432672 /* RoomViewController.m in Sources */,
 				A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */,
 				A8D750CF1ABFC9F7001268EF /* DrawToolModel.m in Sources */,
 				A8B3D6191AC37EC500B7F885 /* RoomManager.m in Sources */,
+				C19831E01AC7ECEC00BAEC26 /* UserLoginViewController.m in Sources */,
 				A8EC3CD21AB6A5F100A3A5A2 /* RoomCell.m in Sources */,
 				A8D750CE1ABFC9F7001268EF /* DrawModel.m in Sources */,
 				A8596A671AB251D0005CA07F /* RoomModel.m in Sources */,
@@ -479,7 +486,6 @@
 				A8B3D6211AC39CB600B7F885 /* SocketFactory.m in Sources */,
 				C1F9E5B71AC679DD00E024FC /* UserSession.m in Sources */,
 				A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */,
-				A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */,
 				A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,11 +13,20 @@
 
 - (id) init: (RestkitWrapper *)restkitWrapper {
     self.restkitWrapper = restkitWrapper;
+    self.authCallbacks = [NSMutableArray array];
     return self;
 }
 
--(void) authenticated {
-    
+-(void) authenticated:(UserModel*)user {
+    self.currentUser = user;
+
+    for(void(^cb)() in self.authCallbacks){
+        cb();
+    }
+}
+
+-(void) addAuthCB:(void(^)())cb {
+    [self.authCallbacks addObject: cb];
 }
 
 -(void) authUser:(NSString*)login password:(NSString*)password cb:(void (^)(NSString* error))cb {
@@ -32,9 +41,7 @@
      userGetRequest:user
      parameters: params
      successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
-
-         self.currentUser = user;
-         
+         [self authenticated:user];
          cb(nil);
      }
      failureCB:^(RKObjectRequestOperation *operation, NSError *error){
@@ -47,13 +54,31 @@
 -(void) authAnonymous {
     UserModel* user = [[UserModel alloc] init];
 
-    user.anonymous = @YES;
+    user.anonymous = YES;
     [self.restkitWrapper
      userPostRequest:user
      successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
-         self.currentUser = user;
+         [self authenticated:user];
         }
     ];
 }
 
+-(void) registerUser:(NSString*)login password:(NSString*)password cb:(void(^)(NSString* error))cb {
+    UserModel* user = self.currentUser;
+    if (!user) {
+        NSLog(@"Register user need's anonymous user model");
+        return;
+    }
+    user.login = login;
+    user.password = password;
+    user.anonymous = NO;
+    
+    [self.restkitWrapper
+     userPutRequest:user
+     successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
+         self.currentUser = user;
+         cb(nil);
+     }
+     ];
+}
 @end

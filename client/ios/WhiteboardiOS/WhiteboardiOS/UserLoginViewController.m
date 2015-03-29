@@ -42,6 +42,21 @@
                        }];
 }
 - (IBAction)registerBtn:(id)sender {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UserSession* userSession = appDelegate.userSession;
+    NSString* login = self.usernameTxt.text;
+    NSString* password = self.passwordTxt.text;
+    
+    self.statusLabel.text = @"";
+    [userSession registerUser:login
+                 password:password
+                       cb: ^(NSString* error){
+                           if (error) {
+                               self.statusLabel.text = error;
+                           }else{
+                               [self handleAuthentication];
+                           }
+                       }];
 }
 
 

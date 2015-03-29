@@ -24,6 +24,7 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.userSession = appDelegate.userSession;
     
     [self initView];
     [self initRoomCollection:appDelegate];
@@ -47,17 +48,40 @@
     roomManager = appDelegate.roomManager;
 }
 
+- (void) showSpinner {
+    [self.spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.spinner startAnimating];
+}
+
+- (void) hideSpinner {
+    [self.spinner setHidesWhenStopped:YES];
+    [self.spinner stopAnimating];
+    
+}
+
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    NSString *authToken = [self getAuthToken];
+
     
-    [self refreshRooms];
+    if (authToken) {
+        [self refreshRooms];
+    }else{
+        [self.userSession addAuthCB:^(){
+            NSLog(@"authenticateddddd!!!");
+            [self refreshRooms];
+        }];
+        [self showSpinner];
+    }
 }
 
 - (void) refreshRooms {
     NSString *authToken = [self getAuthToken];
     
     if (authToken) {
-        [self.roomCollection fetchRooms:authToken];
+        [self.roomCollection fetchRooms:authToken cb:^(){
+            [self hideSpinner];
+        }];
     }else{
         UIAlertView* errorView = [[UIAlertView alloc]
                                   initWithTitle: @"Error"
@@ -70,8 +94,7 @@
 }
 
 - (NSString *) getAuthToken {
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    UserModel* user = appDelegate.userSession.currentUser;
+    UserModel* user = self.userSession.currentUser;
     
     if (user) {
         return user.authToken;

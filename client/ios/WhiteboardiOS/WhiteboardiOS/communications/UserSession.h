@@ -16,10 +16,15 @@
 
 @property (nonatomic, readwrite) UserModel* currentUser;
 @property (nonatomic, readwrite) RestkitWrapper* restkitWrapper;
+@property (nonatomic, readwrite) NSMutableArray* authCallbacks;
 
 - (id)init:(RestkitWrapper*)restkitWrapper;
 -(void) authUser:(NSString*)login password:(NSString*)password cb:(void (^)(NSString* error))cb;
 -(void) authAnonymous;
+-(void) registerUser:(NSString*)login password:(NSString*)password cb:(void(^)(NSString* error))cb;
+
+-(void) addAuthCB:(void(^)())cb;
+
 @end
 
 #endif
