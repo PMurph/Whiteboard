@@ -18,4 +18,4 @@ client/**/*.xcuserdatad/
 xcuserdata/
 client/ios/WhiteboardiOS/WhiteboardiOS.xcodeproj/xcuserdata/
 *.a
-client/ios/WhiteboardiOS/Frank/frank_static_resources.bundle/
+client/ios/WhiteboardiOS/build/
