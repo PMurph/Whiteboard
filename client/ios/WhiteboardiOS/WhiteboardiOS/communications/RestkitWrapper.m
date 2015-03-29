@@ -21,7 +21,23 @@
         objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
         objectManager.requestSerializationMIMEType = RKMIMETypeJSON;
         [self setupRoomModelResponseDescriptor];
+        [self setupUserModelRequestDescriptor];
         [self setupUserModelResponseDescriptor];
+    }
+
+    - (RKObjectMapping*) getUserModelMapping {
+        RKObjectMapping* userMapping = [RKObjectMapping requestMapping];
+        [userMapping addAttributeMappingsFromArray:@[@"login", @"password", @"anonymous"]];
+        return userMapping;
+    }
+
+    - (void) setupUserModelRequestDescriptor {
+        RKObjectMapping* userMap = [self getUserModelMapping];
+        RKRequestDescriptor* userRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:userMap
+                                                        objectClass:[UserModel class]
+                                                        rootKeyPath:nil
+                                                        method:RKRequestMethodAny];
+        [objectManager addRequestDescriptor: userRequestDescriptor];
     }
 
     - (void) setupRoomModelResponseDescriptor {
@@ -33,7 +49,7 @@
         RKResponseDescriptor* roomResponseDescriptor = [RKResponseDescriptor
             responseDescriptorWithMapping:roomModelMapping
             method:RKRequestMethodGET
-            pathPattern: @"/api/room"
+            pathPattern: @"api/room"
             keyPath: nil
             statusCodes:[NSIndexSet indexSetWithIndex:200]];
     
@@ -51,8 +67,8 @@
         
         RKResponseDescriptor *userResponseDescriptor = [RKResponseDescriptor
             responseDescriptorWithMapping:userModelMapping
-            method:RKRequestMethodPOST
-            pathPattern: @"/api/user"
+            method:RKRequestMethodAny
+            pathPattern:@"api/user"
             keyPath: nil
             statusCodes:[NSIndexSet indexSetWithIndex:200]];
         
@@ -70,17 +86,15 @@
         }];
     }
 
-    - (UserPromise *) fetchUser {
-        UserPromise *thePromise = [[UserPromise alloc] init];
-        [[RKObjectManager sharedManager] postObject:nil
+- (void) userPostRequest:(UserModel*)user successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB
+    {
+        [[RKObjectManager sharedManager] postObject:user
             path:@"/api/user"
-            parameters:@{@"anonymous":@YES}
-            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                [thePromise setUserModel:[mappingResult.array objectAtIndex:0]];
-            }
+            parameters:nil
+            success: successCB
             failure:^(RKObjectRequestOperation *operation, NSError *error) {
                 NSLog(@"Could not retrieve user form the server.");
-            }];
-        return thePromise;
-    }
+            }
+         ];
+   }
 @end

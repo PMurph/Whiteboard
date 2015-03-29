@@ -56,13 +56,28 @@
 - (void) refreshRooms {
     NSString *authToken = [self getAuthToken];
     
-    [self.roomCollection fetchRooms:authToken];
+    if (authToken) {
+        [self.roomCollection fetchRooms:authToken];
+    }else{
+        UIAlertView* errorView = [[UIAlertView alloc]
+                                  initWithTitle: @"Error"
+                                  message:@"The app is not authenticated"
+                                  delegate:nil
+                                  cancelButtonTitle: @"OK"
+                                  otherButtonTitles: nil];
+        [errorView show];
+    }
 }
 
 - (NSString *) getAuthToken {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UserModel* user = appDelegate.userSession.currentUser;
     
-    return appDelegate.userPromise.userModel.authToken;
+    if (user) {
+        return user.authToken;
+    }else{
+        return nil;
+    }
 }
 
 - (void) didReceiveMemoryWarning {

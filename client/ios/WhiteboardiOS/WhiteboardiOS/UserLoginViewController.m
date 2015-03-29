@@ -15,5 +15,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)loginBtn:(id)sender {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+- (IBAction)registerBtn:(id)sender {
+}
 
 @end

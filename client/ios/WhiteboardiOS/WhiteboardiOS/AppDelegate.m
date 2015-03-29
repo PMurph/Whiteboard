@@ -7,17 +7,25 @@
 
 @synthesize restkitWrapper;
 
+- (void) _setupRestkit:(NSString *)uri {
+    if(!self.restkitWrapper) {
+        self.restkitWrapper = [[RestkitWrapper alloc] init:[self webAppURI]];
+    }
+}
+
+- (void) _setupUserSession {
+    self.userSession = [[UserSession alloc]init:self.restkitWrapper];
+}
+
 - (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace); 
     RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
     
     _webAppURI = @"http://ec2-54-68-246-235.us-west-2.compute.amazonaws.com";
-    if(!self.restkitWrapper) {
-        restkitWrapper = [[RestkitWrapper alloc] init:[self webAppURI]];
-    }
-    self.userPromise = [restkitWrapper fetchUser];
-    _roomManager = [[RoomManager alloc] init];
     
+    [self _setupRestkit:_webAppURI];
+    [self _setupUserSession];
+    [self.userSession authAnonymous];
     return YES;
 }
 
