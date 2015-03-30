@@ -47,7 +47,7 @@
     roomManager = appDelegate.roomManager;
     
     [self.leaveButton setAction:@selector(leaveButtonClick:)];
-    [self.roomTitleLabel setText:[NSString stringWithFormat:@"Room %@", roomModel.roomId]];
+    [self.roomTitleLabel setText:[NSString stringWithFormat:@"Room: %@", roomModel.name]];
     
     [self initializeListeners];
     [self getCurrentRoomState];

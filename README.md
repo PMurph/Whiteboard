@@ -64,13 +64,11 @@ pod install
 open WhiteboardiOS.xcworkspace
 ```
 
-Setting Up Frank
+Acceptance Tests (client/ios/WhiteboardiOS/WhiteboardiOSTests/acceptance/*.trace)
 ```
-frank setup
-frank build
-```
-
-Running Frank tests
-```
-frank launch
+open WhiteboardiOS.xcworkspace
+Product > Profile (cmd+I)
+Select Automation
+Open .trace file
+Click play button at very button of script
 ```
