@@ -19,6 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.roomManager = appDelegate.roomManager;
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -38,6 +40,7 @@
     self.tabBarController.selectedIndex = 0;
     //Remove Login Tab
     [self swapWithUserSettings:user];
+    [self.roomManager closeAllRooms];
 
 }
 - (IBAction)loginBtn:(id)sender {

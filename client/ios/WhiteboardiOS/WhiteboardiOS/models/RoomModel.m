@@ -9,6 +9,7 @@
     @synthesize roomId;
     @synthesize name;
     @synthesize  type;
+@synthesize  roomView;
 
     - (id) init:(NSString *)assignedRoomId {
         roomId = assignedRoomId;

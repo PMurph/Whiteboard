@@ -1,4 +1,5 @@
 #import "RoomManager.h"
+#import "RoomViewController.h"
 
 @interface RoomManager () {
         NSMutableDictionary *roomModels;
@@ -29,8 +30,10 @@
     - (void) closeRoom:(NSString *)roomId {
         if ([self isRoomOpen:roomId]) {
             RoomModel *roomModel = [roomModels objectForKey:roomId];
+            RoomViewController* roomView = (RoomViewController*)roomModel.roomView;
             [roomModel.socket emit:LEAVE_ROOM_EVENT args:@[@{ROOM_ID_KEY: roomId}]];
             [roomModel.socket close];
+            [roomView removeControllerTab];
             
             [roomModels removeObjectForKey:roomId];
         }

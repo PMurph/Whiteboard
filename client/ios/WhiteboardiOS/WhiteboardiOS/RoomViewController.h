@@ -5,8 +5,8 @@
 #import <SIOSocket/SIOSocket.h>
 
 #import "AppDelegate.h"
-#import "RoomModel.h"
 #import "DrawLogic.h"
+#import "RoomModel.h"
 
 #define GET_ALL_DRAW_COMMANDS @"getAllDrawCommands"
 #define DRAW_COMMANDS_KEY @"drawCommands"
@@ -23,7 +23,8 @@
     @property (weak, nonatomic) IBOutlet UIImageView *tempDrawCanvas;
     @property (strong, nonatomic) DrawToolModel *drawToolModel;
 
-    + (RoomViewController *)createRoomViewController:(RoomModel *)roomToCreate withSocket:(SIOSocket *)socket;
+    + (RoomViewController *)createRoomViewController:(RoomModel*)roomToCreate withSocket:(SIOSocket *)socket;
+- (void) removeControllerTab;
 
 @end
 

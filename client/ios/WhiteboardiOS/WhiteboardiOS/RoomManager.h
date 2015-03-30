@@ -6,6 +6,8 @@
 #define LEAVE_ROOM_EVENT @"leaveRoom"
 #define ROOM_ID_KEY @"roomId"
 
+
+
 @interface RoomManager : NSObject
     - (id) init;
     - (void) addRoom:(RoomModel *)roomModel;
