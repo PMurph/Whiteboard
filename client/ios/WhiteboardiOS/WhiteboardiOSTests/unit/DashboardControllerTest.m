@@ -1,11 +1,3 @@
-//
-//  DashboardControllerTest.m
-//  WhiteboardiOS
-//
-//  Created by Patrick Murphy on 2015-03-17.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>

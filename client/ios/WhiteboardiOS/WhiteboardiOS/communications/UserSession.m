@@ -1,11 +1,3 @@
-//
-//  UserSession.m
-//  WhiteboardiOS
-//
-//  Created by Reyad on 2015-03-27.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import "UserSession.h"
 
@@ -83,7 +75,7 @@
          cb(nil, user);
      }
      failureCB:^(RKObjectRequestOperation *operation, NSError *error){
-         cb(@"Reistration failed", nil);
+         cb(@"Registration failed", nil);
      }
      ];
 }
