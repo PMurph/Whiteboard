@@ -48,11 +48,7 @@
     }
 
     - (NSDictionary *) toDrawMessage:(NSString *)roomId {
-        NSMutableDictionary *drawMessage = [[NSMutableDictionary alloc] init];
-        
-        [drawMessage setValue:[self generateDrawMessageContent:roomId] forKey:DRAW_MESSAGE_KEY];
-        
-        return drawMessage;
+        return [self generateDrawMessageContent:roomId];
     }
 
     - (NSDictionary *) generateDrawMessageContent:(NSString *)roomId {

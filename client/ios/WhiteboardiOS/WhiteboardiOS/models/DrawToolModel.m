@@ -3,7 +3,6 @@
 @interface DrawToolModel () {
         NSDictionary *colourMap;
         NSDictionary *toolMap;
-        NSString *colourName;
         NSString *toolName;
     }
 @end
@@ -18,16 +17,17 @@
             @"yellow" : @[@1.0f, @1.0f, @0.0f],
             @"green" : @[@0.0f, @1.0f, @0.0f],
             @"purple" : @[@(102.0f/255.0f), @0.0f, @1.0f],
+            WHITE_COLOUR : @[@1.0f, @1.0f, @1.0f],
         };
 
         toolMap = @{
-            @"draw" : [NSNumber numberWithInt:DRAW],
-            @"erase": [NSNumber numberWithInt:ERASE],
+            DRAW_TOOL_TYPE : [NSNumber numberWithInt:DRAW],
+            ERASE_TOOL_TYPE : [NSNumber numberWithInt:ERASE],
         };
 
         toolName = @"draw";
-        colourName = @"black";
-        _myColour = [colourMap objectForKey:colourName];
+        _colourName = @"black";
+        _myColour = [colourMap objectForKey:_colourName];
         _myTool = DRAW;
         [self setThickness:@10];
     
@@ -49,8 +49,8 @@
     - (void) setColour:(NSString*)newColour {
         newColour = newColour.lowercaseString;
     
-        if ([colourMap objectForKey:newColour]) {
-            colourName = newColour;
+        if ([colourMap objectForKey:newColour] && _myTool != ERASE) {
+            _colourName = newColour;
             _myColour = [colourMap objectForKey:newColour];
         }
     }
@@ -60,6 +60,11 @@
     
         if ([toolMap objectForKey:newTool]) {
             toolName = newTool;
+            
+            if ([toolName isEqualToString:ERASE_TOOL_TYPE]) {
+                [self setColour:WHITE_COLOUR];
+            }
+            
             _myTool = [[toolMap objectForKey:newTool] unsignedIntegerValue];
         }
     }
@@ -74,7 +79,7 @@
         NSMutableDictionary *tool = [[NSMutableDictionary alloc] init];
         
         [tool setObject:_thickness forKey:THICKNESS_KEY];
-        [tool setObject:colourName forKey:COLOUR_KEY];
+        [tool setObject:_colourName forKey:COLOUR_KEY];
         [tool setObject:toolName forKey:TOOL_TYPE_KEY];
         
         return tool;

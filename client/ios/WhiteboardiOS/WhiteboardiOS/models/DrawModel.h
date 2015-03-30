@@ -3,7 +3,6 @@
 
 #import "DrawToolModel.h"
 
-#define DRAW_MESSAGE_KEY @"message"
 #define TOOL_KEY @"tool"
 #define ROOM_ID_KEY @"roomID"
 

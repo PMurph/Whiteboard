@@ -16,4 +16,6 @@ client/ios/WhiteboardiOS/Pods/
 client/**/*.xcuserdatad/
 **/._*
 xcuserdata/
-Whiteboard/client/ios/WhiteboardiOS/WhiteboardiOS.xcodeproj/xcuserdata/
+client/ios/WhiteboardiOS/WhiteboardiOS.xcodeproj/xcuserdata/
+*.a
+client/ios/WhiteboardiOS/build/

@@ -19,7 +19,6 @@
 		A860ACE91ABA743B00432672 /* Crayon-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A860ACE81ABA743B00432672 /* Crayon-icon.png */; };
 		A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6ED1AAE9BEB00D61DF9 /* main.m */; };
 		A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */; };
-		A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */; };
 		A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */; };
 		A88FF6FA1AAE9BEB00D61DF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6F81AAE9BEB00D61DF9 /* Main.storyboard */; };
 		A88FF6FC1AAE9BEB00D61DF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */; };
@@ -34,10 +33,13 @@
 		A8D750CF1ABFC9F7001268EF /* DrawToolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750CD1ABFC9F7001268EF /* DrawToolModel.m */; };
 		A8D750D11ABFCA28001268EF /* DrawToolModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750D01ABFCA28001268EF /* DrawToolModelTest.m */; };
 		A8D750D31ABFD0A7001268EF /* DrawModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750D21ABFD0A7001268EF /* DrawModelTest.m */; };
-		A8D750D61ABFDA80001268EF /* UserPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750D51ABFDA80001268EF /* UserPromise.m */; };
 		A8EC3CD01AB4FE7000A3A5A2 /* RestkitWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC3CCF1AB4FE7000A3A5A2 /* RestkitWrapper.m */; };
 		A8EC3CD21AB6A5F100A3A5A2 /* RoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC3CD11AB6A5F100A3A5A2 /* RoomCell.m */; };
 		BA272456604C448F2F42B33A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F69200732A00E2E61E393E /* libPods.a */; };
+		C110FB731AC99B0900B5477C /* UserSessionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C110FB721AC99B0900B5477C /* UserSessionTest.m */; };
+		C19831DE1AC7EB4900BAEC26 /* UserSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C19831DD1AC7EB4900BAEC26 /* UserSettingsViewController.m */; };
+		C19831E01AC7ECEC00BAEC26 /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */; };
+		C1F9E5B71AC679DD00E024FC /* UserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F9E5B61AC679DD00E024FC /* UserSession.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +76,6 @@
 		A88FF6ED1AAE9BEB00D61DF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A88FF6EF1AAE9BEB00D61DF9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserLoginViewController.h; path = WhiteboardiOS/UserLoginViewController.h; sourceTree = "<group>"; };
 		A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = UserLoginViewController.m; path = WhiteboardiOS/UserLoginViewController.m; sourceTree = "<group>"; };
 		A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DashboardViewController.h; path = WhiteboardiOS/DashboardViewController.h; sourceTree = "<group>"; };
 		A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DashboardViewController.m; path = WhiteboardiOS/DashboardViewController.m; sourceTree = "<group>"; };
@@ -98,12 +99,16 @@
 		A8D750CD1ABFC9F7001268EF /* DrawToolModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawToolModel.m; path = WhiteboardiOS/models/DrawToolModel.m; sourceTree = "<group>"; };
 		A8D750D01ABFCA28001268EF /* DrawToolModelTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawToolModelTest.m; path = unit/DrawToolModelTest.m; sourceTree = "<group>"; };
 		A8D750D21ABFD0A7001268EF /* DrawModelTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawModelTest.m; path = unit/DrawModelTest.m; sourceTree = "<group>"; };
-		A8D750D41ABFD9DF001268EF /* UserPromise.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserPromise.h; path = WhiteboardiOS/communications/UserPromise.h; sourceTree = "<group>"; };
-		A8D750D51ABFDA80001268EF /* UserPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserPromise.m; path = WhiteboardiOS/communications/UserPromise.m; sourceTree = "<group>"; };
 		A8EC3CCE1AB4FE5600A3A5A2 /* RestkitWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RestkitWrapper.h; path = WhiteboardiOS/communications/RestkitWrapper.h; sourceTree = "<group>"; };
 		A8EC3CCF1AB4FE7000A3A5A2 /* RestkitWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestkitWrapper.m; path = WhiteboardiOS/communications/RestkitWrapper.m; sourceTree = "<group>"; };
 		A8EC3CD11AB6A5F100A3A5A2 /* RoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomCell.m; sourceTree = "<group>"; };
 		A8EC3CD31AB6A60400A3A5A2 /* RoomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomCell.h; sourceTree = "<group>"; };
+		C110FB721AC99B0900B5477C /* UserSessionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSessionTest.m; path = unit/UserSessionTest.m; sourceTree = "<group>"; };
+		C19831DB1AC7EB4900BAEC26 /* UserLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserLoginViewController.h; path = WhiteboardiOS/UserLoginViewController.h; sourceTree = "<group>"; };
+		C19831DC1AC7EB4900BAEC26 /* UserSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingsViewController.h; path = WhiteboardiOS/UserSettingsViewController.h; sourceTree = "<group>"; };
+		C19831DD1AC7EB4900BAEC26 /* UserSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingsViewController.m; path = WhiteboardiOS/UserSettingsViewController.m; sourceTree = "<group>"; };
+		C1D15A041AC72FDE005644A7 /* UserSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSession.h; path = WhiteboardiOS/communications/UserSession.h; sourceTree = "<group>"; };
+		C1F9E5B61AC679DD00E024FC /* UserSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSession.m; path = WhiteboardiOS/communications/UserSession.m; sourceTree = "<group>"; };
 		C9F69200732A00E2E61E393E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBAEBFD26546F12FD9508BE5 /* libPods-WhiteboardiOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WhiteboardiOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E694FFDEC4A856CA9A0BB6 /* Pods-WhiteboardiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhiteboardiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WhiteboardiOSTests/Pods-WhiteboardiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -177,6 +182,7 @@
 				A8B3D6131AC36B0600B7F885 /* AppDelegateTest.m */,
 				A8B3D61C1AC3805100B7F885 /* RoomManagerTest.m */,
 				A8B3D6251AC4886A00B7F885 /* DrawLogicTest.m */,
+				C110FB721AC99B0900B5477C /* UserSessionTest.m */,
 			);
 			name = unit;
 			sourceTree = "<group>";
@@ -264,8 +270,10 @@
 		A8B3D6151AC376AF00B7F885 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */,
+				C19831DB1AC7EB4900BAEC26 /* UserLoginViewController.h */,
 				A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */,
+				C19831DC1AC7EB4900BAEC26 /* UserSettingsViewController.h */,
+				C19831DD1AC7EB4900BAEC26 /* UserSettingsViewController.m */,
 				A860ACDC1ABA4B0D00432672 /* RoomViewController.h */,
 				A860ACDA1ABA4AEF00432672 /* RoomViewController.m */,
 				A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */,
@@ -277,10 +285,10 @@
 		A8EC3CCD1AB4FE2900A3A5A2 /* communication */ = {
 			isa = PBXGroup;
 			children = (
+				C1F9E5B61AC679DD00E024FC /* UserSession.m */,
+				C1D15A041AC72FDE005644A7 /* UserSession.h */,
 				A8EC3CCE1AB4FE5600A3A5A2 /* RestkitWrapper.h */,
 				A8EC3CCF1AB4FE7000A3A5A2 /* RestkitWrapper.m */,
-				A8D750D41ABFD9DF001268EF /* UserPromise.h */,
-				A8D750D51ABFDA80001268EF /* UserPromise.m */,
 			);
 			name = communication;
 			sourceTree = "<group>";
@@ -466,20 +474,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8395A691ABE04F0009227CB /* UserModel.m in Sources */,
-				A8D750D61ABFDA80001268EF /* UserPromise.m in Sources */,
 				A8B3D6231AC4880B00B7F885 /* DrawLogic.m in Sources */,
 				A8EC3CD01AB4FE7000A3A5A2 /* RestkitWrapper.m in Sources */,
+				C19831DE1AC7EB4900BAEC26 /* UserSettingsViewController.m in Sources */,
 				A860ACDB1ABA4AEF00432672 /* RoomViewController.m in Sources */,
 				A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */,
 				A8D750CF1ABFC9F7001268EF /* DrawToolModel.m in Sources */,
 				A8B3D6191AC37EC500B7F885 /* RoomManager.m in Sources */,
+				C19831E01AC7ECEC00BAEC26 /* UserLoginViewController.m in Sources */,
 				A8EC3CD21AB6A5F100A3A5A2 /* RoomCell.m in Sources */,
 				A8D750CE1ABFC9F7001268EF /* DrawModel.m in Sources */,
 				A8596A671AB251D0005CA07F /* RoomModel.m in Sources */,
 				A8596A6B1AB3946A005CA07F /* RoomCollection.m in Sources */,
 				A8B3D6211AC39CB600B7F885 /* SocketFactory.m in Sources */,
+				C1F9E5B71AC679DD00E024FC /* UserSession.m in Sources */,
 				A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */,
-				A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */,
 				A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,6 +503,7 @@
 				A8D750D11ABFCA28001268EF /* DrawToolModelTest.m in Sources */,
 				A860ACE21ABA5ACD00432672 /* DashboardControllerTest.m in Sources */,
 				A860ACE41ABA5ACD00432672 /* RoomViewControllerTest.m in Sources */,
+				C110FB731AC99B0900B5477C /* UserSessionTest.m in Sources */,
 				A8B3D6261AC4886A00B7F885 /* DrawLogicTest.m in Sources */,
 				A860ACE31ABA5ACD00432672 /* RoomCollectionTest.m in Sources */,
 			);
@@ -563,7 +573,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -599,7 +609,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;

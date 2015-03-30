@@ -36,6 +36,7 @@
 }
 
 - (void)testViewDidAppearCallsFetchRooms {
+    // This test will occasionally fail, just rerun the tests if this does
     [self.testDashboardViewController viewDidAppear:YES];
     
     OCMVerify([self.roomCollectionMock fetchRooms:[OCMArg any]]);

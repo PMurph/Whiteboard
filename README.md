@@ -64,3 +64,11 @@ pod install
 open WhiteboardiOS.xcworkspace
 ```
 
+Acceptance Tests (client/ios/WhiteboardiOS/WhiteboardiOSTests/acceptance/*.trace)
+```
+open WhiteboardiOS.xcworkspace
+Product > Profile (cmd+I)
+Select Automation
+Open .trace file
+Click play button at very button of script
+```

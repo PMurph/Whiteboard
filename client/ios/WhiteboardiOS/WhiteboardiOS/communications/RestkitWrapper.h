@@ -5,7 +5,7 @@
 
 #import "Collection.h"
 #import "RoomModel.h"
-#import "UserPromise.h"
+#import "UserModel.h"
 
 @interface RestkitWrapper : NSObject {
         RKObjectManager *objectManager;
@@ -13,8 +13,13 @@
     }
 
     - (id) init: (NSString *)webAppAPIURI;
-    - (void) fetchRooms:(id<Collection>)collection withAuthentication:(NSString *)authToken;
-    - (UserPromise *) fetchUser;
+- (void) fetchRooms:(id<Collection>)collection withAuthentication:(NSString *)authToken cb:(void (^)())cb;
+- (void) userPostRequest:(UserModel*)user successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB failureCB:(void (^)(RKObjectRequestOperation *operation, NSError *error))failureCB;
+- (void) userPutRequest:(UserModel*)user successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB failureCB:(void (^)(RKObjectRequestOperation *operation, NSError *error))failureCB;
+
+    - (void) userGetRequest:(UserModel*)user parameters:(NSDictionary*)params successCB:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))successCB failureCB:(void (^)(RKObjectRequestOperation *operation, NSError *error))failureCB;
+
+
 @end
 
 #endif

@@ -6,7 +6,10 @@
 @interface UserModel : NSObject
 
     @property (nonatomic, strong) NSString *displayName;
-    @property (nonatomic) BOOL anonymous;
+    @property (nonatomic, strong) NSString *status;
+    @property (nonatomic, strong) NSString *login;
+    @property (nonatomic, strong) NSString *password;
+    @property (nonatomic) bool anonymous;
     @property (nonatomic, strong) NSString *authToken;
     @property (nonatomic, strong) NSString *userId;
 

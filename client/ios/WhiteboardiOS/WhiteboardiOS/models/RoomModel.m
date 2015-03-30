@@ -7,9 +7,12 @@
 @implementation RoomModel
 
     @synthesize roomId;
+    @synthesize name;
+    @synthesize  type;
 
     - (id) init:(NSString *)assignedRoomId {
         roomId = assignedRoomId;
+        name = @"";
         return self;
     }
 

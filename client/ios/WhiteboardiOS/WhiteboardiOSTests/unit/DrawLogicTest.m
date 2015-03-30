@@ -16,7 +16,7 @@
 - (void)setUp {
     [super setUp];
     
-    self.testDrawTool = @{@"colour": @"Blue", @"thickness": @5, @"type": @"Erase"};
+    self.testDrawTool = @{@"colour": @"Blue", @"thickness": @5, @"type": @"Draw"};
     testPoint.x = 5;
     testPoint.y = 1.45;
     
@@ -29,6 +29,7 @@
     [super tearDown];
 }
 
+#pragma mark createDrawToolModel tests
 - (void)testCreateDrawToolModelDoesNotReturnNil {
     XCTAssertNotNil([DrawLogic createDrawToolModel:self.testDrawTool]);
 }
@@ -40,7 +41,7 @@
 }
 
 - (void)testCreateDrawToolModelReturnsDrawToolModelWithCorrectTool {
-    XCTAssertEqual(self.testDrawToolModel.myTool, ERASE);
+    XCTAssertEqual(self.testDrawToolModel.myTool, DRAW);
 }
 
 - (void)testCreateDrawToolModelReturnsDrawToolModelWithCorrectThickness {
@@ -51,6 +52,7 @@
     XCTAssertNil([DrawLogic createDrawToolModel:@{}]);
 }
 
+#pragma mark createDrawModel tests
 - (void)testCreateDrawModelDoesNotReturnNil {
     XCTAssertNotNil([DrawLogic createDrawModel:self.testDrawToolModel]);
 }
@@ -79,6 +81,7 @@
     XCTAssertNil([DrawLogic createDrawModel:self.testDrawToolModel withCoordinates:nil]);
 }
 
+#pragma mark drawing tests
 - (void)testEndDrawingShouldReturnNilIfStartDrawingHasNotBeenCalled {
     XCTAssertNil([self.testDrawLogic endDrawing:testPoint]);
 }
