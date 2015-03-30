@@ -64,7 +64,16 @@ pod install
 open WhiteboardiOS.xcworkspace
 ```
 
-Acceptance Tests (client/ios/WhiteboardiOS/WhiteboardiOSTests/acceptance/*.trace)
+####Acceptance Tests 
+Web(client/tests/acceptance/*.html)
+```
+open Selenium IDE
+File > Add test case
+Select all html file under client/tests/acceptance
+Click Play entire suite case
+```
+
+iOS(client/ios/WhiteboardiOS/WhiteboardiOSTests/acceptance/*.trace)
 ```
 open WhiteboardiOS.xcworkspace
 Product > Profile (cmd+I)
