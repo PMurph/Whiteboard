@@ -127,9 +127,10 @@
 
     - (void) newSample:(CGPoint)newPoint {
         DrawToolModel *drawTool = currDrawModel.drawTool;
+        CGRect rect = CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height);
     
         UIGraphicsBeginImageContext(self.drawCanvas.frame.size);
-        [self.tempDrawCanvas.image drawInRect:CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height)];
+        [self.tempDrawCanvas.image drawInRect:rect];
         CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
         CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), newPoint.x, newPoint.y);
         CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);

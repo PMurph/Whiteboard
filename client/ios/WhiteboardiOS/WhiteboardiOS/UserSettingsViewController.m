@@ -27,13 +27,17 @@
     [tabBar setViewControllers:currentTabs animated:YES];
 }
 
+-(void)setLabels {
+    self.displayNameLabel.text = [NSString stringWithFormat:@"%@ %@", @"Display Name:", self.user.displayName];
+    self.usernameLabel.text = [NSString stringWithFormat:@"%@ %@", @"Username:", self.user.login];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.userSession = appDelegate.userSession;
     
-    self.displayNameLabel.text = [NSString stringWithFormat:@"%@ %@", @"Display Name:", self.user.displayName];
-    self.usernameLabel.text = [NSString stringWithFormat:@"%@ %@", @"Username:", self.user.login];
+    [self setLabels];
+
 
 }
 
@@ -71,6 +75,7 @@
             change = YES;
         }else{
             [self setStatus:@"Passwords do not match" isError:YES];
+            return;
         }
     }
     
@@ -81,6 +86,11 @@
                 [self setStatus:[NSString stringWithFormat:@"Invalid: %@", errorMsg] isError:YES];
             }else{
                 [self setStatus:@"Save Successful" isError:NO];
+                self.displayNameTxt.text = @"";
+                self.usernameTxt.text = @"";
+                self.password1Txt.text = @"";
+                self.password2Txt.text = @"";
+                [self setLabels];
             }
         }];
     }
