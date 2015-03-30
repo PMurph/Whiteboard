@@ -14,8 +14,10 @@
 -(void) authUser:(NSString*)login password:(NSString*)password cb:(void (^)(NSString* error, UserModel* user))cb;
 -(void) authAnonymous;
 -(void) registerUser:(NSString*)login password:(NSString*)password cb:(void(^)(NSString* error, UserModel* user))cb;
-
+-(void) save:(UserModel*)user cb: (void(^)(NSString* error, UserModel* user))cb;
 -(void) addAuthCB:(void(^)())cb;
+-(void) logout;
+
 
 @end
 

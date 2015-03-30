@@ -7,6 +7,16 @@
 
 @implementation UserLoginViewController
 
++ (UserLoginViewController*)init {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UserLoginViewController *newView = [storyboard instantiateViewControllerWithIdentifier:@"UserLoginViewController"];
+    UIImage *viewTabIcon = [UIImage imageNamed:@"login.png"];
+    UITabBarItem *viewTabBarItem = [[UITabBarItem alloc] initWithTitle:@"Login" image:viewTabIcon tag:0];
+    
+    [newView setTabBarItem:viewTabBarItem];
+    return newView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -16,14 +26,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)handleAuthentication:(UserModel*)user {
-    //Goto dashboard
-    self.tabBarController.selectedIndex = 0;
-    //Remove Login Tab
+
+-(void) swapWithUserSettings:(UserModel*)user {
     NSMutableArray *currentTabs = [NSMutableArray arrayWithArray:self.tabBarController.viewControllers];
     UserSettingsViewController* userSettingsView = [UserSettingsViewController initWithUser:user];
     [currentTabs replaceObjectAtIndex:1 withObject:userSettingsView];
     [self.tabBarController setViewControllers:currentTabs animated:YES];
+}
+-(void)handleAuthentication:(UserModel*)user {
+    //Goto dashboard
+    self.tabBarController.selectedIndex = 0;
+    //Remove Login Tab
+    [self swapWithUserSettings:user];
 
 }
 - (IBAction)loginBtn:(id)sender {

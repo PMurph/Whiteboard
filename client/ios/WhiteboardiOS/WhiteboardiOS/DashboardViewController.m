@@ -1,5 +1,5 @@
 #import "DashboardViewController.h"
-
+#import "UserSettingsViewController.h"
 @interface DashboardViewController () {
         NSArray *roomSections;
         RoomManager *roomManager;
@@ -29,13 +29,31 @@
     [self initView];
     [self initRoomCollection:appDelegate];
     [self initRoomManager:appDelegate];
+};
+
+- (void) showLogoutBtn {
+    NSMutableArray *toolbarItems = [NSMutableArray arrayWithArray:self.toolbar.items];
+    if(![toolbarItems containsObject:self.LogoutBtn]) {
+        [toolbarItems addObject:self.LogoutBtn];
+        [self.toolbar setItems:toolbarItems animated:YES];
+    }
+}
+
+- (void) hideLogoutBtn {
+    NSMutableArray *toolbarItems = [NSMutableArray arrayWithArray:self.toolbar.items];
+    if([toolbarItems containsObject:self.LogoutBtn]) {
+        [toolbarItems removeObject:self.LogoutBtn];
+        [self.toolbar setItems:toolbarItems animated:YES];
+    }
 }
 
 - (void) initView {
+    
     [[self roomCollectionView] setDataSource:self];
     [[self roomCollectionView] setDelegate:self];
     [[self refreshButton] setTarget:self];
     [[self refreshButton] setAction:@selector(refreshRoomsButtonClick:)];
+    [self hideLogoutBtn];
 }
 
 - (void) initRoomCollection:(AppDelegate *)appDelegate {
@@ -64,7 +82,6 @@
     [super viewDidAppear:animated];
     NSString *authToken = [self getAuthToken];
 
-    
     if (authToken) {
         [self refreshRooms];
     }else{
@@ -78,8 +95,14 @@
 
 - (void) refreshRooms {
     NSString *authToken = [self getAuthToken];
+    UserModel* user = self.userSession.currentUser;
     
     if (authToken) {
+        if(!user.anonymous) {
+            [self showLogoutBtn];
+        }else{
+            [self hideLogoutBtn];
+        }
         [self.roomCollection fetchRooms:authToken cb:^(){
             [self hideSpinner];
         }];
@@ -214,6 +237,15 @@
 - (void) refreshRoomsButtonClick:(id)sender {
     [self showSpinner];
     [self refreshRooms];
+}
+- (IBAction)logoutButtonClick:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
+                                                  bundle: nil];
+    UserSettingsViewController *view = (UserSettingsViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"UserSettingsViewController"];
+    [self.userSession logout];
+    [self hideLogoutBtn];
+    [view swapWithUserLogin:self.tabBarController];
+    [self.userSession authAnonymous];
 }
 
 @end
