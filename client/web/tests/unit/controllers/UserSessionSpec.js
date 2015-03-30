@@ -42,7 +42,7 @@ define(["squirejs/Squire"], function(Squire) {
             injector
             .mock('models/User', mockUser)
             .mock('app', {
-                mainController: jasmine.createSpyObj("mainController", ["renderHeader", "hideShield"])
+                mainController: jasmine.createSpyObj("mainController", ["renderHeader", "hideShield", "inDashboard", "inRoom"])
             })
             .require(['controllers/UserSession'], function(UserSessionController) {
 

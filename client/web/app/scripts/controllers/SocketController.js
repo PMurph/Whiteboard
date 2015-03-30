@@ -26,6 +26,15 @@ define([
             this._setupWindowEvents();
         },
 
+        showErrorMessage: function(message) {
+            App.mainController.showShield();
+            App.mainController.setStatusBox(message + "<br /><a href='#' id='continueDashboardLink'>Continue to dashboard</a>");
+            var continueLink = document.getElementById("continueDashboardLink");
+            continueLink.onclick = function() {
+                App.mainController.hideShield();
+            };
+        },
+
         joinRoom: function(roomID, roomView) {
             var self = this;
 
@@ -37,17 +46,24 @@ define([
             }
 
 
-            this.io.once('joinRequest', function() {
-                self._roomID = roomID;
-                self._roomView = roomView;
-                self.io.once('getAllDrawCommands', function(drawMsgs) {
-                    self._roomView.whiteboard.drawFromGetAllMessages(drawMsgs.drawCommands);
-                });
-                self.io.once('getAllChat', function(chatMsgs) {
-                    self._roomView.chat.chatFromGetAllMessages(chatMsgs.chatMessages);
-                });
-                self.io.emit('getAllDrawCommands');
-                self.io.emit('getAllChat');
+            this.io.once('joinRequest', function(response, status) {
+                if (response === "rejected") {
+                    console.error("rejected: " + status);
+                    self.showErrorMessage("Failed to join room");
+                }else if (response !== roomID){
+                    self.showErrorMessage("Failed to join room (Server return incorrect id)");
+                }else{
+                    self._roomID = roomID;
+                    self._roomView = roomView;
+                    self.io.once('getAllDrawCommands', function(drawMsgs) {
+                        self._roomView.whiteboard.drawFromGetAllMessages(drawMsgs.drawCommands);
+                    });
+                    self.io.once('getAllChat', function(chatMsgs) {
+                        self._roomView.chat.chatFromGetAllMessages(chatMsgs.chatMessages);
+                    });
+                    self.io.emit('getAllDrawCommands');
+                    self.io.emit('getAllChat');
+                }
             });
 
             this.io.emit('joinRequest', {
@@ -61,12 +77,13 @@ define([
         },
 
         _leaveRoom: function() {
-            this.io.emit('leaveRoom', {
-                roomId: this._roomID,
-                authToken: this.userSession.getUser().get('authToken')
-            });
-            this._roomID = undefined;
-            this._roomView = undefined;
+            if(this._roomID) {
+                this.io.emit('leaveRoom', {
+                    roomId: this._roomID,
+                });
+                this._roomID = undefined;
+                this._roomView = undefined;
+            }
         },
 
         _emitChat: function(msg) {
@@ -90,7 +107,7 @@ define([
             });
 
             this.io.on('drawCommand', function(param) {
-                self._roomView.whiteboard.drawFromMessage(param.drawCommand.message);
+                self._roomView.whiteboard.drawFromMessage(param.drawCommand);
             });
 
             this.io.on('roomMessage', function(param) {
@@ -105,9 +122,11 @@ define([
                 self._connected = true;
             });
             this.io.on('disconnect', function() {
+                self.showErrorMessage("Socket was disconnected");
                 self._connected = false;
             });
             this.io.on('error', function(err) {
+                self.showErrorMessage("Socket encountered an error");
                 console.error("SocketIO error: " + err);
             });
         },

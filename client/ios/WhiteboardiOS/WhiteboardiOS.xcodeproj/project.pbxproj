@@ -8,10 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		968BA6246DBE4080B4698BAD /* libPods-WhiteboardiOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBAEBFD26546F12FD9508BE5 /* libPods-WhiteboardiOSTests.a */; };
+		A8395A691ABE04F0009227CB /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACEC1ABB864400432672 /* UserModel.m */; };
+		A8395A9D1ABE1F0A009227CB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8395A9C1ABE1F0A009227CB /* CoreGraphics.framework */; };
 		A8596A671AB251D0005CA07F /* RoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A661AB251D0005CA07F /* RoomModel.m */; };
 		A8596A6B1AB3946A005CA07F /* RoomCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A6A1AB3946A005CA07F /* RoomCollection.m */; };
-		A8596A6F1AB3CB3D005CA07F /* RoomCollectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8596A6E1AB3CB3D005CA07F /* RoomCollectionTest.m */; };
-		A860ACD91AB8D96A00432672 /* DashboardControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */; };
+		A860ACDB1ABA4AEF00432672 /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACDA1ABA4AEF00432672 /* RoomViewController.m */; };
+		A860ACE21ABA5ACD00432672 /* DashboardControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACDF1ABA5ACD00432672 /* DashboardControllerTest.m */; };
+		A860ACE31ABA5ACD00432672 /* RoomCollectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACE01ABA5ACD00432672 /* RoomCollectionTest.m */; };
+		A860ACE41ABA5ACD00432672 /* RoomViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A860ACE11ABA5ACD00432672 /* RoomViewControllerTest.m */; };
+		A860ACE91ABA743B00432672 /* Crayon-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A860ACE81ABA743B00432672 /* Crayon-icon.png */; };
 		A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6ED1AAE9BEB00D61DF9 /* main.m */; };
 		A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */; };
 		A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */; };
@@ -19,8 +24,17 @@
 		A88FF6FA1AAE9BEB00D61DF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6F81AAE9BEB00D61DF9 /* Main.storyboard */; };
 		A88FF6FC1AAE9BEB00D61DF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */; };
 		A88FF6FF1AAE9BEB00D61DF9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A88FF6FD1AAE9BEB00D61DF9 /* LaunchScreen.xib */; };
-		A8D750C81ABF956C001268EF /* DrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750C51ABF956C001268EF /* DrawModel.m */; };
-		A8D750C91ABF956C001268EF /* DrawObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750C71ABF956C001268EF /* DrawObject.m */; };
+		A8B3D6141AC36B0600B7F885 /* AppDelegateTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B3D6131AC36B0600B7F885 /* AppDelegateTest.m */; };
+		A8B3D6191AC37EC500B7F885 /* RoomManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B3D6181AC37EC500B7F885 /* RoomManager.m */; };
+		A8B3D61D1AC3805100B7F885 /* RoomManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B3D61C1AC3805100B7F885 /* RoomManagerTest.m */; };
+		A8B3D6211AC39CB600B7F885 /* SocketFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B3D6201AC39CB600B7F885 /* SocketFactory.m */; };
+		A8B3D6231AC4880B00B7F885 /* DrawLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B3D6221AC4880B00B7F885 /* DrawLogic.m */; };
+		A8B3D6261AC4886A00B7F885 /* DrawLogicTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B3D6251AC4886A00B7F885 /* DrawLogicTest.m */; };
+		A8D750CE1ABFC9F7001268EF /* DrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750CB1ABFC9F7001268EF /* DrawModel.m */; };
+		A8D750CF1ABFC9F7001268EF /* DrawToolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750CD1ABFC9F7001268EF /* DrawToolModel.m */; };
+		A8D750D11ABFCA28001268EF /* DrawToolModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750D01ABFCA28001268EF /* DrawToolModelTest.m */; };
+		A8D750D31ABFD0A7001268EF /* DrawModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750D21ABFD0A7001268EF /* DrawModelTest.m */; };
+		A8D750D61ABFDA80001268EF /* UserPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D750D51ABFDA80001268EF /* UserPromise.m */; };
 		A8EC3CD01AB4FE7000A3A5A2 /* RestkitWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC3CCF1AB4FE7000A3A5A2 /* RestkitWrapper.m */; };
 		A8EC3CD21AB6A5F100A3A5A2 /* RoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC3CD11AB6A5F100A3A5A2 /* RoomCell.m */; };
 		BA272456604C448F2F42B33A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F69200732A00E2E61E393E /* libPods.a */; };
@@ -40,32 +54,52 @@
 		0566D47A577D3E6D5C7C4EBE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		395A891D93E2852F5EA27618 /* Pods-WhiteboardiOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhiteboardiOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhiteboardiOSTests/Pods-WhiteboardiOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		66B2C68B92EB6FB5E714D231 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		A8395A9C1ABE1F0A009227CB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A8596A661AB251D0005CA07F /* RoomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomModel.m; path = WhiteboardiOS/models/RoomModel.m; sourceTree = "<group>"; };
 		A8596A691AB2520F005CA07F /* RoomModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RoomModel.h; path = WhiteboardiOS/models/RoomModel.h; sourceTree = "<group>"; };
 		A8596A6A1AB3946A005CA07F /* RoomCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomCollection.m; path = WhiteboardiOS/collections/RoomCollection.m; sourceTree = "<group>"; };
 		A8596A6D1AB39498005CA07F /* RoomCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RoomCollection.h; path = WhiteboardiOS/collections/RoomCollection.h; sourceTree = "<group>"; };
-		A8596A6E1AB3CB3D005CA07F /* RoomCollectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomCollectionTest.m; sourceTree = "<group>"; };
 		A860ACD61AB7BCA900432672 /* RoomCollectionObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RoomCollectionObserver.h; path = WhiteboardiOS/collections/RoomCollectionObserver.h; sourceTree = "<group>"; };
 		A860ACD71AB7C02E00432672 /* Collection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Collection.h; path = WhiteboardiOS/collections/Collection.h; sourceTree = "<group>"; };
-		A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardControllerTest.m; sourceTree = "<group>"; };
+		A860ACDA1ABA4AEF00432672 /* RoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomViewController.m; path = WhiteboardiOS/RoomViewController.m; sourceTree = "<group>"; };
+		A860ACDC1ABA4B0D00432672 /* RoomViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RoomViewController.h; path = WhiteboardiOS/RoomViewController.h; sourceTree = "<group>"; };
+		A860ACDF1ABA5ACD00432672 /* DashboardControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DashboardControllerTest.m; path = unit/DashboardControllerTest.m; sourceTree = "<group>"; };
+		A860ACE01ABA5ACD00432672 /* RoomCollectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomCollectionTest.m; path = unit/RoomCollectionTest.m; sourceTree = "<group>"; };
+		A860ACE11ABA5ACD00432672 /* RoomViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomViewControllerTest.m; path = unit/RoomViewControllerTest.m; sourceTree = "<group>"; };
+		A860ACE81ABA743B00432672 /* Crayon-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Crayon-icon.png"; sourceTree = "<group>"; };
+		A860ACEB1ABB863200432672 /* UserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserModel.h; path = WhiteboardiOS/models/UserModel.h; sourceTree = "<group>"; };
+		A860ACEC1ABB864400432672 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserModel.m; path = WhiteboardiOS/models/UserModel.m; sourceTree = "<group>"; };
 		A88FF6E81AAE9BEB00D61DF9 /* WhiteboardiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhiteboardiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88FF6EC1AAE9BEB00D61DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A88FF6ED1AAE9BEB00D61DF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A88FF6EF1AAE9BEB00D61DF9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserLoginViewController.h; sourceTree = "<group>"; };
-		A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserLoginViewController.m; sourceTree = "<group>"; };
-		A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
-		A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DashboardViewController.m; sourceTree = "<group>"; };
+		A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserLoginViewController.h; path = WhiteboardiOS/UserLoginViewController.h; sourceTree = "<group>"; };
+		A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = UserLoginViewController.m; path = WhiteboardiOS/UserLoginViewController.m; sourceTree = "<group>"; };
+		A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DashboardViewController.h; path = WhiteboardiOS/DashboardViewController.h; sourceTree = "<group>"; };
+		A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DashboardViewController.m; path = WhiteboardiOS/DashboardViewController.m; sourceTree = "<group>"; };
 		A88FF6F91AAE9BEB00D61DF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A88FF6FE1AAE9BEB00D61DF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		A88FF7041AAE9BEB00D61DF9 /* WhiteboardiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhiteboardiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88FF7091AAE9BEB00D61DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A8D750C41ABF956C001268EF /* DrawModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawModel.h; path = WhiteboardiOS/models/DrawModel.h; sourceTree = "<group>"; };
-		A8D750C51ABF956C001268EF /* DrawModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawModel.m; path = WhiteboardiOS/models/DrawModel.m; sourceTree = "<group>"; };
-		A8D750C61ABF956C001268EF /* DrawObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawObject.h; path = WhiteboardiOS/models/DrawObject.h; sourceTree = "<group>"; };
-		A8D750C71ABF956C001268EF /* DrawObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawObject.m; path = WhiteboardiOS/models/DrawObject.m; sourceTree = "<group>"; };
+		A8B3D6131AC36B0600B7F885 /* AppDelegateTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegateTest.m; path = unit/AppDelegateTest.m; sourceTree = "<group>"; };
+		A8B3D6171AC37E1800B7F885 /* RoomManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomManager.h; sourceTree = "<group>"; };
+		A8B3D6181AC37EC500B7F885 /* RoomManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomManager.m; sourceTree = "<group>"; };
+		A8B3D61C1AC3805100B7F885 /* RoomManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoomManagerTest.m; path = unit/RoomManagerTest.m; sourceTree = "<group>"; };
+		A8B3D61F1AC39BD400B7F885 /* SocketFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SocketFactory.h; sourceTree = "<group>"; };
+		A8B3D6201AC39CB600B7F885 /* SocketFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketFactory.m; sourceTree = "<group>"; };
+		A8B3D6221AC4880B00B7F885 /* DrawLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawLogic.m; sourceTree = "<group>"; };
+		A8B3D6241AC4881900B7F885 /* DrawLogic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawLogic.h; sourceTree = "<group>"; };
+		A8B3D6251AC4886A00B7F885 /* DrawLogicTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawLogicTest.m; path = unit/DrawLogicTest.m; sourceTree = "<group>"; };
+		A8D750CA1ABFC9F7001268EF /* DrawModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawModel.h; path = WhiteboardiOS/models/DrawModel.h; sourceTree = "<group>"; };
+		A8D750CB1ABFC9F7001268EF /* DrawModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawModel.m; path = WhiteboardiOS/models/DrawModel.m; sourceTree = "<group>"; };
+		A8D750CC1ABFC9F7001268EF /* DrawToolModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawToolModel.h; path = WhiteboardiOS/models/DrawToolModel.h; sourceTree = "<group>"; };
+		A8D750CD1ABFC9F7001268EF /* DrawToolModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawToolModel.m; path = WhiteboardiOS/models/DrawToolModel.m; sourceTree = "<group>"; };
+		A8D750D01ABFCA28001268EF /* DrawToolModelTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawToolModelTest.m; path = unit/DrawToolModelTest.m; sourceTree = "<group>"; };
+		A8D750D21ABFD0A7001268EF /* DrawModelTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawModelTest.m; path = unit/DrawModelTest.m; sourceTree = "<group>"; };
+		A8D750D41ABFD9DF001268EF /* UserPromise.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserPromise.h; path = WhiteboardiOS/communications/UserPromise.h; sourceTree = "<group>"; };
+		A8D750D51ABFDA80001268EF /* UserPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserPromise.m; path = WhiteboardiOS/communications/UserPromise.m; sourceTree = "<group>"; };
 		A8EC3CCE1AB4FE5600A3A5A2 /* RestkitWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RestkitWrapper.h; path = WhiteboardiOS/communications/RestkitWrapper.h; sourceTree = "<group>"; };
 		A8EC3CCF1AB4FE7000A3A5A2 /* RestkitWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestkitWrapper.m; path = WhiteboardiOS/communications/RestkitWrapper.m; sourceTree = "<group>"; };
 		A8EC3CD11AB6A5F100A3A5A2 /* RoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomCell.m; sourceTree = "<group>"; };
@@ -80,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8395A9D1ABE1F0A009227CB /* CoreGraphics.framework in Frameworks */,
 				BA272456604C448F2F42B33A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,6 +133,7 @@
 		475CF41DDCF83A4EB3538F83 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A8395A9C1ABE1F0A009227CB /* CoreGraphics.framework */,
 				C9F69200732A00E2E61E393E /* libPods.a */,
 				CBAEBFD26546F12FD9508BE5 /* libPods-WhiteboardiOSTests.a */,
 			);
@@ -107,12 +143,14 @@
 		A8596A681AB251D8005CA07F /* models */ = {
 			isa = PBXGroup;
 			children = (
-				A8D750C41ABF956C001268EF /* DrawModel.h */,
-				A8D750C51ABF956C001268EF /* DrawModel.m */,
-				A8D750C61ABF956C001268EF /* DrawObject.h */,
-				A8D750C71ABF956C001268EF /* DrawObject.m */,
+				A8D750CA1ABFC9F7001268EF /* DrawModel.h */,
+				A8D750CB1ABFC9F7001268EF /* DrawModel.m */,
+				A8D750CC1ABFC9F7001268EF /* DrawToolModel.h */,
+				A8D750CD1ABFC9F7001268EF /* DrawToolModel.m */,
 				A8596A661AB251D0005CA07F /* RoomModel.m */,
 				A8596A691AB2520F005CA07F /* RoomModel.h */,
+				A860ACEB1ABB863200432672 /* UserModel.h */,
+				A860ACEC1ABB864400432672 /* UserModel.m */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -131,17 +169,33 @@
 		A8596A701AB3CB71005CA07F /* unit */ = {
 			isa = PBXGroup;
 			children = (
-				A8596A6E1AB3CB3D005CA07F /* RoomCollectionTest.m */,
-				A860ACD81AB8D96A00432672 /* DashboardControllerTest.m */,
+				A860ACDF1ABA5ACD00432672 /* DashboardControllerTest.m */,
+				A860ACE01ABA5ACD00432672 /* RoomCollectionTest.m */,
+				A860ACE11ABA5ACD00432672 /* RoomViewControllerTest.m */,
+				A8D750D01ABFCA28001268EF /* DrawToolModelTest.m */,
+				A8D750D21ABFD0A7001268EF /* DrawModelTest.m */,
+				A8B3D6131AC36B0600B7F885 /* AppDelegateTest.m */,
+				A8B3D61C1AC3805100B7F885 /* RoomManagerTest.m */,
+				A8B3D6251AC4886A00B7F885 /* DrawLogicTest.m */,
 			);
 			name = unit;
+			sourceTree = "<group>";
+		};
+		A860ACE71ABA68D600432672 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				A860ACE81ABA743B00432672 /* Crayon-icon.png */,
+			);
+			name = assets;
 			sourceTree = "<group>";
 		};
 		A88FF6DF1AAE9BEB00D61DF9 = {
 			isa = PBXGroup;
 			children = (
-				A8EC3CCD1AB4FE2900A3A5A2 /* communication */,
+				A860ACE71ABA68D600432672 /* assets */,
 				A8596A6C1AB39475005CA07F /* collections */,
+				A8EC3CCD1AB4FE2900A3A5A2 /* communication */,
+				A8B3D6151AC376AF00B7F885 /* controllers */,
 				A8596A681AB251D8005CA07F /* models */,
 				A88FF6EA1AAE9BEB00D61DF9 /* WhiteboardiOS */,
 				A88FF7071AAE9BEB00D61DF9 /* WhiteboardiOSTests */,
@@ -165,16 +219,18 @@
 			children = (
 				A88FF6EF1AAE9BEB00D61DF9 /* AppDelegate.h */,
 				A88FF6F01AAE9BEB00D61DF9 /* AppDelegate.m */,
-				A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */,
-				A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */,
-				A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */,
-				A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */,
 				A88FF6F81AAE9BEB00D61DF9 /* Main.storyboard */,
 				A8EC3CD11AB6A5F100A3A5A2 /* RoomCell.m */,
 				A8EC3CD31AB6A60400A3A5A2 /* RoomCell.h */,
 				A88FF6FB1AAE9BEB00D61DF9 /* Images.xcassets */,
 				A88FF6FD1AAE9BEB00D61DF9 /* LaunchScreen.xib */,
 				A88FF6EB1AAE9BEB00D61DF9 /* Supporting Files */,
+				A8B3D6171AC37E1800B7F885 /* RoomManager.h */,
+				A8B3D6181AC37EC500B7F885 /* RoomManager.m */,
+				A8B3D61F1AC39BD400B7F885 /* SocketFactory.h */,
+				A8B3D6201AC39CB600B7F885 /* SocketFactory.m */,
+				A8B3D6221AC4880B00B7F885 /* DrawLogic.m */,
+				A8B3D6241AC4881900B7F885 /* DrawLogic.h */,
 			);
 			path = WhiteboardiOS;
 			sourceTree = "<group>";
@@ -205,11 +261,26 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A8B3D6151AC376AF00B7F885 /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A88FF6F21AAE9BEB00D61DF9 /* UserLoginViewController.h */,
+				A88FF6F31AAE9BEB00D61DF9 /* UserLoginViewController.m */,
+				A860ACDC1ABA4B0D00432672 /* RoomViewController.h */,
+				A860ACDA1ABA4AEF00432672 /* RoomViewController.m */,
+				A88FF6F51AAE9BEB00D61DF9 /* DashboardViewController.h */,
+				A88FF6F61AAE9BEB00D61DF9 /* DashboardViewController.m */,
+			);
+			name = controllers;
+			sourceTree = "<group>";
+		};
 		A8EC3CCD1AB4FE2900A3A5A2 /* communication */ = {
 			isa = PBXGroup;
 			children = (
 				A8EC3CCE1AB4FE5600A3A5A2 /* RestkitWrapper.h */,
 				A8EC3CCF1AB4FE7000A3A5A2 /* RestkitWrapper.m */,
+				A8D750D41ABFD9DF001268EF /* UserPromise.h */,
+				A8D750D51ABFDA80001268EF /* UserPromise.m */,
 			);
 			name = communication;
 			sourceTree = "<group>";
@@ -320,6 +391,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A860ACE91ABA743B00432672 /* Crayon-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,13 +465,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8D750C91ABF956C001268EF /* DrawObject.m in Sources */,
+				A8395A691ABE04F0009227CB /* UserModel.m in Sources */,
+				A8D750D61ABFDA80001268EF /* UserPromise.m in Sources */,
+				A8B3D6231AC4880B00B7F885 /* DrawLogic.m in Sources */,
 				A8EC3CD01AB4FE7000A3A5A2 /* RestkitWrapper.m in Sources */,
+				A860ACDB1ABA4AEF00432672 /* RoomViewController.m in Sources */,
 				A88FF6F71AAE9BEB00D61DF9 /* DashboardViewController.m in Sources */,
-				A8D750C81ABF956C001268EF /* DrawModel.m in Sources */,
+				A8D750CF1ABFC9F7001268EF /* DrawToolModel.m in Sources */,
+				A8B3D6191AC37EC500B7F885 /* RoomManager.m in Sources */,
 				A8EC3CD21AB6A5F100A3A5A2 /* RoomCell.m in Sources */,
+				A8D750CE1ABFC9F7001268EF /* DrawModel.m in Sources */,
 				A8596A671AB251D0005CA07F /* RoomModel.m in Sources */,
 				A8596A6B1AB3946A005CA07F /* RoomCollection.m in Sources */,
+				A8B3D6211AC39CB600B7F885 /* SocketFactory.m in Sources */,
 				A88FF6F11AAE9BEB00D61DF9 /* AppDelegate.m in Sources */,
 				A88FF6F41AAE9BEB00D61DF9 /* UserLoginViewController.m in Sources */,
 				A88FF6EE1AAE9BEB00D61DF9 /* main.m in Sources */,
@@ -410,8 +488,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A860ACD91AB8D96A00432672 /* DashboardControllerTest.m in Sources */,
-				A8596A6F1AB3CB3D005CA07F /* RoomCollectionTest.m in Sources */,
+				A8B3D61D1AC3805100B7F885 /* RoomManagerTest.m in Sources */,
+				A8B3D6141AC36B0600B7F885 /* AppDelegateTest.m in Sources */,
+				A8D750D31ABFD0A7001268EF /* DrawModelTest.m in Sources */,
+				A8D750D11ABFCA28001268EF /* DrawToolModelTest.m in Sources */,
+				A860ACE21ABA5ACD00432672 /* DashboardControllerTest.m in Sources */,
+				A860ACE41ABA5ACD00432672 /* RoomViewControllerTest.m in Sources */,
+				A8B3D6261AC4886A00B7F885 /* DrawLogicTest.m in Sources */,
+				A860ACE31ABA5ACD00432672 /* RoomCollectionTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,6 +4,11 @@
 #import "RoomCell.h"
 #import "RoomCollection.h"
 #import "RoomCollectionObserver.h"
+#import "RoomViewController.h"
+#import "SocketFactory.h"
+
+#define JOIN_REQUEST @"joinRequest"
+#define FAILED_JOIN @"rejected"
 
 @interface DashboardViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, RoomCollectionObserver>
 

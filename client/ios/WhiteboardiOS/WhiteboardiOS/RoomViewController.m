@@ -1,25 +1,103 @@
-//
-//  RoomViewController.m
-//  WhiteboardiOS
-//
-//  Created by Patrick Murphy on 2015-03-18.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
-
 #import "RoomViewController.h"
 
-@interface RoomViewController ()
+@interface RoomViewController () {
+        RoomModel *roomModel;
+        DrawLogic *drawLogic;
+        DrawToolModel *drawToolModel;
+    }
 
+    - (void) initializeController:(RoomModel *)roomInfo withSocket:(SIOSocket *)socket;
+    - (void) getCurrentRoomState;
+    - (void) setupGetAllDrawCommandsListener;
+    - (void) setupDrawCommandListener;
+    - (void) handleDrawCommand:(NSDictionary *)drawCommand;
 @end
 
 @implementation RoomViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
++ (RoomViewController *)createRoomViewController:(RoomModel *)roomToCreate withSocket:(SIOSocket *) socket {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    RoomViewController *newRoomController = [storyboard instantiateViewControllerWithIdentifier:@"RoomViewController"];
+    
+    [newRoomController initializeController:roomToCreate withSocket:socket];
+    
+    return newRoomController;
 }
 
-- (void)didReceiveMemoryWarning {
+- (void) initializeController:(RoomModel *)roomInfo withSocket:(SIOSocket *)socket {
+    NSString *roomTitle = [NSString stringWithFormat:@"Room %@", roomInfo.roomId];
+    UIImage *viewTabIcon = [UIImage imageNamed:@"Crayon-icon.png"];
+    UITabBarItem *viewTabBarItem = [[UITabBarItem alloc] initWithTitle:roomTitle image:viewTabIcon tag:0];
+    
+    [self setTabBarItem:viewTabBarItem];
+    [self setSocket:socket];
+    roomModel = roomInfo;
+}
+
+- (void) viewDidLoad {
+    [super viewDidLoad];
+    
+    drawLogic = [[DrawLogic alloc] initWithDrawCanvas:self.whiteboardCanvas andTempCanvas:self.tempDrawCanvas];
+    [[self roomTitleLabel] setText:[NSString stringWithFormat:@"Room %@", roomModel.roomId]];
+    drawToolModel = [[DrawToolModel alloc] init];
+    [self getCurrentRoomState];
+}
+
+- (void) getCurrentRoomState {
+    [self setupGetAllDrawCommandsListener];
+    [self setupDrawCommandListener];
+    [self.socket emit:GET_ALL_DRAW_COMMANDS];
+}
+
+- (void) setupGetAllDrawCommandsListener {
+    [self.socket on:GET_ALL_DRAW_COMMANDS callback:^(SIOParameterArray *args) {
+        NSArray *drawCommands = [[args objectAtIndex:0] objectForKey:DRAW_COMMANDS_KEY];
+        if(drawCommands) {
+            for(id drawCommand in drawCommands) {
+                [self handleDrawCommand:[drawCommand objectForKey:DRAW_MESSAGE_KEY]];
+            }
+        }
+    }];
+}
+
+- (void) setupDrawCommandListener {
+    [self.socket on:DRAW_COMMAND callback:^(SIOParameterArray *args) {
+        [self handleDrawCommand:[[[args objectAtIndex:0] objectForKey:DRAW_COMMAND] objectForKey:DRAW_MESSAGE_KEY]];
+    }];
+}
+
+- (void) handleDrawCommand:(NSDictionary *)drawCommand {
+    DrawToolModel *newDrawToolModel = [DrawLogic createDrawToolModel:[drawCommand objectForKey:TOOL_KEY]];
+    DrawModel *drawModel = [DrawLogic createDrawModel:newDrawToolModel withCoordinates:[drawCommand objectForKey:VERTICES_KEY]];
+    
+    [drawLogic drawDrawCommand:drawModel];
+}
+
+- (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint startPoint = [touch locationInView:self.whiteboardCanvas];
+    
+    [drawLogic startDrawing:drawToolModel atPoint:startPoint];
+}
+
+- (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint currentPoint = [touch locationInView:self.whiteboardCanvas];
+    
+    [drawLogic updateDrawing:currentPoint];
+}
+
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint currentPoint = [touch locationInView:self.whiteboardCanvas];
+    
+    DrawModel *drawModel = [drawLogic endDrawing:currentPoint];
+    
+    [self.socket emit:DRAW_COMMAND args:@[[drawModel toDrawMessage:roomModel.roomId]]];
 }
 
 @end

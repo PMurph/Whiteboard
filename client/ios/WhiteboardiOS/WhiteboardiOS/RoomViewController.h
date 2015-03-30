@@ -1,17 +1,26 @@
-//
-//  RoomViewController.h
-//  WhiteboardiOS
-//
-//  Created by Patrick Murphy on 2015-03-18.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
-
 #ifndef WhiteboardiOS_RoomViewController_h
 #define WhiteboardiOS_RoomViewController_h
 
 #import <UIKit/UIKit.h>
+#import <SIOSocket/SIOSocket.h>
+
+#import "AppDelegate.h"
+#import "RoomModel.h"
+#import "DrawLogic.h"
+
+#define GET_ALL_DRAW_COMMANDS @"getAllDrawCommands"
+#define DRAW_COMMANDS_KEY @"drawCommands"
+#define DRAW_COMMAND @"drawCommand"
+#define ROOM_ID_KEY @"roomID"
 
 @interface RoomViewController : UIViewController
+    
+    @property (weak, nonatomic) IBOutlet UILabel *roomTitleLabel;
+    @property (strong, nonatomic) SIOSocket *socket;
+    @property (weak, nonatomic) IBOutlet UIImageView *whiteboardCanvas;
+    @property (weak, nonatomic) IBOutlet UIImageView *tempDrawCanvas;
+
+    + (RoomViewController *)createRoomViewController:(RoomModel *)roomToCreate withSocket:(SIOSocket *)socket;
 
 @end
 

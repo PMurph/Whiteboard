@@ -20,6 +20,7 @@ define([
 
     return Marionette.ItemView.extend({
         initialize: function(options) {
+            this.menuId = options.menuId;
             this.userSettingsBehaviour = options.userSettingsBehaviour;
         },
         ui: {
@@ -28,6 +29,15 @@ define([
             password2Text: "#password2Text",
             usernameText: "#usernameText",
             submitButton: "#submitButton"
+        },
+        onShow: function(){
+            if(this.menuId === "modifyDisplayName") {
+                this.ui.displayNameText.focus();
+            }else if(this.menuId === "modifyUserName"){
+                this.ui.usernameText.focus();
+            }else if(this.menuId === "modifyPassword"){
+                this.ui.password1Text.focus();
+            }
         },
         behaviors: {
             editUser: {

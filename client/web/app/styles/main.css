@@ -1,14 +1,28 @@
 @import 'boilerplate.css';
+@import url(http://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+    background-color: #F0F0F0;
+}
+
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    /* override pure-css font stack */
+    font-family: 'Roboto', Georgia, Times, "Times New Roman", serif;
+}
 
 nav {
-	background-color: #66CCFF;
+	background-color: #46799B;
 	width: 100%;
 	min-width: 916px;
 	height: 50px;
 	top: 0px;
 	left: 0px;
-	box-shadow: 0px 0px 5px #000000;
 	margin-bottom: 10px;
+}
+
+textarea {
+    resize: none;
 }
 
 #nav-text {
@@ -18,12 +32,49 @@ nav {
 }
 
 #nav-title {
-	float: left;
+	float: left;  
+    font-size: 2em; 
+    margin-top: 7px;
+}
+
+#nav-text a {
+    color: white;  
+}
+
+#nav-text a:hover {
+	text-shadow: 2px 2px 4px #000000;  
 }
 
 #nav-details {
 	float: right;
 	display: inline-block;
+    font-size: 1em;
+    color: #000000;
+    margin-top: 23px;
+    margin-right: -9px;
+}
+
+#userSettingsButton {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#loginButton {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#logoutButton {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#loginRegisterTxt {
+    padding-right: 5px;
+}
+
+#logoutTxt {
+    padding-right: 5px;
 }
 
 #app-shield {
@@ -136,6 +187,20 @@ nav {
     color: red;
 }
 
+#roomSettingsStatusText {
+    width: 150px;
+}
+#roomSettingsStatusText.error {
+    color: red;
+}
+
+#roomInvitesStatusText {
+    width: 150px;
+}
+#roomInvitesStatusText.error {
+    color: red;
+}
+
 #subStatusLabel.message{
     color: black;
 }
@@ -152,39 +217,104 @@ nav {
 .content-container {
 	width: 916px;
 	margin: 0 auto;
+	margin-top: 15px;
 }
 
 #dashboard {
-	height: 400px;
+	height: 100%;
+	min-height: 600px;
 	width: 100%;
-	background-color: #eee;
-	border: 1px solid #333;
-	box-shadow: 1px 1px 1px #333;
-
+	background-color: #A1C1CF;
+	box-shadow: 1px 1px 2px #333;
 	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#dashboard h1 {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    display: inline-block;
+}
+
+#dashboardToolbar {
+    text-align: right;
+    display: inline-block;
+    padding-top: 45px;
+    float: right;
+}
+
+#dashboard a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+#dashboard a:hover:, #dashboard a:focus, #dashboard a:active {
+    text-decoration: underline;
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
 .room-item {
 	box-shadow: 1px 1px 1px #333;
 	background-color: #FFFFFF;
-	width: 150px;
-	height: 100px;
+	width: 250px;
+	height: 175px;
 	margin: 10px auto;
-	border: 1px solid #000000;
 }
 
 #rooms-list-region span {
 	margin: 0 auto;
 }
 
+#roomListSpinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 #dashRoomLabel {
     text-align: center;
+}
+
+#createRoom {
+    position: relative;
+    height: 430px;
+    background-color: #eee;
+    border: 1px solid #333;
+    box-shadow: 1px 1px 1px #333;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%
+}
+
+#newRoomOptions {
+    display: inline-block;
+}
+
+#newRoomInvites {
+    display: inline-block;
+    padding-right: 100px;
+
+    float: right;
+}
+
+#newRoomButtons {
+    position: absolute;
+
+    bottom: 10px;
+}
+
+#roomUserList {
+    width: 370px;
+    height: 200px;
 }
 
 canvas {
 	width: 700px;
 	height: 500px;
-	border: 1px solid #333;
+    background-color: #FFFFFF;
 	box-shadow: 1px 1px 1px #333;
 }
 
@@ -204,15 +334,30 @@ canvas {
 
 #chat-region {
 	float: right;
+    width: 209px;
+    font-size: 0.75em;
+}
+
+#chat-input {
+    float: left;
+    width: 127px;
+    height: 69px;
+}
+
+#chat-region #send-btn {
+    float: right;
+    height: 75px;
+    width: 67px;
 }
 
 .chat-component {
 	width: 200px;
+    background-color: #FFFFFF;
 }
 
 .chat-component #chat-messages-region {
     overflow-y: scroll;
-    height: 450px;
+    height: 427px;
 }
 
 #login-layout {
@@ -257,16 +402,27 @@ canvas {
     float: left;
     width: 33%;
     height: 100px;
-    background-color: #F2F2F2;
     margin-top: 15px;
 }
 
 .selected {
-    background-color: #66CCFF !important;
+    background-color: #46799B !important;
+    opacity: 1 !important;
 }
 
 .tool-setting {
     height: 50%;
+}
+
+.selectable-tool {
+    opacity: 0.5;
+    transition: opacity .15s ease-in-out;
+    -moz-transition: opacity .15s ease-in-out;
+    -webkit-transition: opacity .15s ease-in-out;
+}
+
+.selectable-tool:hover {
+    opacity: 0.8;
 }
 
 .colour-tile {
@@ -275,11 +431,18 @@ canvas {
     width: 45px;
     opacity: 0.25;
     margin-right: 5px;
+    transition: opacity .15s ease-in-out;
+    -moz-transition: opacity .15s ease-in-out;
+    -webkit-transition: opacity .15s ease-in-out;
+}
+
+.colour-tile:hover {
+    opacity: 0.5;
 }
 
 .selected-colour {
-    opacity: 1;
-    box-shadow: 0px 0px 15px #000000;
+    opacity: 1 !important;
+    box-shadow: 0px 0px 10px #333;
 }
 
 #Black {
@@ -322,4 +485,110 @@ canvas {
 
 #size {
     width: 98%;
+}
+
+.hvr-grow {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+input[type=range] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;
+    
+    /*fix for FF unable to apply focus style bug */
+    border: 1px solid white;
+    
+    /*required for proper track sizing in FF*/
+    width: 300px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #46799B;
+    margin-top: -4px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+input[type=range]::-moz-range-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #46799B;
+}
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 300px;
+    height: 5px;
+    
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+    
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #777;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #46799B;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #888;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
 }

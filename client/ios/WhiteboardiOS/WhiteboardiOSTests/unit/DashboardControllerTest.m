@@ -24,7 +24,7 @@
     [super setUp];
     self.testRoomModels = @[[[RoomModel alloc] init:@"1"], [[RoomModel alloc] init:@"3"]];
     self.roomCollectionMock = OCMClassMock([RoomCollection class]);
-    OCMStub([self.roomCollectionMock fetchRooms]);
+    OCMStub([self.roomCollectionMock fetchRooms:[OCMArg any]]);
     OCMStub([self.roomCollectionMock roomModels]).andReturn(self.testRoomModels);
     
     self.testDashboardViewController = [DashboardViewController alloc];
@@ -38,7 +38,7 @@
 - (void)testViewDidAppearCallsFetchRooms {
     [self.testDashboardViewController viewDidAppear:YES];
     
-    OCMVerify([self.roomCollectionMock fetchRooms]);
+    OCMVerify([self.roomCollectionMock fetchRooms:[OCMArg any]]);
 }
 
 - (void)testNotifyOfChangeGetsRoomModelsFromRoomCollection {

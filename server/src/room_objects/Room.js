@@ -1,61 +1,73 @@
 "use strict";
 
-var Room = function(roomId, creatingUser, whiteboard, messageFactory) {
-    this._creatingUser = creatingUser;
-    this._connectedUsers = [creatingUser];
-    this._id = roomId;
+var Room = function(dbDocument, whiteboard, chat) {
+    this._doc = dbDocument;
     this._whiteboard = whiteboard;
-    this._messageFactory = messageFactory;
+    this._chat = chat;
 };
 
 Room.prototype = {
-    connectUserToRoom: function(connectingUser) {
-        if(this._getUserIndex(connectingUser) === -1) {
-            this._connectedUsers.push(connectingUser);
+    connectUserToRoom: function(connectingUser, cb) {
+        var connectedUsers = this.getConnectedUsers();
+        if (connectedUsers.indexOf(connectingUser.id) === -1) {
+            this._doc.connectedUsers.push(connectingUser.id);
+            this._doc.save(cb);
         }
     },
 
-    disconnectUserFromRoom: function(disconnectingUser) {
-        var userIndex = this._getUserIndex(disconnectingUser);
-        this._removeUser(userIndex);
-    },
+    disconnectUserFromRoom: function(disconnectingUser, cb) {
+        var userDoc = this._doc.connectedUsers.id(disconnectingUser.id);
+        if(userDoc) {
+            userDoc.remove();
 
-    _getUserIndex: function(user) {
-        var index = -1;
-        for(var i = 0; i < this._connectedUsers.length && index === -1; i++) {
-            if(user.userId === this._connectedUsers[i].userId) {
-                index = i;
-            }
-        }
-        return index;
-    },
-
-    _removeUser: function(index) {
-        if(index >= 0) {
-            this._connectedUsers.splice(index, 1);
+            this._doc.save(cb);
+        }else{
+            console.error("User not in room");
+            cb("No user found", null);
         }
     },
 
-    getCreatingUser: function() {
-        return this._creatingUser;
+    getCreatingUserId: function() {
+        return this._doc.creatingUser;
     },
 
     getConnectedUsers: function() {
-        return this._connectedUsers;
+        return this._doc.connectedUsers;
     },
 
-    getId: function(){
-        return this._id;
+    getId: function() {
+        return this._doc.id;
+    },
+
+    getType: function() {
+        return this._doc.type;
+    },
+
+    getAllowAnon: function() {
+        return this._doc.allowAnon;
+    },
+
+    getInvitedUsers: function() {
+        return this._doc.invitedUsers;
     },
 
     handleDrawCommand: function(drawCommandMessage, drawCommandLogic) {
+        var self = this;
+
         var drawCommand = drawCommandMessage.getDrawCommand();
-        this._whiteboard.addDrawCommand(drawCommand);
+        var dbCB = function(error, roomDoc) {
+            if(error || !roomDoc) {
+                console.error("DB Error: " + error);
+            }else{
+                var drawOrder = self._whiteboard.getNumDrawCommandsSeen();
+                drawCommandMessage.setDrawOrder(drawOrder);
 
-        var drawOrder = this._whiteboard.getNumDrawCommandsSeen();
-        drawCommandMessage.setDrawOrder(drawOrder);
+                drawCommandLogic.handleDrawResponse(drawCommandMessage);
 
-        drawCommandLogic.handleDrawResponse(drawCommandMessage);
+            }
+        };
+        this._whiteboard.addDrawCommand(drawCommand, dbCB);
+
     },
 
     handleGetAllDrawCommands: function(getAllDrawCommandsMessage, drawCommandLogic) {
@@ -65,18 +77,25 @@ Room.prototype = {
     },
 
     handleChatMessage: function(chatMessage, chatLogic) {
+        var self = this;
+
         var chat = chatMessage.getChatMessage();
-        this._whiteboard.addChat(chat);
+        var dbCB = function (error, roomDoc) {
+            if(error || !roomDoc) {
+                console.error("DB Error: " + error);
+            }else{
+                var chatOrder = self._chat.getNumChatSeen();
+                chatMessage.setChatOrder(chatOrder);
 
-        var chatOrder = this._whiteboard.getNumChatSeen();
-        chatMessage.setChatOrder(chatOrder);
-
-        chatLogic.handleChatResponse(chatMessage);
+                chatLogic.handleChatResponse(chatMessage);
+            }
+        };
+        this._chat.addChat(chat, dbCB);
     },
 
     handleGetAllChatMessages: function(getAllChatMessage, chatLogic) {
-        var chat = this._whiteboard.getAllChat();
-        getAllChatMessage.setChatMessages(chat);
+        var chatMessages = this._chat.getAllChat();
+        getAllChatMessage.setChatMessages(chatMessages);
         chatLogic.handleGetAllChatMessagesResponse(getAllChatMessage);
     }
 };

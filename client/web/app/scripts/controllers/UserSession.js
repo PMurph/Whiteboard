@@ -3,6 +3,7 @@ define([
     'backbone',
     'marionette',
     'app',
+    'vent',
     'controllers/SocketController',
     'models/AnonymousUser',
     'models/User'
@@ -11,6 +12,7 @@ define([
     Backbone,
     Marionette,
     App,
+    vent,
     SocketController,
     AnonymousUser,
     User
@@ -29,6 +31,7 @@ define([
         },
         _setupObjectEvents: function() {
             this.on("Authenticated", this._authenticatedEvent, this);
+            this.on("PreLoggedOff", this._preLoggedOffEvent, this);
         },
         _setupWindowEvents: function() {
             var self = this;
@@ -45,8 +48,19 @@ define([
                 }
             });
         },
+        _preLoggedOffEvent: function() {
+            if (App.mainController.inRoom()) {
+                vent.trigger("leaveRoom");
+            }
+        },
         _authenticatedEvent: function() {
             App.mainController.renderHeader(this._currentUser);
+
+            if (App.mainController.inDashboard()) {
+                App.mainController.dashboard();
+            }else if (App.mainController.inRoom()) {
+                App.mainController.room();
+            }
             App.mainController.hideShield();
         },
         _setAuthToken: function(token) {
@@ -92,6 +106,7 @@ define([
 
             promise.then(function (response) {
                 if (response.authToken) {
+                    self.trigger("PreLoggedOff");
                     self._setUser(model);
                     self._setAuthToken(response.authToken);
                     self.trigger("Authenticated");
@@ -133,6 +148,7 @@ define([
             var save = saveSession || false;
             //We can convert anonymous user to non-anonymous and call it a registration
             var newUser = (this._currentUser) ? this._currentUser : new User();
+            
 
             var b64pass = window.btoa(password);
             var promise = newUser.save({

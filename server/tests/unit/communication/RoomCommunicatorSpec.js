@@ -5,6 +5,7 @@ var DrawCommandMessage = require('../../../src/communication/objects/DrawCommand
 describe("RoomCommunicator", function() {
     var TEST_ROOM_ID = "42";
 
+    var roomManagerStub;
     var testRoomCommunicator;
     var socketManagerStub;
     var socketMock;
@@ -12,12 +13,12 @@ describe("RoomCommunicator", function() {
     var drawCommandLogicMock;
 
     beforeEach(function() {
+        roomManagerStub = {};
         socketManagerStub = {};
         socketMock = jasmine.createSpyObj('Socket', ['join', 'on', 'emit']);
         drawCommandLogicMock = jasmine.createSpyObj('DrawCommandLogic', ['handleDrawCommand', 'handleGetAllDrawCommands']);
 
-        socketMock.rooms = [0, TEST_ROOM_ID];
-        testRoomCommunicator = new RoomCommunicator(socketManagerStub, socketMock, drawCommandLogicMock);
+        testRoomCommunicator = new RoomCommunicator(roomManagerStub, socketManagerStub, socketMock, drawCommandLogicMock);
     });
         
     it("should call the sockets on method with drawCommand", function() {
@@ -28,7 +29,12 @@ describe("RoomCommunicator", function() {
         expect(socketMock.on).toHaveBeenCalledWith("getAllDrawCommands", jasmine.any(Function));
     });
 
-    it("should get the room id of the socket that was created", function() {
+    it("should initialize room id to NULL ", function() {
+        expect(testRoomCommunicator.getRoomId()).toEqual(null);
+    });
+
+    it("should get/set room id ", function() {
+        testRoomCommunicator.setRoomId(TEST_ROOM_ID);
         expect(testRoomCommunicator.getRoomId()).toEqual(TEST_ROOM_ID);
     });
 
@@ -57,6 +63,8 @@ describe("RoomCommunicator", function() {
                 socketRoomListMock = jasmine.createSpyObj('SocketManager', ['emit']);
                 socketManagerStub.sockets = socketListMock;
                 socketListMock.in.and.returnValue(socketRoomListMock);
+
+                testRoomCommunicator.setRoomId(TEST_ROOM_ID);
 
                 testRoomCommunicator.sendMessage(TEST_MESSAGE_TYPE, TEST_MESSAGE);
             });
