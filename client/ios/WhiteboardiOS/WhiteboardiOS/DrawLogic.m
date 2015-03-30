@@ -76,17 +76,17 @@
         NSDictionary *currCoord;
         CGPoint newPoint;
         currDrawModel = drawCommand;
-        CGRect rect = CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height);
-        
-        UIGraphicsBeginImageContext(self.drawCanvas.frame.size);
-        [self.tempDrawCanvas.image drawInRect:rect];
-        
         
         if([coordinates count] > 0) {
             currCoord = [coordinates objectAtIndex:0];
             newPoint = [self getPointFromCoordinate:currCoord];
             
             [self startFreehandDrawing:newPoint];
+            
+            CGRect rect = CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height);
+        
+            UIGraphicsBeginImageContext(self.drawCanvas.frame.size);
+            [self.tempDrawCanvas.image drawInRect:rect];
             for(int i = 1; i < [coordinates count] - 1; i++) {
                 currCoord = [coordinates objectAtIndex:i];
                 newPoint = [self getPointFromCoordinate:currCoord];
@@ -94,14 +94,15 @@
                 [self newSample:newPoint];
             }
             
+            self.tempDrawCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
+            [self.tempDrawCanvas setAlpha:1.0];
+            UIGraphicsEndImageContext();
+            
             currCoord = [coordinates objectAtIndex:[coordinates count] - 1];
             newPoint = [self getPointFromCoordinate:currCoord];
             [self endFreehandDrawing:newPoint];
+            [self pasteDrawingToDrawCanvas];
         }
-        
-        self.tempDrawCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
-        [self.tempDrawCanvas setAlpha:1.0];
-        UIGraphicsEndImageContext();
     }
 
     - (CGPoint) getPointFromCoordinate:(NSDictionary *)coord {
