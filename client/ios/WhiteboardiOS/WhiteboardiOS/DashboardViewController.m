@@ -25,6 +25,7 @@
     [super viewDidLoad];
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.userSession = appDelegate.userSession;
+    self.roomManager = appDelegate.roomManager;
     
     [self initView];
     [self initRoomCollection:appDelegate];
@@ -244,6 +245,7 @@
     UserSettingsViewController *view = (UserSettingsViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"UserSettingsViewController"];
     [self.userSession logout];
     [self hideLogoutBtn];
+    [self.roomManager closeAllRooms];
     [view swapWithUserLogin:self.tabBarController];
     [self.userSession authAnonymous];
 }
