@@ -31,6 +31,7 @@
                                                            @"password":@"password",
                                                            @"anonymous": @"anonymous",
                                                            @"authToken":@"authToken",
+                                                           @"status":@"status",
                                                            @"displayName":@"displayName",
                                                            @"userId": @"_id"}];
         [userMapping setSetDefaultValueForMissingAttributes:NO];
@@ -70,6 +71,7 @@
         RKObjectMapping* userModelMapping = [RKObjectMapping mappingForClass:[UserModel class]];
         [userModelMapping addAttributeMappingsFromDictionary:@{
             @"displayName": @"displayName",
+            @"status":@"status",
             @"anonymous": @"anonymous",
             @"authToken": @"authToken",
             @"login": @"login",

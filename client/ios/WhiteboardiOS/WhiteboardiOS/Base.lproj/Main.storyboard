@@ -8,7 +8,7 @@
         <!--Login-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="UserLoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserLoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9pv-A4-QxB" customClass="UserLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
@@ -140,6 +140,12 @@
                                     <barButtonItem title="Refresh" id="RGg-G9-GA0">
                                         <inset key="imageInsets" minX="0.0" minY="100" maxX="0.0" maxY="0.0"/>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Rmj-e1-weK"/>
+                                    <barButtonItem title="Logout" id="0hC-xh-Key">
+                                        <connections>
+                                            <action selector="logoutButtonClick:" destination="8rJ-Kc-sve" id="C4J-We-QFP"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Dashboard" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbz-Wn-7lk">
@@ -158,10 +164,12 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Dashboard" image="second" id="cPa-gy-q4n"/>
                     <connections>
+                        <outlet property="LogoutBtn" destination="0hC-xh-Key" id="rdV-zi-ndT"/>
                         <outlet property="refreshButton" destination="RGg-G9-GA0" id="zi8-dM-C6k"/>
                         <outlet property="roomCollection" destination="kFJ-m1-dKN" id="eY9-KW-kpM"/>
                         <outlet property="roomCollectionView" destination="kFJ-m1-dKN" id="PhM-fk-jVq"/>
                         <outlet property="spinner" destination="TDR-85-05a" id="u3Y-G1-Swv"/>
+                        <outlet property="toolbar" destination="1ey-II-Xx6" id="oNS-6l-kfm"/>
                         <outletCollection property="spinner" destination="TDR-85-05a" id="HO0-1U-6Yn"/>
                     </connections>
                 </viewController>
@@ -235,7 +243,7 @@
         <!--User Settings View Controller-->
         <scene sceneID="GSx-og-9gx">
             <objects>
-                <viewController storyboardIdentifier="UserSettingsViewController" id="k7O-rL-hvd" customClass="UserSettingsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserSettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="k7O-rL-hvd" customClass="UserSettingsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LMO-a0-bjf"/>
                         <viewControllerLayoutGuide type="bottom" id="Muh-bv-lDG"/>

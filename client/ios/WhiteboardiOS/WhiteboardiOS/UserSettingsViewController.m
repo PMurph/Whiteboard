@@ -1,4 +1,5 @@
 #import "UserSettingsViewController.h"
+#import "UserLoginViewController.h"
 #import "UserModel.h"
 
 @interface UserSettingsViewController ()
@@ -17,6 +18,13 @@
     [newView setTabBarItem:viewTabBarItem];
     newView.user = user;
     return newView;
+}
+
+-(void) swapWithUserLogin:(UITabBarController*)tabBar {
+    NSMutableArray *currentTabs = [NSMutableArray arrayWithArray:tabBar.viewControllers];
+    UserLoginViewController* userLoginView = [UserLoginViewController init];
+    [currentTabs replaceObjectAtIndex:1 withObject:userLoginView];
+    [tabBar setViewControllers:currentTabs animated:YES];
 }
 
 - (void)viewDidLoad {

@@ -89,6 +89,19 @@
      }
      ];
 }
+-(void) logout {
+    UserModel* user = self.currentUser;
+    user.status = @"offline";
+    self.currentUser = nil;
+
+    [self.restkitWrapper
+     userPutRequest:user
+     successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
+     }
+     failureCB:^(RKObjectRequestOperation *operation, NSError *error){
+     }
+     ];
+}
 
     -(void) save:(UserModel*)user cb: (void(^)(NSString* error, UserModel* user))cb {
         [self.restkitWrapper

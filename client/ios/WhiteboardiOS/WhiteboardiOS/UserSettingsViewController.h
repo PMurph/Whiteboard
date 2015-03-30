@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic, readwrite) UserModel* user;
 + (UserSettingsViewController*)initWithUser:(UserModel*)user;
+-(void) swapWithUserLogin:(UITabBarController*)tabBar;
 
 @end
 
