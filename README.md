@@ -63,14 +63,3 @@ cd client/ios/WhiteboardiOS/
 pod install
 open WhiteboardiOS.xcworkspace
 ```
-
-Setting Up Frank
-```
-frank setup
-frank build
-```
-
-Running Frank tests
-```
-frank launch
-```
