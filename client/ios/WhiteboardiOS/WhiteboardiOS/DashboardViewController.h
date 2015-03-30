@@ -5,6 +5,7 @@
 #import "RoomCollection.h"
 #import "RoomCollectionObserver.h"
 #import "RoomViewController.h"
+#import "RoomManager.h"
 #import "SocketFactory.h"
 
 #define JOIN_REQUEST @"joinRequest"
@@ -17,6 +18,7 @@
     @property (weak, nonatomic) IBOutlet UICollectionView *roomCollectionView;
     @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 @property (strong, nonatomic, readwrite) RoomCollection *roomCollection;
+@property (strong, nonatomic, readwrite) RoomManager* roomManager;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic, readwrite) UserSession* userSession;
 @end
