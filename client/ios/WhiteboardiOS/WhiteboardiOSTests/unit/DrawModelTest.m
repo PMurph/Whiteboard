@@ -63,15 +63,15 @@
 }
 
 - (void)testToDrawMessageContainsKeyMessage {
-    //XCTAssertNotNil([[self.testDrawModel toDrawMessage:@"0"] objectForKey:DRAW_MESSAGE_KEY]);
+    XCTAssertNotNil([self.testDrawModel toDrawMessage:@"0"]);
 }
 
 - (void)testToDrawMessageContainsKeyMessageWithKeyTool {
-    //XCTAssertNotNil([[[self.testDrawModel toDrawMessage:@"0"] objectForKey:DRAW_MESSAGE_KEY] objectForKey:TOOL_KEY]);
+    XCTAssertNotNil([[self.testDrawModel toDrawMessage:@"0"] objectForKey:TOOL_KEY]);
 }
 
 - (void)testToDrawMessageContainsKeyMessageWithKeyVertices {
-    //XCTAssertNotNil([[[self.testDrawModel toDrawMessage:@"0"] objectForKey:DRAW_MESSAGE_KEY] objectForKey:VERTICES_KEY]);
+    XCTAssertNotNil([[self.testDrawModel toDrawMessage:@"0"] objectForKey:VERTICES_KEY]);
 }
 
 

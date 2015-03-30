@@ -129,7 +129,17 @@
     - (void) updateDrawing:(CGPoint)newPoint {
         if(drawing) {
             [currDrawModel addCoordinateX:@(newPoint.x) Y:@(newPoint.y)];
+            
+            CGRect rect = CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height);
+            
+            UIGraphicsBeginImageContext(self.drawCanvas.frame.size);
+            [self.tempDrawCanvas.image drawInRect:rect];
+
             [self newSample:newPoint];
+            
+            self.tempDrawCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
+            [self.tempDrawCanvas setAlpha:1.0];
+            UIGraphicsEndImageContext();
             
         }
     }
