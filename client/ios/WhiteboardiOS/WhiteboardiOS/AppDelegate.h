@@ -1,3 +1,4 @@
+#pragma once
 #import <UIKit/UIKit.h>
 
 #import "RestkitWrapper.h"

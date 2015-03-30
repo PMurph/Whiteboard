@@ -24,6 +24,7 @@
     
     [newRoomController initializeController:roomToCreate withSocket:socket];
     [roomToCreate setSocket:socket];
+    [roomToCreate setRoomView:newRoomController];
     
     return newRoomController;
 }
