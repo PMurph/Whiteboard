@@ -23,6 +23,7 @@
     
     _roomManager = [[RoomManager alloc] init];
     _webAppURI = @"http://ec2-54-68-246-235.us-west-2.compute.amazonaws.com/";
+
     
     [self _setupRestkit:_webAppURI];
     [self _setupUserSession];

@@ -18,7 +18,7 @@
         authToken = @"";
         userId = @"";
         login = @"";
-        password = @"";
+        password = nil;
         return self;
     }
 @end

@@ -27,16 +27,24 @@
 
     - (RKObjectMapping*) getUserModelMapping {
         RKObjectMapping* userMapping = [RKObjectMapping requestMapping];
-        [userMapping addAttributeMappingsFromArray:@[@"login", @"password", @"anonymous", @"authToken"]];
+        [userMapping addAttributeMappingsFromDictionary:@{@"login": @"login",
+                                                           @"password":@"password",
+                                                           @"anonymous": @"anonymous",
+                                                           @"authToken":@"authToken",
+                                                           @"displayName":@"displayName",
+                                                           @"userId": @"_id"}];
+        [userMapping setSetDefaultValueForMissingAttributes:NO];
         return userMapping;
     }
 
     - (void) setupUserModelRequestDescriptor {
         RKObjectMapping* userMap = [self getUserModelMapping];
-        RKRequestDescriptor* userRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:userMap
+        RKRequestDescriptor* userRequestDescriptor = [RKRequestDescriptor
+                                                      requestDescriptorWithMapping:userMap
                                                         objectClass:[UserModel class]
                                                         rootKeyPath:nil
                                                         method:RKRequestMethodAny];
+        
         [objectManager addRequestDescriptor: userRequestDescriptor];
     }
 
@@ -64,6 +72,7 @@
             @"displayName": @"displayName",
             @"anonymous": @"anonymous",
             @"authToken": @"authToken",
+            @"login": @"login",
             @"_id": @"userId"
         }];
         

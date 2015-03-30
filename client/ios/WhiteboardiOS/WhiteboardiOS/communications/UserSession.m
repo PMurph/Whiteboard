@@ -41,6 +41,7 @@
      userGetRequest:user
      parameters: params
      successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
+         self.currentUser.password = nil;
          [self authenticated:user];
          cb(nil, user);
      }
@@ -79,6 +80,7 @@
     [self.restkitWrapper
      userPutRequest:user
      successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
+         self.currentUser.password = nil;
          self.currentUser = user;
          cb(nil, user);
      }
@@ -87,4 +89,17 @@
      }
      ];
 }
+
+    -(void) save:(UserModel*)user cb: (void(^)(NSString* error, UserModel* user))cb {
+        [self.restkitWrapper
+         userPutRequest:user
+         successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
+             cb(nil, user);
+         }
+         failureCB:^(RKObjectRequestOperation *operation, NSError *error){
+             cb(@"Save failed", nil);
+         }
+         ];
+    }
+
 @end
