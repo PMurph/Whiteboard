@@ -85,7 +85,8 @@
          cb(nil, user);
      }
      failureCB:^(RKObjectRequestOperation *operation, NSError *error){
-         cb(@"Reistration failed", nil);
+        NSString* errorMsg = error.userInfo[@"NSLocalizedRecoverySuggestion"];
+        cb([NSString stringWithFormat:@"Reistration failed: %@", errorMsg], nil);
      }
      ];
 }

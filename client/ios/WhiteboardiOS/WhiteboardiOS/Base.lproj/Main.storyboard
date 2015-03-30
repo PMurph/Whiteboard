@@ -54,7 +54,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyf-Zf-mO0">
-                                <rect key="frame" x="363" y="477" width="245" height="21"/>
+                                <rect key="frame" x="233" y="441" width="457" height="57"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -66,12 +66,9 @@
                             <constraint firstItem="xRZ-gT-3m3" firstAttribute="trailing" secondItem="oU9-Km-6Qz" secondAttribute="trailing" id="Kva-qP-CrA"/>
                             <constraint firstItem="x1v-g5-yvS" firstAttribute="leading" secondItem="xRZ-gT-3m3" secondAttribute="leading" id="Ltt-A5-WLP"/>
                             <constraint firstItem="x1v-g5-yvS" firstAttribute="leading" secondItem="gvA-Ou-sMH" secondAttribute="leading" id="N5g-WH-rLB"/>
-                            <constraint firstItem="cyf-Zf-mO0" firstAttribute="leading" secondItem="xRZ-gT-3m3" secondAttribute="leading" id="Ypf-lk-R7Q"/>
                             <constraint firstAttribute="centerX" secondItem="xRZ-gT-3m3" secondAttribute="centerX" id="ZNh-Q4-4vb"/>
                             <constraint firstItem="xRZ-gT-3m3" firstAttribute="trailing" secondItem="gvA-Ou-sMH" secondAttribute="trailing" id="d4M-rx-3fd"/>
                             <constraint firstAttribute="centerX" secondItem="gvA-Ou-sMH" secondAttribute="centerX" id="h1w-AG-GHs"/>
-                            <constraint firstItem="cyf-Zf-mO0" firstAttribute="leading" secondItem="gvA-Ou-sMH" secondAttribute="leading" id="sJb-J4-LDw"/>
-                            <constraint firstItem="cyf-Zf-mO0" firstAttribute="leading" secondItem="x1v-g5-yvS" secondAttribute="leading" id="z9j-pW-ikV"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Login" image="first" id="acW-dT-cKf"/>
