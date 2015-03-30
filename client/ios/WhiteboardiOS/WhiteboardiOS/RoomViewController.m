@@ -10,7 +10,7 @@
     - (void) initializeListeners;
     - (void) setupGetAllDrawCommandsListener;
     - (void) setupDrawCommandListener;
-    - (void) handleDrawCommand:(NSDictionary *)drawCommand;
+    - (void) handleDrawCommand:(NSArray *)drawCommands;
     - (void) getCurrentRoomState;
     - (void) leaveButtonClick:(id)sender;
     - (void) removeControllerTab;
@@ -63,24 +63,27 @@
     [self.socket on:GET_ALL_DRAW_COMMANDS callback:^(SIOParameterArray *args) {
         NSArray *drawCommands = [[args objectAtIndex:0] objectForKey:DRAW_COMMANDS_KEY];
         if(drawCommands) {
-            for(id drawCommand in drawCommands) {
-                [self handleDrawCommand:drawCommand];
-            }
+            [self handleDrawCommand:drawCommands];
         }
     }];
 }
 
 - (void) setupDrawCommandListener {
     [self.socket on:DRAW_COMMAND callback:^(SIOParameterArray *args) {
-        [self handleDrawCommand:[[args objectAtIndex:0] objectForKey:DRAW_COMMAND]];
+        [self handleDrawCommand:@[[[args objectAtIndex:0] objectForKey:DRAW_COMMAND]]];
     }];
 }
 
-- (void) handleDrawCommand:(NSDictionary *)drawCommand {
-    DrawToolModel *newDrawToolModel = [DrawLogic createDrawToolModel:[drawCommand objectForKey:TOOL_KEY]];
-    DrawModel *drawModel = [DrawLogic createDrawModel:newDrawToolModel withCoordinates:[drawCommand objectForKey:VERTICES_KEY]];
-    
-    [drawLogic drawDrawCommand:drawModel];
+- (void) handleDrawCommand:(NSArray *)drawCommands {
+    NSMutableArray *drawModels = [[NSMutableArray alloc] init];
+    for(id drawCommand in drawCommands) {
+        DrawToolModel *newDrawToolModel = [DrawLogic createDrawToolModel:[drawCommand objectForKey:TOOL_KEY]];
+        DrawModel *newDrawModel = [DrawLogic createDrawModel:newDrawToolModel withCoordinates:[drawCommand objectForKey:VERTICES_KEY]];
+                
+        [drawModels addObject:newDrawModel];
+    }
+            
+    [drawLogic drawDrawCommands:drawModels];
 }
 
 - (void) getCurrentRoomState {

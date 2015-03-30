@@ -78,6 +78,11 @@ iOS(client/ios/WhiteboardiOS/WhiteboardiOSTests/acceptance/*.trace)
 open WhiteboardiOS.xcworkspace
 Product > Profile (cmd+I)
 Select Automation
+
 Open .trace file
+    -or-
+Open .js file in text editor
+Copy script into automation script area
+
 Click play button at very button of script
 ```

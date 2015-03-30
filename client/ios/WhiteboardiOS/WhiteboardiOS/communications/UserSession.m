@@ -1,11 +1,3 @@
-//
-//  UserSession.m
-//  WhiteboardiOS
-//
-//  Created by Reyad on 2015-03-27.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import "UserSession.h"
 
@@ -78,16 +70,16 @@
     user.anonymous = NO;
     
     [self.restkitWrapper
-     userPutRequest:user
-     successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
-         self.currentUser.password = nil;
-         self.currentUser = user;
-         cb(nil, user);
-     }
-     failureCB:^(RKObjectRequestOperation *operation, NSError *error){
-        NSString* errorMsg = error.userInfo[@"NSLocalizedRecoverySuggestion"];
-        cb([NSString stringWithFormat:@"Reistration failed: %@", errorMsg], nil);
-     }
+        userPutRequest:user
+        successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
+            self.currentUser.password = nil;
+            self.currentUser = user;
+            cb(nil, user);
+        }
+        failureCB:^(RKObjectRequestOperation *operation, NSError *error){
+            NSString* errorMsg = error.userInfo[@"NSLocalizedRecoverySuggestion"];
+            cb([NSString stringWithFormat:@"Reistration failed: %@", errorMsg], nil);
+        }
      ];
 }
 -(void) logout {
@@ -96,12 +88,12 @@
     self.currentUser = nil;
 
     [self.restkitWrapper
-     userPutRequest:user
-     successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
-     }
-     failureCB:^(RKObjectRequestOperation *operation, NSError *error){
-     }
-     ];
+        userPutRequest:user
+        successCB:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
+        }
+        failureCB:^(RKObjectRequestOperation *operation, NSError *error){
+        }
+    ];
 }
 
     -(void) save:(UserModel*)user cb: (void(^)(NSString* error, UserModel* user))cb {
