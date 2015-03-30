@@ -76,6 +76,11 @@
         NSDictionary *currCoord;
         CGPoint newPoint;
         currDrawModel = drawCommand;
+        CGRect rect = CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height);
+        
+        UIGraphicsBeginImageContext(self.drawCanvas.frame.size);
+        [self.tempDrawCanvas.image drawInRect:rect];
+        
         
         if([coordinates count] > 0) {
             currCoord = [coordinates objectAtIndex:0];
@@ -93,6 +98,10 @@
             newPoint = [self getPointFromCoordinate:currCoord];
             [self endFreehandDrawing:newPoint];
         }
+        
+        self.tempDrawCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
+        [self.tempDrawCanvas setAlpha:1.0];
+        UIGraphicsEndImageContext();
     }
 
     - (CGPoint) getPointFromCoordinate:(NSDictionary *)coord {
@@ -127,21 +136,17 @@
 
     - (void) newSample:(CGPoint)newPoint {
         DrawToolModel *drawTool = currDrawModel.drawTool;
-        CGRect rect = CGRectMake(0, 0, self.drawCanvas.frame.size.width, self.drawCanvas.frame.size.height);
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+
+        CGContextMoveToPoint(ctx, lastPoint.x, lastPoint.y);
+        CGContextAddLineToPoint(ctx, newPoint.x, newPoint.y);
+        CGContextSetLineCap(ctx, kCGLineCapRound);
+        CGContextSetLineWidth(ctx, drawTool.thickness.floatValue);
+        CGContextSetRGBStrokeColor(ctx, [drawTool getRed].floatValue, [drawTool getGreen].floatValue, [drawTool getBlue].floatValue, 1.0);
+        CGContextSetBlendMode(ctx, kCGBlendModeNormal);
     
-        UIGraphicsBeginImageContext(self.drawCanvas.frame.size);
-        [self.tempDrawCanvas.image drawInRect:rect];
-        CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-        CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), newPoint.x, newPoint.y);
-        CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), drawTool.thickness.floatValue);
-        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), [drawTool getRed].floatValue, [drawTool getGreen].floatValue, [drawTool getBlue].floatValue, 1.0);
-        CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeNormal);
-    
-        CGContextStrokePath(UIGraphicsGetCurrentContext());
-        self.tempDrawCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
-        [self.tempDrawCanvas setAlpha:1.0];
-        UIGraphicsEndImageContext();
+        CGContextStrokePath(ctx);
+
         
         lastPoint = newPoint;
     }
