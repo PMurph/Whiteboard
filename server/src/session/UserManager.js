@@ -188,6 +188,11 @@ UserManager.prototype = {
         if (userChanges.login && userChanges.login !== user.login) {
             var self = this;
             var newLogin = userChanges.login;
+
+            if (!(/^[a-z0-9]+$/i.test(newLogin))){
+                    callback("The username must be alphanumeric");
+                    return;
+            }
             this._isUsernameTaken(newLogin, function (err, users) {
                 if (users.length > 0) {
                     callback("The username is already taken");
@@ -198,6 +203,11 @@ UserManager.prototype = {
                 }
             });
             return;
+        }
+
+        if(userChanges.displayName) {
+            var newDisplayName = userChanges.displayName;
+            userChanges.displayName = newDisplayName.replace(/>/g, "&gt;").replace(/</g, "&lt;");
         }
 
         this._UserModel
