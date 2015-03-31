@@ -218,6 +218,7 @@ RoomManager.prototype = {
         if(user.anonymous === true) {
             res.status(400).send("Anonymous Users cannot create a room");
         }else{
+            name = name.replace(/>/g, "&gt;").replace(/</g, "&lt;");
             this._createNewRoom(name, user.id, type, allowAnon, userInvites, dbCB);
         }
     },
