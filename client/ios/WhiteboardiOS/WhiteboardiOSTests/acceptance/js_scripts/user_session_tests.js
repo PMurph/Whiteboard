@@ -19,25 +19,26 @@ testName = "Blank user registration fails";
 UIALogger.logStart(testName);
 target.frontMostApp().mainWindow().buttons()["Register"].tap();
 target.pushTimeout(5);
-var errorText = target.frontMostApp().mainWindow().staticTexts()["Registration failed"]; 
+var settingsBtn = tabbar.buttons()["Settings"];
 target.popTimeout();
-if(errorText.isValid()) {
-    UIALogger.logPass(testName);
-} else {
+if(settingsBtn.isValid()) {
     UIALogger.logFail(testName);
+} else {
+    UIALogger.logPass(testName);
 }
 
 testName = "Register test user";
 
-var testUserName = "hgjfdshgjdsfg";
-var testPassword = "fdgsfdbfdbvbcb";
+// Change user name if this test fails
+var testUserName = "hyytfnnxxcmvnfcfd";
+var testPassword = "fdgdbcvvcbvccv";
 
 UIALogger.logStart(testName);
 var userNameField = target.frontMostApp().mainWindow().textFields()[0];
 var passwordField = target.frontMostApp().mainWindow().secureTextFields()[0];
 userNameField.setValue(testUserName);
 passwordField.setValue(testPassword);
-target.frontMosApp().mainWindow().buttons()["Register"].tap();
+target.frontMostApp().mainWindow().buttons()["Register"].tap();
 target.pushTimeout(5);
 var settingBtn = tabbar.buttons()["Settings"];
 target.popTimeout();
@@ -50,11 +51,25 @@ if(settingBtn.isValid()) {
 testName = "Logout of account";
 
 UIALogger.logStart(testName);
-UIALogger.logFail(testName);
+var toolbar = target.frontMostApp().mainWindow().toolbar();
+toolbar.buttons()["Logout"].tap();
+target.pushTimeout(5);
+var loginBtn = tabbar.buttons()["Login"];
+target.popTimeout();
+if(loginBtn.isValid()) {
+    UIALogger.logPass(testName);
+} else {
+    UIALogger.logFail(testName);
+}
 
 testName = "Login to valid account";
 
 UIALogger.logStart(testName);
+tabbar.buttons()["Login"].tap();
+target.pushTimeout(5);
+userNameField = target.frontMostApp().mainWindow().textFields()[0];
+passwordField = target.frontMostApp().mainWindow().secureTextFields()[0];
+target.popTimeout();
 userNameField.setValue(testUserName);
 passwordField.setValue(testPassword);
 target.frontMostApp().mainWindow().buttons()["Login"].tap();
@@ -80,6 +95,17 @@ if(saveBtn.isValid()) {
     UIALogger.logFail(testName);
 }
 
+testName = "User settings save fail";
+
+UIALogger.logStart(testName);
+saveBtn.tap();
+var saveSuccessful = target.frontMostApp().mainWindow().staticTexts()["Save Successful"];
+if(saveSuccessful.isValid()) {
+    UIALogger.logFail(testName);
+} else {
+    UIALogger.logPass(testName);
+}
+
 testName = "User settings save successful";
 
 UIALogger.logStart(testName);
@@ -94,9 +120,3 @@ if(saveSuccessful.isValid()) {
 } else {
     UIALogger.logFail(testName);
 }
-
-testName = "User settings save fail";
-
-UIALogger.logStart(testName);
-
-UIAlogger.logFail(testName);

@@ -1,11 +1,3 @@
-//
-//  UserSessionControllerTest.m
-//  WhiteboardiOS
-//
-//  Created by Reyad on 2015-03-30.
-//  Copyright (c) 2015 Patrick Murphy. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
