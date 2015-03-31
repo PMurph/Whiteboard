@@ -17,6 +17,7 @@
     - (void) registerObserver:(id <RoomCollectionObserver>)observer;
     - (void) fetchRooms:(NSString *)authToken cb:(void (^)())cb;
 
+
 @end
 
 #endif
